@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  rails:
+    build: .
+    container_name: "olive-app"
+    ports:
+        - "8080:3000"
+    volumes:
+      - ./src/:/usr/local/src
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql:5.7
+    container_name: "olive-mysql"
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'db_olive'
+      MYSQL_USER: 'root'
+      MYSQL_ROOT_PASSWORD: 'mysql'
+    ports: 
+      - 3360:3306
