@@ -1,0 +1,2 @@
+class WithChildStatus < ApplicationRecord
+end
