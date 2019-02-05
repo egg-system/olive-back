@@ -1,10 +1,9 @@
 # olive-back
 ## サロンシステム
 ### 環境のbuild手順
-- dockerのターミナルを起動
-- ターミナルで、レポジトリのルートに移動 
-- `docker-compose build`を入力
-- コンテナが作成される
+- 下記を参照
+   - https://github.com/egg-system/olive-back/wiki/%E7%92%B0%E5%A2%83%E3%81%AEbuild%E6%89%8B%E9%A0%86
+#### 環境のbuildは一度のみの実行すればいい
 
 ### 環境の起動
 - `docker-compose up -d`を入力
