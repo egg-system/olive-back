@@ -10,8 +10,10 @@
   </head>
 
   <body>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
-    <%= yield %>
+    <%= render :partial => 'header' %>
+    <p><%= breadcrumbs separator: " &rsaquo;" %></p>
+    <div class="container-fluid">
+      <%= yield %>
+    </div>
   </body>
 </html>
