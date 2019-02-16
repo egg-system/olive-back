@@ -11,3 +11,12 @@
   - ポートフォワーディングにより、ポートは変更可能
   - dockerの詳細は下記を参照
     - https://github.com/egg-system/olive-back/wiki/docker%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6
+
+### 各種コマンド
+- bundleの更新
+   - docker-compose run rails bundle install
+
+- 各種 railsコマンドの実装
+   - コンテナ内に入る
+      - docker exec -it olive-app bash
+   

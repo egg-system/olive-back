@@ -11,6 +11,10 @@ RUN apt-get update && \
     apt-get clean && \
     rm -r /var/lib/apt/lists/*
 
+# node update
+RUN curl -sL https://deb.nodesource.com/setup_10.x | bash - \
+    && apt-get install -y nodejs
+
 # create user and group.
 RUN groupadd -r --gid 1000 rails && \
     useradd -m -r --uid 1000 --gid 1000 rails
