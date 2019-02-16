@@ -12,7 +12,7 @@
 
 ActiveRecord::Schema.define(version: 2019_02_13_130118) do
 
-  create_table "coupons", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "coupons", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "coupon_id"
     t.string "name"
     t.string "coupon_fee"
@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 2019_02_13_130118) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "customers", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "customers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "costomer_id"
     t.string "customer_first_name"
     t.string "customer_last_name"
@@ -50,14 +50,14 @@ ActiveRecord::Schema.define(version: 2019_02_13_130118) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "department_categories", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "department_categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "department_id"
     t.text "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "menu_categories", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "menu_categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "menu_category_id"
     t.string "name"
     t.integer "department_id"
@@ -65,7 +65,7 @@ ActiveRecord::Schema.define(version: 2019_02_13_130118) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "menus", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "menus", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "menu_id"
     t.integer "store_id"
     t.string "name"
@@ -81,28 +81,48 @@ ActiveRecord::Schema.define(version: 2019_02_13_130118) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "pregnant_statuses", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "pregnant_statuses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "pregnant_status_id"
     t.text "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "reservation_details", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "reservation_details", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "reservation_id"
     t.integer "menu_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "roles", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "reservations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.integer "reservation_id"
+    t.integer "customer_id"
+    t.integer "staff_id"
+    t.integer "coupon_id"
+    t.boolean "first_visit_flg"
+    t.integer "pregnant_status_id"
+    t.integer "with_child_status_id"
+    t.boolean "double_flg"
+    t.date "reservation_date"
+    t.time "start_time"
+    t.time "end_time"
+    t.text "reservation_comment"
+    t.boolean "cancel_flg"
+    t.integer "total_fee"
+    t.time "total_time"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "roles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "role_id"
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "shifts", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "shifts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "shift_id"
     t.date "shift_date"
     t.integer "store_id"
@@ -123,14 +143,14 @@ ActiveRecord::Schema.define(version: 2019_02_13_130118) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "skills", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "skills", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "skill_id"
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "staffs", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "staffs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "staff_id"
     t.string "first_name"
     t.string "last_name"
@@ -146,7 +166,7 @@ ActiveRecord::Schema.define(version: 2019_02_13_130118) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "staffs_skills", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "staffs_skills", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "staff_skill_id"
     t.integer "staff_id"
     t.integer "skill_id"
@@ -154,14 +174,14 @@ ActiveRecord::Schema.define(version: 2019_02_13_130118) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "store_types", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "store_types", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "store_type_id"
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "stores", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "stores", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "store_id"
     t.integer "store_type_id"
     t.string "name"
@@ -177,7 +197,7 @@ ActiveRecord::Schema.define(version: 2019_02_13_130118) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "taxes", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "taxes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "tax_id"
     t.float "tax_rate"
     t.boolean "tax_flg"
@@ -185,27 +205,7 @@ ActiveRecord::Schema.define(version: 2019_02_13_130118) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "user_reservations", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
-    t.integer "reservation_id"
-    t.integer "customer_id"
-    t.integer "staff_id"
-    t.integer "coupon_id"
-    t.boolean "first_visit_flg"
-    t.integer "pregnant_status_id"
-    t.integer "with_child_status_id"
-    t.boolean "double_flg"
-    t.date "reservation_date"
-    t.time "start_time"
-    t.time "end_time"
-    t.text "reservation_comment"
-    t.boolean "cancel_flg"
-    t.integer "total_fee"
-    t.time "total_time"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
@@ -217,7 +217,7 @@ ActiveRecord::Schema.define(version: 2019_02_13_130118) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  create_table "with_child_statuses", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "with_child_statuses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "with_child_status_id"
     t.text "name"
     t.datetime "created_at", null: false
