@@ -1,13 +1,13 @@
-FROM ruby:2.6
+FROM ruby:2.6.0
 
 ENV LANG C.UTF-8
 ENV WORKSPACE=/usr/local/src
 
-# install bundler.
+# install bundler. -v 2.0.1 はエラーが発生するため、1.17.3をinstall
 RUN apt-get update && \
     apt-get install -y vim less && \
     apt-get install -y build-essential libpq-dev nodejs && \
-    gem install bundler && \
+    gem install bundler -v 1.17.3 && \
     apt-get clean && \
     rm -r /var/lib/apt/lists/*
 
