@@ -1,0 +1,7 @@
+DepartmentCategoy.create(department_id:1, name:'整体・マッサージ')
+DepartmentCategoy.create(department_id:2, name:'鍼灸')
+DepartmentCategoy.create(department_id:3, name:'交通事故治療')
+DepartmentCategoy.create(department_id:4, name:'不妊治療')
+DepartmentCategoy.create(department_id:5, name:'エステ')
+DepartmentCategoy.create(department_id:6, name:'ブライダルエステ')
+DepartmentCategoy.create(department_id:7, name:'なし')
