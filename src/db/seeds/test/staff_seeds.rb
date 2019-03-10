@@ -1,3 +1,7 @@
+if Staff.exists?
+  return
+end
+
 Staff.create(staff_id:1, first_name:'整体', last_name:'太郎', first_name_kana:'セイタイ', last_name_kana:'タロウ', staff_skill_id:1
 , belong_store_id:, role_id:, employee_type:'', absence_flg:false, deleted_flg:false)
 Staff.create(staff_id:2, first_name:'整体', last_name:'花子', first_name_kana:'セイタイ', last_name_kana:'ハナコ', staff_skill_id:1
