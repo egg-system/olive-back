@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_13_130118) do
+ActiveRecord::Schema.define(version: 2019_02_24_090428) do
 
   create_table "coupons", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "coupon_id"
@@ -144,26 +144,23 @@ ActiveRecord::Schema.define(version: 2019_02_13_130118) do
   end
 
   create_table "skills", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.integer "skill_id"
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "staffs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.integer "staff_id"
     t.string "first_name"
     t.string "last_name"
-    t.string "first_name_kana"
-    t.string "last_name_kana"
-    t.integer "staff_skill_id"
-    t.integer "belong_store_id"
-    t.integer "role_id"
-    t.string "employee_type"
+    t.string "first_kana"
+    t.string "last_kana"
+    t.bigint "store_id", null: false
+    t.string "employment_type"
     t.boolean "absence_flg"
     t.boolean "deleted_flg"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["store_id"], name: "index_staffs_on_store_id"
   end
 
   create_table "staffs_skills", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -174,33 +171,23 @@ ActiveRecord::Schema.define(version: 2019_02_13_130118) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "store_types", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.integer "store_type_id"
-    t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "stores", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.integer "store_id"
-    t.integer "store_type_id"
+    t.integer "store_type", comment: "モデル内でenum型に定義 0:直営店 1:FC店"
     t.string "name"
     t.text "address"
-    t.string "store_tel"
-    t.string "store_mail"
-    t.text "store_url"
-    t.date "business_hours_weekday"
-    t.date "business_hours_holiday"
-    t.date "last_reception_time_weekday"
-    t.date "last_reception_time_holiday"
+    t.string "tel"
+    t.string "mail"
+    t.text "url"
+    t.time "weekday_first_reception_time"
+    t.time "holiday_first_reception_time"
+    t.time "weekday_last_reception_time"
+    t.time "holiday_last_reception_time"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "taxes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.integer "tax_id"
     t.float "tax_rate"
-    t.boolean "tax_flg"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -213,8 +200,12 @@ ActiveRecord::Schema.define(version: 2019_02_13_130118) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "staff_id"
+    t.bigint "role_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["role_id"], name: "index_users_on_role_id"
+    t.index ["staff_id"], name: "index_users_on_staff_id"
   end
 
   create_table "with_child_statuses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -224,4 +215,7 @@ ActiveRecord::Schema.define(version: 2019_02_13_130118) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "staffs", "stores"
+  add_foreign_key "users", "roles"
+  add_foreign_key "users", "staffs"
 end
