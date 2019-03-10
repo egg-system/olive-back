@@ -7,8 +7,7 @@ class CreateStaffs < ActiveRecord::Migration[5.1]
       t.string :last_kana
       t.references :store, foreign_key: true, null: false
       t.string :employment_type
-      t.boolean :is_absenced
-      t.boolean :is_deleted
+      t.datetime :deleted_at
       t.timestamps
     end
   end
