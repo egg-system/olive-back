@@ -1,3 +1,3 @@
 class MenuCategory < ApplicationRecord
-    belongs_to :department_category
+    belongs_to :department
 end

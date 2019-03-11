@@ -3,12 +3,12 @@ class CreateMenus < ActiveRecord::Migration[5.1]
     create_table :menus do |t|
       t.integer :store_id
       t.string :name
-      t.text :menu_description
-      t.integer :menu_fee
-      t.time :service_time
+      t.text :description
+      t.integer :fee
+      t.integer :service_minutes, comment: '施術時間(分)'
       t.date :service_start_date
       t.date :service_end_date
-      t.integer :menu_category_id
+      t.references :menu_category, foreign_key: true
       t.text :memo
 
       t.timestamps
