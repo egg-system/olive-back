@@ -1,27 +1,23 @@
 class CreateCustomers < ActiveRecord::Migration[5.1]
   def change
     create_table :customers do |t|
-      t.integer :costomer_id
-      t.string :customer_first_name
-      t.string :customer_last_name
-      t.string :customer_first_name_kana
-      t.string :customer_last_name_kana
+      t.string :first_name
+      t.string :last_name
+      t.string :first_kana
+      t.string :last_kana
       t.string :tel
-      t.string :mail1
-      t.string :mail2
-      t.boolean :mail_receive_flg
+      t.string :mail, comment: 'メールアドレス'
+      t.boolean :can_receive_mail
       t.date :birthday
       t.string :zip_code
       t.string :prefecture
       t.text :city
       t.text :address
-      t.boolean :membership_flg
-      t.boolean :mail_flg
-      t.text :comment1
-      t.text :comment2
-      t.integer :fitsrt_visit_store_id
-      t.integer :last_visit_store_id
-      t.date :last_visit_date
+      t.boolean :has_membership
+      t.text :comment
+      t.references :fitsrt_visit_store, foreign_key: { to_table: :stores }
+      t.references :last_visit_store, foreign_key: { to_table: :stores }
+      t.date :last_visited_at
 
       t.timestamps
     end

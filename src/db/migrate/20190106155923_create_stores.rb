@@ -7,11 +7,7 @@ class CreateStores < ActiveRecord::Migration[5.1]
       t.string :tel
       t.string :mail
       t.text :url
-      t.time :weekday_first_reception_time
-      t.time :holiday_first_reception_time
-      t.time :weekday_last_reception_time
-      t.time :holiday_last_reception_time
-
+      t.text :infomation
       t.timestamps
     end
   end
