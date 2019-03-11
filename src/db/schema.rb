@@ -67,7 +67,6 @@ ActiveRecord::Schema.define(version: 2019_03_11_115658) do
     t.string "name"
     t.text "menu_description"
     t.integer "menu_fee"
-    t.integer "tax_id", comment: "消費税。0.08%なのでデフォルト値は2"
     t.time "service_time"
     t.date "service_start_date"
     t.date "service_end_date"
@@ -198,6 +197,7 @@ ActiveRecord::Schema.define(version: 2019_03_11_115658) do
 
   create_table "taxes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.float "rate"
+    t.boolean "is_default", comment: "このフラグが立っている税率がデフォルトになる"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
