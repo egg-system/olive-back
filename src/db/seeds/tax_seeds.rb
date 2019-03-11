@@ -1,2 +1,3 @@
-Tax.create(tax_id:1, tax_rate:1.08, tax_flg:true)
-Tax.create(tax_id:2, tax_rate:1.00, tax_flg:false)
+Tax.where(id: 1).first_or_create(rate:1.00)
+Tax.where(id: 2).first_or_create(rate:1.08, is_default: true)
+Tax.where(id: 3).first_or_create(rate:1.10)

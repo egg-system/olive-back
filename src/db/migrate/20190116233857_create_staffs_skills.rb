@@ -1,10 +1,8 @@
 class CreateStaffsSkills < ActiveRecord::Migration[5.1]
   def change
     create_table :staffs_skills do |t|
-      t.integer :staff_skill_id
-      t.integer :staff_id
-      t.integer :skill_id
-
+      t.references :staff, foreign_key: true
+      t.references :skill, foreign_key: true
       t.timestamps
     end
   end

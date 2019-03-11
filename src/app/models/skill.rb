@@ -1,3 +1,3 @@
 class Skill < ApplicationRecord
-    belongs_to :staffs_skill
+    has_many :staffs, through: :staffs_skill
 end

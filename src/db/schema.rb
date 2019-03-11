@@ -10,75 +10,70 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_13_130118) do
+ActiveRecord::Schema.define(version: 2019_03_11_115658) do
 
   create_table "coupons", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.integer "coupon_id"
     t.string "name"
-    t.string "coupon_fee"
-    t.integer "tax_id"
-    t.integer "coupon_remaining"
-    t.date "coupon_start_date"
-    t.date "coupon_start_end"
+    t.string "fee"
+    t.integer "count", comment: "利用回数"
+    t.date "start_at"
+    t.date "end_at"
+    t.date "expired_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "customers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.integer "costomer_id"
-    t.string "customer_first_name"
-    t.string "customer_last_name"
-    t.string "customer_first_name_kana"
-    t.string "customer_last_name_kana"
+    t.string "first_name"
+    t.string "last_name"
+    t.string "first_kana"
+    t.string "last_kana"
     t.string "tel"
-    t.string "mail1"
-    t.string "mail2"
-    t.boolean "mail_receive_flg"
+    t.string "mail", comment: "メールアドレス"
+    t.boolean "can_receive_mail"
     t.date "birthday"
     t.string "zip_code"
     t.string "prefecture"
     t.text "city"
     t.text "address"
-    t.boolean "membership_flg"
-    t.boolean "mail_flg"
-    t.text "comment1"
-    t.text "comment2"
-    t.integer "fitsrt_visit_store_id"
-    t.integer "last_visit_store_id"
-    t.date "last_visit_date"
+    t.boolean "has_membership"
+    t.text "comment"
+    t.bigint "fitsrt_visit_store_id"
+    t.bigint "last_visit_store_id"
+    t.date "last_visited_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["fitsrt_visit_store_id"], name: "index_customers_on_fitsrt_visit_store_id"
+    t.index ["last_visit_store_id"], name: "index_customers_on_last_visit_store_id"
   end
 
-  create_table "department_categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.integer "department_id"
+  create_table "departments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.text "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "menu_categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.integer "menu_category_id"
     t.string "name"
-    t.integer "department_id"
+    t.bigint "department_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["department_id"], name: "index_menu_categories_on_department_id"
   end
 
   create_table "menus", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.integer "menu_id"
     t.integer "store_id"
     t.string "name"
-    t.text "menu_description"
-    t.integer "menu_fee"
-    t.integer "tax_id"
-    t.time "service_time"
+    t.text "description"
+    t.integer "fee"
+    t.integer "service_minutes", comment: "施術時間(分)"
     t.date "service_start_date"
     t.date "service_end_date"
-    t.integer "menu_category_id"
+    t.bigint "menu_category_id"
     t.text "memo"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["menu_category_id"], name: "index_menus_on_menu_category_id"
   end
 
   create_table "pregnant_statuses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -89,7 +84,6 @@ ActiveRecord::Schema.define(version: 2019_02_13_130118) do
   end
 
   create_table "reservation_details", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.integer "reservation_id"
     t.integer "menu_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -116,7 +110,6 @@ ActiveRecord::Schema.define(version: 2019_02_13_130118) do
   end
 
   create_table "roles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.integer "role_id"
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -144,63 +137,67 @@ ActiveRecord::Schema.define(version: 2019_02_13_130118) do
   end
 
   create_table "skills", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.integer "skill_id"
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "skills_menus", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "skill_id"
+    t.bigint "menu_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["menu_id"], name: "index_skills_menus_on_menu_id"
+    t.index ["skill_id"], name: "index_skills_menus_on_skill_id"
   end
 
   create_table "staffs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.integer "staff_id"
     t.string "first_name"
     t.string "last_name"
-    t.string "first_name_kana"
-    t.string "last_name_kana"
-    t.integer "staff_skill_id"
-    t.integer "belong_store_id"
-    t.integer "role_id"
-    t.string "employee_type"
-    t.boolean "absence_flg"
-    t.boolean "deleted_flg"
+    t.string "first_kana"
+    t.string "last_kana"
+    t.bigint "store_id", null: false
+    t.string "employment_type"
+    t.datetime "deleted_at"
+    t.boolean "is_absenced"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["store_id"], name: "index_staffs_on_store_id"
   end
 
   create_table "staffs_skills", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.integer "staff_skill_id"
-    t.integer "staff_id"
-    t.integer "skill_id"
+    t.bigint "staff_id"
+    t.bigint "skill_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["skill_id"], name: "index_staffs_skills_on_skill_id"
+    t.index ["staff_id"], name: "index_staffs_skills_on_staff_id"
   end
 
-  create_table "store_types", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.integer "store_type_id"
-    t.string "name"
+  create_table "store_menus", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "store_id"
+    t.bigint "menu_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["menu_id"], name: "index_store_menus_on_menu_id"
+    t.index ["store_id"], name: "index_store_menus_on_store_id"
   end
 
   create_table "stores", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.integer "store_id"
-    t.integer "store_type_id"
+    t.integer "store_type", default: 0, comment: "モデル内でenum型に定義 0:直営店 1:FC店"
     t.string "name"
     t.text "address"
-    t.string "store_tel"
-    t.string "store_mail"
-    t.text "store_url"
-    t.date "business_hours_weekday"
-    t.date "business_hours_holiday"
-    t.date "last_reception_time_weekday"
-    t.date "last_reception_time_holiday"
+    t.string "tel"
+    t.string "mail"
+    t.text "url"
+    t.text "infomation"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "taxes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.integer "tax_id"
-    t.float "tax_rate"
-    t.boolean "tax_flg"
+    t.float "rate"
+    t.boolean "is_default", default: false, null: false, comment: "このフラグが立っている税率がデフォルトになる"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -213,8 +210,12 @@ ActiveRecord::Schema.define(version: 2019_02_13_130118) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "staff_id"
+    t.bigint "role_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["role_id"], name: "index_users_on_role_id"
+    t.index ["staff_id"], name: "index_users_on_staff_id"
   end
 
   create_table "with_child_statuses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -224,4 +225,17 @@ ActiveRecord::Schema.define(version: 2019_02_13_130118) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "customers", "stores", column: "fitsrt_visit_store_id"
+  add_foreign_key "customers", "stores", column: "last_visit_store_id"
+  add_foreign_key "menu_categories", "departments"
+  add_foreign_key "menus", "menu_categories"
+  add_foreign_key "skills_menus", "menus"
+  add_foreign_key "skills_menus", "skills"
+  add_foreign_key "staffs", "stores"
+  add_foreign_key "staffs_skills", "skills"
+  add_foreign_key "staffs_skills", "staffs"
+  add_foreign_key "store_menus", "menus"
+  add_foreign_key "store_menus", "stores"
+  add_foreign_key "users", "roles"
+  add_foreign_key "users", "staffs"
 end
