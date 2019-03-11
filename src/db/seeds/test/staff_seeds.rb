@@ -1,14 +1,29 @@
-if Staff.exists?
-  return
+require 'faker'
+
+unless Store.exists?
+  3.times do
+    Store.create(
+      store_type: Faker::Number.between(0, 1),
+      name: Faker::Company.name
+    )
+  end
 end
 
-Staff.create(staff_id:1, first_name:'整体', last_name:'太郎', first_name_kana:'セイタイ', last_name_kana:'タロウ', staff_skill_id:1
-, belong_store_id:, role_id:, employee_type:'', absence_flg:false, deleted_flg:false)
-Staff.create(staff_id:2, first_name:'整体', last_name:'花子', first_name_kana:'セイタイ', last_name_kana:'ハナコ', staff_skill_id:1
-, belong_store_id:, role_id:, employee_type:'', absence_flg:false, deleted_flg:false)
-Staff.create(staff_id:3, first_name:'鍼灸', last_name:'次郎', first_name_kana:'シンキュウ', last_name_kana:'ジロウ', staff_skill_id:2
-, belong_store_id:, role_id:, employee_type:'', absence_flg:false, deleted_flg:false)
-Staff.create(staff_id:4, first_name:'交通', last_name:'三郎', first_name_kana:'コウツウ', last_name_kana:'サブロウ', staff_skill_id:3
-, belong_store_id:, role_id:, employee_type:'', absence_flg:false, deleted_flg:false)
-Staff.create(staff_id:５, first_name:'不妊', last_name:'四郎', first_name_kana:'フニン', last_name_kana:'シロウ', staff_skill_id:4
-, belong_store_id:, role_id:, employee_type:'', absence_flg:false, deleted_flg:false)
+unless Staff.exists?
+  5.times do
+    Staff.create(
+      store_id: Store.order("RAND()").first().id,
+      first_name: Faker::Name.first_name, 
+      last_name: Faker::Name.last_name
+    )
+  end
+end
+
+unless User.exists?
+  User.create(
+    role_id: Role.order("RAND()").first().id,
+    staff_id: Staff.order("RAND()").first().id,
+    email: 'email@olive.test',
+    password: 'password'
+  )
+end

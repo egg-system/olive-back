@@ -80,3 +80,5 @@ gem 'dotenv-rails'
 
 # パンくず描画
 gem 'gretel'
+
+gem 'rails-i18n'

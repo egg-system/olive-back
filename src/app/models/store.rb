@@ -1,3 +1,3 @@
 class Store < ApplicationRecord
-    belongs_to :store_type
+    enum store_type: { owned: 0, franchised: 1 }
 end

@@ -184,7 +184,7 @@ ActiveRecord::Schema.define(version: 2019_03_11_115658) do
   end
 
   create_table "stores", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.integer "store_type", comment: "モデル内でenum型に定義 0:直営店 1:FC店"
+    t.integer "store_type", default: 0, comment: "モデル内でenum型に定義 0:直営店 1:FC店"
     t.string "name"
     t.text "address"
     t.string "tel"
@@ -197,7 +197,7 @@ ActiveRecord::Schema.define(version: 2019_03_11_115658) do
 
   create_table "taxes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.float "rate"
-    t.boolean "is_default", comment: "このフラグが立っている税率がデフォルトになる"
+    t.boolean "is_default", default: false, null: false, comment: "このフラグが立っている税率がデフォルトになる"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

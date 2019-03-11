@@ -1,5 +1,5 @@
 class Staff < ApplicationRecord
-    belongs_to :staffs_skill
+    has_many :skill, through: :staffs_skill 
     belongs_to :store
     has_many :shift
     has_one :user
