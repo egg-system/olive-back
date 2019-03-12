@@ -2,7 +2,8 @@ class CreateShifts < ActiveRecord::Migration[5.1]
   def change
     create_table :shifts do |t|
       t.date :shift_date
-      t.references :store, foreign_key: true
+      # csvに列がないので、一旦コメントアウト
+      # t.references :store, foreign_key: true
       t.references :staff, foreign_key: true
       t.time :start_at
       t.time :end_at
