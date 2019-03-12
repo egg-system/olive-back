@@ -1,1 +1,0 @@
-MenuCategory.create()

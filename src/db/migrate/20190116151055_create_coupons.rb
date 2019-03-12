@@ -1,13 +1,12 @@
 class CreateCoupons < ActiveRecord::Migration[5.1]
   def change
     create_table :coupons do |t|
-      t.integer :coupon_id
       t.string :name
-      t.string :coupon_fee
-      t.integer :tax_id
-      t.integer :coupon_remaining
-      t.date :coupon_start_date
-      t.date :coupon_start_end
+      t.string :fee
+      t.integer :count, comment: '利用回数'
+      t.date :start_at
+      t.date :end_at
+      t.date :expired_at
 
       t.timestamps
     end

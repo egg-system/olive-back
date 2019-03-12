@@ -6,9 +6,12 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-unless Rails.env.production? || User.exists?
-  User.create(
-    email: 'admin@olive.example',
-    password: 'password'
-  )
+Dir.glob(File.join(Rails.root, 'db', 'seeds', '*.rb')) do |file|
+  load(file)
+end
+
+unless Rails.env.production?
+  Dir.glob(File.join(Rails.root, 'db', 'seeds', 'test', '*.rb')) do |file|
+    load(file)
+  end
 end

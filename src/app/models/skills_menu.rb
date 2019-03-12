@@ -1,0 +1,2 @@
+class SkillsMenu < ApplicationRecord
+end
