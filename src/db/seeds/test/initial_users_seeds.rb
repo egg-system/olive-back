@@ -2,7 +2,7 @@ require 'faker'
 
 unless Store.exists?
   3.times do
-    Store.create(
+    Store.create!(
       store_type: Faker::Number.between(0, 1),
       name: Faker::Company.name
     )
@@ -11,7 +11,7 @@ end
 
 unless Staff.exists?
   5.times do
-    Staff.create(
+    Staff.create!(
       store_id: Store.order("RAND()").first().id,
       first_name: Faker::Name.first_name, 
       last_name: Faker::Name.last_name
@@ -20,9 +20,17 @@ unless Staff.exists?
 end
 
 unless User.exists?
-  User.create(
+  # csvインポートのテストなどのため、名前を固定にしておく
+  staff = Staff.find_or_initialize_by(id: 1)
+  staff.update_attributes(
+    first_name: 'オリーブ', 
+    last_name: '管理者'
+  )
+  staff.save!
+
+  User.create!(
     role_id: Role.order("RAND()").first().id,
-    staff_id: Staff.order("RAND()").first().id,
+    staff_id: staff.id,
     email: 'email@olive.test',
     password: 'password'
   )
