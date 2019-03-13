@@ -31,7 +31,7 @@ unless User.exists?
   User.create!(
     role_id: Role.order("RAND()").first().id,
     staff_id: staff.id,
-    email: 'email@olive.test',
+    email: 'test@olive.test',
     password: 'password'
   )
 end

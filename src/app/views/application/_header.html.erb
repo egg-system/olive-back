@@ -9,10 +9,11 @@
             class="nav-link dropdown-toggle"  
             data-toggle="dropdown" 
           >
-            予約管理
+            シフト管理
           </a>
           <div class="dropdown-menu" aria-labelledby="shift-menu">
-            <%= link_to 'シフト管理', shifts_path, :class => "dropdown-item" %>
+            <%= link_to 'インポート', new_shift_path, :class => "dropdown-item" %>
+            <%= link_to '一覧', shifts_path, :class => "dropdown-item" %>
           </div>
         </li>
         <li class="nav-item">

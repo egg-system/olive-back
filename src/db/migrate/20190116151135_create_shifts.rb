@@ -1,12 +1,9 @@
 class CreateShifts < ActiveRecord::Migration[5.1]
   def change
     create_table :shifts do |t|
-      t.date :shift_date
-      # csvに列がないので、一旦コメントアウト
-      # t.references :store, foreign_key: true
+      t.date :date
+      t.references :store, foreign_key: true
       t.references :staff, foreign_key: true
-      t.time :start_at
-      t.time :end_at
       t.boolean :on_shift_10_to_11, comment: '10時~11時に施術可能か'
       t.boolean :on_shift_11_to_12, comment: '11時~12時に施術可能か'
       t.boolean :on_shift_12_to_13, comment: '12時~13時に施術可能か'

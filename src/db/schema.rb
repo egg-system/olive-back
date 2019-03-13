@@ -116,10 +116,9 @@ ActiveRecord::Schema.define(version: 2019_03_11_115658) do
   end
 
   create_table "shifts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.date "shift_date"
+    t.date "date"
+    t.bigint "store_id"
     t.bigint "staff_id"
-    t.time "start_at"
-    t.time "end_at"
     t.boolean "on_shift_10_to_11", comment: "10時~11時に施術可能か"
     t.boolean "on_shift_11_to_12", comment: "11時~12時に施術可能か"
     t.boolean "on_shift_12_to_13", comment: "12時~13時に施術可能か"
@@ -133,6 +132,7 @@ ActiveRecord::Schema.define(version: 2019_03_11_115658) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["staff_id"], name: "index_shifts_on_staff_id"
+    t.index ["store_id"], name: "index_shifts_on_store_id"
   end
 
   create_table "skills", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -229,6 +229,7 @@ ActiveRecord::Schema.define(version: 2019_03_11_115658) do
   add_foreign_key "menu_categories", "departments"
   add_foreign_key "menus", "menu_categories"
   add_foreign_key "shifts", "staffs"
+  add_foreign_key "shifts", "stores"
   add_foreign_key "skills_menus", "menus"
   add_foreign_key "skills_menus", "skills"
   add_foreign_key "staffs", "stores"
