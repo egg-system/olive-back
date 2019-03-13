@@ -1,0 +1,2 @@
+class Zoomancy < ApplicationRecord
+end

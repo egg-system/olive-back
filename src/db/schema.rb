@@ -29,7 +29,8 @@ ActiveRecord::Schema.define(version: 2019_03_11_115658) do
     t.string "first_kana"
     t.string "last_kana"
     t.string "tel"
-    t.string "mail", comment: "メールアドレス"
+    t.string "pc_mail"
+    t.string "phone_mail"
     t.boolean "can_receive_mail"
     t.date "birthday"
     t.string "zip_code"
@@ -40,7 +41,12 @@ ActiveRecord::Schema.define(version: 2019_03_11_115658) do
     t.text "comment"
     t.bigint "fitsrt_visit_store_id"
     t.bigint "last_visit_store_id"
+    t.date "first_visited_at"
     t.date "last_visited_at"
+    t.string "card_number", comment: "カルテの番号。紙媒体で管理しているため、外部キーなし"
+    t.string "introducer", comment: "紹介していただいた方の名前など"
+    t.string "searchd_by", comment: "web検索単語など"
+    t.boolean "has_registration_card", comment: "診察券を発行したかどうか"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["fitsrt_visit_store_id"], name: "index_customers_on_fitsrt_visit_store_id"
@@ -62,7 +68,6 @@ ActiveRecord::Schema.define(version: 2019_03_11_115658) do
   end
 
   create_table "menus", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.integer "store_id"
     t.string "name"
     t.text "description"
     t.integer "fee"
@@ -156,7 +161,7 @@ ActiveRecord::Schema.define(version: 2019_03_11_115658) do
     t.string "first_kana"
     t.string "last_kana"
     t.bigint "store_id", null: false
-    t.string "employment_type"
+    t.integer "employment_type", comment: "model内でenumにする。0:正社員, 1:契約社員, 2:パート・アルバイト"
     t.datetime "deleted_at"
     t.boolean "is_absenced"
     t.datetime "created_at", null: false
