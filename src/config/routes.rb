@@ -1,6 +1,11 @@
 Rails.application.routes.draw do
-  devise_for :users, controllers: {
-    sessions: 'users/sessions'
+  devise_for :customers, controllers: {
+    sessions: 'customers/sessions',
+    passwords: 'customers/passwords',
+    registrations: 'customers/registrations'
+  }
+  devise_for :staffs, controllers: {
+    sessions: 'staffs/sessions'
   }
   
   root to: 'dashboards#index'

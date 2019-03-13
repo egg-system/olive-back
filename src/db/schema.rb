@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_13_053634) do
+ActiveRecord::Schema.define(version: 2019_03_13_124119) do
 
   create_table "baby_ages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -61,11 +61,18 @@ ActiveRecord::Schema.define(version: 2019_03_13_053634) do
     t.bigint "size_id"
     t.bigint "visit_reason_id"
     t.bigint "nearest_station_id"
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
     t.index ["baby_age_id"], name: "index_customers_on_baby_age_id"
+    t.index ["email"], name: "index_customers_on_email", unique: true
     t.index ["first_visit_store_id"], name: "index_customers_on_first_visit_store_id"
     t.index ["job_type_id"], name: "index_customers_on_job_type_id"
     t.index ["last_visit_store_id"], name: "index_customers_on_last_visit_store_id"
     t.index ["nearest_station_id"], name: "index_customers_on_nearest_station_id"
+    t.index ["reset_password_token"], name: "index_customers_on_reset_password_token", unique: true
     t.index ["size_id"], name: "index_customers_on_size_id"
     t.index ["visit_reason_id"], name: "index_customers_on_visit_reason_id"
     t.index ["zoomancy_id"], name: "index_customers_on_zoomancy_id"
@@ -196,12 +203,21 @@ ActiveRecord::Schema.define(version: 2019_03_13_053634) do
     t.string "last_name"
     t.string "first_kana"
     t.string "last_kana"
-    t.bigint "store_id", null: false
+    t.bigint "store_id"
+    t.bigint "role_id"
     t.integer "employment_type", comment: "model内でenumにする。0:正社員, 1:契約社員, 2:パート・アルバイト"
     t.datetime "deleted_at"
     t.boolean "is_absenced"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "login", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.index ["login", "store_id"], name: "index_staffs_on_login_and_store_id", unique: true
+    t.index ["reset_password_token"], name: "index_staffs_on_reset_password_token", unique: true
+    t.index ["role_id"], name: "index_staffs_on_role_id"
     t.index ["store_id"], name: "index_staffs_on_store_id"
   end
 
@@ -242,22 +258,6 @@ ActiveRecord::Schema.define(version: 2019_03_13_053634) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "email", default: "", null: false
-    t.string "encrypted_password", default: "", null: false
-    t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "staff_id"
-    t.bigint "role_id"
-    t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
-    t.index ["role_id"], name: "index_users_on_role_id"
-    t.index ["staff_id"], name: "index_users_on_staff_id"
-  end
-
   create_table "visit_reasons", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -291,11 +291,10 @@ ActiveRecord::Schema.define(version: 2019_03_13_053634) do
   add_foreign_key "shifts", "stores"
   add_foreign_key "skills_menus", "menus"
   add_foreign_key "skills_menus", "skills"
+  add_foreign_key "staffs", "roles"
   add_foreign_key "staffs", "stores"
   add_foreign_key "staffs_skills", "skills"
   add_foreign_key "staffs_skills", "staffs"
   add_foreign_key "store_menus", "menus"
   add_foreign_key "store_menus", "stores"
-  add_foreign_key "users", "roles"
-  add_foreign_key "users", "staffs"
 end
