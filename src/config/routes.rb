@@ -12,5 +12,9 @@ Rails.application.routes.draw do
   get 'dashboards/index'
   
   resources :shifts, only: [:index, :new, :create, :update]
+
+  namespace :api do 
+    resources :stores, path: :shops, only: [:show]
+  end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
