@@ -243,7 +243,10 @@ ActiveRecord::Schema.define(version: 2019_03_13_124119) do
     t.string "tel"
     t.string "mail"
     t.text "url"
-    t.text "infomation"
+    t.integer "open_at"
+    t.integer "close_at"
+    t.integer "break_from"
+    t.integer "break_to"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
