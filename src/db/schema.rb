@@ -52,6 +52,7 @@ ActiveRecord::Schema.define(version: 2019_03_13_053634) do
     t.string "introducer", comment: "紹介していただいた方の名前など"
     t.string "searchd_by", comment: "web検索単語など"
     t.boolean "has_registration_card", comment: "診察券を発行したかどうか"
+    t.integer "children_count", comment: "お子様の数。その他やdefault値にあたるものはnullにする"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "job_type_id"

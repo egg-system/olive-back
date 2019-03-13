@@ -24,6 +24,7 @@ class CreateCustomers < ActiveRecord::Migration[5.1]
       t.string :introducer, comment: '紹介していただいた方の名前など'
       t.string :searchd_by, comment: 'web検索単語など'
       t.boolean :has_registration_card, comment: '診察券を発行したかどうか'
+      t.integer :children_count, null: true, comment: 'お子様の数。その他やdefault値にあたるものはnullにする'
 
       t.timestamps
     end
