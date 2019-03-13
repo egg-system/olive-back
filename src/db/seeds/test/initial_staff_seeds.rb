@@ -16,7 +16,7 @@ unless Staff.exists?
       role_id: Role.order("RAND()").first().id,
       first_name: Faker::Name.first_name, 
       last_name: Faker::Name.last_name,
-      login: 'test#{index}',
+      login: "test#{index}",
       password: 'password'
     )
   end

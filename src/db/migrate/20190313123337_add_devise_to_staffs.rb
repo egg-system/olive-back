@@ -7,9 +7,9 @@ class AddDeviseToStaffs < ActiveRecord::Migration[5.2]
       t.string :login,              null: false, default: ""
       t.string :encrypted_password, null: false, default: ""
 
-      ## Recoverable
-      t.string   :reset_password_token
-      t.datetime :reset_password_sent_at
+      # ## Recoverable
+      # t.string   :reset_password_token
+      # t.datetime :reset_password_sent_at
 
       ## Rememberable
       t.datetime :remember_created_at
@@ -38,7 +38,7 @@ class AddDeviseToStaffs < ActiveRecord::Migration[5.2]
     end
 
     add_index :staffs, [:login, :store_id], unique: true
-    add_index :staffs, :reset_password_token, unique: true
+    # add_index :staffs, :reset_password_token, unique: true
     # add_index :staffs, :confirmation_token,   unique: true
     # add_index :staffs, :unlock_token,         unique: true
   end

@@ -212,11 +212,8 @@ ActiveRecord::Schema.define(version: 2019_03_13_124119) do
     t.datetime "updated_at", null: false
     t.string "login", default: "", null: false
     t.string "encrypted_password", default: "", null: false
-    t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
     t.index ["login", "store_id"], name: "index_staffs_on_login_and_store_id", unique: true
-    t.index ["reset_password_token"], name: "index_staffs_on_reset_password_token", unique: true
     t.index ["role_id"], name: "index_staffs_on_role_id"
     t.index ["store_id"], name: "index_staffs_on_store_id"
   end
