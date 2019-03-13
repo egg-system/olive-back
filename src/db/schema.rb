@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_13_053318) do
+ActiveRecord::Schema.define(version: 2019_03_13_053634) do
 
   create_table "baby_ages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -44,7 +44,7 @@ ActiveRecord::Schema.define(version: 2019_03_13_053318) do
     t.text "address"
     t.boolean "has_membership"
     t.text "comment"
-    t.bigint "fitsrt_visit_store_id"
+    t.bigint "first_visit_store_id"
     t.bigint "last_visit_store_id"
     t.date "first_visited_at"
     t.date "last_visited_at"
@@ -54,8 +54,20 @@ ActiveRecord::Schema.define(version: 2019_03_13_053318) do
     t.boolean "has_registration_card", comment: "診察券を発行したかどうか"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["fitsrt_visit_store_id"], name: "index_customers_on_fitsrt_visit_store_id"
+    t.bigint "job_type_id"
+    t.bigint "zoomancy_id"
+    t.bigint "baby_age_id"
+    t.bigint "size_id"
+    t.bigint "visit_reason_id"
+    t.bigint "nearest_station_id"
+    t.index ["baby_age_id"], name: "index_customers_on_baby_age_id"
+    t.index ["first_visit_store_id"], name: "index_customers_on_first_visit_store_id"
+    t.index ["job_type_id"], name: "index_customers_on_job_type_id"
     t.index ["last_visit_store_id"], name: "index_customers_on_last_visit_store_id"
+    t.index ["nearest_station_id"], name: "index_customers_on_nearest_station_id"
+    t.index ["size_id"], name: "index_customers_on_size_id"
+    t.index ["visit_reason_id"], name: "index_customers_on_visit_reason_id"
+    t.index ["zoomancy_id"], name: "index_customers_on_zoomancy_id"
   end
 
   create_table "departments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -264,8 +276,14 @@ ActiveRecord::Schema.define(version: 2019_03_13_053318) do
     t.datetime "updated_at", null: false
   end
 
-  add_foreign_key "customers", "stores", column: "fitsrt_visit_store_id"
+  add_foreign_key "customers", "baby_ages"
+  add_foreign_key "customers", "job_types"
+  add_foreign_key "customers", "nearest_stations"
+  add_foreign_key "customers", "sizes"
+  add_foreign_key "customers", "stores", column: "first_visit_store_id"
   add_foreign_key "customers", "stores", column: "last_visit_store_id"
+  add_foreign_key "customers", "visit_reasons"
+  add_foreign_key "customers", "zoomancies"
   add_foreign_key "menu_categories", "departments"
   add_foreign_key "menus", "menu_categories"
   add_foreign_key "shifts", "staffs"
