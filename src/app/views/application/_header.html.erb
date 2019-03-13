@@ -1,7 +1,7 @@
 <nav class="navbar navbar-dark bg-primary navbar-expand">
   <%= link_to 'olive system', home_path, :class => 'navbar-brand' %>
   <div class="navbar-collapse">
-    <% if user_signed_in? %>  
+    <% if staff_signed_in? %>  
       <ul class="navbar-nav">
         <li class="nav-item dropdown">
           <a 
@@ -19,7 +19,7 @@
         <li class="nav-item">
           <%= 
             link_to 'ログアウト', 
-              destroy_user_session_path, 
+              destroy_staff_session_path, 
               method: :delete,
               :class => "nav-link" 
           %>
