@@ -10,7 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_11_115658) do
+ActiveRecord::Schema.define(version: 2019_03_13_053318) do
+
+  create_table "baby_ages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "coupons", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
@@ -59,6 +64,12 @@ ActiveRecord::Schema.define(version: 2019_03_11_115658) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "job_types", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "menu_categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
     t.bigint "department_id"
@@ -79,6 +90,12 @@ ActiveRecord::Schema.define(version: 2019_03_11_115658) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["menu_category_id"], name: "index_menus_on_menu_category_id"
+  end
+
+  create_table "nearest_stations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "pregnant_statuses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -138,6 +155,12 @@ ActiveRecord::Schema.define(version: 2019_03_11_115658) do
     t.datetime "updated_at", null: false
     t.index ["staff_id"], name: "index_shifts_on_staff_id"
     t.index ["store_id"], name: "index_shifts_on_store_id"
+  end
+
+  create_table "sizes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "skills", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -222,9 +245,21 @@ ActiveRecord::Schema.define(version: 2019_03_11_115658) do
     t.index ["staff_id"], name: "index_users_on_staff_id"
   end
 
+  create_table "visit_reasons", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "with_child_statuses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "with_child_status_id"
     t.text "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "zoomancies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
