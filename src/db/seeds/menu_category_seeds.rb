@@ -1,0 +1,7 @@
+MenuCategory.where(id: 1).first_or_create(menu_category_id:1, name:'整体・マッサージ', department_id:1)
+MenuCategory.where(id: 2).first_or_create(menu_category_id:2, name:'鍼灸', department_id:1)
+MenuCategory.where(id: 3).first_or_create(menu_category_id:3, name:'交通事故治療', department_id:1)
+MenuCategory.where(id: 4).first_or_create(menu_category_id:4, name:'不妊治療', department_id:1)
+MenuCategory.where(id: 5).first_or_create(menu_category_id:5, name:'エステ', department_id:2)
+MenuCategory.where(id: 6).first_or_create(menu_category_id:6, name:'ブライダルエステ', department_id:2)
+MenuCategory.where(id: 7).first_or_create(menu_category_id:7, name:'オプション', department_id:1)
