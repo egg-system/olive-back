@@ -11,6 +11,8 @@ services:
       - bundle-data:/usr/local/bundle
     depends_on:
       - mysql
+    tty: true
+    stdin_open: true
 
   mysql:
     image: mysql:5.7

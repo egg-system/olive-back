@@ -53,6 +53,9 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
 
   gem 'rails-erd'
+  
+  gem 'pry-rails'
+  gem 'pry-byebug'
 end
 
 group :test do
@@ -82,3 +85,5 @@ gem 'dotenv-rails'
 gem 'gretel'
 
 gem 'rails-i18n'
+
+gem 'activerecord-import'

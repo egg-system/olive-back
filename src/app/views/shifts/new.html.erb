@@ -1,0 +1,10 @@
+<h1>シフト登録</h1>
+
+<%= form_for @shift do |form| %>
+  <div class="field">
+    <%= form.file_field :shift_csv %>
+  </div>
+  <div class="actions">
+    <%= form.submit "登録" %>
+  </div>
+<% end %>
