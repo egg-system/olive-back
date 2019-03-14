@@ -1,0 +1,5 @@
+WithChildStatus.where(id: 1).first_or_create(with_child_status_id:1, name:'なし')
+WithChildStatus.where(id: 2).first_or_create(with_child_status_id:2, name:'1人')
+WithChildStatus.where(id: 3).first_or_create(with_child_status_id:3, name:'2人')
+WithChildStatus.where(id: 4).first_or_create(with_child_status_id:4, name:'3人')
+WithChildStatus.where(id: 5).first_or_create(with_child_status_id:5, name:'4人')

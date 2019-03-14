@@ -1,0 +1,1 @@
+Customer.where(id: 1).first_or_create(name:'システム管理者権限')
