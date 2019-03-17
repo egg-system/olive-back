@@ -1,0 +1,7 @@
+VisitHistory.where(id: 1).first_or_create(visit_history_id: 0, name:'')
+VisitHistory.where(id: 2).first_or_create(visit_history_id: 1, name:'広告・チラシ ')
+VisitHistory.where(id: 3).first_or_create(visit_history_id: 2, name:'看板・通りがかり ')
+VisitHistory.where(id: 4).first_or_create(visit_history_id: 3, name:'雑誌 ')
+VisitHistory.where(id: 5).first_or_create(visit_history_id: 4, name:'知人の紹介 ')
+VisitHistory.where(id: 6).first_or_create(visit_history_id: 5, name:'Web検索 ')
+VisitHistory.where(id: 7).first_or_create(visit_history_id: 99, name:'その他 ')
