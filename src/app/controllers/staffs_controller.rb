@@ -7,6 +7,7 @@ class StaffsController < ApplicationController
     @staffs = Staff.join_tables
     if params[:store_id].present?
       @staffs = @staffs.get_by_store params[:store_id]
+      @store_id = params[:store_id]
     end
     @stores = Store.all
   end
@@ -53,6 +54,15 @@ class StaffsController < ApplicationController
   # PATCH/PUT /staffs/1
   # PATCH/PUT /staffs/1.json
   def update
+    if params[:is_delete]
+      @staff.destroy
+      respond_to do |format|
+        format.html { redirect_to staffs_url, notice: "削除しました" }
+        format.json { head :no_content }
+      end
+      return
+    end
+
     respond_to do |format|
       begin
         @staff.update(staff_params)
@@ -70,7 +80,7 @@ class StaffsController < ApplicationController
   def destroy
     @staff.destroy
     respond_to do |format|
-      format.html { redirect_to staffs_url, notice: 'Staff was successfully destroyed.' }
+      format.html { redirect_to staffs_url, notice: "スタッフID:#{@staff.id}を削除しました" }
       format.json { head :no_content }
     end
   end

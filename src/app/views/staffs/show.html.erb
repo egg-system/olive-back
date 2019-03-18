@@ -35,7 +35,7 @@
       </tr>
     </tbody>
   </table>
-  <div class="delete-form"><%= form.label :is_delete, "削除"%><%= form.check_box :is_delete %></div>
+  <div class="delete-form"><%=label_tag :is_delete, "削除"%><%=check_box_tag :is_delete %></div>
 </div>
 <div class="right-container">
   <table>
@@ -43,7 +43,6 @@
       <tr>
         <th>雇用区分</th>
         <td><%=form.select :employment_type, options_for_select([["正社員", 0], ["契約社員", 1], ["パート・アルバイト", 2]], selected: @staff.employment_type), {}, {class: "form-control"}%></td>
-        <%=@staff.employment_type%>
       </tr>
       <% if current_staff.role_id == 1%>
       <tr>

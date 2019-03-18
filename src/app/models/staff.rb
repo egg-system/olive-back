@@ -1,4 +1,5 @@
 class Staff < ApplicationRecord
+  acts_as_paranoid
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :rememberable, 
@@ -26,7 +27,7 @@ class Staff < ApplicationRecord
   }
 
   scope :join_tables, ->{
-    select('*').join_store.join_role
+    select('staffs.*').join_store.join_role
   }
 
 end

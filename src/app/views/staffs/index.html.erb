@@ -10,7 +10,7 @@
         <tr>
         <th>所属店舗</th>
         <td>
-          <%= select_tag :store_id, options_for_select(@stores.collect{|store| [store.name, store.id]}), class: "form-control", prompt: "全店舗"%>
+          <%= select_tag :store_id, options_for_select(@stores.collect{|store| [store.name, store.id]}, selected: @store_id), class: "form-control", prompt: "全店舗"%>
         <td>
         </tr>
       </tbody>
@@ -45,7 +45,7 @@
         <td></td>
         <td></td>
         <td><%=staff.updated_at.strftime('%Y/%m/%d')%></td>
-        <td><%=link_to "詳細へ", staff_path(staff[:id])%></td>
+        <td><%=link_to "詳細へ", staff_path(staff.id)%></td>
       </tr>
     <%end%>
     </tbody>

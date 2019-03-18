@@ -88,4 +88,4 @@ gem 'rails-i18n'
 
 gem 'activerecord-import'
 
-gem 'ransack'
+gem "paranoia", "~> 2.2"
