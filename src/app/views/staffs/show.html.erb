@@ -42,12 +42,13 @@
     <tbody>
       <tr>
         <th>雇用区分</th>
-        <td></td>
+        <td><%=form.select :employment_type, options_for_select([["正社員", 0], ["契約社員", 1], ["パート・アルバイト", 2]], selected: @staff.employment_type), {}, {class: "form-control"}%></td>
+        <%=@staff.employment_type%>
       </tr>
       <% if current_staff.role_id == 1%>
       <tr>
         <th>システム利用権限</th>
-      <td><%= form.select :role_id, options_for_select(@roles.collect{|role| [role.name, role.id]}, selected: @staff.role_id), class: "form-control"%></td>
+      <td><%= form.select :role_id, options_for_select(@roles.collect{|role| [role.name, role.id]}, selected: @staff.role_id), {}, {class: "form-control"}%></td>
       </tr>
       <%end%>
     </tbody>
