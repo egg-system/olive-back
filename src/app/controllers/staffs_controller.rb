@@ -55,12 +55,7 @@ class StaffsController < ApplicationController
   # PATCH/PUT /staffs/1.json
   def update
     if params[:is_delete]
-      @staff.destroy
-      respond_to do |format|
-        format.html { redirect_to staffs_url, notice: "削除しました" }
-        format.json { head :no_content }
-      end
-      return
+      return self.destroy
     end
 
     respond_to do |format|
@@ -78,9 +73,10 @@ class StaffsController < ApplicationController
   # DELETE /staffs/1
   # DELETE /staffs/1.json
   def destroy
+    id = @staff.id
     @staff.destroy
     respond_to do |format|
-      format.html { redirect_to staffs_url, notice: "スタッフID:#{@staff.id}を削除しました" }
+      format.html { redirect_to staffs_url, notice: "スタッフID:#{id}を削除しました" }
       format.json { head :no_content }
     end
   end
