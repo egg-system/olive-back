@@ -1,4 +1,59 @@
-<p id="notice"><%= notice %></p>
-
-<%= link_to 'Edit', edit_staff_path(@staff) %> |
-<%= link_to 'Back', staffs_path %>
+<% breadcrumb :root %>
+<div id="staff_show">
+<h1>基本情報</h1>
+<%= form_with model: @staff do |form| %>
+<div class="left-container">
+  <table>
+    <tbody>
+      <tr>
+        <th scope="row">所属店舗</th>
+        <td><%= form.select :store_id, options_for_select(@stores.map{|store| [store.name, store.id]}, selected: @staff.store_id), {}, {class:"form-control"} %></td>
+      </tr>
+      <tr>
+        <th scope="row">氏名（姓）</th>
+        <td><%= form.text_field :last_name, value:@staff.last_name, class: "form-control"%></td>
+      </tr>
+      <tr>
+        <th scope="row">氏名（名）</th>
+        <td><%= form.text_field :first_name, value:@staff.first_name, class: "form-control"%></td>
+      </tr>
+      <tr>
+        <th scope="row">氏名（カナ）（姓）</th>
+        <td><%= form.text_field :last_kana, value:@staff.last_kana,  class: "form-control"%></td>
+      </tr>
+      <tr>
+        <th scope="row">氏名（カナ）（名）</th>
+        <td><%= form.text_field :first_kana, value:@staff.first_kana,  class: "form-control"%></td>
+      </tr>
+      <tr>
+        <th scope="row">保有スキル</th>
+        <td><%=form.collection_check_boxes :skill_ids, @skills, :id, :name, include_hidden: false %></td>
+      </tr>
+      <tr>
+        <th></th>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="delete-form"><%= form.label :is_delete, "削除"%><%= form.check_box :is_delete %></div>
+</div>
+<div class="right-container">
+  <table>
+    <tbody>
+      <tr>
+        <th>雇用区分</th>
+        <td></td>
+      </tr>
+      <% if current_staff.role_id == 1%>
+      <tr>
+        <th>システム利用権限</th>
+      <td><%= form.select :role_id, options_for_select(@roles.collect{|role| [role.name, role.id]}, selected: @staff.role_id), class: "form-control"%></td>
+      </tr>
+      <%end%>
+    </tbody>
+  </table>
+  <%=submit_tag "更新", {class: "btn btn-info btn-update"}%>
+</div>
+<% end %>
+<div class="clear"></div>
+</div>

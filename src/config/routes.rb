@@ -7,6 +7,11 @@ Rails.application.routes.draw do
   devise_for :staffs, controllers: {
     sessions: 'staffs/sessions'
   }
+  resources :staffs do
+    collection do
+      post :search
+    end
+  end
   
   root to: 'dashboards#index'
   get 'dashboards/index'
