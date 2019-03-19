@@ -16,7 +16,7 @@ default: &default
   database: <%= ENV.fetch('DATABASE_SCHEMA', 'db_olive') %>
   username: <%= ENV.fetch('DATABASE_USER', 'root') %>
   password: <%= ENV.fetch('DATABASE_PASSWORD', 'mysql') %>
-  host: <%= ENV.fetch('DATABASE_HOST', 'mysql') %>
+  host: mysql
 
 development:
   <<: *default
@@ -50,4 +50,4 @@ test:
 #
 production:
   <<: *default
-  host: mysql
+  host: <%= ENV.fetch('DATABASE_HOST', 'mysql') %>
