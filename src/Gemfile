@@ -87,3 +87,6 @@ gem 'gretel'
 gem 'rails-i18n'
 
 gem 'activerecord-import'
+
+# 本番環境でjsを動作させるため、必要
+gem 'mini_racer'
