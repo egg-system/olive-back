@@ -89,3 +89,5 @@ gem 'rails-i18n'
 gem 'activerecord-import'
 
 gem "paranoia", "~> 2.2"
+
+gem "solargraph"

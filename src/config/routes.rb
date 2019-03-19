@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   devise_for :staffs, controllers: {
     sessions: 'staffs/sessions'
   }
-  resources :staffs do
+  resources :staffs, only: [:index, :show, :create, :update, :new] do
     collection do
       post :search
     end

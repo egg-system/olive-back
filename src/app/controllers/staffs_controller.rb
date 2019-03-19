@@ -29,6 +29,9 @@ class StaffsController < ApplicationController
   # GET /staffs/new
   def new
     @staff = Staff.new
+    @stores = Store.all
+    @roles = Role.all
+    @skills = Skill.all 
   end
 
   # GET /staffs/1/edit
