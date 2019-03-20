@@ -4,8 +4,9 @@ class Customer < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable
 
-  belongs_to :first_visit_store
-  belongs_to :last_visit_store
+  belongs_to :first_visit_store, class_name: 'Store'
+  belongs_to :last_visit_store, class_name: 'Store'
+
   belongs_to :job_type, optional: true
   belongs_to :zoomancy, optional: true
   belongs_to :baby_age, optional: true

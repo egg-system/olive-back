@@ -1,4 +1,4 @@
 class SkillMenu < ApplicationRecord
-  belongs_to: :menu
-  belongs_to: :skill
+  belongs_to :menu
+  belongs_to :skill
 end
