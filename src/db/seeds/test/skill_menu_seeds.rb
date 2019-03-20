@@ -1,5 +1,0 @@
-SkillMenu.where(id: 1).first_or_create(staff_skill_id:1, staff_id:1, skill_id:2)
-SkillMenu.where(id: 2).first_or_create(staff_skill_id:2, staff_id:2, skill_id:1)
-SkillMenu.where(id: 3).first_or_create(staff_skill_id:3, staff_id:3, skill_id:2)
-SkillMenu.where(id: 4).first_or_create(staff_skill_id:4, staff_id:4, skill_id:1)
-SkillMenu.where(id: 5).first_or_create(staff_skill_id:5, staff_id:5, skill_id:2)
