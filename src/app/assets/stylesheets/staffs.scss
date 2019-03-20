@@ -37,54 +37,18 @@
   }
 }
 
-#staff_show {
-  width: 100%;
-  .left-container {
+.form-wrapper{
+  text-align: center;
+  margin: auto;
+  width: 90%;
+
+  .form-left{
     float: left;
-    width: 60%;
-    table{
-        width: 80%;
-      th {
-        width: 30%;
-      }
-      td {
-        width: 70%;
-      }
-    }
-
-    .delete-form {
-      margin-top: 20px;
-      label {
-        margin-right: 10px;
-        font-weight: bold;
-      }
-    }
+    width: 50%;
   }
-  .right-container {
-    float: left;
-    width: 40%;
-    th {
-      width: 30%;
-      padding-right: 10px;
-    }
-    td {
-      width: 70%;
-    }
 
-    .btn-update {
-      margin-top: 100px;
-      margin-left: 350px;
-      width: 100px;
-    }
+  .form-right{
+    float:left;
+    width:50%;
   }
-}
-
-#staff_new{
-    text-align: center;
-    table{
-        margin: auto;
-    }
-    .btn-create{
-        margin-top: 20px;
-    }
 }

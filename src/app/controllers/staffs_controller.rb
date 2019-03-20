@@ -1,5 +1,5 @@
 class StaffsController < ApplicationController
-  before_action :set_staff, only: [:show, :edit, :update, :destroy]
+  before_action :set_staff, only: [:show, :update, :destroy]
 
   # GET /staffs
   # GET /staffs.json
@@ -23,7 +23,7 @@ class StaffsController < ApplicationController
     @stores = Store.all
     @roles = Role.all
     @skills = Skill.all
-    @staff_skills = StaffsSkill.where({staff_id: params[:id]}).includes(:staff)
+    @staff_skills = StaffsSkill.where({staff_id: params[:id]})
   end
 
   # GET /staffs/new
@@ -31,23 +31,22 @@ class StaffsController < ApplicationController
     @staff = Staff.new
     @stores = Store.all
     @roles = Role.all
-    @skills = Skill.all 
-  end
-
-  # GET /staffs/1/edit
-  def edit
+    @skills = Skill.all
   end
 
   # POST /staffs
   # POST /staffs.json
   def create
     @staff = Staff.new(staff_params)
-
+    @stores = Store.all
+    @skills = Skill.all
+    @roles = Role.all
     respond_to do |format|
-      if @staff.save
+      begin
+       @staff.save!
         format.html { redirect_to @staff, notice: 'Staff was successfully created.' }
         format.json { render :show, status: :created, location: @staff }
-      else
+      rescue => exception
         format.html { render :new }
         format.json { render json: @staff.errors, status: :unprocessable_entity }
       end
@@ -63,7 +62,7 @@ class StaffsController < ApplicationController
 
     respond_to do |format|
       begin
-        @staff.update(staff_params)
+        @staff.update!(staff_params)
         format.html { redirect_to @staff, notice: '更新しました。' }
         format.json { render :show, status: :ok, location: @staff }
       rescue => exception

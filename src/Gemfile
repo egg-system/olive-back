@@ -91,3 +91,7 @@ gem 'activerecord-import'
 gem "paranoia", "~> 2.2"
 
 gem "solargraph"
+
+gem "simple_form"
+
+gem "config"
