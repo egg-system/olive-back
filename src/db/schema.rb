@@ -13,13 +13,14 @@
 ActiveRecord::Schema.define(version: 2019_03_13_124119) do
 
   create_table "baby_ages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "coupons", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
-    t.string "fee"
+    t.string "fee", comment: "税別料金"
     t.integer "count", comment: "利用回数"
     t.date "start_at"
     t.date "end_at"
@@ -55,12 +56,12 @@ ActiveRecord::Schema.define(version: 2019_03_13_124119) do
     t.integer "children_count", comment: "お子様の数。その他やdefault値にあたるものはnullにする"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "job_type_id"
-    t.bigint "zoomancy_id"
-    t.bigint "baby_age_id"
-    t.bigint "size_id"
-    t.bigint "visit_reason_id"
-    t.bigint "nearest_station_id"
+    t.bigint "occupation_id", comment: "職業"
+    t.bigint "zoomancy_id", comment: "動物占いの結果"
+    t.bigint "baby_age_id", comment: "赤ちゃんの年齢"
+    t.bigint "size_id", comment: "サイズ"
+    t.bigint "visit_reason_id", comment: "来店経緯"
+    t.bigint "nearest_station_id", comment: "最寄り駅"
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
@@ -69,9 +70,9 @@ ActiveRecord::Schema.define(version: 2019_03_13_124119) do
     t.index ["baby_age_id"], name: "index_customers_on_baby_age_id"
     t.index ["email"], name: "index_customers_on_email", unique: true
     t.index ["first_visit_store_id"], name: "index_customers_on_first_visit_store_id"
-    t.index ["job_type_id"], name: "index_customers_on_job_type_id"
     t.index ["last_visit_store_id"], name: "index_customers_on_last_visit_store_id"
     t.index ["nearest_station_id"], name: "index_customers_on_nearest_station_id"
+    t.index ["occupation_id"], name: "index_customers_on_occupation_id"
     t.index ["reset_password_token"], name: "index_customers_on_reset_password_token", unique: true
     t.index ["size_id"], name: "index_customers_on_size_id"
     t.index ["visit_reason_id"], name: "index_customers_on_visit_reason_id"
@@ -80,12 +81,6 @@ ActiveRecord::Schema.define(version: 2019_03_13_124119) do
 
   create_table "departments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.text "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "job_types", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -103,8 +98,8 @@ ActiveRecord::Schema.define(version: 2019_03_13_124119) do
     t.text "description"
     t.integer "fee"
     t.integer "service_minutes", comment: "施術時間(分)"
-    t.date "service_start_date"
-    t.date "service_end_date"
+    t.date "start_at"
+    t.date "end_at"
     t.bigint "menu_category_id"
     t.text "memo"
     t.datetime "created_at", null: false
@@ -118,8 +113,13 @@ ActiveRecord::Schema.define(version: 2019_03_13_124119) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "pregnant_statuses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.integer "pregnant_status_id"
+  create_table "occupations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "pregnant_states", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.text "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -183,19 +183,28 @@ ActiveRecord::Schema.define(version: 2019_03_13_124119) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "skills", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "skills_menus", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "skill_menus", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "skill_id"
     t.bigint "menu_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["menu_id"], name: "index_skills_menus_on_menu_id"
-    t.index ["skill_id"], name: "index_skills_menus_on_skill_id"
+    t.index ["menu_id"], name: "index_skill_menus_on_menu_id"
+    t.index ["skill_id"], name: "index_skill_menus_on_skill_id"
+  end
+
+  create_table "skill_staffs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "staff_id"
+    t.bigint "skill_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["skill_id"], name: "index_skill_staffs_on_skill_id"
+    t.index ["staff_id"], name: "index_skill_staffs_on_staff_id"
+  end
+
+  create_table "skills", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "staffs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -218,15 +227,6 @@ ActiveRecord::Schema.define(version: 2019_03_13_124119) do
     t.index ["store_id"], name: "index_staffs_on_store_id"
   end
 
-  create_table "staffs_skills", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.bigint "staff_id"
-    t.bigint "skill_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["skill_id"], name: "index_staffs_skills_on_skill_id"
-    t.index ["staff_id"], name: "index_staffs_skills_on_staff_id"
-  end
-
   create_table "store_menus", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "store_id"
     t.bigint "menu_id"
@@ -245,8 +245,6 @@ ActiveRecord::Schema.define(version: 2019_03_13_124119) do
     t.text "url"
     t.integer "open_at"
     t.integer "close_at"
-    t.integer "break_from"
-    t.integer "break_to"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -264,13 +262,6 @@ ActiveRecord::Schema.define(version: 2019_03_13_124119) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "with_child_statuses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.integer "with_child_status_id"
-    t.text "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "zoomancies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -278,8 +269,8 @@ ActiveRecord::Schema.define(version: 2019_03_13_124119) do
   end
 
   add_foreign_key "customers", "baby_ages"
-  add_foreign_key "customers", "job_types"
   add_foreign_key "customers", "nearest_stations"
+  add_foreign_key "customers", "occupations"
   add_foreign_key "customers", "sizes"
   add_foreign_key "customers", "stores", column: "first_visit_store_id"
   add_foreign_key "customers", "stores", column: "last_visit_store_id"
@@ -289,12 +280,12 @@ ActiveRecord::Schema.define(version: 2019_03_13_124119) do
   add_foreign_key "menus", "menu_categories"
   add_foreign_key "shifts", "staffs"
   add_foreign_key "shifts", "stores"
-  add_foreign_key "skills_menus", "menus"
-  add_foreign_key "skills_menus", "skills"
+  add_foreign_key "skill_menus", "menus"
+  add_foreign_key "skill_menus", "skills"
+  add_foreign_key "skill_staffs", "skills"
+  add_foreign_key "skill_staffs", "staffs"
   add_foreign_key "staffs", "roles"
   add_foreign_key "staffs", "stores"
-  add_foreign_key "staffs_skills", "skills"
-  add_foreign_key "staffs_skills", "staffs"
   add_foreign_key "store_menus", "menus"
   add_foreign_key "store_menus", "stores"
 end
