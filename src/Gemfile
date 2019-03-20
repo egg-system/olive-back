@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.6.0'
+ruby '2.6.1'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.2'
@@ -87,3 +87,6 @@ gem 'gretel'
 gem 'rails-i18n'
 
 gem 'activerecord-import'
+
+# 本番環境でjsを動作させるため、必要
+gem 'mini_racer'
