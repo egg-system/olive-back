@@ -10,12 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_13_124119) do
+ActiveRecord::Schema.define(version: 2019_03_20_130526) do
 
   create_table "baby_ages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "coupon_histories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "customer_id"
+    t.bigint "coupon_id"
+    t.date "used_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["coupon_id"], name: "index_coupon_histories_on_coupon_id"
+    t.index ["customer_id"], name: "index_coupon_histories_on_customer_id"
   end
 
   create_table "coupons", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -268,6 +278,8 @@ ActiveRecord::Schema.define(version: 2019_03_13_124119) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "coupon_histories", "coupons"
+  add_foreign_key "coupon_histories", "customers"
   add_foreign_key "customers", "baby_ages"
   add_foreign_key "customers", "nearest_stations"
   add_foreign_key "customers", "occupations"
