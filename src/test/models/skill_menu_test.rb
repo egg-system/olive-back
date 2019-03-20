@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class SkillsMenuTest < ActiveSupport::TestCase
+class SkillMenuTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end
