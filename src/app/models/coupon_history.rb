@@ -1,0 +1,2 @@
+class CouponHistory < ApplicationRecord
+end

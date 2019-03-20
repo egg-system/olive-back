@@ -9,8 +9,6 @@ class CreateStores < ActiveRecord::Migration[5.1]
       t.text :url
       t.integer :open_at
       t.integer :close_at
-      t.integer :break_from
-      t.integer :break_to
       t.timestamps
     end
   end
