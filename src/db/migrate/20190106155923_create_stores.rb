@@ -9,6 +9,8 @@ class CreateStores < ActiveRecord::Migration[5.1]
       t.text :url
       t.integer :open_at
       t.integer :close_at
+      t.integer :break_to, cooment: '休憩の開始時間'
+      t.integer :break_from, comment: '休憩の終了時間'
       t.timestamps
     end
   end
