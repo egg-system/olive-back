@@ -1,17 +1,16 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
-
-Dir.glob(File.join(Rails.root, 'db', 'seeds', '*.rb')) do |file|
-  load(file)
+# 本番データ投入用のseeder
+ActiveRecord::Base.transaction do
+  Dir.glob(File.join(Rails.root, 'db', 'seeds', '*.rb')) do |file|
+    load(file)
+  end
 end
 
-unless Rails.env.production?
-  Dir.glob(File.join(Rails.root, 'db', 'seeds', 'test', '*.rb')) do |file|
-    load(file)
+# テストデータ用のseeder 本番でも実行させたい場合は環境変数を渡して、実行する
+doSeed = ENV.fetch('PREVENT_SEED_TEST_DATA', 1) === 0
+ActiveRecord::Base.transaction do
+  unless Rails.env.production? && doSeed
+    Dir.glob(File.join(Rails.root, 'db', 'seeds', 'test', '*.rb')) do |file|
+      load(file)
+    end
   end
 end

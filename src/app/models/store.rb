@@ -9,8 +9,8 @@ class Store < ApplicationRecord
   
   SHOP_KEYS = [ :id, :name, :open_at, :close_at, :break_from, :break_to ]
   def shop_attributes
-    attributes.select { |key, value|
-      SHOP_KEYS.include?(key.to_sym)
-    }.to_json
+    SHOP_KEYS.map { |json_key|
+      [json_key, attributes[json_key.to_s]]
+    }.to_h.to_json
   end
 end

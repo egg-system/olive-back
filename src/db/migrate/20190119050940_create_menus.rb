@@ -5,8 +5,8 @@ class CreateMenus < ActiveRecord::Migration[5.1]
       t.text :description
       t.integer :fee
       t.integer :service_minutes, comment: '施術時間(分)'
-      t.date :service_start_date
-      t.date :service_end_date
+      t.date :start_at
+      t.date :end_at
       t.references :menu_category, foreign_key: true
       t.text :memo
 
