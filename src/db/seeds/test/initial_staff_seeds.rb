@@ -1,4 +1,4 @@
-require 'faker'
+#require 'faker'
 
 # csvインポートのテストなどのため、名前を固定にしておく
 staff = Staff.find_or_initialize_by(id: 1)
