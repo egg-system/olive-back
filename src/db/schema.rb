@@ -255,7 +255,7 @@ ActiveRecord::Schema.define(version: 2019_03_20_130526) do
     t.text "url"
     t.integer "open_at"
     t.integer "close_at"
-    t.integer "break_from"
+    t.integer "break_from", comment: "休憩の開始時間"
     t.integer "break_to", comment: "休憩の終了時間"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
