@@ -13,7 +13,7 @@ class CustomersController < ApplicationController
     @customer = Customer.join_tables.find(params[:id])
     @customer.age = (Date.today.strftime('%Y%m%d').to_i - @customer.birthday.strftime('%Y%m%d').to_i) / 10000
     @stores = Store.all
-    @reservation = Reservation.where({customer_id: params[:id]}).join_staffjjj
+    @reservation = Reservation.where({customer_id: params[:id]}).join_staff
   end
 
   # GET /customers/new
