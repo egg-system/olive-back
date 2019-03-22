@@ -1,3 +1,27 @@
 <% breadcrumb :root %>
 <h1>基本情報</h1>
 <%=render "form"%>
+<table class="table">
+    <thead class="thead-light">
+        <tr>
+            <th scope="col">予約日時</th>
+            <th scope="col">来店店舗</th>
+            <th scope="col">メニュー</th>
+            <th scope="col">担当者</th>
+            <th scope="col">売上金額</th>
+            <th scope="col">キャンセル有無</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% @reservations.each do |reservation|%>
+        <tr>
+            <td><%=reservation.reservation_date%></td>
+            <td></td>
+            <td></td>
+            <td><%=reservation.staff_name%></td>
+            <td><%=reservation.total_fee%></td>
+            <td><%=(reservation.cancel_flg)? "有": "無"%></td>
+        </tr>
+        <%end%>
+    </tbody>
+</table>
