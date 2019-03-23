@@ -23,12 +23,12 @@ class StaffsController < ApplicationController
     @stores = Store.all
     @roles = Role.all
     @skills = Skill.all
-    @staff_skills = SkillStaff.where({staff_id: params[:id]})
   end
 
   # GET /staffs/new
   def new
     @staff = Staff.new
+    @staff.build_skill_staff
     @stores = Store.all
     @roles = Role.all
     @skills = Skill.all
@@ -91,7 +91,7 @@ class StaffsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def staff_params
-      params.require(:staff).permit(:first_name, :last_name, :first_kana, :last_kana, :store_id, :employment_type, :role_id, {:skill_ids => []})
+      params.require(:staff).permit(:first_name, :last_name, :first_kana, :last_kana, :store_id, :employment_type, :role_id, :skill_staff_attributes => [:skill_id])
     end
 
 end
