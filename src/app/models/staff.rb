@@ -5,12 +5,12 @@ class Staff < ApplicationRecord
   devise :database_authenticatable, :rememberable, 
     authentication_keys: [:login, :store_id]
 
-  has_many :staffs_skill
-  has_many :skill, through: :staffs_skill 
+  has_many :skill_staff
+  has_many :skill, through: :skill_staff 
   belongs_to :store
   has_many :shift
   belongs_to :role
-  accepts_nested_attributes_for :staffs_skill
+  accepts_nested_attributes_for :skill_staff
 
 
   #店舗idによる絞り込み

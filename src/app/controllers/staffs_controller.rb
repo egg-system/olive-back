@@ -23,7 +23,7 @@ class StaffsController < ApplicationController
     @stores = Store.all
     @roles = Role.all
     @skills = Skill.all
-    @staff_skills = StaffsSkill.where({staff_id: params[:id]})
+    @staff_skills = SkillStaff.where({staff_id: params[:id]})
   end
 
   # GET /staffs/new
