@@ -38,19 +38,28 @@ class StaffsController < ApplicationController
   # POST /staffs.json
   def create
     @staff = Staff.new(staff_params)
+    @staff.login = SecureRandom.alphanumeric(8)
+    @staff.password = SecureRandom.alphanumeric()
     @stores = Store.all
     @skills = Skill.all
     @roles = Role.all
     respond_to do |format|
       begin
-       @staff.save!
+        @staff.save!
         format.html { redirect_to @staff, notice: 'Staff was successfully created.' }
         format.json { render :show, status: :created, location: @staff }
+        return  self.created(@staff.login, @staff.password)
       rescue => exception
         format.html { render :new }
         format.json { render json: @staff.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def created(login, password)
+    @login = login
+    @password = password
+      render template: "staffs/created"
   end
 
   # PATCH/PUT /staffs/1
