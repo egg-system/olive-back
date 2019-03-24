@@ -23,6 +23,7 @@ class StaffsController < ApplicationController
     @stores = Store.all
     @roles = Role.all
     @skills = Skill.all
+    @staff_skills = SkillStaff.where({staff_id: params[:id]})
   end
 
   # GET /staffs/new
@@ -44,20 +45,13 @@ class StaffsController < ApplicationController
     respond_to do |format|
       begin
         @staff.save!
-        format.html { redirect_to @staff, notice: 'Staff was successfully created.' }
+        format.html { redirect_to @staff, notice: '新規Staffが作成されました。' }
         format.json { render :show, status: :created, location: @staff }
-        return  self.created(@staff.login, @staff.password)
       rescue => exception
-        format.html { render :new }
+        format.html { redirect_to :new_staff , notice: 'Staffの新規作成に失敗しました。'  }
         format.json { render json: @staff.errors, status: :unprocessable_entity }
       end
     end
-  end
-
-  def created(login, password)
-    @login = login
-    @password = password
-      render template: "staffs/created"
   end
 
   # PATCH/PUT /staffs/1
@@ -98,7 +92,7 @@ class StaffsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def staff_params
-      params.require(:staff).permit(:first_name, :last_name, :first_kana, :last_kana, :store_id, :employment_type, :role_id, :login, :password, :skill_staff_attributes => [:skill_id])
+      params.require(:staff).permit(:first_name, :last_name, :first_kana, :last_kana, :store_id, :employment_type, :role_id, :login, :password, {skill_ids: []})
     end
 
 end

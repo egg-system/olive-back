@@ -33,7 +33,7 @@ class CustomersController < ApplicationController
 
     respond_to do |format|
       if @customer.save
-        format.html { redirect_to @customer, notice: 'Customer was successfully created.' }
+        format.html { redirect_to @customer, notice: '新規作成しました。' }
         format.json { render :show, status: :created, location: @customer }
       else
         format.html { render :new }
@@ -50,7 +50,7 @@ class CustomersController < ApplicationController
         format.html { redirect_to @customer, notice: '更新しました。' }
         format.json { render :show, status: :ok, location: @customer }
       else
-        format.html { render :edit }
+        format.html { redirect_to :show, location: @customer }
         format.json { render json: @customer.errors, status: :unprocessable_entity }
       end
     end
@@ -61,7 +61,7 @@ class CustomersController < ApplicationController
   def destroy
     @customer.destroy
     respond_to do |format|
-      format.html { redirect_to customers_url, notice: 'Customer was successfully destroyed.' }
+      format.html { redirect_to @customer, notice: 'Customer was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

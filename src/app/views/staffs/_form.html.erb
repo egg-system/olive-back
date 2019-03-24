@@ -18,10 +18,8 @@
     <%= f.input :first_name, label: '氏名（名）'%>
     <%= f.input :last_kana, label: '氏名（カナ）（姓）'%>
     <%= f.input :first_kana, label: '氏名（カナ）（名）'%>
-    <%= f.fields_for :skill_staff do |skill_staff_f|%>
-    <%= skill_staff_f.input :skill_staff_attributes, as: :check_boxes, wrapper: :horizontal_collection_inline, 
-            collection: @skills.map{|skill| [skill.name, skill.id]}, label: '保有スキル', checked: @staff_skills.present? ? @staff_skills.map{|item| item.skill_id} : []%>
-    <%end%>
+    <%= f.input :skill_ids, as: :check_boxes, wrapper: :horizontal_collection_inline, 
+            collection: @skills.map{|skill| [skill.name, skill.id]}, label: '保有スキル', checked: @staff_skills.present? ? @staff_skills.map{|item| item.skill_id} : [], include_hidden: false%>
     <% if request.path_info != new_staff_path %>
     <div class="delete-form"><%=label_tag :is_delete, "削除"%><%=check_box_tag :is_delete %></div>
     <%end%>
@@ -32,13 +30,13 @@
     <%= f.input :role_id, as: :select, collection: @roles.map{|role| [role.name, role.id]}, label: 'システム利用権限', default: 0%>
     <%end%>
     <% if request.path_info == new_staff_path%>
-      <%=f.input :login, label: "ログインID"%>
-      <%=f.input :password, label: "パスワード"%>
+    <%=f.input :login, label: "ログインID"%>
+    <%=f.input :password, label: "パスワード"%>
     <%end%>
-        <div>
-        <%= f.button :submit, class: 'btn btn-primary'%>
-        <%= link_to '戻る', staffs_path, class: 'btn' %>
-        <div>
+    <div>
+      <%= f.button :submit, class: 'btn btn-primary'%>
+      <%= link_to '戻る', staffs_path, class: 'btn' %>
     </div>
-<% end %>
+  </div>
+  <% end %>
 </div>
