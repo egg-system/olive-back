@@ -28,7 +28,7 @@ class StaffsController < ApplicationController
   # GET /staffs/new
   def new
     @staff = Staff.new
-    @staff.build_skill_staff
+    @staff.skill_staff.build
     @stores = Store.all
     @roles = Role.all
     @skills = Skill.all
@@ -38,8 +38,6 @@ class StaffsController < ApplicationController
   # POST /staffs.json
   def create
     @staff = Staff.new(staff_params)
-    @staff.login = SecureRandom.alphanumeric(8)
-    @staff.password = SecureRandom.alphanumeric()
     @stores = Store.all
     @skills = Skill.all
     @roles = Role.all
@@ -100,7 +98,7 @@ class StaffsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def staff_params
-      params.require(:staff).permit(:first_name, :last_name, :first_kana, :last_kana, :store_id, :employment_type, :role_id, :skill_staff_attributes => [:skill_id])
+      params.require(:staff).permit(:first_name, :last_name, :first_kana, :last_kana, :store_id, :employment_type, :role_id, :login, :password, :skill_staff_attributes => [:skill_id])
     end
 
 end

@@ -5,8 +5,8 @@ class Staff < ApplicationRecord
   devise :database_authenticatable, :rememberable, 
     authentication_keys: [:login, :store_id]
 
-  has_one :skill_staff
-  has_one :skill, through: :skill_staff 
+  has_many :skill_staff
+  has_many :skill, through: :skill_staff 
   belongs_to :store
   has_many :shift
   belongs_to :role
