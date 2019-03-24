@@ -12,7 +12,7 @@
         <%= f.input :last_kana, label: '氏名(カナ)(姓)'%>
         <%= f.input :first_kana, label: '氏名(カナ)(名)'%>
         <%= f.input :tel, label: '電話番号'%>
-        <%= f.input :pc_mail, label: 'メールアドレス1'%>
+        <%= f.input :pc_mail, label: 'PCメールアドレス'%>
         <%= f.input :can_receive_mail, as: :radio_buttons, wrapper: :horizontal_collection_inline, 
             collection: [["受け取る", true], ["受け取らない", false]], label: 'メール受け取り', checked: @customer.can_receive_mail%>
         <%= f.input :first_visit_store_id, as: :select, collection: @stores.map{|store| [store.name, store.id]}, label: '初回来店店舗', default: @customer.first_visit_store_id%>
@@ -24,10 +24,14 @@
         <%= f.input :zip_code, label: '郵便番号'%>
         <%= f.input :address, label: '住所'%>
         <%= f.input :birthday, label: '生年月日', wrapper: :horizontal_multi_select%>
-        <% if request.path_info != new_staff_path %>
+        <% if request.path_info != new_customer_path %>
         <%= f.input :age, label: '年齢', readonly: true%>
         <%end%>
-        <%= f.input :phone_mail, label: 'メールアドレス2'%>
+        <%= f.input :phone_mail, label: '携帯アドレス'%>
+        <%= f.input :email, label: 'emailアドレス'%>
+        <% if request.path_info == new_customer_path %>
+        <%= f.input :password, label: 'パスワード'%>
+        <%end%>
         <%= f.button :submit, class: 'btn btn-primary'%>
         <%= link_to '戻る', customers_path, class: 'btn' %>
         <% end %>

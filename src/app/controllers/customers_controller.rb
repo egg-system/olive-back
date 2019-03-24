@@ -32,10 +32,11 @@ class CustomersController < ApplicationController
     @customer = Customer.new(customer_params)
 
     respond_to do |format|
-      if @customer.save
+      begin
+        @customer.save!
         format.html { redirect_to @customer, notice: '新規作成しました。' }
         format.json { render :show, status: :created, location: @customer }
-      else
+      rescue => exception
         format.html { render :new }
         format.json { render json: @customer.errors, status: :unprocessable_entity }
       end
@@ -46,10 +47,11 @@ class CustomersController < ApplicationController
   # PATCH/PUT /customers/1.json
   def update
     respond_to do |format|
-      if @customer.update(customer_params)
+      begin
+        @customer.update!(customer_params)
         format.html { redirect_to @customer, notice: '更新しました。' }
         format.json { render :show, status: :ok, location: @customer }
-      else
+      rescue => exception
         format.html { redirect_to :show, location: @customer }
         format.json { render json: @customer.errors, status: :unprocessable_entity }
       end
