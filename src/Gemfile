@@ -56,6 +56,8 @@ group :development do
   
   gem 'pry-rails'
   gem 'pry-byebug'
+
+  gem "solargraph"
 end
 
 group :test do
@@ -84,16 +86,19 @@ gem 'dotenv-rails'
 # パンくず描画
 gem 'gretel'
 
+# 国際化
 gem 'rails-i18n'
 
+# bulk-insert用
 gem 'activerecord-import'
 
+# 論理削除用
 gem "paranoia", "~> 2.2"
 
-gem "solargraph"
-
+# フォームの生成
 gem "simple_form"
 
+# 定数の設定用
 gem "config"
 
 # 本番環境でjsを動作させるため、必要
