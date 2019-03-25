@@ -18,6 +18,20 @@
         </li>
         <li class="nav-item">
           <%= 
+            link_to 'スタッフ管理', 
+              staffs_path, 
+              :class => "nav-link" 
+          %>
+        </li>
+        <li class="nav-item">
+          <%= 
+            link_to '顧客管理', 
+              customers_path, 
+              :class => "nav-link" 
+          %>
+        </li>
+        <li class="nav-item">
+          <%= 
             link_to 'ログアウト', 
               destroy_staff_session_path, 
               method: :delete,

@@ -1,4 +1,5 @@
 class Customer < ApplicationRecord
+  attr_accessor :age
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -13,4 +14,13 @@ class Customer < ApplicationRecord
   belongs_to :size, optional: true
   belongs_to :visit_reason, optional: true
   belongs_to :nearest_station, optional: true
+
+  #left join
+  scope :join_size, ->{
+    left_joins(:size).select("sizes.name as size_name")
+  }
+
+  scope :join_tables, ->{
+    select('customers.*').join_size
+  }
 end

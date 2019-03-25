@@ -88,5 +88,13 @@ gem 'rails-i18n'
 
 gem 'activerecord-import'
 
+gem "paranoia", "~> 2.2"
+
+gem "solargraph"
+
+gem "simple_form"
+
+gem "config"
+
 # 本番環境でjsを動作させるため、必要
 gem 'mini_racer'

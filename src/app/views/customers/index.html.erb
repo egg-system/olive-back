@@ -1,0 +1,45 @@
+<% breadcrumb :root %>
+<div id="staff_index">
+<h1>顧客一覧</h1>
+<div class="upper-frame">
+  <h4>検索条件入力</h4>
+  <div class="condition-section">
+    <%= form_with url: search_customers_path, id:"search", method: :post do |form| %>
+    <table>
+      <tbody>
+      </tbody>
+    </table>
+    <%end%>
+  </div>
+  <div class="button-section">
+    <%=link_to "新規登録へ", new_customer_path, {class: "btn btn-primary btn-new"}%>
+    <%=submit_tag "検索実行", {class: "btn btn-info btn-search", form: "search"}%>
+  </div>
+  <div class="clear"></div>
+</div>
+<div class="lower-frame">
+  <table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">顧客ID</th>
+        <th scope="col">氏名</th>
+        <th scope="col">住所</th>
+        <th scope="col">個性</th>
+        <th scope="col">サイズ</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+    <% @customers.each do |customer|%>
+      <tr>
+        <td scope="row"><%=customer.id%></td>
+        <td><%=customer.last_name + customer.first_name%></td>
+        <td><%=customer.address%></td>
+        <td><%=customer.size_name%></td>
+        <td><%=link_to "詳細へ", customer_path(customer.id)%></td>
+      </tr>
+    <%end%>
+    </tbody>
+  </table>
+</div>
+</div>
