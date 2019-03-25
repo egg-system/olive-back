@@ -15,6 +15,13 @@ module Src
     config.time_zone = 'Tokyo'
     config.active_record.time_zone_aware_types = [:datetime, :time]
 
+    # apiに対する対応
+    config.action_dispatch.default_headers = {
+      'Access-Control-Allow-Credentials' => 'true',
+      'Access-Control-Allow-Origin' => ENV.fetch('RESERVATION_CLIENT_DOMAIN', nil),
+      'Access-Control-Request-Method' => '*'
+    }
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded after loading
