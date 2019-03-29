@@ -25,7 +25,9 @@ Rails.application.routes.draw do
   resources :shifts, only: [:index, :new, :create, :update]
 
   namespace :api do 
-    resources :stores, path: :shops, only: [:show]
+    get 'shops(/:id)', to: 'stores#shop'
+    get 'shops(/:id)/menus', to: 'stores#menus'
+    get 'shops(/:id)/dates', to: 'stores#dates'
   end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
