@@ -45,7 +45,6 @@ ActiveRecord::Schema.define(version: 2019_03_20_130526) do
     t.string "first_kana"
     t.string "last_kana"
     t.string "tel"
-    t.string "mail", null: false, comment: "wordpress管理のメールアドレス"
     t.string "pc_mail", comment: "pcメール。fileMakerから移行"
     t.string "phone_mail", comment: "携帯メール。fileMakerから移行"
     t.boolean "can_receive_mail"
