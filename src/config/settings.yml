@@ -6,3 +6,7 @@ employment_type:
 patient_card:
   - 未
   - 済
+
+stores:
+  head_store_id: 1
+  head_este_store_id: 2
