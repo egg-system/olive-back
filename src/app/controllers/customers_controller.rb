@@ -5,6 +5,13 @@ class CustomersController < ApplicationController
   # GET /customers.json
   def index
     @customers = Customer.all.join_tables
+    if params[:name].present?
+      @customers = @customers.like_name(params[:name])
+    end
+  end
+
+  def search
+    redirect_to customers_path(name: params[:name])
   end
 
   # GET /customers/1

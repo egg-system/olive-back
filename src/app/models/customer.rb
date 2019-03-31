@@ -23,4 +23,8 @@ class Customer < ApplicationRecord
   scope :join_tables, ->{
     select('customers.*').join_size
   }
+
+  scope :like_name, ->(name){
+    where("concat(last_name, first_name) like ?", "%#{name}%")
+  }
 end
