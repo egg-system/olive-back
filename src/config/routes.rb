@@ -19,7 +19,8 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :roles, only: [:index, :show, :create, :update, :new, :destroy]
+  resources :roles
+  resources :skills
   
   root to: 'dashboards#index'
   get 'dashboards/index'
