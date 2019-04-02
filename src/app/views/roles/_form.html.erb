@@ -1,0 +1,6 @@
+<%= simple_form_for(@role) do |f| %>
+<%=f.input :id, label: "id", readonly: true%>
+<%=f.input :name, label: "name"%>
+<%= f.button :submit, class: 'btn btn-primary'%>
+<%= link_to '戻る', roles_path, class: 'btn' %>
+<% end %>

@@ -18,6 +18,8 @@ Rails.application.routes.draw do
       post :search
     end
   end
+
+  resources :roles, only: [:index, :show, :create, :update, :new, :destroy]
   
   root to: 'dashboards#index'
   get 'dashboards/index'
