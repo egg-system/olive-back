@@ -50,10 +50,17 @@ class RolesController < ApplicationController
   # DELETE /roles/1
   # DELETE /roles/1.json
   def destroy
-    @role.destroy
-    respond_to do |format|
-      format.html { redirect_to roles_url, notice: 'Role was successfully destroyed.' }
-      format.json { head :no_content }
+    begin
+      @role.destroy!
+      respond_to do |format|
+        format.html { redirect_to roles_url, notice: 'Role was successfully destroyed.' }
+        format.json { head :no_content }
+      end
+    rescue => exception
+      respond_to do |format|
+        format.html { redirect_to role_url(@role.id), notice: 'すでに利用されているため、削除できません' }
+        format.json { render json: @role.errors, status: :unprocessable_entity }
+      end 
     end
   end
 
