@@ -1,0 +1,28 @@
+  <h1>Menu一覧</h1>
+  <%=link_to "新規登録へ", new_menu_path, {class: "btn btn-primary btn-new"}%>
+  <table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">id</th>
+        <th scope="col">メニュー名</th>
+        <th scope="col">メニュー説明</th>
+        <th scope="col">料金（税別）</th>
+        <th scope="col">施術時間</th>
+        <th scope="col">更新日時</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @menus.each do |menu|%>
+      <tr>
+        <td><%=menu.id%></td>
+        <td><%=menu.name%></td>
+        <td><%=menu.description%></td>
+        <td><%=menu.fee%></td>
+        <td><%=menu.service_minutes%></td>
+        <td><%=menu.updated_at.strftime('%Y/%m/%d')%></td>
+        <td><%=link_to "詳細へ", menu_path(menu.id)%></td>
+      </tr>
+      <%end%>
+    </tbody>
+  </table>
