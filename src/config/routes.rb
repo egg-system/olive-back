@@ -19,7 +19,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :roles, :skills, :menus
+  resources :roles, :skills, :menus, :stores
   
   root to: 'dashboards#index'
   get 'dashboards/index'

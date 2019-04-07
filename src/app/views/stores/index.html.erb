@@ -1,0 +1,28 @@
+  <h1>Store一覧</h1>
+  <%=link_to "新規登録へ", new_store_path, {class: "btn btn-primary btn-new"}%>
+  <table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">id</th>
+        <th scope="col">店舗区分</th>
+        <th scope="col">店舗名</th>
+        <th scope="col">店舗住所</th>
+        <th scope="col">店舗リンク</th>
+        <th scope="col">更新日時</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @stores.each do |store|%>
+      <tr>
+        <td><%=store.id%></td>
+        <td><%=Settings.store_type[store.store_type]%></td>
+        <td><%=store.name%></td>
+        <td><%=store.address%></td>
+        <td><%=link_to "ホームページへ", store.url%></td>
+        <td><%=store.updated_at.strftime('%Y/%m/%d')%></td>
+        <td><%=link_to "詳細へ", store_path(store.id)%></td>
+      </tr>
+      <%end%>
+    </tbody>
+  </table>
