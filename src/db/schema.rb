@@ -45,7 +45,6 @@ ActiveRecord::Schema.define(version: 2019_03_20_130526) do
     t.string "first_kana"
     t.string "last_kana"
     t.string "tel"
-    t.string "mail", null: false, comment: "wordpress管理のメールアドレス"
     t.string "pc_mail", comment: "pcメール。fileMakerから移行"
     t.string "phone_mail", comment: "携帯メール。fileMakerから移行"
     t.boolean "can_receive_mail"
@@ -143,23 +142,25 @@ ActiveRecord::Schema.define(version: 2019_03_20_130526) do
   end
 
   create_table "reservations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.integer "reservation_id"
-    t.integer "customer_id"
-    t.integer "staff_id"
-    t.integer "coupon_id"
-    t.boolean "first_visit_flg"
-    t.integer "pregnant_status_id"
-    t.integer "with_child_status_id"
-    t.boolean "double_flg"
+    t.integer "children_count", comment: "随伴するお子様の数"
+    t.boolean "double_select", comment: "二枠選択かどうか"
     t.date "reservation_date"
-    t.time "start_time"
-    t.time "end_time"
+    t.date "first_visited_at"
+    t.time "start_at"
+    t.time "end_at"
     t.text "reservation_comment"
-    t.boolean "cancel_flg"
+    t.boolean "is_canceled"
     t.integer "total_fee"
-    t.time "total_time"
+    t.bigint "customer_id"
+    t.bigint "staff_id"
+    t.bigint "coupon_id"
+    t.bigint "pregnant_state_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["coupon_id"], name: "index_reservations_on_coupon_id"
+    t.index ["customer_id"], name: "index_reservations_on_customer_id"
+    t.index ["pregnant_state_id"], name: "index_reservations_on_pregnant_state_id"
+    t.index ["staff_id"], name: "index_reservations_on_staff_id"
   end
 
   create_table "roles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -293,6 +294,10 @@ ActiveRecord::Schema.define(version: 2019_03_20_130526) do
   add_foreign_key "customers", "zoomancies"
   add_foreign_key "menu_categories", "departments"
   add_foreign_key "menus", "menu_categories"
+  add_foreign_key "reservations", "coupons"
+  add_foreign_key "reservations", "customers"
+  add_foreign_key "reservations", "pregnant_states"
+  add_foreign_key "reservations", "staffs"
   add_foreign_key "shifts", "staffs"
   add_foreign_key "shifts", "stores"
   add_foreign_key "skill_menus", "menus"
