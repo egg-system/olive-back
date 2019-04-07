@@ -1,14 +1,16 @@
 Rails.application.routes.draw do
-  devise_for :customers, controllers: {
-    sessions: 'customers/sessions',
-    # passwords: 'customers/passwords',
-    # registrations: 'customers/registrations'
-  }
+  
   resources :customers, only: [:index, :show, :create, :update, :new] do
     collection do
       post :search
     end
   end
+  devise_for :customers, controllers: {
+    sessions: 'customers/sessions',
+    passwords: 'customers/passwords',
+    registrations: 'customers/registrations'
+  }
+
   
   devise_for :staffs, controllers: {
     sessions: 'staffs/sessions'
