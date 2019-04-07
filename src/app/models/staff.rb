@@ -12,7 +12,6 @@ class Staff < ApplicationRecord
   belongs_to :role
   accepts_nested_attributes_for :skill_staff, update_only: true
 
-
   #店舗idによる絞り込み
   scope :get_by_store, ->(store_id){
     where(store_id: store_id)
@@ -30,4 +29,7 @@ class Staff < ApplicationRecord
     select('staffs.*').join_store.join_role
   }
 
+  def name
+    return "#{self.last_name} #{self.first_name}"
+  end
 end

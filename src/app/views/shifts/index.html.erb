@@ -1,15 +1,38 @@
 <h1>シフト一覧</h1>
 
+
+<%= form_tag(:shifts, method: 'get') do |form| %>
+  <div class="field">
+    <%= date_select :search_month, :by, discard_day: true %>
+  </div>
+  <div class="field">
+    <% storeSelects = options_from_collection_for_select(Store.all, :id, :name) %>
+    <%= select_tag :store_id, storeSelects %>
+  </div>
+  <div class="field">
+    <% staffSelects = options_from_collection_for_select(Staff.all, :id, :name) %>
+    <%= select_tag :staff_id, staffSelects %>
+  </div>
+  <div class="actions">
+    <%= submit_tag "検索" %>
+  </div>
+<% end %>
+
 <table>
   <thead>
     <tr>
-      <th colspan="3"></th>
+      <th colspan="7"></th>
     </tr>
   </thead>
 
   <tbody>
-    <% @shifts.each do |shift| %>
-      <%= shift %>
+    <% @shifts.each_slice(7) do |shifts| %>
+      <tr>
+        <% shifts.each do |shift| %>
+          <td><%= shift.date %></td>
+          <td><%= check_box('shifts', 'do_create', { checked: shift.persisted? }) %></td>
+        <% end %>
+      </tr>
     <% end %>
   </tbody>
 </table>

@@ -8,6 +8,7 @@ class Api::StoresController < Api::ApiController
   end
 
   def dates
-    render json: {}
+    render json: Shift.where(store_id: params[:store_id])
+      .to_time_slots(params[:from], params[:to])
   end
 end
