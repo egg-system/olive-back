@@ -27,7 +27,7 @@ Customer.where(id: 1).first_or_create!(
     first_kana: '高橋',
     last_kana: 'こきゃく１', 
     tel: '090-0000-0000', 
-    mail: 'tt.wing001@gmail.com',
+    email: 'tt.wing001@gmail.com',
     pc_mail: 'tt.wing002@gmail.com', 
     phone_mail: 'tt.wing003@gmail.com', 
     can_receive_mail: true, 
