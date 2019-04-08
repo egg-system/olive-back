@@ -21,17 +21,54 @@
 <table>
   <thead>
     <tr>
-      <th colspan="7"></th>
+      <th>日付</th>
+      <th>10～11</th>
+      <th>11～12</th>
+      <th>12～13</th>
+      <th>13～14</th>
+      <th>14～15</th>
+      <th>15～16</th>
+      <th>16～17</th>
+      <th>17～18</th>
+      <th>18～19</th>
+      <th>19～20</th>
     </tr>
   </thead>
 
   <tbody>
-    <% @shifts.each_slice(7) do |shifts| %>
+    <% @shifts.each do |shift| %>
       <tr>
-        <% shifts.each do |shift| %>
-          <td><%= shift.date %></td>
-          <td><%= check_box('shifts', 'do_create', { checked: shift.persisted? }) %></td>
-        <% end %>
+        <td><%= shift.date %></td>
+        <td><%= check_box('shifts[shift.date]', 'on_shift_10_to_11', { 
+            checked: shift.on_shift_10_to_11 
+        }) %></td>
+        <td><%= check_box('shifts[shift.date]', 'on_shift_11_to_12', { 
+            checked: shift.on_shift_11_to_12 
+        }) %></td>
+        <td><%= check_box('shifts[shift.date]', 'on_shift_12_to_13', { 
+            checked: shift.on_shift_12_to_13 
+        }) %></td>
+        <td><%= check_box('shifts[shift.date]', 'on_shift_13_to_14', { 
+            checked: shift.on_shift_13_to_14 
+        }) %></td>
+        <td><%= check_box('shifts[shift.date]', 'on_shift_14_to_15', { 
+            checked: shift.on_shift_14_to_15 
+        }) %></td>
+        <td><%= check_box('shifts[shift.date]', 'on_shift_15_to_16', { 
+            checked: shift.on_shift_15_to_16 
+        }) %></td>
+        <td><%= check_box('shifts[shift.date]', 'on_shift_16_to_17', { 
+            checked: shift.on_shift_16_to_17 
+        }) %></td>
+        <td><%= check_box('shifts[shift.date]', 'on_shift_17_to_18', { 
+            checked: shift.on_shift_17_to_18 
+        }) %></td>
+        <td><%= check_box('shifts[shift.date]', 'on_shift_18_to_19', { 
+            checked: shift.on_shift_18_to_19 
+        }) %></td>
+        <td><%= check_box('shifts[shift.date]', 'on_shift_19_to_20', { 
+            checked: shift.on_shift_19_to_20 
+        }) %></td>
       </tr>
     <% end %>
   </tbody>
