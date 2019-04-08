@@ -7,7 +7,7 @@ class ShiftsController < ApplicationController
     @shifts = Shift.where(
       store_id: search_params[:store_id], 
       staff_id: search_params[:staff_id]
-    ).to_time_slots(search_params[:search_month])
+    ).to_month_slots(search_params[:search_month])
     .map { |shift| shift.first }
 
     # 月初に変換する
