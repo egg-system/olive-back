@@ -33,6 +33,11 @@ class Store < ApplicationRecord
   end
 
   def sub_shop_attributes
-    { id: self.id, name: self.name, menus: self.menus }
+    menus = self.menus.to_sub_menus
+    return { 
+      id: self.id, 
+      name: self.name, 
+      menus: menus 
+    }
   end
 end
