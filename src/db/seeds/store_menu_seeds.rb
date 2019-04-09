@@ -41,7 +41,7 @@ Menu.where(id: 29).first_or_create!(name:'デラックスプラン', fee:90000, 
 Menu.where(id: 30).first_or_create!(name:'ラグジュアリープラン', fee:126000, service_minutes:0, start_at:'2019-01-01', menu_category_id:6)
 
 Skill.where(id: 1).first_or_create!(name:'柔道整体師')
-Skill.where(id: 2).first_or_create!(name:'柔道整体師兼鍼灸師')
+Skill.where(id: 2).first_or_create!(name:'鍼灸師')
 
 Skill.all.each do |skill|
   Menu.all.each do |menu|
