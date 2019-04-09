@@ -6,26 +6,38 @@ class Staff < ApplicationRecord
     authentication_keys: [:login, :store_id]
 
   has_many :skill_staff
-  has_many :skill, through: :skill_staff 
-  belongs_to :store
-  has_many :shift
-  belongs_to :role
+  has_many :skills, through: :skill_staff 
   accepts_nested_attributes_for :skill_staff, update_only: true
 
+  belongs_to :store
+  belongs_to :role
+    
+  has_many :shifts
+
+  # 全部のスキルを持っているスタッフで絞りこむ
+  scope :has_must_skills, -> (skill_ids) {
+    staffIds = SkillStaff.where(skill_id: skill_ids)
+      .group(:staff_id)
+      .having('count(skill_id) >= ?', skill_ids.count)
+      .select(:staff_id)
+
+    return where(id: staffIds)
+  }
+
   #店舗idによる絞り込み
-  scope :get_by_store, ->(store_id){
+  scope :get_by_store, -> (store_id) {
     where(store_id: store_id)
   }
 
   #left join
-  scope :join_store, ->{
+  scope :join_store, -> {
     left_joins(:store).select("stores.name as store_name")
   }
-  scope :join_role, ->{
-       left_joins(:role).select("roles.name as role_name")
+  scope :join_role, -> {
+    left_joins(:role).select("roles.name as role_name")
   }
 
-  scope :join_tables, ->{
+  scope :join_tables, -> {
     select('staffs.*').join_store.join_role
   }
 

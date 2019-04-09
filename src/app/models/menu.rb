@@ -1,6 +1,10 @@
 class Menu < ApplicationRecord
     belongs_to :menu_category
+
+    has_many :skill_menus
     has_many :skills, through: :skill_menus
+    
+    has_many :store_menus
     has_many :stores, through: :store_menus
 
     ACUPUNTURE_WITH_MASSAGE = 11
@@ -10,19 +14,9 @@ class Menu < ApplicationRecord
         ACUPUNTURE_WITHOUT_MASSAGE
     ]
 
-    attr_accessor :is_option
-
-    def is_option
-        self.menu_category_id === MenuCategory::OPTION_CATEGORY_ID
-    end
-
-    def is_acupuncture
-        self.menu_category_id === MenuCategory::ACUPUNTURE_CATEGORY_ID
-    end
-
-    def is_option_acupuncture
-        ACUPUNTURE_OPTION_MENU_IDS.include?(self.id)
-    end
+    scope :get_must_skill_ids, -> {
+        joins(:skills).select('skills.id').distinct
+    }
 
     def self.to_sub_menus
         all_menus = self.all
@@ -42,6 +36,20 @@ class Menu < ApplicationRecord
             
             json
         }
+    end
+
+    attr_accessor :is_option
+
+    def is_option
+        self.menu_category_id === MenuCategory::OPTION_CATEGORY_ID
+    end
+
+    def is_acupuncture
+        self.menu_category_id === MenuCategory::ACUPUNTURE_CATEGORY_ID
+    end
+
+    def is_option_acupuncture
+        ACUPUNTURE_OPTION_MENU_IDS.include?(self.id)
     end
     
     def to_sub_menu_attributes()
