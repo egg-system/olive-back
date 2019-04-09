@@ -30,6 +30,8 @@ Rails.application.routes.draw do
     get 'shops(/:id)', to: 'stores#shop'
     get 'shops(/:id)/menus', to: 'stores#menus'
     get 'shops(/:id)/dates', to: 'stores#dates'
+    post 'reserve/commit', to: 'reservations#commit'
+    post 'customer/create', to: 'customers#create'
   end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
