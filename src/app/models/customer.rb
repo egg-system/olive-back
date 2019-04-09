@@ -5,8 +5,8 @@ class Customer < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable
 
-  belongs_to :first_visit_store, class_name: 'Store'
-  belongs_to :last_visit_store, class_name: 'Store'
+  belongs_to :first_visit_store, class_name: 'Store', foreign_key: 'first_visit_store_id'
+  belongs_to :last_visit_store, class_name: 'Store', foreign_key: 'last_visit_store_id'
 
   belongs_to :job_type, optional: true
   belongs_to :zoomancy, optional: true
@@ -22,5 +22,9 @@ class Customer < ApplicationRecord
 
   scope :join_tables, ->{
     select('customers.*').join_size
+  }
+
+  scope :like_name, ->(name){
+    where("concat(last_name, first_name) like ?", "%#{name}%")
   }
 end
