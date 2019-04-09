@@ -7,6 +7,10 @@ patient_card:
   - 未
   - 済
 
+store_type:
+  owned: 直営店
+  franchised: FC店
+
 stores:
   head_store_id: 1
   head_este_store_id: 2
