@@ -14,10 +14,6 @@ class Menu < ApplicationRecord
         ACUPUNTURE_WITHOUT_MASSAGE
     ]
 
-    scope :get_must_skill_ids, -> {
-        joins(:skills).select('skills.id').distinct
-    }
-
     def self.to_sub_menus
         all_menus = self.all
         options = all_menus.select { |menu| menu.is_option }

@@ -8,12 +8,13 @@ class Api::StoresController < Api::ApiController
   end
 
   def dates
-    mustSkillIds = Menu.where(id: params[:menu_ids]).get_must_skill_ids
-    staffIds = Staff.has_must_skills(mustSkillIds).select('id')
-    
+    must_skill_ids = Menu.where(id: params[:menu_ids]).select('skill_id').distinct
+    staff_ids = Staff.has_must_skills(must_skill_ids).select('id')
+  
     render json: Shift.where(store_id: params[:id])
-      .where(staff_id: staffIds)
-      .to_time_slots(params[:from_date], params[:to_date])
-      .map { |shifts| Shift.to_date_slot(shifts) }
+      .where(staff_id: staff_ids)
+      .where(date: (params[:from_date])..(params[:to_date]))
+      .has_any_reservation
+      .to_time_slot
   end
 end
