@@ -6,14 +6,12 @@ class ShiftsController < ApplicationController
   # GET /shifts
   # GET /shifts.json
   def index
-    @shifts = Shift.where(
+    @month = search_params[:search_month]
+    @date_shifts = Shift.where(
       store_id: search_params[:store_id], 
       staff_id: search_params[:staff_id]
-    ).to_month_slots(search_params[:search_month])
-    .map { |shift| shift.first }
-
-    # 月初に変換する
-    @month_date = "#{search_params[:search_month]}-01".to_date
+    ).where_months(@month)
+    .group_by { |shift| shift.date.strftime('%Y-%m-%d') }
   end
 
   def new

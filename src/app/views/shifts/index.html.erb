@@ -36,39 +36,25 @@
   </thead>
 
   <tbody>
-    <% @shifts.each do |shift| %>
+    <% 
+      start_date, end_date = Shift.get_month_range(@month)
+      ((start_date)..(end_date)).each do |date|
+    %>
       <tr>
-        <td><%= shift.date %></td>
-        <td><%= check_box('shifts[shift.date]', 'on_shift_10_to_11', { 
-            checked: shift.on_shift_10_to_11 
-        }) %></td>
-        <td><%= check_box('shifts[shift.date]', 'on_shift_11_to_12', { 
-            checked: shift.on_shift_11_to_12 
-        }) %></td>
-        <td><%= check_box('shifts[shift.date]', 'on_shift_12_to_13', { 
-            checked: shift.on_shift_12_to_13 
-        }) %></td>
-        <td><%= check_box('shifts[shift.date]', 'on_shift_13_to_14', { 
-            checked: shift.on_shift_13_to_14 
-        }) %></td>
-        <td><%= check_box('shifts[shift.date]', 'on_shift_14_to_15', { 
-            checked: shift.on_shift_14_to_15 
-        }) %></td>
-        <td><%= check_box('shifts[shift.date]', 'on_shift_15_to_16', { 
-            checked: shift.on_shift_15_to_16 
-        }) %></td>
-        <td><%= check_box('shifts[shift.date]', 'on_shift_16_to_17', { 
-            checked: shift.on_shift_16_to_17 
-        }) %></td>
-        <td><%= check_box('shifts[shift.date]', 'on_shift_17_to_18', { 
-            checked: shift.on_shift_17_to_18 
-        }) %></td>
-        <td><%= check_box('shifts[shift.date]', 'on_shift_18_to_19', { 
-            checked: shift.on_shift_18_to_19 
-        }) %></td>
-        <td><%= check_box('shifts[shift.date]', 'on_shift_19_to_20', { 
-            checked: shift.on_shift_19_to_20 
-        }) %></td>
+        <td><%= date %></td>
+        <% Shift.get_time_slots(date).each do |shift_time| %>
+          <% if @date_shifts.has_key?(date) %>
+            <td><%= check_box("shifts[#{date}]", shift_time, { 
+              checked: @date_shifts[date].any? { |shift|  
+                shift.shift_at === shift_time.strftime('%Y%m%d%H') 
+              }
+            }) %></td>
+          <% else %>
+            <td><%= check_box("shifts[#{date}]", shift_time, { 
+              checked: false
+            }) %></td>
+          <% end %>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
