@@ -1,22 +1,15 @@
 class CreateReservations < ActiveRecord::Migration[5.1]
   def change
     create_table :reservations do |t|
-      t.integer :reservation_id
-      t.integer :customer_id
-      t.integer :staff_id
-      t.integer :coupon_id
-      t.boolean :first_visit_flg
-      t.integer :pregnant_status_id
-      t.integer :with_child_status_id
-      t.boolean :double_flg
-      t.date :reservation_date
-      t.time :start_time
-      t.time :end_time
+      t.integer :children_count, default: 0, comment: '随伴するお子様の数'
       t.text :reservation_comment
-      t.boolean :cancel_flg
-      t.integer :total_fee
-      t.time :total_time
-
+      
+      t.references :customer, foreign_key: true
+      t.references :shift, comment: 'storeやstaff、日時の情報はshiftで保持する'
+      t.references :coupon, foreign_key: true
+      t.references :pregnant_state, foreign_key: true
+      
+      t.date :deleted_at
       t.timestamps
     end
   end
