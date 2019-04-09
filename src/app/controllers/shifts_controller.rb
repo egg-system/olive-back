@@ -1,5 +1,7 @@
 class ShiftsController < ApplicationController
   before_action :set_shift, only: [:show, :edit, :update, :destroy]
+  
+  require 'csv'
 
   # GET /shifts
   # GET /shifts.json
@@ -21,7 +23,16 @@ class ShiftsController < ApplicationController
   # POST /shifts
   # POST /shifts.json
   def create
-    @shifts = Shift.imports(csv_params[:shift_csv])
+    csv_rows = CSV.read(
+      csv_params[:shift_csv].path, 
+      headers: true, encoding: 
+      "Shift_JIS:UTF-8"
+    )
+    
+    @shifts = csv_rows.map { |row|
+      Shift.import(row)
+    }
+    
     redirect_to action: :index
   end
 
