@@ -1,0 +1,9 @@
+<%= simple_form_for(@role) do |f| %>
+<%=f.input :id, label: "id", readonly: true%>
+<%=f.input :name, label: "name"%>
+<%= f.button :submit, class: 'btn btn-primary'%>
+<% if request.path_info != new_role_path%>
+<%= link_to '削除', role_path(@role),method: :delete, class: 'btn btn-danger' %>
+<%end%>
+<%= link_to '戻る', roles_path, class: 'btn' %>
+<% end %>

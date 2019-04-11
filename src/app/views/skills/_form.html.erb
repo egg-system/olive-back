@@ -1,0 +1,9 @@
+<%= simple_form_for(@skill) do |f| %>
+<%=f.input :id, label: "id", readonly: true%>
+<%=f.input :name, label: "name"%>
+<%= f.button :submit, class: 'btn btn-primary'%>
+<% if request.path_info != new_skill_path%>
+<%= link_to '削除', skill_path(@skill),method: :delete, class: 'btn btn-danger' %>
+<%end%>
+<%= link_to '戻る', skill_path, class: 'btn' %>
+<% end %>

@@ -111,10 +111,12 @@ ActiveRecord::Schema.define(version: 2019_03_20_130526) do
     t.date "start_at"
     t.date "end_at"
     t.bigint "menu_category_id"
+    t.bigint "skill_id", default: 1, comment: "必須スキルを紐づける"
     t.text "memo"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["menu_category_id"], name: "index_menus_on_menu_category_id"
+    t.index ["skill_id"], name: "index_menus_on_skill_id"
   end
 
   create_table "nearest_stations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -142,23 +144,19 @@ ActiveRecord::Schema.define(version: 2019_03_20_130526) do
   end
 
   create_table "reservations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.integer "reservation_id"
-    t.integer "customer_id"
-    t.integer "staff_id"
-    t.integer "coupon_id"
-    t.boolean "first_visit_flg"
-    t.integer "pregnant_status_id"
-    t.integer "with_child_status_id"
-    t.boolean "double_flg"
-    t.date "reservation_date"
-    t.time "start_time"
-    t.time "end_time"
+    t.integer "children_count", default: 0, comment: "随伴するお子様の数"
     t.text "reservation_comment"
-    t.boolean "cancel_flg"
-    t.integer "total_fee"
-    t.time "total_time"
+    t.bigint "customer_id"
+    t.bigint "shift_id", comment: "storeやstaff、日時の情報はshiftで保持する"
+    t.bigint "coupon_id"
+    t.bigint "pregnant_state_id"
+    t.date "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["coupon_id"], name: "index_reservations_on_coupon_id"
+    t.index ["customer_id"], name: "index_reservations_on_customer_id"
+    t.index ["pregnant_state_id"], name: "index_reservations_on_pregnant_state_id"
+    t.index ["shift_id"], name: "index_reservations_on_shift_id"
   end
 
   create_table "roles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -167,20 +165,11 @@ ActiveRecord::Schema.define(version: 2019_03_20_130526) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "shifts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.date "date"
+  create_table "shifts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", comment: "シフト。スタッフと既存の予約の組み合わせで、予約枠になる", force: :cascade do |t|
+    t.date "date", comment: "シフトの日時"
+    t.string "shift_time", comment: "シフトの時間帯。1時間単位になる"
     t.bigint "store_id"
     t.bigint "staff_id"
-    t.boolean "on_shift_10_to_11", comment: "10時~11時に施術可能か"
-    t.boolean "on_shift_11_to_12", comment: "11時~12時に施術可能か"
-    t.boolean "on_shift_12_to_13", comment: "12時~13時に施術可能か"
-    t.boolean "on_shift_13_to_14", comment: "13時~14時に施術可能か"
-    t.boolean "on_shift_14_to_15", comment: "14時~15時に施術可能か"
-    t.boolean "on_shift_15_to_16", comment: "15時~16時に施術可能か"
-    t.boolean "on_shift_16_to_17", comment: "16時~17時に施術可能か"
-    t.boolean "on_shift_17_to_18", comment: "17時~18時に施術可能か"
-    t.boolean "on_shift_18_to_19", comment: "18時~19時に施術可能か"
-    t.boolean "on_shift_19_to_20", comment: "19時~20時に施術可能か"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["staff_id"], name: "index_shifts_on_staff_id"
@@ -191,15 +180,6 @@ ActiveRecord::Schema.define(version: 2019_03_20_130526) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "skill_menus", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.bigint "skill_id"
-    t.bigint "menu_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["menu_id"], name: "index_skill_menus_on_menu_id"
-    t.index ["skill_id"], name: "index_skill_menus_on_skill_id"
   end
 
   create_table "skill_staffs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -292,10 +272,12 @@ ActiveRecord::Schema.define(version: 2019_03_20_130526) do
   add_foreign_key "customers", "zoomancies"
   add_foreign_key "menu_categories", "departments"
   add_foreign_key "menus", "menu_categories"
+  add_foreign_key "menus", "skills"
+  add_foreign_key "reservations", "coupons"
+  add_foreign_key "reservations", "customers"
+  add_foreign_key "reservations", "pregnant_states"
   add_foreign_key "shifts", "staffs"
   add_foreign_key "shifts", "stores"
-  add_foreign_key "skill_menus", "menus"
-  add_foreign_key "skill_menus", "skills"
   add_foreign_key "skill_staffs", "skills"
   add_foreign_key "skill_staffs", "staffs"
   add_foreign_key "staffs", "roles"
