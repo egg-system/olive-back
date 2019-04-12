@@ -1,0 +1,28 @@
+  <h1>CouponHistory一覧</h1>
+  <%=link_to "新規登録へ", new_coupon_history_path, {class: "btn btn-primary btn-new"}%>
+  <table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">id</th>
+        <th scope="col">顧客ID</th>
+        <th scope="col">顧客名</th>
+        <th scope="col">回数券名</th>
+        <th scope="col">利用日時</th>
+        <th scope="col">更新日時</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @coupon_histories.each do |item|%>
+      <tr>
+        <td><%=item.id%></td>
+        <td><%=item.customer_id%></td>
+        <td><%=item.customer_name%></td>
+        <td><%=item.coupon_name%></td>
+        <td><%=item.used_at%></td>
+        <td><%=item.updated_at.strftime('%Y/%m/%d')%></td>
+        <td><%=link_to "詳細へ", coupon_history_path(item.id)%></td>
+      </tr>
+      <%end%>
+    </tbody>
+  </table>
