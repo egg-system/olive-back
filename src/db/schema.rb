@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_20_130526) do
+ActiveRecord::Schema.define(version: 2019_04_14_154727) do
 
   create_table "baby_ages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
@@ -78,7 +78,8 @@ ActiveRecord::Schema.define(version: 2019_03_20_130526) do
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
     t.index ["baby_age_id"], name: "index_customers_on_baby_age_id"
-    t.index ["email"], name: "index_customers_on_email", unique: true
+    t.index ["email", "has_membership"], name: "index_customers_on_email_and_has_membership", unique: true
+    t.index ["email"], name: "index_customers_on_email"
     t.index ["first_visit_store_id"], name: "index_customers_on_first_visit_store_id"
     t.index ["last_visit_store_id"], name: "index_customers_on_last_visit_store_id"
     t.index ["nearest_station_id"], name: "index_customers_on_nearest_station_id"
@@ -131,16 +132,52 @@ ActiveRecord::Schema.define(version: 2019_03_20_130526) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "options", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name"
+    t.bigint "skill_id"
+    t.bigint "department_id"
+    t.text "description"
+    t.integer "fee"
+    t.date "start_at"
+    t.date "end_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["department_id"], name: "index_options_on_department_id"
+    t.index ["skill_id"], name: "index_options_on_skill_id"
+  end
+
   create_table "pregnant_states", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.text "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "reservation_details", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.integer "menu_id"
+  create_table "reservation_coupons", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "reservation_id"
+    t.bigint "coupon_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["coupon_id"], name: "index_reservation_coupons_on_coupon_id"
+    t.index ["reservation_id"], name: "index_reservation_coupons_on_reservation_id"
+  end
+
+  create_table "reservation_details", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "reservation_id"
+    t.bigint "menu_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["menu_id"], name: "index_reservation_details_on_menu_id"
+    t.index ["reservation_id"], name: "index_reservation_details_on_reservation_id"
+  end
+
+  create_table "reservation_options", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "reservation_id"
+    t.bigint "option_id"
+    t.integer "count"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["option_id"], name: "index_reservation_options_on_option_id"
+    t.index ["reservation_id"], name: "index_reservation_options_on_reservation_id"
   end
 
   create_table "reservations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -148,12 +185,13 @@ ActiveRecord::Schema.define(version: 2019_03_20_130526) do
     t.text "reservation_comment"
     t.bigint "customer_id"
     t.bigint "shift_id", comment: "storeやstaff、日時の情報はshiftで保持する"
-    t.bigint "coupon_id"
     t.bigint "pregnant_state_id"
+    t.date "reservation_date"
+    t.time "start_time"
+    t.time "end_time"
     t.date "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["coupon_id"], name: "index_reservations_on_coupon_id"
     t.index ["customer_id"], name: "index_reservations_on_customer_id"
     t.index ["pregnant_state_id"], name: "index_reservations_on_pregnant_state_id"
     t.index ["shift_id"], name: "index_reservations_on_shift_id"
@@ -273,7 +311,14 @@ ActiveRecord::Schema.define(version: 2019_03_20_130526) do
   add_foreign_key "menu_categories", "departments"
   add_foreign_key "menus", "menu_categories"
   add_foreign_key "menus", "skills"
-  add_foreign_key "reservations", "coupons"
+  add_foreign_key "options", "departments"
+  add_foreign_key "options", "skills"
+  add_foreign_key "reservation_coupons", "coupons"
+  add_foreign_key "reservation_coupons", "reservations"
+  add_foreign_key "reservation_details", "menus"
+  add_foreign_key "reservation_details", "reservations"
+  add_foreign_key "reservation_options", "options"
+  add_foreign_key "reservation_options", "reservations"
   add_foreign_key "reservations", "customers"
   add_foreign_key "reservations", "pregnant_states"
   add_foreign_key "shifts", "staffs"

@@ -6,9 +6,12 @@ class CreateReservations < ActiveRecord::Migration[5.1]
       
       t.references :customer, foreign_key: true
       t.references :shift, comment: 'storeやstaff、日時の情報はshiftで保持する'
-      t.references :coupon, foreign_key: true
       t.references :pregnant_state, foreign_key: true
       
+      t.date :reservation_date
+      t.time :start_time
+      t.time :end_time
+
       t.date :deleted_at
       t.timestamps
     end
