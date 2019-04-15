@@ -1,0 +1,12 @@
+
+<%= simple_form_for(@department) do |f| %>
+<% if request.path_info != new_department_path%>
+<%=f.input :id, label: "id", readonly: true%>
+<%end%>
+<%=f.input :name, label: "部門名"%>
+<%= f.button :submit, class: 'btn btn-primary'%>
+<% if request.path_info != new_department_path%>
+<%= link_to '削除', department_path(@department),method: :delete, class: 'btn btn-danger' %>
+<%end%>
+<%= link_to '戻る', departments_path, class: 'btn' %>
+<% end %>
