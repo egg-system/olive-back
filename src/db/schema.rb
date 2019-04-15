@@ -167,7 +167,8 @@ ActiveRecord::Schema.define(version: 2019_03_20_130526) do
 
   create_table "shifts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", comment: "シフト。スタッフと既存の予約の組み合わせで、予約枠になる", force: :cascade do |t|
     t.date "date", comment: "シフトの日時"
-    t.string "shift_time", comment: "シフトの時間帯。1時間単位になる"
+    t.time "start_at", comment: "シフトの開始時間"
+    t.time "end_at", comment: "シフトの終了時間。30分単位になる"
     t.bigint "store_id"
     t.bigint "staff_id"
     t.datetime "created_at", null: false

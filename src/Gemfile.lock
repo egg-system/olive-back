@@ -309,6 +309,7 @@ GEM
     thor (0.20.3)
     thread_safe (0.3.6)
     tilt (2.0.9)
+    tod (2.2.0)
     turbolinks (5.2.0)
       turbolinks-source (~> 5.2)
     turbolinks-source (5.2.0)
@@ -367,6 +368,7 @@ DEPENDENCIES
   solargraph
   spring
   spring-watcher-listen (~> 2.0.0)
+  tod
   turbolinks (~> 5)
   tzinfo-data
   uglifier (>= 1.3.0)
