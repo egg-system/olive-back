@@ -15,6 +15,11 @@ class Staff < ApplicationRecord
     
   has_many :shifts
 
+  scope :can_treat_menus, -> (menu_ids) {
+    must_skill_ids = Menu.where(id: menu_ids).select('skill_id').distinct
+    return has_must_skills(must_skill_ids)
+  }
+
   # 全部のスキルを持っているスタッフで絞りこむ
   scope :has_must_skills, -> (skill_ids) {
     staffIds = SkillStaff.where(skill_id: skill_ids)
