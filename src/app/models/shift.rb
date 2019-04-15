@@ -48,7 +48,7 @@ class Shift < ApplicationRecord
         staff_id: staff_id,
         date: shift_date, 
         start_at: shift_time,
-        end_at: shift_time + 1800,
+        end_at: shift_time + SLOT_INCREMENT_SECOND,
       ).first_or_create()
     }
   end
@@ -70,6 +70,8 @@ class Shift < ApplicationRecord
   end
 
   private
+  # 30分刻みでシフトを設定する
+  SLOT_INCREMENT_SECOND = 1800
 
   SHIFT_TIMES = {
     '10:00~10:30'  => '10:00:00',
