@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_20_130526) do
+ActiveRecord::Schema.define(version: 2019_04_14_154726) do
 
   create_table "baby_ages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
@@ -129,6 +129,20 @@ ActiveRecord::Schema.define(version: 2019_03_20_130526) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "options", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name"
+    t.bigint "skill_id"
+    t.bigint "department_id"
+    t.text "description"
+    t.integer "fee"
+    t.date "start_at"
+    t.date "end_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["department_id"], name: "index_options_on_department_id"
+    t.index ["skill_id"], name: "index_options_on_skill_id"
   end
 
   create_table "pregnant_states", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -274,6 +288,8 @@ ActiveRecord::Schema.define(version: 2019_03_20_130526) do
   add_foreign_key "menu_categories", "departments"
   add_foreign_key "menus", "menu_categories"
   add_foreign_key "menus", "skills"
+  add_foreign_key "options", "departments"
+  add_foreign_key "options", "skills"
   add_foreign_key "reservations", "coupons"
   add_foreign_key "reservations", "customers"
   add_foreign_key "reservations", "pregnant_states"
