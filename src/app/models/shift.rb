@@ -1,4 +1,9 @@
 class Shift < ApplicationRecord
+  require 'tod'
+
+  serialize :start_at, Tod::TimeOfDay
+  serialize :end_at, Tod::TimeOfDay
+
   extend DateModule
 
   has_many :reservations
@@ -37,12 +42,14 @@ class Shift < ApplicationRecord
     csv_row.select { |key, value|
       SHIFT_TIMES.has_key?(key) && value === '1'
     }.each { |key, value|
-      Shift.where(
+      shift_time = Tod::TimeOfDay.parse(SHIFT_TIMES[key])
+      shift = Shift.where(
         store_id: store_id, 
         staff_id: staff_id,
         date: shift_date, 
-        shift_time: SHIFT_TIMES[key]
-      ).first_or_create() 
+        start_at: shift_time,
+        end_at: shift_time + 1800,
+      ).first_or_create()
     }
   end
 
@@ -54,22 +61,36 @@ class Shift < ApplicationRecord
 
   def shift_at
     date_string = self.date.strftime('%Y-%m-%d')
-    shift_date = DateTime.parse("#{date_string} #{self.shift_time}")
-    shift_date.strftime('%Y%m%d%H')
+    shift_date = DateTime.parse("#{date_string} #{self.start_at}")
+    shift_date.strftime('%Y%m%d%H%M')
+  end
+
+  def self.slot_time_labels
+    return SHIFT_TIMES.keys
   end
 
   private
 
   SHIFT_TIMES = {
-    '10:00~11:00' => '10:00:00',
-    '11:00~12:00' => '11:00:00',
-    '12:00~13:00' => '12:00:00',
-    '13:00~14:00' => '13:00:00',
-    '14:00~15:00' => '13:00:00',
-    '15:00~16:00' => '13:00:00',
-    '16:00~17:00' => '16:00:00',
-    '17:00~18:00' => '17:00:00', 
-    '18:00~19:00' => '18:00:00', 
-    '19:00~20:00' => '19:00:00', 
+    '10:00~10:30'  => '10:00:00',
+    '10:30~11:00'  => '10:30:00',
+    '11:00~11:30'  => '11:00:00',
+    '11:30~12:00'  => '11:30:00',
+    '12:00~12:30'  => '12:00:00',
+    '12:30~13:00'  => '12:30:00',
+    '13:00~13:30'  => '13:00:00',
+    '13:30~14:00'  => '13:30:00',
+    '14:00~14:30'  => '14:00:00',
+    '14:30~15:00'  => '14:30:00',
+    '15:00~15:30'  => '15:00:00',
+    '15:30~16:00'  => '15:30:00',
+    '16:00~16:30'  => '16:00:00',
+    '16:30~17:00'  => '16:30:00',
+    '17:00~17:30'  => '17:00:00',
+    '17:30~18:00'  => '17:30:00',
+    '18:00~18:30'  => '18:00:00',
+    '18:30~19:00'  => '18:30:00',
+    '19:00~19:30'  => '19:00:00',
+    '19:30~20:00'  => '19:30:00',
   }
 end
