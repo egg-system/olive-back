@@ -39,7 +39,7 @@
           <% if @date_shifts.has_key?(date) %>
             <td><%= check_box("shifts[#{date}]", shift_time, { 
               checked: @date_shifts[date].any? { |shift|  
-                shift.shift_at === shift_time.strftime('%Y%m%d%H') 
+                shift.shift_at === shift_time.strftime('%Y%m%d%H%M') 
               }
             }) %></td>
           <% else %>
