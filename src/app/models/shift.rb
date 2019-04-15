@@ -15,7 +15,7 @@ class Shift < ApplicationRecord
     left_joins(:reservations).where('reservations.id is NULL')
   }
 
-  def self.to_time_slot
+  def self.to_time_slots
     return all.group_by { |shift| 
       shift.date 
     }.map { |date, shifts|
