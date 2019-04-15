@@ -3,9 +3,11 @@ version: '3'
 services:
   rails:
     build: .
+    environment:
+      TZ: "Japan"
     container_name: "olive-app"
     ports:
-        - "8080:3000"
+      - "8080:3000"
     volumes:
       - ./src/:/usr/local/src
       - bundle-data:/usr/local/bundle
@@ -22,6 +24,7 @@ services:
       MYSQL_DATABASE: 'db_olive'
       MYSQL_USER: 'root'
       MYSQL_ROOT_PASSWORD: 'mysql'
+      TZ: "Asia/Tokyo"
     ports: 
       - 3360:3306
     volumes: 

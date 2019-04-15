@@ -14,6 +14,7 @@ module Src
     
     config.time_zone = 'Tokyo'
     config.active_record.time_zone_aware_types = [:datetime, :time]
+    config.active_record.default_timezone = :local
 
     # apiに対する対応
     config.action_dispatch.default_headers = {
