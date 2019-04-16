@@ -30,8 +30,8 @@ class Shift < ApplicationRecord
         { start_time: shift_at, remain: shift_group.count }
       }
 
-      { date: date, time_slots: time_slots }
-    }
+      [date, time_slots]
+    }.to_h
   end
   
   def self.import(csv_row)
