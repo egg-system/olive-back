@@ -2,7 +2,7 @@ class CreateOptions < ActiveRecord::Migration[5.2]
   def change
     create_table :options do |t|
       t.string :name
-      t.references :skill, foreign_key: true
+      t.references :skill, foreign_key: true, comment: '必須スキル'
       t.references :department, foreign_key: true
       t.text :description
       t.integer :fee
