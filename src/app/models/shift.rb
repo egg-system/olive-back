@@ -30,7 +30,7 @@ class Shift < ApplicationRecord
         { start_time: shift_at, remain: shift_group.count }
       }
 
-      [date, time_slots]
+      [date.strftime('%Y%m%d'), time_slots]
     }.to_h
   end
   
