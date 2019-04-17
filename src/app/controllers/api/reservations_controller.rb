@@ -47,7 +47,7 @@ class Api::ReservationsController < Api::ApiController
       #reservation_detail作成
       menus_params = reservation_params['menus']
       menus_params.each do |menu|
-        reservation_detail = ReservationDetail.new
+        reservation_detail = ReservationMenu.new
         reservation_detail.reservation_id = reservation.id
         reservation_detail.menu_id = menu['id']
         reservation_detail.save!

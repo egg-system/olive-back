@@ -165,13 +165,13 @@ ActiveRecord::Schema.define(version: 2019_04_17_075237) do
     t.index ["reservation_id"], name: "index_reservation_coupons_on_reservation_id"
   end
 
-  create_table "reservation_details", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "reservation_menus", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "reservation_id"
     t.bigint "menu_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["menu_id"], name: "index_reservation_details_on_menu_id"
-    t.index ["reservation_id"], name: "index_reservation_details_on_reservation_id"
+    t.index ["menu_id"], name: "index_reservation_menus_on_menu_id"
+    t.index ["reservation_id"], name: "index_reservation_menus_on_reservation_id"
   end
 
   create_table "reservation_options", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -320,8 +320,8 @@ ActiveRecord::Schema.define(version: 2019_04_17_075237) do
   add_foreign_key "options", "skills"
   add_foreign_key "reservation_coupons", "coupons"
   add_foreign_key "reservation_coupons", "reservations"
-  add_foreign_key "reservation_details", "menus"
-  add_foreign_key "reservation_details", "reservations"
+  add_foreign_key "reservation_menus", "menus"
+  add_foreign_key "reservation_menus", "reservations"
   add_foreign_key "reservation_options", "options"
   add_foreign_key "reservation_options", "reservations"
   add_foreign_key "reservations", "customers"

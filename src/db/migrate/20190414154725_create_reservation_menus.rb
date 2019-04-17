@@ -1,6 +1,6 @@
-class CreateReservationDetails < ActiveRecord::Migration[5.1]
+class CreateReservationMenus < ActiveRecord::Migration[5.1]
   def change
-    create_table :reservation_details do |t|
+    create_table :reservation_menus do |t|
       t.references :reservation, foreign_key: true
       t.references :menu, foreign_key: true
 
