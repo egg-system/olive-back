@@ -1,19 +1,9 @@
 Rails.application.routes.draw do
-  
-  resources :customers, only: [:index, :show, :create, :update, :new] do
-    collection do
-      post :search
-    end
-  end
-  devise_for :customers, controllers: {
-    sessions: 'customers/sessions',
-    passwords: 'customers/passwords',
-    registrations: 'customers/registrations'
-  }
+  get 'dashboards/index'
+  root to: 'dashboards#index'
 
-  
-  devise_for :staffs, controllers: {
-    sessions: 'staffs/sessions'
+  devise_for :staffs, only: :sessions, controllers: {
+    sessions: 'staffs/sessions',
   }
   resources :staffs, only: [:index, :show, :create, :update, :new] do
     collection do
@@ -21,14 +11,23 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :roles, :skills, :menus, :stores, :menu_categories, :coupons, :coupon_histories, :departments
-  
-  root to: 'dashboards#index'
-  get 'dashboards/index'
-  
-  resources :shifts, only: [:index, :new, :create, :update]
+  resources :customers, only: [:index, :show, :create, :update, :new] do
+    collection do
+      post :search
+    end
+  end
 
-  namespace :api do 
+  resources :shifts, only: [:index, :new, :create, :update]
+  
+  resources :stores, :departments, :roles
+  resources :skills, :menu_categories, :menus
+  resources :coupons, :coupon_histories
+  
+  namespace :api do
+    devise_for :customers, skip: :all
+    mount_devise_token_auth_for 'Customer', at: 'customers', controllers: {
+      sessions: 'api/customers/sessions'
+    }
     get 'shops(/:id)', to: 'stores#shop'
     get 'shops(/:id)/menus', to: 'stores#menus'
     get 'shops(/:id)/dates', to: 'stores#dates'
