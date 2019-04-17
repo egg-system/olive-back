@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_14_154726) do
+ActiveRecord::Schema.define(version: 2019_04_17_075237) do
 
   create_table "baby_ages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
@@ -77,6 +77,9 @@ ActiveRecord::Schema.define(version: 2019_04_14_154726) do
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
+    t.string "provider", default: "email", null: false
+    t.string "uid", default: "", null: false
+    t.text "tokens"
     t.index ["baby_age_id"], name: "index_customers_on_baby_age_id"
     t.index ["email"], name: "index_customers_on_email", unique: true
     t.index ["first_visit_store_id"], name: "index_customers_on_first_visit_store_id"
@@ -85,6 +88,7 @@ ActiveRecord::Schema.define(version: 2019_04_14_154726) do
     t.index ["occupation_id"], name: "index_customers_on_occupation_id"
     t.index ["reset_password_token"], name: "index_customers_on_reset_password_token", unique: true
     t.index ["size_id"], name: "index_customers_on_size_id"
+    t.index ["uid", "provider"], name: "index_customers_on_uid_and_provider", unique: true
     t.index ["visit_reason_id"], name: "index_customers_on_visit_reason_id"
     t.index ["zoomancy_id"], name: "index_customers_on_zoomancy_id"
   end
@@ -133,7 +137,7 @@ ActiveRecord::Schema.define(version: 2019_04_14_154726) do
 
   create_table "options", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
-    t.bigint "skill_id"
+    t.bigint "skill_id", comment: "必須スキル"
     t.bigint "department_id"
     t.text "description"
     t.integer "fee"
