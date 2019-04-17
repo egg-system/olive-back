@@ -45,24 +45,24 @@ Option.where(id: 10).first_or_create!(name:'置鍼', skill_id: 2, fee:300, start
 Option.where(id: 11).first_or_create!(name:'初回カウンセリング', skill_id: 1, fee:1000, start_at:'2019-01-01', department_id:1)
 
 Store.where(id: 1).first_or_create!(
-  store_type: 0, 
-  name: '女性専門の治療院オリーヴボディケア たまプラーザ店', 
-  address: '横浜市青葉区新石川3-15-16 メディカルモールたまプラーザ301', 
-  tel: '045-530-1688', 
-  mail: 'gaku.machida@gmail.com', 
-  url: 'https://olivebodycare.jp', 
-  open_at: '10:00', 
+  store_type: 0,
+  name: '女性専門の治療院オリーヴボディケア たまプラーザ店',
+  address: '横浜市青葉区新石川3-15-16 メディカルモールたまプラーザ301',
+  tel: '045-530-1688',
+  mail: 'gaku.machida@gmail.com',
+  url: 'https://olivebodycare.jp',
+  open_at: '10:00',
   close_at: '20:00'
 )
 
 Store.where(id: 2).first_or_create!(
-  store_type: 0, 
-  name:'Simpleste たまプラーザのエステ', 
-  address:'横浜市青葉区新石川3-15-16　メディカルモールたまプラーザ301', 
-  tel:'045-530-3966', 
-  mail:'simpleste.olivejapan@gmail.com', 
-  url:'https://simpleste.jp', 
-  open_at:'10:00', 
+  store_type: 0,
+  name:'Simpleste たまプラーザのエステ',
+  address:'横浜市青葉区新石川3-15-16　メディカルモールたまプラーザ301',
+  tel:'045-530-3966',
+  mail:'simpleste.olivejapan@gmail.com',
+  url:'https://simpleste.jp',
+  open_at:'10:00',
   close_at: '20:00'
 )
 

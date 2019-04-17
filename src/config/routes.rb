@@ -18,7 +18,6 @@ Rails.application.routes.draw do
   end
 
   resources :shifts, only: [:index, :new, :create, :update]
-  
   resources :stores, :departments, :roles
   resources :skills, :menu_categories, :menus
   resources :coupons, :coupon_histories
@@ -31,6 +30,7 @@ Rails.application.routes.draw do
     get 'shops(/:id)', to: 'stores#shop'
     get 'shops(/:id)/menus', to: 'stores#menus'
     get 'shops(/:id)/dates', to: 'stores#dates'
+    post 'reserve/commit', to: 'reservations#commit'
   end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
