@@ -1,0 +1,16 @@
+<%= simple_form_for(@coupon) do |f| %>
+<% if request.path_info != new_coupon_path%>
+<%=f.input :id, label: "id", readonly: true%>
+<%end%>
+<%=f.input :name, label: "回数券名"%>
+<%=f.input :fee, label: "値段"%>
+<%=f.input :count, label: "回数"%>
+<%=f.input :start_at, label: "開始日"%>
+<%=f.input :end_at, label: "終了日"%>
+<%=f.input :expired_at, label: "期限"%>
+<%= f.button :submit, class: 'btn btn-primary'%>
+<% if request.path_info != new_coupon_path%>
+<%= link_to '削除', coupon_path(@coupon),method: :delete, class: 'btn btn-danger' %>
+<%end%>
+<%= link_to '戻る', coupons_path, class: 'btn' %>
+<% end %>

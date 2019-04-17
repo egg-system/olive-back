@@ -1,0 +1,14 @@
+
+<%= simple_form_for(@coupon_history) do |f| %>
+<% if request.path_info != new_coupon_history_path%>
+<%=f.input :id, label: "id", readonly: true%>
+<%end%>
+<%=f.input :customer_id, label: "顧客ID"%>
+<%=f.input :coupon_id, as: :select, collection: @coupons.map{|coupon| [coupon.name, coupon.id]}, label: "回数券名"%>
+<%=f.input :used_at, label: "利用日時"%>
+<%= f.button :submit, class: 'btn btn-primary'%>
+<% if request.path_info != new_coupon_history_path%>
+<%= link_to '削除', coupon_history_path(@coupon_history),method: :delete, class: 'btn btn-danger' %>
+<%end%>
+<%= link_to '戻る', coupon_histories_path, class: 'btn' %>
+<% end %>

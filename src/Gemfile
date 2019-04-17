@@ -74,6 +74,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 # ログイン機能用
 gem 'devise'
 gem 'devise-i18n'
+gem 'devise_token_auth'
 gem 'font-awesome-rails'
 
 # bootstrap用
@@ -103,3 +104,6 @@ gem "config"
 
 # 本番環境でjsを動作させるため、必要
 gem 'mini_racer'
+
+# dbのtime型を扱う用
+gem 'tod'

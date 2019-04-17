@@ -37,7 +37,7 @@ Option.where(id: 2).first_or_create!(name:'足つぼ', skill_id: 1, fee:2000, st
 Option.where(id: 3).first_or_create!(name:'小顔矯正', skill_id: 1, fee:4000, start_at:'2019-01-01', department_id:1)
 Option.where(id: 4).first_or_create!(name:'テーピング', skill_id: 1, fee:2000, start_at:'2019-01-01', department_id:1)
 Option.where(id: 5).first_or_create!(name:'インデプス', skill_id: 1, fee:2000, start_at:'2019-01-01', department_id:1)
-Option.where(id: 6).first_or_create!(name:'本治療', skill_id: 1, fee:2000, start_at:'2019-01-01', department_id:1)
+Option.where(id: 6).first_or_create!(name:'本治療', skill_id: 2, fee:2000, start_at:'2019-01-01', department_id:1, description: '鍼のオプションのため、鍼につけることはできない')
 Option.where(id: 7).first_or_create!(name:'耳つぼ', skill_id: 1, fee:2000, start_at:'2019-01-01', department_id:1)
 Option.where(id: 8).first_or_create!(name:'耳つぼジュエリー', skill_id: 1, fee:500, start_at:'2019-01-01', department_id:1)
 Option.where(id: 9).first_or_create!(name:'赤ちゃん鍼', skill_id: 2, fee:1000, start_at:'2019-01-01', department_id:1)

@@ -7,14 +7,14 @@ class Api::StoresController < Api::ApiController
     render json: Store.find(params[:id]).to_shop_menus
   end
 
-  def dates
-    must_skill_ids = Menu.where(id: params[:menu_ids]).select('skill_id').distinct
-    staff_ids = Staff.has_must_skills(must_skill_ids).select('id')
-  
+  def dates 
+    staff_ids = Staff
+      .can_treats(params[:menu_ids], params[:option_ids])
+      .select('id')
     render json: Shift.where(store_id: params[:id])
       .where(staff_id: staff_ids)
       .where(date: (params[:from_date])..(params[:to_date]))
       .has_any_reservation
-      .to_time_slot
+      .to_time_slots
   end
 end
