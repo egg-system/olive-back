@@ -22,8 +22,6 @@ module Src
       'Access-Control-Allow-Origin' => ENV.fetch('RESERVATION_CLIENT_DOMAIN', nil),
       'Access-Control-Request-Method' => '*'
     }
-
-    config.logger = Logger.new("log/rails.log", 'daily')
     
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers
