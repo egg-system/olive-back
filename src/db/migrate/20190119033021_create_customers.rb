@@ -14,7 +14,6 @@ class CreateCustomers < ActiveRecord::Migration[5.1]
       t.string :prefecture
       t.text :city
       t.text :address
-      t.boolean :has_membership, default: false
       t.text :comment
       t.references :first_visit_store, foreign_key: { to_table: :stores }
       t.references :last_visit_store, foreign_key: { to_table: :stores }

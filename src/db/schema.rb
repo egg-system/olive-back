@@ -53,7 +53,6 @@ ActiveRecord::Schema.define(version: 2019_04_17_075237) do
     t.string "prefecture"
     t.text "city"
     t.text "address"
-    t.boolean "has_membership"
     t.text "comment"
     t.bigint "first_visit_store_id"
     t.bigint "last_visit_store_id"
@@ -81,7 +80,6 @@ ActiveRecord::Schema.define(version: 2019_04_17_075237) do
     t.string "uid", default: "", null: false
     t.text "tokens"
     t.index ["baby_age_id"], name: "index_customers_on_baby_age_id"
-    t.index ["email", "has_membership"], name: "index_customers_on_email_and_has_membership", unique: true
     t.index ["email"], name: "index_customers_on_email"
     t.index ["first_visit_store_id"], name: "index_customers_on_first_visit_store_id"
     t.index ["last_visit_store_id"], name: "index_customers_on_last_visit_store_id"
