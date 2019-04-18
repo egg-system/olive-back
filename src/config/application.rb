@@ -16,12 +16,17 @@ module Src
     config.active_record.time_zone_aware_types = [:datetime, :time]
     config.active_record.default_timezone = :local
 
-    # apiに対する対応
-    config.action_dispatch.default_headers = {
-      'Access-Control-Allow-Credentials' => 'true',
-      'Access-Control-Allow-Origin' => ENV.fetch('RESERVATION_CLIENT_DOMAIN', nil),
-      'Access-Control-Request-Method' => '*'
-    }
+    # feからのアクセス設定
+    Rails.application.config.middleware.insert_before 0, Rack::Cors do
+      allow do
+        origins ENV.fetch('RESERVATION_CLIENT_DOMAIN', nil)
+    
+        resource "*",
+          headers: :any,
+          methods: [:get, :post, :put, :patch, :delete, :options, :head],
+          expose: ['uid', 'access-token', 'client']
+      end
+    end
     
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers
