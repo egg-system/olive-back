@@ -1,6 +1,7 @@
 class Api::ReservationsController < Api::ApiController
-	protect_from_forgery with: :null_session
-  def commit
+  include Concerns::TokenAuthenticable
+  
+  def create
     Reservation.transaction do
       params = JSON.parse(request.body.read)
 
@@ -76,13 +77,5 @@ class Api::ReservationsController < Api::ApiController
       self.render_response_ok
     # rescue => e
     #   self.render_response_error
-  end
-
-  def menus
-    render json: Store.find(params[:id]).to_shop_menus
-  end
-
-  def dates
-    render json: {}
   end
 end
