@@ -25,7 +25,8 @@ Rails.application.routes.draw do
   namespace :api do
     devise_for :customers, skip: :all
     mount_devise_token_auth_for 'Customer', at: 'customers', controllers: {
-      sessions: 'api/customers/sessions'
+      sessions: 'api/customers/sessions',
+      registrations: 'api/customers/registrations',
     }
     get 'shops(/:id)', to: 'stores#shop'
     get 'shops(/:id)/menus', to: 'stores#menus'
