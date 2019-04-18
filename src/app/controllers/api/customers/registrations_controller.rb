@@ -11,7 +11,7 @@ class Api::Customers::RegistrationsController < DeviseTokenAuth::RegistrationsCo
 
     new_customer = Customer.find_or_initialize_by({
       email: sign_up_params[:email],
-      provider: sign_up_params[:provider]
+      provider: sign_up_params[:provider],
     })
     new_customer.update_attributes!(sign_up_params)
       
