@@ -47,7 +47,7 @@ ActiveRecord::Schema.define(version: 2019_04_17_075237) do
     t.string "tel"
     t.string "pc_mail", comment: "pcメール。fileMakerから移行"
     t.string "phone_mail", comment: "携帯メール。fileMakerから移行"
-    t.boolean "can_receive_mail"
+    t.boolean "can_receive_mail", default: true, comment: "お知らせメールなどの受け取り可否"
     t.date "birthday"
     t.string "zip_code"
     t.string "prefecture"
@@ -163,30 +163,32 @@ ActiveRecord::Schema.define(version: 2019_04_17_075237) do
     t.index ["reservation_id"], name: "index_reservation_coupons_on_reservation_id"
   end
 
-  create_table "reservation_menus", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.bigint "reservation_id"
-    t.bigint "menu_id"
+  create_table "reservation_detail_options", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "reservation_detail_id"
+    t.bigint "option_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["menu_id"], name: "index_reservation_menus_on_menu_id"
-    t.index ["reservation_id"], name: "index_reservation_menus_on_reservation_id"
+    t.index ["option_id"], name: "index_reservation_detail_options_on_option_id"
+    t.index ["reservation_detail_id"], name: "index_reservation_detail_options_on_reservation_detail_id"
   end
 
-  create_table "reservation_options", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "reservation_details", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", comment: "予約の詳細。シフトやメニューなどに紐づく", force: :cascade do |t|
     t.bigint "reservation_id"
-    t.bigint "option_id"
-    t.integer "count"
+    t.bigint "menu_id"
+    t.bigint "shift_id"
+    t.integer "mimitsubo_count", comment: "耳つぼジュエリの個数。"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["option_id"], name: "index_reservation_options_on_option_id"
-    t.index ["reservation_id"], name: "index_reservation_options_on_reservation_id"
+    t.index ["menu_id"], name: "index_reservation_details_on_menu_id"
+    t.index ["reservation_id"], name: "index_reservation_details_on_reservation_id"
+    t.index ["shift_id"], name: "index_reservation_details_on_shift_id"
   end
 
   create_table "reservations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "children_count", default: 0, comment: "随伴するお子様の数"
     t.text "reservation_comment"
+    t.bigint "store_id"
     t.bigint "customer_id"
-    t.bigint "shift_id", comment: "storeやstaff、日時の情報はshiftで保持する"
     t.bigint "pregnant_state_id"
     t.date "reservation_date"
     t.time "start_time"
@@ -196,7 +198,7 @@ ActiveRecord::Schema.define(version: 2019_04_17_075237) do
     t.datetime "updated_at", null: false
     t.index ["customer_id"], name: "index_reservations_on_customer_id"
     t.index ["pregnant_state_id"], name: "index_reservations_on_pregnant_state_id"
-    t.index ["shift_id"], name: "index_reservations_on_shift_id"
+    t.index ["store_id"], name: "index_reservations_on_store_id"
   end
 
   create_table "roles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -318,12 +320,14 @@ ActiveRecord::Schema.define(version: 2019_04_17_075237) do
   add_foreign_key "options", "skills"
   add_foreign_key "reservation_coupons", "coupons"
   add_foreign_key "reservation_coupons", "reservations"
-  add_foreign_key "reservation_menus", "menus"
-  add_foreign_key "reservation_menus", "reservations"
-  add_foreign_key "reservation_options", "options"
-  add_foreign_key "reservation_options", "reservations"
+  add_foreign_key "reservation_detail_options", "options"
+  add_foreign_key "reservation_detail_options", "reservation_details"
+  add_foreign_key "reservation_details", "menus"
+  add_foreign_key "reservation_details", "reservations"
+  add_foreign_key "reservation_details", "shifts"
   add_foreign_key "reservations", "customers"
   add_foreign_key "reservations", "pregnant_states"
+  add_foreign_key "reservations", "stores"
   add_foreign_key "shifts", "staffs"
   add_foreign_key "shifts", "stores"
   add_foreign_key "skill_staffs", "skills"
