@@ -31,6 +31,7 @@ class Api::Customers::RegistrationsController < DeviseTokenAuth::RegistrationsCo
     :first_visit_store_id,
     :last_visit_store_id,
     :provider,
+    :can_receive_mail,
   ]
 
   def sign_up_params
