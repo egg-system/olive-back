@@ -42,8 +42,8 @@
         <td scope="row"><%=staff.store_name%></td>
         <td><%=staff.last_name%></td>
         <td><%=staff.first_name%></td>
-        <td></td>
-        <td></td>
+        <td><%=@staff_skills_list.find{|item| item['staff_id'] == staff.id}&.fetch('skills_list')%></td>
+        <td><%= staff.employment_type.present? ? Settings.employment_type[staff.employment_type] : nil%></td>
         <td><%=staff.updated_at.strftime('%Y/%m/%d')%></td>
         <td><%=link_to "詳細へ", staff_path(staff.id)%></td>
       </tr>
