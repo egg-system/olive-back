@@ -72,11 +72,11 @@ ActiveRecord::Schema.define(version: 2019_04_17_075237) do
     t.bigint "visit_reason_id", comment: "来店経緯"
     t.bigint "nearest_station_id", comment: "最寄り駅"
     t.string "email", default: "", null: false
-    t.string "encrypted_password", default: "", null: false
+    t.string "encrypted_password", comment: "非会員の場合、nullにする"
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.string "provider", default: "email", null: false
+    t.string "provider", default: "email", null: false, comment: "非会員の場合、noneになる"
     t.string "uid", default: "", null: false
     t.text "tokens"
     t.index ["baby_age_id"], name: "index_customers_on_baby_age_id"
