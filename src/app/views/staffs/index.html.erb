@@ -11,7 +11,13 @@
         <th>所属店舗</th>
         <td>
           <%= select_tag :store_id, options_for_select(@stores.collect{|store| [store.name, store.id]}, selected: @store_id), class: "form-control", prompt: "全店舗"%>
-        <td>
+        </td>
+        </tr>
+        <tr>
+          <th>スタッフ氏名</th>
+          <td>
+            <%= text_field_tag :staff_name, @staff_name.present? ? @staff_name : "" ,{class: "form-control"}%>
+          </td>
         </tr>
       </tbody>
     </table>
