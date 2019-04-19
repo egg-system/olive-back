@@ -26,7 +26,7 @@ Customer.where(id: 1).first_or_create!(
   last_name: '顧客1', 
   first_kana: '高橋',
   last_kana: 'こきゃく１', 
-  tel: '090-0000-0000', 
+  tel: '09010001000', 
   email: 'test@test.com',
   password: 'password',
   pc_mail: 'tt.wing001@gmail.com', 
