@@ -15,7 +15,8 @@ class Api::Customers::RegistrationsController < DeviseTokenAuth::RegistrationsCo
     })
     new_customer.update_attributes!(sign_up_params)
       
-    render json: new_customer
+    # superの返り値に合わせる
+    render json: { status: 'success', data: new_customer }
   end
 
   private
