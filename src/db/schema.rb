@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_17_075237) do
+ActiveRecord::Schema.define(version: 2019_04_20_014643) do
 
   create_table "baby_ages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
@@ -175,13 +175,20 @@ ActiveRecord::Schema.define(version: 2019_04_17_075237) do
   create_table "reservation_details", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", comment: "予約の詳細。シフトやメニューなどに紐づく", force: :cascade do |t|
     t.bigint "reservation_id"
     t.bigint "menu_id"
-    t.bigint "shift_id"
     t.integer "mimitsubo_count", comment: "耳つぼジュエリの個数。"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["menu_id"], name: "index_reservation_details_on_menu_id"
     t.index ["reservation_id"], name: "index_reservation_details_on_reservation_id"
-    t.index ["shift_id"], name: "index_reservation_details_on_shift_id"
+  end
+
+  create_table "reservation_shifts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "reservation_id"
+    t.bigint "shift_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["reservation_id"], name: "index_reservation_shifts_on_reservation_id"
+    t.index ["shift_id"], name: "index_reservation_shifts_on_shift_id"
   end
 
   create_table "reservations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -324,7 +331,8 @@ ActiveRecord::Schema.define(version: 2019_04_17_075237) do
   add_foreign_key "reservation_detail_options", "reservation_details"
   add_foreign_key "reservation_details", "menus"
   add_foreign_key "reservation_details", "reservations"
-  add_foreign_key "reservation_details", "shifts"
+  add_foreign_key "reservation_shifts", "reservations"
+  add_foreign_key "reservation_shifts", "shifts"
   add_foreign_key "reservations", "customers"
   add_foreign_key "reservations", "pregnant_states"
   add_foreign_key "reservations", "stores"
