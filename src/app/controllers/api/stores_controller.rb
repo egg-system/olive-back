@@ -14,7 +14,7 @@ class Api::StoresController < Api::ApiController
     render json: Shift.where(store_id: params[:id])
       .where(staff_id: staff_ids)
       .where(date: (params[:from_date])..(params[:to_date]))
-      .has_any_reservation
+      .where_not_reserved
       .to_time_slots
   end
 end

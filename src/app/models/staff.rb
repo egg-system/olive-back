@@ -47,6 +47,7 @@ class Staff < ApplicationRecord
   scope :join_store, -> {
     left_joins(:store).select("stores.name as store_name")
   }
+
   scope :join_role, -> {
     left_joins(:role).select("roles.name as role_name")
   }
