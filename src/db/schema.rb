@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_17_075237) do
+ActiveRecord::Schema.define(version: 2019_04_20_014643) do
 
   create_table "baby_ages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
@@ -47,13 +47,12 @@ ActiveRecord::Schema.define(version: 2019_04_17_075237) do
     t.string "tel"
     t.string "pc_mail", comment: "pcメール。fileMakerから移行"
     t.string "phone_mail", comment: "携帯メール。fileMakerから移行"
-    t.boolean "can_receive_mail"
+    t.boolean "can_receive_mail", default: true, comment: "お知らせメールなどの受け取り可否"
     t.date "birthday"
     t.string "zip_code"
     t.string "prefecture"
     t.text "city"
     t.text "address"
-    t.boolean "has_membership"
     t.text "comment"
     t.bigint "first_visit_store_id"
     t.bigint "last_visit_store_id"
@@ -73,15 +72,14 @@ ActiveRecord::Schema.define(version: 2019_04_17_075237) do
     t.bigint "visit_reason_id", comment: "来店経緯"
     t.bigint "nearest_station_id", comment: "最寄り駅"
     t.string "email", default: "", null: false
-    t.string "encrypted_password", default: "", null: false
+    t.string "encrypted_password", comment: "非会員の場合、nullにする"
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.string "provider", default: "email", null: false
+    t.string "provider", default: "email", null: false, comment: "非会員の場合、noneになる"
     t.string "uid", default: "", null: false
     t.text "tokens"
     t.index ["baby_age_id"], name: "index_customers_on_baby_age_id"
-    t.index ["email", "has_membership"], name: "index_customers_on_email_and_has_membership", unique: true
     t.index ["email"], name: "index_customers_on_email"
     t.index ["first_visit_store_id"], name: "index_customers_on_first_visit_store_id"
     t.index ["last_visit_store_id"], name: "index_customers_on_last_visit_store_id"
@@ -165,30 +163,39 @@ ActiveRecord::Schema.define(version: 2019_04_17_075237) do
     t.index ["reservation_id"], name: "index_reservation_coupons_on_reservation_id"
   end
 
-  create_table "reservation_menus", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.bigint "reservation_id"
-    t.bigint "menu_id"
+  create_table "reservation_detail_options", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "reservation_detail_id"
+    t.bigint "option_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["menu_id"], name: "index_reservation_menus_on_menu_id"
-    t.index ["reservation_id"], name: "index_reservation_menus_on_reservation_id"
+    t.index ["option_id"], name: "index_reservation_detail_options_on_option_id"
+    t.index ["reservation_detail_id"], name: "index_reservation_detail_options_on_reservation_detail_id"
   end
 
-  create_table "reservation_options", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "reservation_details", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", comment: "予約の詳細。シフトやメニューなどに紐づく", force: :cascade do |t|
     t.bigint "reservation_id"
-    t.bigint "option_id"
-    t.integer "count"
+    t.bigint "menu_id"
+    t.integer "mimitsubo_count", comment: "耳つぼジュエリの個数。"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["option_id"], name: "index_reservation_options_on_option_id"
-    t.index ["reservation_id"], name: "index_reservation_options_on_reservation_id"
+    t.index ["menu_id"], name: "index_reservation_details_on_menu_id"
+    t.index ["reservation_id"], name: "index_reservation_details_on_reservation_id"
+  end
+
+  create_table "reservation_shifts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "reservation_id"
+    t.bigint "shift_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["reservation_id"], name: "index_reservation_shifts_on_reservation_id"
+    t.index ["shift_id"], name: "index_reservation_shifts_on_shift_id"
   end
 
   create_table "reservations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "children_count", default: 0, comment: "随伴するお子様の数"
     t.text "reservation_comment"
+    t.bigint "store_id"
     t.bigint "customer_id"
-    t.bigint "shift_id", comment: "storeやstaff、日時の情報はshiftで保持する"
     t.bigint "pregnant_state_id"
     t.date "reservation_date"
     t.time "start_time"
@@ -198,7 +205,7 @@ ActiveRecord::Schema.define(version: 2019_04_17_075237) do
     t.datetime "updated_at", null: false
     t.index ["customer_id"], name: "index_reservations_on_customer_id"
     t.index ["pregnant_state_id"], name: "index_reservations_on_pregnant_state_id"
-    t.index ["shift_id"], name: "index_reservations_on_shift_id"
+    t.index ["store_id"], name: "index_reservations_on_store_id"
   end
 
   create_table "roles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -320,12 +327,15 @@ ActiveRecord::Schema.define(version: 2019_04_17_075237) do
   add_foreign_key "options", "skills"
   add_foreign_key "reservation_coupons", "coupons"
   add_foreign_key "reservation_coupons", "reservations"
-  add_foreign_key "reservation_menus", "menus"
-  add_foreign_key "reservation_menus", "reservations"
-  add_foreign_key "reservation_options", "options"
-  add_foreign_key "reservation_options", "reservations"
+  add_foreign_key "reservation_detail_options", "options"
+  add_foreign_key "reservation_detail_options", "reservation_details"
+  add_foreign_key "reservation_details", "menus"
+  add_foreign_key "reservation_details", "reservations"
+  add_foreign_key "reservation_shifts", "reservations"
+  add_foreign_key "reservation_shifts", "shifts"
   add_foreign_key "reservations", "customers"
   add_foreign_key "reservations", "pregnant_states"
+  add_foreign_key "reservations", "stores"
   add_foreign_key "shifts", "staffs"
   add_foreign_key "shifts", "stores"
   add_foreign_key "skill_staffs", "skills"

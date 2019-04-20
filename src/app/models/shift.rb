@@ -1,12 +1,14 @@
 class Shift < ApplicationRecord
   require 'tod'
 
+  # time型を扱いやすくするための実装
   serialize :start_at, Tod::TimeOfDay
   serialize :end_at, Tod::TimeOfDay
 
   extend DateModule
 
-  has_many :reservations
+  has_one :reservation_shift
+  has_one :reservation, through: :reservation_shift
   
   belongs_to :store
   belongs_to :staff
@@ -16,8 +18,8 @@ class Shift < ApplicationRecord
     where(date: (start_date)..(end_date))
   }
 
-  scope :has_any_reservation, -> {
-    left_joins(:reservations).where('reservations.id is NULL')
+  scope :where_not_reserved, -> {
+    left_joins(:reservation).where('reservations.id is NULL')
   }
 
   def self.to_time_slots
@@ -48,30 +50,31 @@ class Shift < ApplicationRecord
         staff_id: staff_id,
         date: shift_date, 
         start_at: shift_time,
-        end_at: shift_time + SLOT_INCREMENT_SECOND,
+        end_at: shift_time + SLOT_INCREMENT_MITUNES.minutes,
       ).first_or_create()
     }
   end
 
   def self.get_time_slots(date)
-    SHIFT_TIMES.map { |label, time_slot| 
-      DateTime.parse("#{date} #{time_slot}")
+    SHIFT_TIMES.map { |label, time_slot|
+      day = Date.parse(date)
+      Tod::TimeOfDay.parse(time_slot).on(day)
     }
   end
-
-  def shift_at
-    date_string = self.date.strftime('%Y-%m-%d')
-    shift_date = DateTime.parse("#{date_string} #{self.start_at}")
-    shift_date.strftime('%Y%m%d%H%M')
-  end
-
+  
   def self.slot_time_labels
     return SHIFT_TIMES.keys
   end
 
+  def shift_at
+    self.start_at.on(self.date).strftime('%Y%m%d%H%M')
+  end
+
+
   private
+
   # 30分刻みでシフトを設定する
-  SLOT_INCREMENT_SECOND = 1800
+  SLOT_INCREMENT_MITUNES = 30
 
   SHIFT_TIMES = {
     '10:00~10:30'  => '10:00:00',
