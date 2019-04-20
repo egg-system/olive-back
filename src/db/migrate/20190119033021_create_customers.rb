@@ -8,13 +8,12 @@ class CreateCustomers < ActiveRecord::Migration[5.1]
       t.string :tel
       t.string :pc_mail, comment: 'pcメール。fileMakerから移行'
       t.string :phone_mail, comment: '携帯メール。fileMakerから移行'
-      t.boolean :can_receive_mail
+      t.boolean :can_receive_mail, nil: false, default: true, comment: 'お知らせメールなどの受け取り可否'
       t.date :birthday
       t.string :zip_code
       t.string :prefecture
       t.text :city
       t.text :address
-      t.boolean :has_membership
       t.text :comment
       t.references :first_visit_store, foreign_key: { to_table: :stores }
       t.references :last_visit_store, foreign_key: { to_table: :stores }

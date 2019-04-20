@@ -1,6 +1,6 @@
 class DeviseTokenAuthCreateCustomers < ActiveRecord::Migration[5.2]
   def change
-    add_column :customers, :provider, :string, null: false, default: 'email'
+    add_column :customers, :provider, :string, null: false, default: 'email', comment: '非会員の場合、noneになる'
     add_column :customers, :uid, :string, null: false, default: ''
     add_column :customers, :tokens, :text
 

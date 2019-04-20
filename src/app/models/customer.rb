@@ -16,6 +16,8 @@ class Customer < ApplicationRecord
   belongs_to :visit_reason, optional: true
   belongs_to :nearest_station, optional: true
 
+  before_validation :sync_none_uid
+
   #left join
   scope :join_size, ->{
     left_joins(:size).select("sizes.name as size_name")
@@ -30,4 +32,14 @@ class Customer < ApplicationRecord
   }
   
   attr_accessor :age
+
+  protected
+
+  def is_none_provider?
+    provider === 'none'
+  end
+
+  def sync_none_uid
+    self.uid = Time.now.to_s if is_none_provider?
+  end
 end
