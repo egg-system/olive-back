@@ -1,46 +1,46 @@
 # store_id:2はエステの店舗が予約済み
 Store.where(id: 3).first_or_create(
-    store_type: 0, 
-    name:'女性専門の治療院オリーヴボディケア　直営テスト店', 
-    address:'東京都新宿区', 
-    tel:'000-000-000', 
-    mail:'tt.wing001@gmail.com', 
-    url:'https://eggsystem.co.jp/', 
-    open_at:'10:00', 
+    store_type: 0,
+    name:'女性専門の治療院オリーヴボディケア　直営テスト店',
+    address:'東京都新宿区',
+    tel:'000-000-000',
+    mail:'tt.wing001@gmail.com',
+    url:'https://eggsystem.co.jp/',
+    open_at:'10:00',
     close_at:'20:00'
   )
-  
+
 Store.where(id: 4).first_or_create(
-  store_type: 1, 
-  name:'女性専門の治療院オリーヴボディケア　FCテスト店', 
-  address:'東京都新宿区', 
-  tel:'000-000-000', 
-  mail:'tt.wing002@gmail.com', 
-  url:'https://eggsystem.co.jp/', 
-  open_at:'10:00', 
+  store_type: 1,
+  name:'女性専門の治療院オリーヴボディケア　FCテスト店',
+  address:'東京都新宿区',
+  tel:'000-000-000',
+  mail:'tt.wing002@gmail.com',
+  url:'https://eggsystem.co.jp/',
+  open_at:'10:00',
   close_at:'20:00'
-)  
+)
 
 Customer.where(id: 1).first_or_create!(
-  first_name: '高橋', 
-  last_name: '顧客1', 
+  first_name: '高橋',
+  last_name: '顧客1',
   first_kana: '高橋',
-  last_kana: 'こきゃく１', 
-  tel: '09010001000', 
+  last_kana: 'こきゃく１',
+  tel: '09010001000',
   email: 'test@test.com',
   password: 'password',
-  pc_mail: 'tt.wing001@gmail.com', 
-  phone_mail: 'tt.wing002@gmail.com', 
-  can_receive_mail: true, 
-  birthday: '1985-1-1', 
-  zip_code: '160-0022', 
-  prefecture: '東京都', 
-  city: '新宿区新宿１−１−１　なんとかビル１階', 
+  pc_mail: 'tt.wing001@gmail.com',
+  phone_mail: 'tt.wing002@gmail.com',
+  can_receive_mail: true,
+  birthday: '1985-1-1',
+  zip_code: '160-0022',
+  prefecture: '東京都',
+  city: '新宿区新宿１−１−１　なんとかビル１階',
   address: '東京都	新宿区新宿１−１−１　なんとかビル１階',
-  comment: 'コメントです', 
-  first_visit_store_id: 1, 
-  last_visit_store_id: 2, 
-  first_visited_at: '2019-01-01', 
+  comment: 'コメントです',
+  first_visit_store_id: 1,
+  last_visit_store_id: 2,
+  first_visited_at: '2019-01-01',
   last_visited_at: '2019-02-01',
   card_number: 999,
   children_count: 1,
@@ -70,3 +70,5 @@ SkillStaff.where(id: 5).first_or_create(staff_id:3, skill_id:2)
 SkillStaff.where(id: 6).first_or_create(staff_id:4, skill_id:1)
 SkillStaff.where(id: 7).first_or_create(staff_id:5, skill_id:1)
 SkillStaff.where(id: 8).first_or_create(staff_id:5, skill_id:2)
+
+Coupon.find(1).bought_by_customer(1)

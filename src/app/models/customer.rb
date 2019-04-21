@@ -3,7 +3,7 @@ class Customer < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable
-         
+
   include DeviseTokenAuth::Concerns::User
 
   belongs_to :first_visit_store, class_name: 'Store', foreign_key: 'first_visit_store_id'
@@ -15,6 +15,8 @@ class Customer < ApplicationRecord
   belongs_to :size, optional: true
   belongs_to :visit_reason, optional: true
   belongs_to :nearest_station, optional: true
+
+  has_many :customer_coupons
 
   before_validation :sync_none_uid
 
@@ -30,7 +32,7 @@ class Customer < ApplicationRecord
   scope :like_name, ->(name){
     where("concat(last_name, first_name) like ?", "%#{name}%")
   }
-  
+
   attr_accessor :age
 
   protected

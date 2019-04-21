@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_20_014643) do
+ActiveRecord::Schema.define(version: 2019_04_21_023226) do
 
   create_table "baby_ages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
@@ -18,25 +18,47 @@ ActiveRecord::Schema.define(version: 2019_04_20_014643) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "coupon_histories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.bigint "customer_id"
-    t.bigint "coupon_id"
-    t.date "used_at"
+  create_table "coupon_types", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name"
+    t.string "type_code"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["coupon_id"], name: "index_coupon_histories_on_coupon_id"
-    t.index ["customer_id"], name: "index_coupon_histories_on_customer_id"
+    t.index ["type_code"], name: "index_coupon_types_on_type_code", unique: true
   end
 
   create_table "coupons", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "coupon_type_id"
     t.string "name"
     t.string "fee", comment: "税別料金"
     t.integer "count", comment: "利用回数"
     t.date "start_at"
     t.date "end_at"
-    t.date "expired_at"
+    t.integer "months_to_expire"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["coupon_type_id"], name: "index_coupons_on_coupon_type_id"
+  end
+
+  create_table "customer_coupon_tickets", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "customer_id"
+    t.bigint "customer_coupon_id"
+    t.date "used_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["customer_coupon_id"], name: "index_customer_coupon_tickets_on_customer_coupon_id"
+    t.index ["customer_id"], name: "index_customer_coupon_tickets_on_customer_id"
+  end
+
+  create_table "customer_coupons", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "customer_id"
+    t.bigint "coupon_id"
+    t.bigint "coupon_type_id"
+    t.date "expire_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["coupon_id"], name: "index_customer_coupons_on_coupon_id"
+    t.index ["coupon_type_id"], name: "index_customer_coupons_on_coupon_type_id"
+    t.index ["customer_id"], name: "index_customer_coupons_on_customer_id"
   end
 
   create_table "customers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -310,8 +332,12 @@ ActiveRecord::Schema.define(version: 2019_04_20_014643) do
     t.datetime "updated_at", null: false
   end
 
-  add_foreign_key "coupon_histories", "coupons"
-  add_foreign_key "coupon_histories", "customers"
+  add_foreign_key "coupons", "coupon_types"
+  add_foreign_key "customer_coupon_tickets", "customer_coupons"
+  add_foreign_key "customer_coupon_tickets", "customers"
+  add_foreign_key "customer_coupons", "coupon_types"
+  add_foreign_key "customer_coupons", "coupons"
+  add_foreign_key "customer_coupons", "customers"
   add_foreign_key "customers", "baby_ages"
   add_foreign_key "customers", "nearest_stations"
   add_foreign_key "customers", "occupations"
