@@ -31,6 +31,7 @@ class Reservation < ApplicationRecord
             .where(staff_id: extract_can_treat_staff_ids)
             .where_not_reserved
         
+        return if shifts.empty?
         self.shifts = shifts.group_by { |shift| shift.staff_id }.values.first  
     end
 
@@ -48,6 +49,6 @@ class Reservation < ApplicationRecord
     def extract_end_time_from_details
         reservation_minutes = self.reservation_details
             .sum { |reservation_detail| reservation_detail.menu.service_minutes }
-        return self.start_time + reservation_minutes.minutes
+        return self.start_time + reservation_minutes.minutes unless self.start_time.nil? 
     end
 end
