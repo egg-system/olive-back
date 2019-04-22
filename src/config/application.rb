@@ -19,7 +19,7 @@ module Src
     # feからのアクセス設定
     Rails.application.config.middleware.insert_before 0, Rack::Cors do
       allow do
-        origins ENV.fetch('RESERVATION_CLIENT_DOMAIN', nil)
+        origins ENV.fetch('RESERVATION_CLIENT_DOMAIN', '')
     
         resource "*",
           headers: :any,
