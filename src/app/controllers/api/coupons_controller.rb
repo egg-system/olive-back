@@ -12,10 +12,10 @@ class Api::CouponsController < Api::ApiController
         join_tickets_can_be_used.
         group('expire_at').
         count
-      
+
       unless count_result.empty? then
         arr = []
-        count.each do|expire_at, count|
+        count_result.each do|expire_at, count|
           countArr.push({'count' => count, 'expire' => expire_at})
         end
         ret[coupon_type.type_code] = arr
