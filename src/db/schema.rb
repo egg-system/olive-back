@@ -200,6 +200,7 @@ ActiveRecord::Schema.define(version: 2019_04_20_014643) do
     t.date "reservation_date"
     t.time "start_time"
     t.time "end_time"
+    t.boolean "is_first"
     t.date "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

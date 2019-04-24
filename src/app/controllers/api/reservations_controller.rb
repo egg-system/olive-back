@@ -20,6 +20,7 @@ class Api::ReservationsController < Api::ApiController
       :reservation_date,
       :start_time,
       :store_id,
+      :is_first,
       coupon_ids: [],
       reservation_details_attributes: [
         :menu_id, 

@@ -12,6 +12,8 @@ class CreateReservations < ActiveRecord::Migration[5.1]
       t.time :start_time
       t.time :end_time
 
+      t.boolean :is_first
+
       t.date :deleted_at
       t.timestamps
     end
