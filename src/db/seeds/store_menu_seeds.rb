@@ -7,12 +7,11 @@ MenuCategory.where(id: 3).first_or_create!(name:'交通事故治療', department
 MenuCategory.where(id: 4).first_or_create!(name:'不妊治療', department_id:1)
 MenuCategory.where(id: 5).first_or_create!(name:'エステ', department_id:2)
 MenuCategory.where(id: 6).first_or_create!(name:'ブライダルエステ', department_id:2)
-MenuCategory.where(id: 7).first_or_create!(name:'オプション', department_id:1)
 
 Skill.where(id: 1).first_or_create!(name:'柔道整体師')
 Skill.where(id: 2).first_or_create!(name:'鍼灸師')
 
-Menu.where(id: 1).first_or_create!(name:'初通常整体コース', skill_id: 1, fee:6000, service_minutes:60, start_at:'2019-01-01', menu_category_id:1)
+Menu.where(id: 1).first_or_create!(name:'通常整体コース', skill_id: 1, fee:6000, service_minutes:60, start_at:'2019-01-01', menu_category_id:1)
 Menu.where(id: 2).first_or_create!(name:'整体スペシャルパックコース', skill_id: 1, fee:25000, service_minutes:120, start_at:'2019-01-01', menu_category_id:1)
 Menu.where(id: 3).first_or_create!(name:'骨盤矯正', skill_id: 1, fee:6000, service_minutes:60, start_at:'2019-01-01', menu_category_id:1)
 Menu.where(id: 4).first_or_create!(name:'マッサージ', skill_id: 1, fee:6000, service_minutes:60, start_at:'2019-01-01', menu_category_id:1)
