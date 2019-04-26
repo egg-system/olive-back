@@ -30,7 +30,7 @@ module Src
     
     config.action_mailer.raise_delivery_errors = true
     
-    meil_delivery_method = ENV.fetch('MAIL_DELIVERY_METHOD', 'letter_opener').to_sym
+    meil_delivery_method = ENV.fetch('MAIL_DELIVERY_METHOD', 'smtp').to_sym
     config.action_mailer.delivery_method = meil_delivery_method
 
     if meil_delivery_method === :smtp
