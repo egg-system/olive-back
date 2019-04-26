@@ -79,6 +79,7 @@ ActiveRecord::Schema.define(version: 2019_04_20_014643) do
     t.string "provider", default: "email", null: false, comment: "非会員の場合、noneになる"
     t.string "uid", default: "", null: false
     t.text "tokens"
+    t.boolean "allow_password_change", default: false, comment: "パスワード変更に必要"
     t.index ["baby_age_id"], name: "index_customers_on_baby_age_id"
     t.index ["email"], name: "index_customers_on_email"
     t.index ["first_visit_store_id"], name: "index_customers_on_first_visit_store_id"
