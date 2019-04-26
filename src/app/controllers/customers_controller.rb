@@ -39,6 +39,10 @@ class CustomersController < ApplicationController
     @stores = Store.all
     @customer = Customer.new(customer_params)
 
+    # メールが送信されないようにする
+    # 下記の実装漏れによるバグ可能性が高いため、要改修
+    @customer.should_send_mail = false
+
     respond_to do |format|
       begin
         @customer.save!

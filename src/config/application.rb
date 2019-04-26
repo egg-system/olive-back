@@ -28,6 +28,22 @@ module Src
       end
     end
     
+    config.action_mailer.raise_delivery_errors = true
+    
+    meil_delivery_method = ENV.fetch('MAIL_DELIVERY_METHOD', 'letter_opener').to_sym
+    config.action_mailer.delivery_method = meil_delivery_method
+
+    if meil_delivery_method === :smtp
+      config.action_mailer.smtp_settings = {
+        port:                 ENV.fetch('MAIL_PORT', ''),
+        domain:               ENV.fetch('MAIL_HOST', ''),
+        address:              ENV.fetch('MAIL_ADDRESS', ''),
+        user_name:            ENV.fetch('MAIL_USER', ''),
+        password:             ENV.fetch('MAIL_PASSWORD', ''),
+        authentication:       ENV.fetch('MAIL_AUTH', 'login').to_sym,
+      }
+    end
+    
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded after loading
