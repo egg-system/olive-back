@@ -33,15 +33,14 @@ module Src
     meil_delivery_method = ENV.fetch('MAIL_DELIVERY_METHOD', 'letter_opener').to_sym
     config.action_mailer.delivery_method = meil_delivery_method
 
-    if meil_delivery_method === :stmp 
+    if meil_delivery_method === :smtp
       config.action_mailer.smtp_settings = {
         port:                 ENV.fetch('MAIL_PORT', ''),
         domain:               ENV.fetch('MAIL_HOST', ''),
         address:              ENV.fetch('MAIL_ADDRESS', ''),
         user_name:            ENV.fetch('MAIL_USER', ''),
         password:             ENV.fetch('MAIL_PASSWORD', ''),
-        authentication:       'login',
-        enable_starttls_auto: true
+        authentication:       ENV.fetch('MAIL_AUTH', 'login').to_sym,
       }
     end
     
