@@ -6,8 +6,8 @@ class Customer < ApplicationRecord
          
   include DeviseTokenAuth::Concerns::User
 
-  belongs_to :first_visit_store, class_name: 'Store', foreign_key: 'first_visit_store_id'
-  belongs_to :last_visit_store, class_name: 'Store', foreign_key: 'last_visit_store_id'
+  belongs_to :first_visit_store, optional: true, class_name: 'Store', foreign_key: 'first_visit_store_id'
+  belongs_to :last_visit_store, optional: true, class_name: 'Store', foreign_key: 'last_visit_store_id'
 
   belongs_to :job_type, optional: true
   belongs_to :zoomancy, optional: true
