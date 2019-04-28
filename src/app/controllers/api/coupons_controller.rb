@@ -16,7 +16,7 @@ class Api::CouponsController < Api::ApiController
       unless count_result.empty? then
         arr = []
         count_result.each do|expire_at, count|
-          countArr.push({'count' => count, 'expire' => expire_at})
+          arr.push({'count' => count, 'expire' => expire_at})
         end
         ret[coupon_type.type_code] = arr
       end
