@@ -40,13 +40,11 @@ ActiveRecord::Schema.define(version: 2019_04_21_023226) do
   end
 
   create_table "customer_coupon_tickets", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.bigint "customer_id"
     t.bigint "customer_coupon_id"
     t.date "used_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["customer_coupon_id"], name: "index_customer_coupon_tickets_on_customer_coupon_id"
-    t.index ["customer_id"], name: "index_customer_coupon_tickets_on_customer_id"
   end
 
   create_table "customer_coupons", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -333,8 +331,7 @@ ActiveRecord::Schema.define(version: 2019_04_21_023226) do
   end
 
   add_foreign_key "coupons", "coupon_types"
-  add_foreign_key "customer_coupon_tickets", "customer_coupons"
-  add_foreign_key "customer_coupon_tickets", "customers"
+  add_foreign_key "customer_coupon_tickets", "customer_coupons", on_delete: :cascade
   add_foreign_key "customer_coupons", "coupon_types"
   add_foreign_key "customer_coupons", "coupons"
   add_foreign_key "customer_coupons", "customers"
