@@ -1,5 +1,6 @@
 class CustomerCoupon < ApplicationRecord
     belongs_to :coupon
+    belongs_to :coupon_type
     belongs_to :customer
     has_many :customer_coupon_tickets
 

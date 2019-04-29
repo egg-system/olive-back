@@ -1,22 +1,19 @@
 class Coupon < ApplicationRecord
+    has_many :customer_coupons
     def bought_by_customer(customer_id)
         ticket_count = self.count
-        customer_coupon = CustomerCoupon.new
-        customer_coupon.coupon_id = self.id
-        customer_coupon.coupon_type_id = self.coupon_type_id
-        customer_coupon.customer_id = customer_id
-        if self.months_to_expire then
-            customer_coupon.expire_at = Time.current.since(self.months_to_expire.month)
-        end
-        if !customer_coupon.save then
-            return false
-        end
+        customer_coupon = 
+            self.customer_coupons.build(
+                {
+                    customer_id: customer_id,
+                    expire_at: self.months_to_expire ?
+                        Time.current.since(self.months_to_expire.month) : nil,
+                    coupon_type_id: self.coupon_type_id
+                }
+            )
         ticket_count.times do |i|
-            customer_coupon_ticket = CustomerCouponTicket.new
-            customer_coupon_ticket.customer_coupon = customer_coupon
-            if !customer_coupon_ticket.save then
-                return false
-            end
+            customer_coupon.customer_coupon_tickets.build
         end
+        return customer_coupon.save
     end
 end
