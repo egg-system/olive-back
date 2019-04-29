@@ -72,3 +72,6 @@ SkillStaff.where(id: 7).first_or_create(staff_id:5, skill_id:1)
 SkillStaff.where(id: 8).first_or_create(staff_id:5, skill_id:2)
 
 Coupon.find(1).bought_by_customer(1)
+Coupon.find(2).bought_by_customer(1)
+Coupon.find(3).bought_by_customer(1)
+Coupon.find(4).bought_by_customer(1)
