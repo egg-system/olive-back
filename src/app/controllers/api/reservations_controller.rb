@@ -19,11 +19,12 @@ class Api::ReservationsController < Api::ApiController
       :reservation_comment,
       :reservation_date,
       :start_time,
-      :store_id,
+      :is_first,
       coupon_ids: [],
       reservation_details_attributes: [
+        :store_id,
         :menu_id, 
-        :mimitsubo_count, 
+        :mimitsubo_count,
         option_ids: [],
       ]
     )

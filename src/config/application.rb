@@ -19,13 +19,29 @@ module Src
     # feからのアクセス設定
     Rails.application.config.middleware.insert_before 0, Rack::Cors do
       allow do
-        origins ENV.fetch('RESERVATION_CLIENT_DOMAIN', nil)
+        origins ENV.fetch('RESERVATION_CLIENT_DOMAIN', '')
     
         resource "*",
           headers: :any,
           methods: [:get, :post, :put, :patch, :delete, :options, :head],
           expose: ['uid', 'access-token', 'client']
       end
+    end
+    
+    config.action_mailer.raise_delivery_errors = true
+    
+    meil_delivery_method = ENV.fetch('MAIL_DELIVERY_METHOD', 'smtp').to_sym
+    config.action_mailer.delivery_method = meil_delivery_method
+
+    if meil_delivery_method === :smtp
+      config.action_mailer.smtp_settings = {
+        port:                 ENV.fetch('MAIL_PORT', ''),
+        domain:               ENV.fetch('MAIL_HOST', ''),
+        address:              ENV.fetch('MAIL_ADDRESS', ''),
+        user_name:            ENV.fetch('MAIL_USER', ''),
+        password:             ENV.fetch('MAIL_PASSWORD', ''),
+        authentication:       ENV.fetch('MAIL_AUTH', 'login').to_sym,
+      }
     end
     
     # Settings in config/environments/* take precedence over those specified here.

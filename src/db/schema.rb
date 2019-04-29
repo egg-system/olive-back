@@ -99,6 +99,7 @@ ActiveRecord::Schema.define(version: 2019_04_21_023226) do
     t.string "provider", default: "email", null: false, comment: "非会員の場合、noneになる"
     t.string "uid", default: "", null: false
     t.text "tokens"
+    t.boolean "allow_password_change", default: false, comment: "パスワード変更に必要"
     t.index ["baby_age_id"], name: "index_customers_on_baby_age_id"
     t.index ["email"], name: "index_customers_on_email"
     t.index ["first_visit_store_id"], name: "index_customers_on_first_visit_store_id"
@@ -113,7 +114,7 @@ ActiveRecord::Schema.define(version: 2019_04_21_023226) do
   end
 
   create_table "departments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.text "name"
+    t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -195,11 +196,13 @@ ActiveRecord::Schema.define(version: 2019_04_21_023226) do
   create_table "reservation_details", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", comment: "予約の詳細。シフトやメニューなどに紐づく", force: :cascade do |t|
     t.bigint "reservation_id"
     t.bigint "menu_id"
+    t.bigint "store_id"
     t.integer "mimitsubo_count", comment: "耳つぼジュエリの個数。"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["menu_id"], name: "index_reservation_details_on_menu_id"
     t.index ["reservation_id"], name: "index_reservation_details_on_reservation_id"
+    t.index ["store_id"], name: "index_reservation_details_on_store_id"
   end
 
   create_table "reservation_shifts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -214,18 +217,17 @@ ActiveRecord::Schema.define(version: 2019_04_21_023226) do
   create_table "reservations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "children_count", default: 0, comment: "随伴するお子様の数"
     t.text "reservation_comment"
-    t.bigint "store_id"
     t.bigint "customer_id"
     t.bigint "pregnant_state_id"
     t.date "reservation_date"
     t.time "start_time"
     t.time "end_time"
+    t.boolean "is_first"
     t.date "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["customer_id"], name: "index_reservations_on_customer_id"
     t.index ["pregnant_state_id"], name: "index_reservations_on_pregnant_state_id"
-    t.index ["store_id"], name: "index_reservations_on_store_id"
   end
 
   create_table "roles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -354,11 +356,11 @@ ActiveRecord::Schema.define(version: 2019_04_21_023226) do
   add_foreign_key "reservation_detail_options", "reservation_details"
   add_foreign_key "reservation_details", "menus"
   add_foreign_key "reservation_details", "reservations"
+  add_foreign_key "reservation_details", "stores"
   add_foreign_key "reservation_shifts", "reservations"
   add_foreign_key "reservation_shifts", "shifts"
   add_foreign_key "reservations", "customers"
   add_foreign_key "reservations", "pregnant_states"
-  add_foreign_key "reservations", "stores"
   add_foreign_key "shifts", "staffs"
   add_foreign_key "shifts", "stores"
   add_foreign_key "skill_staffs", "skills"

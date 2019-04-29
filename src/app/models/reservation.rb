@@ -9,6 +9,7 @@ class Reservation < ApplicationRecord
 
     extend DateModule
 
+    belongs_to :customer
     belongs_to :pregnant_state, optional: true
     
     has_many :reservation_details
@@ -23,6 +24,8 @@ class Reservation < ApplicationRecord
     has_many :shifts, through: :reservation_shifts
     validates_presence_of :reservation_shifts
 
+    after_commit :send_confirm_mail, on: :create
+
     def build_shifts
         self.end_time = extract_end_time_from_details
         shifts = Shift
@@ -31,6 +34,7 @@ class Reservation < ApplicationRecord
             .where(staff_id: extract_can_treat_staff_ids)
             .where_not_reserved
         
+        return if shifts.empty?
         self.shifts = shifts.group_by { |shift| shift.staff_id }.values.first  
     end
 
@@ -48,6 +52,10 @@ class Reservation < ApplicationRecord
     def extract_end_time_from_details
         reservation_minutes = self.reservation_details
             .sum { |reservation_detail| reservation_detail.menu.service_minutes }
-        return self.start_time + reservation_minutes.minutes
+        return self.start_time + reservation_minutes.minutes unless self.start_time.nil? 
+    end
+    
+    def send_confirm_mail
+        ReservationMailer.confirm_reservation(self).deliver_now
     end
 end

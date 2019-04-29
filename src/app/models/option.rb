@@ -24,7 +24,7 @@ class Option < ApplicationRecord
 
   private
 
-  ACUPUNCTURE_OPTION_ID = 6
-  MIMITSUBO_JWELRY_OPTION_ID = 8
+  ACUPUNCTURE_OPTION_ID = 5
+  MIMITSUBO_JWELRY_OPTION_ID = 7
 
 end
