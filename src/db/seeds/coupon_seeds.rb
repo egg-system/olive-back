@@ -1,6 +1,6 @@
-CouponType.where(id: 1).first_or_create!(name:'施術', type_code: 'operation')
-CouponType.where(id: 2).first_or_create!(name:'インデプス', type_code: 'indeps')
-CouponType.where(id: 3).first_or_create!(name:'ブライダル', type_code: 'bridal')
+CouponType.where(id: 1).first_or_create!(name:'施術')
+CouponType.where(id: 2).first_or_create!(name:'インデプス')
+CouponType.where(id: 3).first_or_create!(name:'ブライダルエステ')
 
 Coupon.where(id: 1).first_or_create!(name:'施術5回券', coupon_type_id: 1, fee:29167, count:5, start_at:'2019-01-01')
 Coupon.where(id: 2).first_or_create!(name:'施術10回券', coupon_type_id: 1, fee:58334, count:10, start_at:'2019-01-01')
