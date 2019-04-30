@@ -20,10 +20,8 @@ ActiveRecord::Schema.define(version: 2019_04_21_023226) do
 
   create_table "coupon_types", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
-    t.string "type_code"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["type_code"], name: "index_coupon_types_on_type_code", unique: true
   end
 
   create_table "coupons", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
