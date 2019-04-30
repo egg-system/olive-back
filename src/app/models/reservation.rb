@@ -11,17 +11,24 @@ class Reservation < ApplicationRecord
 
     belongs_to :customer
     belongs_to :pregnant_state, optional: true
-    
+
     has_many :reservation_details
     accepts_nested_attributes_for :reservation_details
     validates_presence_of :reservation_details
-        
+
+    has_many :menus, through: :reservation_details
+    has_many :reservation_detail_options, through: :reservation_details
+    has_many :options, through: :reservation_detail_options
+
+    has_many :stores, through: :reservation_details
+
     has_many :reservation_coupons
     has_many :coupons, through: :reservation_coupons
     accepts_nested_attributes_for :reservation_coupons, allow_destroy: true
 
     has_many :reservation_shifts
     has_many :shifts, through: :reservation_shifts
+    has_many :staffs, -> { distinct }, through: :shifts
     validates_presence_of :reservation_shifts
 
     after_commit :send_confirm_mail, on: :create

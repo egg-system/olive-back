@@ -15,12 +15,36 @@
     <tbody>
         <% @reservations.each do |reservation|%>
         <tr>
-            <td><%=reservation.reservation_date%></td>
-            <td></td>
-            <td></td>
-            <td><%=reservation.staff_name%></td>
-            <td><%=reservation.total_fee%></td>
-            <td><%=(reservation.cancel_flg)? "有": "無"%></td>
+            <td>
+                <%=reservation.reservation_date%>&nbsp;
+                <%=reservation.start_time.strftime("%H:%M")%>〜<%=reservation.end_time.strftime("%H:%M")%>
+            </td>
+            <td>
+                <% reservation.stores.each_with_index do |store, i| %>
+                    <%=store.name%>
+                    <% if i != reservation.stores.length %>
+                        <br>
+                    <% end %>
+                <% end %>
+            </td>
+            <td>
+                <% reservation.menus.each_with_index do |menu, i| %>
+                    <%=menu.name%>
+                    <% if i != reservation.menus.length %>
+                        <br>
+                    <% end %>
+                <% end %>
+            </td>
+            <td>
+                <% reservation.staffs.each_with_index do |staff, i| %>
+                    <%=staff.first_name%>&nbsp;<%=staff.last_name%>
+                    <% if i != reservation.staffs.length %>
+                        <br>
+                    <% end %>
+                <% end %>
+            </td>
+            <td><%=number_with_delimiter(reservation.total_fee)%>円</td>
+            <td><%= (reservation.deleted_at) ? reservation.deleted_at.strftime("%Y/%m/%d") : "無"%></td>
         </tr>
         <%end%>
     </tbody>
