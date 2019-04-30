@@ -15,8 +15,8 @@ class CreateCustomers < ActiveRecord::Migration[5.1]
       t.text :city
       t.text :address
       t.text :comment
-      t.references :first_visit_store, foreign_key: { to_table: :stores }
-      t.references :last_visit_store, foreign_key: { to_table: :stores }
+      t.references :first_visit_store, nil: true, foreign_key: { to_table: :stores }
+      t.references :last_visit_store, nil: true, foreign_key: { to_table: :stores }
       t.date :first_visited_at
       t.date :last_visited_at
       t.string :card_number, comment: 'カルテの番号。紙媒体で管理しているため、外部キーなし'
