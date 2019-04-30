@@ -22,7 +22,7 @@ Rails.application.routes.draw do
   resources :skills, :menu_categories, :menus
   resources :coupons, :coupon_histories
 
-  resources :stores do
+  resources :stores, :reservations do
     collection do
       post :search
     end

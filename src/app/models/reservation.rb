@@ -2,8 +2,8 @@ class Reservation < ApplicationRecord
     require 'tod'
   
     # time型を扱いやすくするための実装
-    serialize :start_time, Tod::TimeOfDay
-    serialize :end_time, Tod::TimeOfDay
+    # serialize :start_time, Tod::TimeOfDay
+    #  serialize :end_time, Tod::TimeOfDay
 
     acts_as_paranoid
 
@@ -58,4 +58,12 @@ class Reservation < ApplicationRecord
     def send_confirm_mail
         ReservationMailer.confirm_reservation(self).deliver_now
     end
+
+    scope :join_customer, -> {
+        left_joins(:customer).select("concat(customers.first_name, customers.last_name) as customer_name")
+    }
+
+    scope :join_tables, -> {
+        select("reservations.*").join_customer
+    }
 end
