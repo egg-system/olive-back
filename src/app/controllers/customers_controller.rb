@@ -21,7 +21,6 @@ class CustomersController < ApplicationController
     @customer.age = (Date.today.strftime('%Y%m%d').to_i - @customer.birthday.strftime('%Y%m%d').to_i) / 10000
     @stores = Store.all
     @reservations = @customer.reservations
-    @staffs = @reservations[0].staffs
   end
 
   # GET /customers/new

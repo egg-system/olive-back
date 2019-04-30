@@ -1,6 +1,6 @@
 class Reservation < ApplicationRecord
     require 'tod'
-  
+
     # time型を扱いやすくするための実装
     serialize :start_time, Tod::TimeOfDay
     serialize :end_time, Tod::TimeOfDay
@@ -40,9 +40,13 @@ class Reservation < ApplicationRecord
             .where(start_at: (self.start_time.to_s)...(self.end_time.to_s))
             .where(staff_id: extract_can_treat_staff_ids)
             .where_not_reserved
-        
+
         return if shifts.empty?
-        self.shifts = shifts.group_by { |shift| shift.staff_id }.values.first  
+        self.shifts = shifts.group_by { |shift| shift.staff_id }.values.first
+    end
+
+    def total_fee
+        return self.menus.sum(:fee) + self.options.sum(:fee)
     end
 
     private
@@ -50,8 +54,8 @@ class Reservation < ApplicationRecord
     def extract_can_treat_staff_ids
         menu_ids = self.reservation_details
             .map { |reservation_detail| reservation_detail.menu.id }
-        option_ids = self.reservation_details.flat_map { |reservation_detail| 
-            reservation_detail.options.map { |option| option.id }  
+        option_ids = self.reservation_details.flat_map { |reservation_detail|
+            reservation_detail.options.map { |option| option.id }
         }
         return Staff.can_treats(menu_ids, option_ids).map { |staff| staff.id }
     end
@@ -59,9 +63,9 @@ class Reservation < ApplicationRecord
     def extract_end_time_from_details
         reservation_minutes = self.reservation_details
             .sum { |reservation_detail| reservation_detail.menu.service_minutes }
-        return self.start_time + reservation_minutes.minutes unless self.start_time.nil? 
+        return self.start_time + reservation_minutes.minutes unless self.start_time.nil?
     end
-    
+
     def send_confirm_mail
         ReservationMailer.confirm_reservation(self).deliver_now
     end
