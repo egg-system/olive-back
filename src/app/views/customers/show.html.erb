@@ -7,6 +7,7 @@
             <th scope="col">予約日時</th>
             <th scope="col">来店店舗</th>
             <th scope="col">メニュー</th>
+            <th scope="col">オプション</th>
             <th scope="col">担当者</th>
             <th scope="col">売上金額</th>
             <th scope="col">キャンセル有無</th>
@@ -20,25 +21,40 @@
                 <%=reservation.start_time.strftime("%H:%M")%>〜<%=reservation.end_time.strftime("%H:%M")%>
             </td>
             <td>
-                <% reservation.stores.each_with_index do |store, i| %>
+                <% reservation.stores.each_with_index do |store, index| %>
                     <%=store.name%>
-                    <% if i != reservation.stores.length %>
+                    <% if index != reservation.stores.length %>
                         <br>
                     <% end %>
                 <% end %>
             </td>
             <td>
-                <% reservation.menus.each_with_index do |menu, i| %>
+                <% reservation.menus.each_with_index do |menu, index| %>
                     <%=menu.name%>
-                    <% if i != reservation.menus.length %>
+                    <% if index != reservation.menus.length %>
                         <br>
                     <% end %>
                 <% end %>
             </td>
             <td>
-                <% reservation.staffs.each_with_index do |staff, i| %>
+                <% if reservation.reservation_detail_options.length == 0 %>
+                    無
+                <% else %>
+                    <% reservation.reservation_detail_options.each_with_index do |reservation_detail_option, index| %>
+                        <%=reservation_detail_option.option.name%>
+                        <% if reservation_detail_option.option.is_mimitsubo_jewelry %>
+                            ×<%= reservation_detail_option.reservation_detail.mimitsubo_count %>個
+                        <% end %>
+                        <% if index != reservation.reservation_detail_options.length %>
+                            <br>
+                        <% end %>
+                    <% end %>
+                <% end %>
+            </td>
+            <td>
+                <% reservation.staffs.each_with_index do |staff, index| %>
                     <%=staff.first_name%>&nbsp;<%=staff.last_name%>
-                    <% if i != reservation.staffs.length %>
+                    <% if index != reservation.staffs.length %>
                         <br>
                     <% end %>
                 <% end %>
