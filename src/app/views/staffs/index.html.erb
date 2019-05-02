@@ -42,8 +42,15 @@
         <td scope="row"><%=staff.store_name%></td>
         <td><%=staff.last_name%></td>
         <td><%=staff.first_name%></td>
-        <td></td>
-        <td></td>
+        <td>
+            <% staff.skills.each_with_index do |skill, index| %>
+                <%=skill.name%>
+                <% if index != staff.skills.length %>
+                    <br>
+                <% end %>
+            <% end %>
+        </td>
+        <td><%=staff.occupation_type_name%></td>
         <td><%=staff.updated_at.strftime('%Y/%m/%d')%></td>
         <td><%=link_to "詳細へ", staff_path(staff.id)%></td>
       </tr>
