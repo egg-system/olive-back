@@ -197,17 +197,19 @@ ActiveRecord::Schema.define(version: 2019_04_20_014643) do
   create_table "reservations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "children_count", default: 0, comment: "随伴するお子様の数"
     t.text "reservation_comment"
+    t.bigint "staff_id", comment: "対応予定のスタッフid。キャンセル時にシフトとのリレーションを消すため、追加"
     t.bigint "customer_id"
     t.bigint "pregnant_state_id"
     t.date "reservation_date"
     t.time "start_time"
     t.time "end_time"
     t.boolean "is_first"
-    t.date "deleted_at"
+    t.date "deleted_at", comment: "キャンセルされた日時。paranoidを利用しているため、このように命名"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["customer_id"], name: "index_reservations_on_customer_id"
     t.index ["pregnant_state_id"], name: "index_reservations_on_pregnant_state_id"
+    t.index ["staff_id"], name: "index_reservations_on_staff_id"
   end
 
   create_table "roles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -338,6 +340,7 @@ ActiveRecord::Schema.define(version: 2019_04_20_014643) do
   add_foreign_key "reservation_shifts", "shifts"
   add_foreign_key "reservations", "customers"
   add_foreign_key "reservations", "pregnant_states"
+  add_foreign_key "reservations", "staffs"
   add_foreign_key "shifts", "staffs"
   add_foreign_key "shifts", "stores"
   add_foreign_key "skill_staffs", "skills"
