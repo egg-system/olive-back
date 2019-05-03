@@ -8,6 +8,9 @@ class Api::ReservationsController < Api::ApiController
     reservation.build_shifts
     reservation.save!
   end
+
+  def index
+  end
   
   private
 
