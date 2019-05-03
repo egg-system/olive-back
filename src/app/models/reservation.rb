@@ -8,6 +8,7 @@ class Reservation < ApplicationRecord
     acts_as_paranoid
 
     extend DateModule
+    include PaginationModule
 
     belongs_to :customer
     belongs_to :pregnant_state, optional: true
@@ -25,6 +26,11 @@ class Reservation < ApplicationRecord
     validates_presence_of :reservation_shifts
 
     after_commit :send_confirm_mail, on: :create
+
+    scope :order_reserved_at, -> {
+      order(reservation_date: :desc)
+      .order(start_time: :desc)
+    }
 
     def build_shifts
         self.end_time = extract_end_time_from_details
