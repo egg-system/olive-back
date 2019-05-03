@@ -15,7 +15,7 @@ class Staff < ApplicationRecord
 
   has_many :shifts
 
-  def occupation_type_name
+  def employment_type_name
     if self.employment_type.nil?
         return ""
     end
