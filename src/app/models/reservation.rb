@@ -46,7 +46,15 @@ class Reservation < ApplicationRecord
     end
 
     def total_fee
-        return self.menus.sum(:fee) + self.options.sum(:fee)
+        menus_total = self.menus.sum(:fee)
+        options_total = self.reservation_detail_options.map {|detail_option|
+            if detail_option.is_mimitsubo_jewelry then
+                detail_option.option.fee * detail_option.mimitsubo_count
+            else
+                detail_option.option.fee
+            end
+        }.sum
+        return menus_total + options_total
     end
 
     private
