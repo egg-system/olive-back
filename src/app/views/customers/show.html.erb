@@ -20,47 +20,24 @@
                 <%=reservation.reservation_date%>&nbsp;
                 <%=reservation.start_time.strftime("%H:%M")%>〜<%=reservation.end_time.strftime("%H:%M")%>
             </td>
-            <td>
-                <% reservation.stores.each_with_index do |store, index| %>
-                    <%=store.name%>
-                    <% if index != reservation.stores.length %>
-                        <br>
-                    <% end %>
-                <% end %>
-            </td>
-            <td>
-                <% reservation.menus.each_with_index do |menu, index| %>
-                    <%=menu.name%>
-                    <% if index != reservation.menus.length %>
-                        <br>
-                    <% end %>
-                <% end %>
-            </td>
+            <td><%=safe_join(reservation.stores.pluck(:name), tag(:br))%></td>
+            <td><%=safe_join(reservation.menus.pluck(:name), tag(:br))%></td>
             <td>
                 <% if reservation.reservation_detail_options.length == 0 %>
                     無
                 <% else %>
-                    <% reservation.reservation_detail_options.each_with_index do |reservation_detail_option, index| %>
-                        <%=reservation_detail_option.option.name%>
-                        <% if reservation_detail_option.option.is_mimitsubo_jewelry %>
-                            ×<%= reservation_detail_option.reservation_detail.mimitsubo_count %>個
-                        <% end %>
-                        <% if index != reservation.reservation_detail_options.length %>
-                            <br>
-                        <% end %>
-                    <% end %>
+                    <%=safe_join(reservation.reservation_detail_options.map {|detail_option|
+                        if detail_option.is_mimitsubo_jewelry then
+                            detail_option.name + '×' + detail_option.mimitsubo_count.to_s + '個'
+                        else
+                            detail_option.name
+                        end
+                    }, tag(:br))%>
                 <% end %>
             </td>
-            <td>
-                <% reservation.staffs.each_with_index do |staff, index| %>
-                    <%=staff.first_name%>&nbsp;<%=staff.last_name%>
-                    <% if index != reservation.staffs.length %>
-                        <br>
-                    <% end %>
-                <% end %>
-            </td>
+            <td><%=safe_join(reservation.staffs.map{|staff| staff.full_name}, tag(:br))%></td>
             <td><%=number_with_delimiter(reservation.total_fee)%>円</td>
-            <td><%= (reservation.deleted_at) ? reservation.deleted_at.strftime("%Y/%m/%d") : "無"%></td>
+            <td><%= (reservation.deleted_at) ? "有" : "無"%></td>
         </tr>
         <%end%>
     </tbody>

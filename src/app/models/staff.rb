@@ -15,6 +15,10 @@ class Staff < ApplicationRecord
     
   has_many :shifts
 
+  def full_name
+    return self.last_name + ' ' + self.first_name
+  end
+
   scope :can_treats, -> (menu_ids, option_ids) {
     menus = Menu.where(id: menu_ids).select('skill_id').distinct
     must_skill_ids = menus.map { |menu| menu.skill_id }
