@@ -314,8 +314,8 @@ ActiveRecord::Schema.define(version: 2019_04_20_014643) do
     t.datetime "updated_at", null: false
   end
 
-  add_foreign_key "coupon_histories", "coupons"
-  add_foreign_key "coupon_histories", "customers"
+  add_foreign_key "coupon_histories", "coupons", on_delete: :cascade
+  add_foreign_key "coupon_histories", "customers", on_delete: :cascade
   add_foreign_key "customers", "baby_ages"
   add_foreign_key "customers", "nearest_stations"
   add_foreign_key "customers", "occupations"
@@ -329,22 +329,22 @@ ActiveRecord::Schema.define(version: 2019_04_20_014643) do
   add_foreign_key "menus", "skills"
   add_foreign_key "options", "departments"
   add_foreign_key "options", "skills"
-  add_foreign_key "reservation_coupons", "coupons"
-  add_foreign_key "reservation_coupons", "reservations"
-  add_foreign_key "reservation_detail_options", "options"
-  add_foreign_key "reservation_detail_options", "reservation_details"
-  add_foreign_key "reservation_details", "menus"
-  add_foreign_key "reservation_details", "reservations"
-  add_foreign_key "reservation_details", "stores"
-  add_foreign_key "reservation_shifts", "reservations"
-  add_foreign_key "reservation_shifts", "shifts"
-  add_foreign_key "reservations", "customers"
+  add_foreign_key "reservation_coupons", "coupons", on_delete: :cascade
+  add_foreign_key "reservation_coupons", "reservations", on_delete: :cascade
+  add_foreign_key "reservation_detail_options", "options", on_delete: :nullify
+  add_foreign_key "reservation_detail_options", "reservation_details", on_delete: :cascade
+  add_foreign_key "reservation_details", "menus", on_delete: :nullify
+  add_foreign_key "reservation_details", "reservations", on_delete: :cascade
+  add_foreign_key "reservation_details", "stores", on_delete: :cascade
+  add_foreign_key "reservation_shifts", "reservations", on_delete: :cascade
+  add_foreign_key "reservation_shifts", "shifts", on_delete: :cascade
+  add_foreign_key "reservations", "customers", on_delete: :cascade
   add_foreign_key "reservations", "pregnant_states"
-  add_foreign_key "reservations", "staffs"
-  add_foreign_key "shifts", "staffs"
-  add_foreign_key "shifts", "stores"
-  add_foreign_key "skill_staffs", "skills"
-  add_foreign_key "skill_staffs", "staffs"
+  add_foreign_key "reservations", "staffs", on_delete: :cascade
+  add_foreign_key "shifts", "staffs", on_delete: :cascade
+  add_foreign_key "shifts", "stores", on_delete: :cascade
+  add_foreign_key "skill_staffs", "skills", on_delete: :cascade
+  add_foreign_key "skill_staffs", "staffs", on_delete: :cascade
   add_foreign_key "staffs", "roles"
   add_foreign_key "staffs", "stores"
   add_foreign_key "store_menus", "menus"
