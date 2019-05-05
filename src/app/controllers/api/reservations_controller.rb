@@ -10,13 +10,22 @@ class Api::ReservationsController < Api::ApiController
   end
 
   def index
-    render json: Reservation
-      .where(customer_id: params[:customer_id])
-      .paginate(params[:page])
+    reservations = Reservation
+      .where(customer_id: index_params[:customer_id])
+      .where(store_id: index_params[:store_id])
+      .paginate(index_params[:page])
       .order_reserved_at
+
+    render json: { 
+      data: reservations,
+      total_pages: reservations.total_pages
+    }
   end
   
   private
+  def index_params
+    params.permit(:customer_id, :store_id, :page)
+  end
 
   def reservation_params
     params.permit(
