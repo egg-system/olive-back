@@ -41,7 +41,8 @@ class Reservation < ApplicationRecord
             .where_not_reserved
         
         return if shifts.empty?
-        self.shifts = shifts.group_by { |shift| shift.staff_id }.values.first  
+        self.shifts = shifts.group_by { |shift| shift.staff_id }.values.first
+        self.staff_id = self.shifts.first.staff_id
     end
 
     private
