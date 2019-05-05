@@ -11,7 +11,7 @@ class Menu < ApplicationRecord
     @@all_options = Option.all
     
     return self.all.map { |menu|
-        menu.to_sub_menu_attributes
+      menu.to_sub_menu_attributes
     }
   end
 
@@ -23,23 +23,23 @@ class Menu < ApplicationRecord
     options = @@all_options
     
     if options.nil?
-        options = Option.all
+      options = Option.all
     end
 
     if self.is_acupuncture
-        options = options.reject{ |option| 
-          option.is_acupuncture 
-        }
+      options = options.reject{ |option| 
+        option.is_acupuncture 
+      }
     end
 
     return {
-        id: self.id, 
-        name: self.name,
-        price: self.fee, 
-        minutes: self.service_minutes,
-        description: self.description,
-        department_id: self.menu_category.department_id, 
-        options: options.map { |option| option.to_api_json },
+      id: self.id, 
+      name: self.name,
+      price: self.fee, 
+      minutes: self.service_minutes,
+      description: self.description,
+      department_id: self.menu_category.department_id, 
+      options: options.map { |option| option.to_api_json },
     }
   end
 end
