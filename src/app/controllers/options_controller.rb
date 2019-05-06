@@ -12,9 +12,17 @@ class OptionsController < ApplicationController
   def show
   end
 
+  def show
+    @option = Option.find(params[:id])
+    @departments = Department.all
+    @skills = Skill.all
+  end
+
   # GET /options/new
   def new
     @option = Option.new
+    @departments = Department.all
+    @skills = Skill.all
   end
 
   # GET /options/1/edit
@@ -69,6 +77,6 @@ class OptionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def option_params
-      params.fetch(:option, {})
+      params.require(:option).permit(:name, :description, :fee, :start_at, :end_at, :department_id, :skill_id)
     end
 end

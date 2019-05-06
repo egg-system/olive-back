@@ -1,12 +1,17 @@
 
 <%= simple_form_for(@option) do |f| %>
-  <%= f.error_notification %>
-  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+  <%=f.input :name, label: "オプション名"%>
+  <%=f.input :description, label: "オプション説明"%>
+  <%=f.input :fee, label: "料金（税別）"%>
+  <%=f.input :start_at, label: "販売開始日"%>
+  <%=f.input :end_at, label: "販売終了日"%>
+  <%=f.input :department_id,  as: :select, collection: @departments.map{|department| [department.name, department.id]}, label: "部門", default: 0%>
+  <%=f.input :skill_id,  as: :select, collection: @skills.map{|skill| [skill.name, skill.id]}, label: "手技", default: 0%>
 
-  <div class="form-inputs">
-  </div>
-
-  <div class="form-actions">
-    <%= f.button :submit %>
-  </div>
+  <%= f.button :submit, class: 'btn btn-primary'%>
+  <% if request.path_info != new_option_path%>
+  <%= link_to '削除', option_path(@option),method: :delete, class: 'btn btn-danger' %>
+  <%end%>
+  <%= link_to '戻る', options_path, class: 'btn' %>
 <% end %>
+
