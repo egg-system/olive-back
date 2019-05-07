@@ -16,10 +16,6 @@ class Reservation < ApplicationRecord
     accepts_nested_attributes_for :reservation_details
     validates_presence_of :reservation_details
 
-    has_many :menus, through: :reservation_details
-    has_many :reservation_detail_options, through: :reservation_details
-    has_many :options, through: :reservation_detail_options
-
     has_many :stores, through: :reservation_details
 
     has_many :reservation_coupons
@@ -46,15 +42,36 @@ class Reservation < ApplicationRecord
     end
 
     def total_fee
-        menus_total = self.menus.sum(:fee)
-        options_total = self.reservation_detail_options.map {|detail_option|
-            if detail_option.is_mimitsubo_jewelry then
-                detail_option.option.fee * detail_option.mimitsubo_count
-            else
-                detail_option.option.fee
-            end
+        self.reservation_details.map { |detail|
+            detail.total_fee
         }.sum
-        return menus_total + options_total
+    end
+
+    def menu_names_for_display
+        self.reservation_details.map { |detail|
+            detail.menu.name
+        }
+    end
+
+    def option_names_for_display
+        names = []
+        self.reservation_details.each { |detail|
+            detail.options.each { |option|
+                if option.is_mimitsubo_jewelry then
+                    names.push(option.name + '×' + detail.mimitsubo_count.to_s + '個')
+                else
+                    names.push(option.name)
+                end
+            }
+        }
+        return names
+    end
+
+    def has_options
+        0 < 
+        self.reservation_details.select { |detail|
+            detail.has_options
+        }.length
     end
 
     private

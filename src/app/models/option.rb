@@ -22,6 +22,14 @@ class Option < ApplicationRecord
     }
   end
 
+  def self.mimitsubo_jewelry_fee
+    self.find(MIMITSUBO_JWELRY_OPTION_ID).fee
+  end
+  
+  scope :where_not_mimitsubo_jewelry, -> {
+    where.not('options.id = ?', MIMITSUBO_JWELRY_OPTION_ID)
+  }
+
   private
 
   ACUPUNCTURE_OPTION_ID = 5

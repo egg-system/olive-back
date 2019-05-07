@@ -21,18 +21,12 @@
                 <%=reservation.start_time.strftime("%H:%M")%>〜<%=reservation.end_time.strftime("%H:%M")%>
             </td>
             <td><%=safe_join(reservation.stores.pluck(:name), tag(:br))%></td>
-            <td><%=safe_join(reservation.menus.pluck(:name), tag(:br))%></td>
+            <td><%=safe_join(reservation.menu_names_for_display, tag(:br))%></td>
             <td>
-                <% if reservation.reservation_detail_options.length == 0 %>
-                    無
+                <% if reservation.has_options %>
+                    <%=safe_join(reservation.option_names_for_display, tag(:br))%>
                 <% else %>
-                    <%=safe_join(reservation.reservation_detail_options.map {|detail_option|
-                        if detail_option.is_mimitsubo_jewelry then
-                            detail_option.name + '×' + detail_option.mimitsubo_count.to_s + '個'
-                        else
-                            detail_option.name
-                        end
-                    }, tag(:br))%>
+                    無
                 <% end %>
             </td>
             <td><%=safe_join(reservation.staffs.map{|staff| staff.full_name}, tag(:br))%></td>
