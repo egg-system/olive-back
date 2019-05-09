@@ -21,7 +21,7 @@ Store.where(id: 4).first_or_create(
   close_at:'20:00'
 )  
 
-Customer.where(id: 1).first_or_create!(
+customer = Customer.where(id: 1).first_or_initialize(
   first_name: '顧客', 
   last_name: '高橋', 
   first_kana: 'コキャク',
@@ -54,6 +54,8 @@ Customer.where(id: 1).first_or_create!(
   size_id: 1,
   has_registration_card: false
 )
+customer.should_send_mail = false
+customer.save!
 
 # テストデータ用
 Staff.where(id: 2).first_or_create!(login: 'test1', password: 'password', first_name:'本部', last_name:'恵子', first_kana:'ほんぶ', last_kana:'けいこ', store_id:1, role_id:2, employment_type:0)
