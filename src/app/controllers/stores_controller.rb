@@ -5,6 +5,14 @@ class StoresController < ApplicationController
   # GET /stores.json
   def index
     @stores = Store.all
+    if params[:store_name].present?
+      @stores = @stores.where("name like ?", "%#{params[:store_name]}%")
+      @store_name = params[:store_name]
+    end
+  end
+
+  def search
+    return redirect_to stores_path(store_name: params[:store_name])
   end
 
   # GET /stores/1

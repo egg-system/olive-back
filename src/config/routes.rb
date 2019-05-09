@@ -18,7 +18,13 @@ Rails.application.routes.draw do
   end
 
   resources :shifts, only: [:index, :new, :create, :update]
-  resources :stores, :departments, :roles
+  resources :reservations do
+    collection do
+      post :search
+    end
+  end
+
+  resources :stores,  :departments, :roles  
   resources :skills, :menu_categories, :menus, :options
   resources :coupons, :coupon_histories
 

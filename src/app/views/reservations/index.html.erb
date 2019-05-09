@@ -1,0 +1,52 @@
+  <div id="reservation_index">
+    <div class="upper-frame">
+      <h4>検索条件入力</h4>
+      <div class="condition-section">
+        <%= form_with url: search_reservations_path, id:"search", method: :post do |form| %>
+        <table>
+          <tbody>
+            <tr>
+              <th>顧客名</th>
+              <td>
+                <%=form.text_field :customer_name, class: "form-control"%>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <%end%>
+      </div>
+      <div class="button-section">
+        <%=link_to "新規登録へ", new_reservation_path, {class: "btn btn-primary btn-new"}%>
+        <%=submit_tag "検索実行", {class: "btn btn-info btn-search", form: "search"}%>
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="lower-frame">
+      <table class="table">
+        <thead class="thead-light">
+          <tr>
+            <th scope="col">id</th>
+            <th scope="col">顧客名</th>
+            <th scope="col">予約日</th>
+            <th scope="col">開始時刻</th>
+            <th scope="col">終了時刻</th>
+            <th scope="col">更新日時</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @reservations.each do |reservation|%>
+          <tr>
+            <td><%=reservation.id%></td>
+            <td><%=resevation.customer_name%></td>
+            <td><%=reservation.reservation_date%></td>
+            <td><%=reservation.start_time%></td>
+            <td><%=reservation.end_time%></td>
+            <td><%=reservation.updated_at%></td>
+            <td><%=link_to "詳細へ", reservation_path(reservation.id)%></td>
+          </tr>
+          <%end%>
+        </tbody>
+      </table>
+    </div>
+  </div>
