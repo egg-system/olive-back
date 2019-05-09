@@ -16,6 +16,8 @@ class Customer < ApplicationRecord
   belongs_to :visit_reason, optional: true
   belongs_to :nearest_station, optional: true
 
+  has_many :reservations
+
   before_validation :sync_none_uid
 
   after_commit :send_register_mail, on: :create
