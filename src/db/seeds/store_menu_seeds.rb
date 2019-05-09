@@ -21,6 +21,8 @@ Menu.where(id: 7).first_or_create!(name:'特別鍼灸（マッサージ無）', 
 Menu.where(id: 8).first_or_create!(name:'交通事故治療', skill_id: 1, fee:0, service_minutes:60, start_at:'2019-01-01', menu_category_id:3)
 Menu.where(id: 9).first_or_create!(name:'不妊治療（整体）', skill_id: 1, fee:6000, service_minutes:60, start_at:'2019-01-01', menu_category_id:4)
 Menu.where(id: 10).first_or_create!(name:'不妊治療（鍼灸）', skill_id: 2, fee:6000, service_minutes:60, start_at:'2019-01-01', menu_category_id:4)
+
+# エステのメニュー
 Menu.where(id: 11).first_or_create!(name:'上半身メインコース', skill_id: 1, fee:6000, service_minutes:60, start_at:'2019-01-01', menu_category_id:5)
 Menu.where(id: 12).first_or_create!(name:'下半身メインコース', skill_id: 1, fee:6000, service_minutes:60, start_at:'2019-01-01', menu_category_id:5)
 Menu.where(id: 13).first_or_create!(name:'全身コース', skill_id: 1, fee:6000, service_minutes:60, start_at:'2019-01-01', menu_category_id:5)
@@ -64,5 +66,6 @@ Store.where(id: 2).first_or_create!(
 )
 
 Menu.all.each do |menu|
-  StoreMenu.where(store_id: 1, menu_id: menu.id).first_or_create!()
+  store_id = menu.id < 11 ? 1 : 2
+  StoreMenu.where(store_id: store_id, menu_id: menu.id).first_or_create!()
 end

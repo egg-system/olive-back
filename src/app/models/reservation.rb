@@ -1,97 +1,71 @@
 class Reservation < ApplicationRecord
-    require 'tod'
+  require 'tod'
 
-    # time型を扱いやすくするための実装
-    serialize :start_time, Tod::TimeOfDay
-    serialize :end_time, Tod::TimeOfDay
+  # time型を扱いやすくするための実装
+  serialize :start_time, Tod::TimeOfDay
+  serialize :end_time, Tod::TimeOfDay
 
-    acts_as_paranoid
+  acts_as_paranoid
 
-    extend DateModule
+  extend DateModule
+  include PaginationModule
 
-    belongs_to :customer
-    belongs_to :pregnant_state, optional: true
+  belongs_to :customer
+  belongs_to :staff
+  belongs_to :pregnant_state, optional: true
+  
+  has_many :reservation_details
+  accepts_nested_attributes_for :reservation_details
+  validates_presence_of :reservation_details
 
-    has_many :reservation_details
-    accepts_nested_attributes_for :reservation_details
-    validates_presence_of :reservation_details
+  has_many :reservation_coupons
+  has_many :coupons, through: :reservation_coupons
+  accepts_nested_attributes_for :reservation_coupons, allow_destroy: true
 
-    has_many :stores, through: :reservation_details
+  has_many :reservation_shifts, dependent: :delete_all
+  has_many :shifts, through: :reservation_shifts
+  validates_presence_of :reservation_shifts, on: :create
 
-    has_many :reservation_coupons
-    has_many :coupons, through: :reservation_coupons
-    accepts_nested_attributes_for :reservation_coupons, allow_destroy: true
+  after_commit :send_confirm_mail, on: :create
 
-    has_many :reservation_shifts
-    has_many :shifts, through: :reservation_shifts
-    has_many :staffs, -> { distinct }, through: :shifts
-    validates_presence_of :reservation_shifts
+  def build_shifts
+    self.end_time = extract_end_time_from_details
+    shifts = Shift
+      .where(date: self.reservation_date)
+      .where(start_at: (self.start_time.to_s)...(self.end_time.to_s))
+      .where(staff_id: extract_can_treat_staff_ids)
+      .where_not_reserved
 
-    after_commit :send_confirm_mail, on: :create
+    return if shifts.empty?
 
-    def build_shifts
-        self.end_time = extract_end_time_from_details
-        shifts = Shift
-            .where(date: self.reservation_date)
-            .where(start_at: (self.start_time.to_s)...(self.end_time.to_s))
-            .where(staff_id: extract_can_treat_staff_ids)
-            .where_not_reserved
+    self.shifts = shifts.group_by { |shift| shift.staff_id }.values.first
+    self.staff_id = self.shifts.first.staff_id
+  end
 
-        return if shifts.empty?
-        self.shifts = shifts.group_by { |shift| shift.staff_id }.values.first
-    end
+  def total_fee
+    self.reservation_details.sum { |detail|
+      detail.total_fee
+    }
+  end
+  
+  private
 
-    def total_fee
-        self.reservation_details.map { |detail|
-            detail.total_fee
-        }.sum
-    end
+  def extract_can_treat_staff_ids
+    menu_ids = self.reservation_details
+      .map { |reservation_detail| reservation_detail.menu.id }
+    option_ids = self.reservation_details.flat_map { |reservation_detail|
+      reservation_detail.options.map { |option| option.id }
+    }
+    return Staff.can_treats(menu_ids, option_ids).map { |staff| staff.id }
+  end
 
-    def menu_names_for_display
-        self.reservation_details.map { |detail|
-            detail.menu.name
-        }
-    end
+  def extract_end_time_from_details
+    reservation_minutes = self.reservation_details
+      .sum { |reservation_detail| reservation_detail.menu.service_minutes }
+    return self.start_time + reservation_minutes.minutes unless self.start_time.nil?
+  end
 
-    def option_names_for_display
-        names = []
-        self.reservation_details.each { |detail|
-            detail.options.each { |option|
-                if option.is_mimitsubo_jewelry then
-                    names.push(option.name + '×' + detail.mimitsubo_count.to_s + '個')
-                else
-                    names.push(option.name)
-                end
-            }
-        }
-        return names
-    end
-
-    def has_options
-        0 < 
-        self.reservation_details.select { |detail|
-            detail.has_options
-        }.length
-    end
-
-    private
-
-    def extract_can_treat_staff_ids
-        menu_ids = self.reservation_details
-            .map { |reservation_detail| reservation_detail.menu.id }
-        option_ids = self.reservation_details.flat_map { |reservation_detail|
-            reservation_detail.options.map { |option| option.id }
-        }
-        return Staff.can_treats(menu_ids, option_ids).map { |staff| staff.id }
-    end
-
-    def extract_end_time_from_details
-        reservation_minutes = self.reservation_details
-            .sum { |reservation_detail| reservation_detail.menu.service_minutes }
-        return self.start_time + reservation_minutes.minutes unless self.start_time.nil?
-    end
-
-    def send_confirm_mail
-        ReservationMailer.confirm_reservation(self).deliver_now
-    end
+  def send_confirm_mail
+    ReservationMailer.confirm_reservation(self).deliver_now
+  end
 end

@@ -1,38 +1,45 @@
-<% breadcrumb :root %>
+<% breadcrumb :root  %>
 <h1>基本情報</h1>
-<%=render "form"%>
+<%= render "form" %>
 <table class="table">
-    <thead class="thead-light">
-        <tr>
-            <th scope="col">予約日時</th>
-            <th scope="col">来店店舗</th>
-            <th scope="col">メニュー</th>
-            <th scope="col">オプション</th>
-            <th scope="col">担当者</th>
-            <th scope="col">売上金額</th>
-            <th scope="col">キャンセル有無</th>
-        </tr>
-    </thead>
-    <tbody>
-        <% @reservations.each do |reservation|%>
-        <tr>
-            <td>
-                <%=reservation.reservation_date%>&nbsp;
-                <%=reservation.start_time.strftime("%H:%M")%>〜<%=reservation.end_time.strftime("%H:%M")%>
-            </td>
-            <td><%=safe_join(reservation.stores.pluck(:name), tag(:br))%></td>
-            <td><%=safe_join(reservation.menu_names_for_display, tag(:br))%></td>
-            <td>
-                <% if reservation.has_options %>
-                    <%=safe_join(reservation.option_names_for_display, tag(:br))%>
-                <% else %>
-                    無
-                <% end %>
-            </td>
-            <td><%=safe_join(reservation.staffs.map{|staff| staff.full_name}, tag(:br))%></td>
-            <td><%=number_with_delimiter(reservation.total_fee)%>円</td>
-            <td><%= (reservation.deleted_at) ? "有" : "無"%></td>
-        </tr>
-        <%end%>
-    </tbody>
+	<thead class="thead-light">
+		<tr>
+			<th scope="col">予約日時</th>
+			<th scope="col">来店店舗</th>
+			<th scope="col">メニュー</th>
+			<th scope="col">オプション</th>
+			<th scope="col">担当者</th>
+			<th scope="col">売上金額</th>
+			<th scope="col">キャンセル有無</th>
+		</tr>
+	</thead>
+	<tbody>
+		<% @reservations.each do |reservation| %>
+			<tr>
+				<td>
+					<%= reservation.reservation_date %>&nbsp;
+					<%= reservation.start_time.strftime("%H:%M") %>〜<%= reservation.end_time.strftime("%H:%M") %>
+				</td>
+				<%# 以下、暫定仕様 %>
+				<td><%= safe_join(reservation.reservation_details.map { |detail| 
+					detail.store.name 
+				}, tag(:br)) %></td>
+				<td><%= safe_join(reservation.reservation_details.map { |detail| 
+					detail.menu.name 
+				}, tag(:br)) %></td>
+				<td>
+					<% if reservation.reservation_details.any? { |detail| detail.has_options } %>
+						<%= safe_join(reservation.reservation_details.flat_map { |detail|
+							detail.option_names
+						}, tag(:br)) %></td>
+					<% else %>
+						無
+					<% end %>
+				</td>
+				<td><%= reservation.staff.full_name %></td>
+				<td><%= number_with_delimiter(reservation.total_fee) %>円</td>
+				<td><%= (reservation.deleted_at) ? "有" : "無" %></td>
+			</tr>
+		<% end %>
+	</tbody>
 </table>

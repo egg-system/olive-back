@@ -1,6 +1,9 @@
 class Option < ApplicationRecord
   belongs_to :skill
   belongs_to :department
+  has_many :reservation_detail_options
+  has_many :reservation_details, through: :reservation_detail_options
+  has_many :reservations, through: :reservation_details
 
   attr_accessor :is_option, :is_mimitsubo_jewelry
 
@@ -21,14 +24,6 @@ class Option < ApplicationRecord
       is_mimitsubo_jewelry: self.is_mimitsubo_jewelry,
     }
   end
-
-  def self.mimitsubo_jewelry_fee
-    self.find(MIMITSUBO_JWELRY_OPTION_ID).fee
-  end
-  
-  scope :where_not_mimitsubo_jewelry, -> {
-    where.not('options.id = ?', MIMITSUBO_JWELRY_OPTION_ID)
-  }
 
   private
 
