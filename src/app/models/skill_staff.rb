@@ -1,4 +1,4 @@
 class SkillStaff < ApplicationRecord
-    belongs_to :staff
-    belongs_to :skill
+  belongs_to :staff
+  belongs_to :skill
 end

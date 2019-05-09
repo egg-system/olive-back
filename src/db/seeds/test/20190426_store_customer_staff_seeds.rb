@@ -22,13 +22,13 @@ Store.where(id: 4).first_or_create(
 )  
 
 Customer.where(id: 1).first_or_create!(
-  first_name: '高橋', 
-  last_name: '顧客1', 
-  first_kana: '高橋',
-  last_kana: 'こきゃく１', 
+  first_name: '顧客', 
+  last_name: '高橋', 
+  first_kana: 'コキャク',
+  last_kana: 'タカハシ', 
   tel: '09010001000', 
   email: 'test@test.com',
-  password: 'password',
+  password: 'test1234',
   pc_mail: 'tt.wing001@gmail.com', 
   phone_mail: 'tt.wing002@gmail.com', 
   can_receive_mail: true, 

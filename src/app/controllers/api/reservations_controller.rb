@@ -1,15 +1,40 @@
 class Api::ReservationsController < Api::ApiController
   include Concerns::TokenAuthenticable
+
   # TODO: customerが非会員かどうかに応じて、認証処理を追加する
-  skip_before_action :authenticate_api_customer!
+  skip_before_action :authenticate_api_customer!, only: :create
   
   def create
     reservation = Reservation.new(reservation_params)
     reservation.build_shifts
     reservation.save!
   end
+
+  def index
+    reservations = Reservation
+      .where(customer_id: index_params[:customer_id])
+      .paginate(index_params[:page])
+      .order_reserved_at
+
+    render json: { 
+      data: reservations,
+      total_pages: reservations.total_pages
+    }
+  end
+
+  def destroy
+    # 予約枠取得時に影響しないよう、リレーションを削除する
+    Reservation.transaction {
+      Reservation.find(params[:id]).delete
+      ReservationShift.where(reservation_id: params[:id]).delete_all
+    }
+    render json: { data: 'ok' }
+  end
   
   private
+  def index_params
+    params.permit(:customer_id, :page)
+  end
 
   def reservation_params
     params.permit(

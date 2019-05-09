@@ -28,12 +28,13 @@ Rails.application.routes.draw do
       sessions: 'api/customers/sessions',
       registrations: 'api/customers/registrations',
       passwords: 'api/customers/passwords',
+      token_validations: 'api/customers/token_validations',
     }
     get 'shops(/:id)', to: 'stores#shop'
     get 'shops(/:id)/menus', to: 'stores#menus'
     get 'shops(/:id)/dates', to: 'stores#dates'
 
-    resources :reservations, only: :create
+    resources :reservations, only: [:create, :index, :destroy]
   end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
