@@ -11,7 +11,8 @@ class Api::ReservationsController < Api::ApiController
   end
 
   def index
-    reservations = 
+    reservations = current_api_customer
+      .reservations
       .paginate(index_params[:page])
       .order_reserved_at
 

@@ -28,6 +28,11 @@ class Reservation < ApplicationRecord
 
   after_commit :send_confirm_mail, on: :create
 
+  scope :order_reserved_at, -> {	
+    order(reservation_date: :desc)	
+    .order(start_time: :desc)	
+  }
+
   def build_shifts
     self.end_time = extract_end_time_from_details
     shifts = Shift
