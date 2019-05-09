@@ -1,6 +1,9 @@
 class Option < ApplicationRecord
   belongs_to :skill
   belongs_to :department
+  has_many :reservation_detail_options
+  has_many :reservation_details, through: :reservation_detail_options
+  has_many :reservations, through: :reservation_details
 
   attr_accessor :is_option, :is_mimitsubo_jewelry
 
