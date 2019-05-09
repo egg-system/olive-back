@@ -21,9 +21,9 @@ class Reservation < ApplicationRecord
   has_many :coupons, through: :reservation_coupons
   accepts_nested_attributes_for :reservation_coupons, allow_destroy: true
 
-  has_many :reservation_shifts
+  has_many :reservation_shifts, dependent: :delete_all
   has_many :shifts, through: :reservation_shifts
-  validates_presence_of :reservation_shifts
+  validates_presence_of :reservation_shifts, on: :create
 
   after_commit :send_confirm_mail, on: :create
 
