@@ -11,8 +11,7 @@ class Api::ReservationsController < Api::ApiController
   end
 
   def index
-    reservations = Reservation
-      .where(customer_id: index_params[:customer_id])
+    reservations = 
       .paginate(index_params[:page])
       .order_reserved_at
 
@@ -33,7 +32,7 @@ class Api::ReservationsController < Api::ApiController
   
   private
   def index_params
-    params.permit(:customer_id, :page)
+    params.permit(:page)
   end
 
   def reservation_params

@@ -15,6 +15,10 @@ class Staff < ApplicationRecord
 
   has_many :shifts
 
+  def full_name
+    return self.last_name + ' ' + self.first_name
+  end
+  
   def employment_type_name
     if self.employment_type.nil?
         return ""
