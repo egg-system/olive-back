@@ -23,7 +23,8 @@
     <div class="form-right">
         <%= f.input :zip_code, label: '郵便番号'%>
         <%= f.input :address, label: '住所'%>
-        <%= f.input :birthday, label: '生年月日', wrapper: :horizontal_multi_select%>
+        <%= f.input :birthday, label: '生年月日', wrapper: :horizontal_multi_select,
+            start_year: 1940, end_year: Date.today.year%>
         <% if request.path_info != new_customer_path %>
         <%= f.input :age, label: '年齢', readonly: true%>
         <%end%>
