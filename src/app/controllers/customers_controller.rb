@@ -18,7 +18,6 @@ class CustomersController < ApplicationController
   # GET /customers/1.json
   def show
     @customer = Customer.join_tables.find(params[:id])
-    @customer.age = (Date.today.strftime('%Y%m%d').to_i - @customer.birthday.strftime('%Y%m%d').to_i) / 10000
     @stores = Store.all
     @reservations = @customer.reservations.order('reservation_date DESC, start_time DESC')
   end

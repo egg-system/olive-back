@@ -41,6 +41,11 @@ class Customer < ApplicationRecord
     self.should_send_mail = true
   end
 
+  def age
+    return nil if self.birthday.nil?
+    return (Date.today.strftime('%Y%m%d').to_i - self.birthday.strftime('%Y%m%d').to_i) / 10000
+  end
+
   protected
 
   def is_none_provider?
