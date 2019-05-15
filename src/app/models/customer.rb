@@ -2,8 +2,8 @@ class Customer < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable
-         
+        :recoverable, :rememberable
+
   include DeviseTokenAuth::Concerns::User
 
   belongs_to :first_visit_store, optional: true, class_name: 'Store', foreign_key: 'first_visit_store_id'
@@ -34,7 +34,7 @@ class Customer < ApplicationRecord
   scope :like_name, ->(name){
     where("concat(last_name, first_name) like ?", "%#{name}%")
   }
-  
+
   attr_accessor :age, :should_send_mail
 
   after_initialize do
