@@ -4,7 +4,7 @@
 <table class="table">
 	<thead class="thead-light">
 		<tr>
-			<th scope="col">キャンセル有無</th>
+			<th scope="col">ステータス</th>
 			<th scope="col">予約日時</th>
 			<th scope="col">担当者</th>
 			<th scope="col">売上金額</th>
@@ -18,7 +18,7 @@
 		<% @reservations.each do |reservation| %>
 			<% row_span = reservation.reservation_details.count %>
 			<tr>
-				<td rowspan="<%= row_span %>"><%= (reservation.deleted_at) ? "有" : "無" %></td>
+				<td rowspan="<%= row_span %>"><%= reservation.state %></td>
 				<td rowspan="<%= row_span %>">
 					<%= reservation.reservation_date %>&nbsp;
 					<%= reservation.start_time.strftime("%H:%M") %>〜<%= reservation.end_time.strftime("%H:%M") %>
