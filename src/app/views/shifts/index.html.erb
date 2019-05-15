@@ -22,7 +22,7 @@
   <thead>
     <tr>
       <th>日付</th>
-      <% Shift.slot_time_labels.each do |key, value| %> 
+      <% Shift.slot_time_labels.each do |key, value| %>
         <th><%= key %></th>
       <% end %>
     </tr>
@@ -37,13 +37,13 @@
         <td><%= date %></td>
         <% Shift.get_time_slots(date).each do |shift_time| %>
           <% if @date_shifts.has_key?(date) %>
-            <td><%= check_box("shifts[#{date}]", shift_time, { 
-              checked: @date_shifts[date].any? { |shift|  
-                shift.shift_at === shift_time.strftime('%Y%m%d%H%M') 
+            <td><%= check_box("shifts[#{date}]", shift_time, {
+              checked: @date_shifts[date].any? { |shift|
+                shift.shift_at === shift_time.strftime('%Y%m%d%H%M')
               }
             }) %></td>
           <% else %>
-            <td><%= check_box("shifts[#{date}]", shift_time, { 
+            <td><%= check_box("shifts[#{date}]", shift_time, {
               checked: false
             }) %></td>
           <% end %>

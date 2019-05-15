@@ -46,8 +46,8 @@
     <% @staffs.each do |staff| %>
       <tr>
         <td scope="row"><%= staff.store_name %></td>
-        <td><%= staff.last_name %></td>
         <td><%= staff.first_name %></td>
+        <td><%= staff.last_name %></td>
         <td><%= safe_join(staff.skills.pluck(:name), tag(:br)) %></td>
         <td><%= staff.employment_type_name %></td>
         <td><%= staff.updated_at.strftime('%Y/%m/%d') %></td>

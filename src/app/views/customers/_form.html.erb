@@ -7,10 +7,10 @@
         <% if request.path_info != new_customer_path %>
         <%= f.input :id, label: '顧客ID', readonly: true%>
         <%end%>
-        <%= f.input :last_name, label: '氏名(姓)'%>
-        <%= f.input :first_name, label: '氏名(名)'%>
-        <%= f.input :last_kana, label: '氏名(カナ)(姓)'%>
-        <%= f.input :first_kana, label: '氏名(カナ)(名)'%>
+        <%= f.input :first_name, label: '氏名(姓)'%>
+        <%= f.input :last_name, label: '氏名(名)'%>
+        <%= f.input :first_kana, label: '氏名(カナ)(姓)'%>
+        <%= f.input :last_kana, label: '氏名(カナ)(名)'%>
         <%= f.input :tel, label: '電話番号'%>
         <%= f.input :pc_mail, label: 'PCメールアドレス'%>
         <%= f.input :can_receive_mail, as: :radio_buttons, wrapper: :horizontal_collection_inline, 
