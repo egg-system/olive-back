@@ -16,9 +16,10 @@ class Api::ReservationsController < Api::ApiController
       .paginate(index_params[:page])
       .order_reserved_at
 
+    # total_pages > data の順にキーを配置しなければ、エラーになる可能性あり
     render json: { 
-      data: reservations,
-      total_pages: reservations.total_pages
+      total_pages: reservations.total_pages,
+      data: reservations.to_resources,
     }
   end
 
