@@ -35,15 +35,14 @@ class Reservation < ApplicationRecord
 
   def build_shifts
     self.end_time = extract_end_time_from_details
-    shifts = Shift
-      .where(date: self.reservation_date)
-      .where(start_at: (self.start_time.to_s)...(self.end_time.to_s))
-      .where(staff_id: extract_can_treat_staff_ids)
-      .where_not_reserved
+    shifts = Shift.where(date: self.reservation_date).where(start_at: (self.start_time.to_s)...(self.end_time.to_s)).where(staff_id: extract_can_treat_staff_ids).where_not_reserved.group_by { |shift| shift.staff_id }
+      .select { |staff_id, shifts| shifts.length === necessary_shift_count }
+      .values
+      .first
 
     return if shifts.empty?
 
-    self.shifts = shifts.group_by { |shift| shift.staff_id }.values.first
+    self.shifts = shifts
     self.staff_id = self.shifts.first.staff_id
   end
 
@@ -51,6 +50,11 @@ class Reservation < ApplicationRecord
     self.reservation_details.sum { |detail|
       detail.total_fee
     }
+  end
+
+  def necessary_shift_count
+    reserved_duration = Tod::Shift.new(self.start_time, self.end_time).duration
+    return reserved_duration / Shift::SLOT_INCREMENT_MITUNES.minutes.seconds
   end
   
   private
