@@ -14,10 +14,10 @@
 
   <div class="form-left">
     <%= f.input :store_id, as: :select, collection: @stores.map{|store| [store.name, store.id]}, label: '所属店舗', default: @staff.store_id%>
-    <%= f.input :first_name, label: '氏名（姓）'%>
-    <%= f.input :last_name, label: '氏名（名）'%>
-    <%= f.input :first_kana, label: '氏名（カナ）（姓）'%>
-    <%= f.input :last_kana, label: '氏名（カナ）（名）'%>
+    <%= f.input :last_name, label: '氏名（姓）'%>
+    <%= f.input :first_name, label: '氏名（名）'%>
+    <%= f.input :last_kana, label: '氏名（カナ）（姓）'%>
+    <%= f.input :first_kana, label: '氏名（カナ）（名）'%>
     <%= f.input :skill_ids, as: :check_boxes, wrapper: :horizontal_collection_inline, 
             collection: @skills.map{|skill| [skill.name, skill.id]}, label: '保有スキル', checked: @staff_skills.present? ? @staff_skills.map{|item| item.skill_id} : [], include_hidden: false%>
     <% if request.path_info != new_staff_path %>

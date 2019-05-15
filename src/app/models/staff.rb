@@ -16,7 +16,7 @@ class Staff < ApplicationRecord
   has_many :shifts
 
   def full_name
-    return self.first_name + ' ' + self.last_name
+    return self.last_name + ' ' + self.first_name
   end
 
   def employment_type_name
@@ -68,6 +68,6 @@ class Staff < ApplicationRecord
   }
 
   def name
-    return "#{self.first_name} #{self.last_name}"
+    return "#{self.last_name} #{self.first_name}"
   end
 end

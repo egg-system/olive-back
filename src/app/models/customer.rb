@@ -32,7 +32,7 @@ class Customer < ApplicationRecord
   }
 
   scope :like_name, ->(name){
-    where("concat(first_name, last_name) like ?", "%#{name}%")
+    where("concat(last_name, first_name) like ?", "%#{name}%")
   }
 
   attr_accessor :age, :should_send_mail
