@@ -33,6 +33,7 @@
   <table class="table">
     <thead class="thead-light">
       <tr>
+        <th scope="col">スタッフID</th>
         <th scope="col">店舗名</th>
         <th scope="col">スタッフ氏名（姓）</th>
         <th scope="col">スタッフ氏名（名）</th>
@@ -45,6 +46,7 @@
     <tbody>
     <% @staffs.each do |staff| %>
       <tr>
+        <td><%= staff.id %></td>
         <td scope="row"><%= staff.store_name %></td>
         <td><%= staff.last_name %></td>
         <td><%= staff.first_name %></td>
