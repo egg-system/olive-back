@@ -44,7 +44,8 @@ ActiveRecord::Schema.define(version: 2019_04_20_014643) do
     t.string "last_name"
     t.string "first_kana"
     t.string "last_kana"
-    t.string "tel"
+    t.string "tel", comment: "携帯電話番号"
+    t.string "foxed_line_tel", comment: "固定電話番号"
     t.string "pc_mail", comment: "pcメール。fileMakerから移行"
     t.string "phone_mail", comment: "携帯メール。fileMakerから移行"
     t.boolean "can_receive_mail", default: true, comment: "お知らせメールなどの受け取り可否"
@@ -204,7 +205,7 @@ ActiveRecord::Schema.define(version: 2019_04_20_014643) do
     t.time "start_time"
     t.time "end_time"
     t.boolean "is_first"
-    t.date "deleted_at", comment: "キャンセルされた日時。paranoidを利用しているため、このように命名"
+    t.date "canceled_at", comment: "キャンセルされた日時"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["customer_id"], name: "index_reservations_on_customer_id"
