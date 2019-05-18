@@ -1,0 +1,7 @@
+---
+ja:
+  invalid: "は不正な値です"
+  activerecord:
+    attributes:
+      customer:
+        email: "emailアドレス"
