@@ -7,7 +7,7 @@ class ReservationsController < ApplicationController
     @reservations = Reservation.join_tables
 
     if params[:customer_name].present?
-      @reservations = @staffs.where("concat(first_name, last_name) like ?", "%#{params[:customer_name]}%")
+      @reservations = @staffs.where("concat(last_name, first_name) like ?", "%#{params[:customer_name]}%")
       @customer_name = params[:customer_name]
     end
     @stores = Store.all

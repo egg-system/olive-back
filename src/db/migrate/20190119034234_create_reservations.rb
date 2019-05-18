@@ -13,7 +13,7 @@ class CreateReservations < ActiveRecord::Migration[5.1]
       t.time :end_time
 
       t.boolean :is_first
-      t.date :deleted_at, comment: 'キャンセルされた日時。paranoidを利用しているため、このように命名'
+      t.date :canceled_at, comment: 'キャンセルされた日時'
       t.timestamps
     end
   end

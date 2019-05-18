@@ -11,7 +11,7 @@ class StaffsController < ApplicationController
     end
 
     if params[:staff_name].present?
-      @staffs = @staffs.where("concat(first_name, last_name) like ?", "%#{params[:staff_name]}%")
+      @staffs = @staffs.where("concat(last_name, first_name) like ?", "%#{params[:staff_name]}%")
       @staff_name = params[:staff_name]
     end
     @stores = Store.all

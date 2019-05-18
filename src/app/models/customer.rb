@@ -2,7 +2,8 @@ class Customer < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable
+
+        :recoverable, :rememberable
 
   include DeviseTokenAuth::Concerns::User
 
@@ -44,6 +45,11 @@ class Customer < ApplicationRecord
 
   after_initialize do
     self.should_send_mail = true
+  end
+
+  def age
+    return nil if self.birthday.nil?
+    return (Date.today.strftime('%Y%m%d').to_i - self.birthday.strftime('%Y%m%d').to_i) / 10000
   end
 
   protected

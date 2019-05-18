@@ -5,7 +5,7 @@ class Reservation < ApplicationRecord
   serialize :start_time, Tod::TimeOfDay
   serialize :end_time, Tod::TimeOfDay
 
-  acts_as_paranoid
+  acts_as_paranoid column: :canceled_at
 
   extend DateModule
   include PaginationModule
@@ -33,6 +33,23 @@ class Reservation < ApplicationRecord
     .order(start_time: :desc)	
   }
 
+  def self.to_resources
+    return self.all.map { |reservation| reservation.to_resource }
+  end
+
+  def to_resource
+    reservation_detail = self.reservation_details.first
+    return {
+      id: self.id,
+      state: self.state,
+      store: reservation_detail.store,
+      start_at: self.start_time.on(self.reservation_date),
+      end_at: self.end_time.on(self.reservation_date),
+      menu: reservation_detail.menu,
+      fee: self.total_fee,
+    }
+  end
+
   def build_shifts
     self.end_time = extract_end_time_from_details
     shifts = Shift
@@ -40,17 +57,32 @@ class Reservation < ApplicationRecord
       .where(start_at: (self.start_time.to_s)...(self.end_time.to_s))
       .where(staff_id: extract_can_treat_staff_ids)
       .where_not_reserved
+      .group_by { |shift| shift.staff_id }
+      .select { |staff_id, shifts| shifts.length === necessary_shift_count }
+      .values
+      .first
 
     return if shifts.empty?
 
-    self.shifts = shifts.group_by { |shift| shift.staff_id }.values.first
+    self.shifts = shifts
     self.staff_id = self.shifts.first.staff_id
   end
 
   def total_fee
-    self.reservation_details.sum { |detail|
-      detail.total_fee
-    }
+    return self.reservation_details.sum { |detail| detail.total_fee }
+  end
+
+  def necessary_shift_count
+    reserved_duration = Tod::Shift.new(self.start_time, self.end_time).duration
+    return reserved_duration / Shift::SLOT_INCREMENT_MITUNES.minutes.seconds
+  end
+
+  def state
+    return 'キャンセル' if self.deleted?
+
+    reservation_end_at = self.end_time.on(self.reservation_date)
+    visited = reservation_end_at < DateTime.now
+    return visited ? '来店済み' : '予約中'
   end
   
   private
