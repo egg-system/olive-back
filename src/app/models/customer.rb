@@ -74,10 +74,10 @@ class Customer < ApplicationRecord
   def modify_errors
     #emailのフォーマット不正があった場合に"はメールアドレスではありません"のメッセージが出てくるのを
     #さしかえる処理
-    isEmailFormatError = self.errors.details[:email].find {|email_error_detail|
+    is_email_format_error = self.errors.details[:email].find {|email_error_detail|
         email_error_detail[:error] == :invalid
     }.count
-    if isEmailFormatError then
+    if is_email_format_error then
         self.errors.messages[:email] = [I18n.t('.invalid')]
     end
   end
