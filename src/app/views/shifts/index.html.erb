@@ -1,56 +1,56 @@
-<h1>シフト一覧</h1>
+<p>シフト一覧</p>
 
+<div class="shift-list">
+  <%= form_tag(:shifts, method: 'get') do |form| %>
+    <div class="field">
+      <%= date_select :search_month, :by, discard_day: true %>
+    </div>
+    <div class="field">
+      <% storeSelects = options_from_collection_for_select(Store.all, :id, :name) %>
+      <%= select_tag :store_id, storeSelects %>
+    </div>
+    <div class="field">
+      <% staffSelects = options_from_collection_for_select(Staff.all, :id, :name) %>
+      <%= select_tag :staff_id, staffSelects %>
+    </div>
+    <div class="actions">
+      <%= submit_tag "検索"%>
+    </div>
+  <% end %>
 
-<%= form_tag(:shifts, method: 'get') do |form| %>
-  <div class="field">
-    <%= date_select :search_month, :by, discard_day: true %>
-  </div>
-  <div class="field">
-    <% storeSelects = options_from_collection_for_select(Store.all, :id, :name) %>
-    <%= select_tag :store_id, storeSelects %>
-  </div>
-  <div class="field">
-    <% staffSelects = options_from_collection_for_select(Staff.all, :id, :name) %>
-    <%= select_tag :staff_id, staffSelects %>
-  </div>
-  <div class="actions">
-    <%= submit_tag "検索" %>
-  </div>
-<% end %>
-
-<table>
-  <thead>
-    <tr>
-      <th>日付</th>
-      <% Shift.slot_time_labels.each do |key, value| %>
-        <th><%= key %></th>
-      <% end %>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% 
-      start_date, end_date = Shift.get_month_range(@month)
-      ((start_date)..(end_date)).each do |date|
-    %>
-      <tr>
-        <td><%= date %></td>
-        <% Shift.get_time_slots(date).each do |shift_time| %>
-          <% if @date_shifts.has_key?(date) %>
-            <td><%= check_box("shifts[#{date}]", shift_time, {
-              checked: @date_shifts[date].any? { |shift|
-                shift.shift_at === shift_time.strftime('%Y%m%d%H%M')
-              }
-            }) %></td>
-          <% else %>
-            <td><%= check_box("shifts[#{date}]", shift_time, {
-              checked: false
-            }) %></td>
+    <table border="1" class="sticky_table">
+      <thead>
+        <tr>
+          <th class="sticky_th">日付</th>
+          <% Shift.slot_time_labels.each do |key, value| %>
+            <th><%= key %></th>
           <% end %>
-        <% end %>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+        </tr>
+      </thead>
 
+      <tbody class="cls-tbody">
+        <%
+          start_date, end_date = Shift.get_month_range(@month)
+          ((start_date)..(end_date)).each do |date|
+        %>
+          <tr>
+            <th class="td-date"><%= date %></td>
+            <% Shift.get_time_slots(date).each do |shift_time| %>
+              <% if @date_shifts.has_key?(date) %>
+                <td><%= check_box("shifts[#{date}]", shift_time, {
+                  checked: @date_shifts[date].any? { |shift|
+                    shift.shift_at === shift_time.strftime('%Y%m%d%H%M')
+                  }
+                }) %></td>
+              <% else %>
+                <td><%= check_box("shifts[#{date}]", shift_time, {
+                  checked: false
+                }) %></td>
+              <% end %>
+            <% end %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 <br>
