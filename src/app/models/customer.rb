@@ -2,7 +2,6 @@ class Customer < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-
         :recoverable, :rememberable
 
   include DeviseTokenAuth::Concerns::User
@@ -66,4 +65,3 @@ class Customer < ApplicationRecord
     CustomerMailer.confirm_register(self).deliver_now
   end
 end
-
