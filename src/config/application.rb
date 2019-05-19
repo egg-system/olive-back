@@ -33,11 +33,12 @@ module Src
     config.action_mailer.delivery_method = :smtp
     config.action_mailer.smtp_settings = {
         port:                 ENV.fetch('MAIL_PORT', ''),
-        domain:               ENV.fetch('MAIL_HOST', ''),
-        address:              ENV.fetch('MAIL_ADDRESS', ''),
+        domain:               ENV.fetch('MAIL_DMAIN', ''),
+        address:              ENV.fetch('MAIL_HOST', ''),
         user_name:            ENV.fetch('MAIL_USER', ''),
         password:             ENV.fetch('MAIL_PASSWORD', ''),
         authentication:       ENV.fetch('MAIL_AUTH', 'login').to_sym,
+        enable_starttls_auto: ENV.fetch('MAIL_AUTO_TTLS', '0') === '1'
     }
     
     # Settings in config/environments/* take precedence over those specified here.
