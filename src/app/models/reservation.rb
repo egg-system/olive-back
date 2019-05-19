@@ -38,14 +38,13 @@ class Reservation < ApplicationRecord
   end
 
   def to_resource
-    reservation_detail = self.reservation_details.first
     return {
       id: self.id,
       state: self.state,
-      store: reservation_detail.store,
+      store: self.reservation_details.first.store,
       start_at: self.start_time.on(self.reservation_date),
       end_at: self.end_time.on(self.reservation_date),
-      menu: reservation_detail.menu,
+      menus: reservation_details.map { |detail| detail.menu },
       fee: self.total_fee,
     }
   end
