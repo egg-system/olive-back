@@ -3,6 +3,10 @@
 }
 
 #customer_index {
+  p {
+    font-size: 30px;
+    text-align: center;
+  }
   .upper-frame {
     width: 100%;
     h4 {
@@ -37,18 +41,19 @@
   }
 }
 
-.form-wrapper{
-  text-align: center;
-  margin: auto;
-  width: 90%;
-
-  .form-left{
-    float: left;
-    width: 50%;
+.form-wrapper {
+  .form-center .collection_radio_buttons {
+    margin: 0;
   }
 
-  .form-right{
-    float:left;
-    width:50%;
+  .form-center label {
+    text-align: left;
+  }
+
+  .form-center label {
+    text-align: left;
+  }
+  .form-center .btn {
+    width: 90px;
   }
 }

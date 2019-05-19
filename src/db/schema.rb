@@ -44,8 +44,7 @@ ActiveRecord::Schema.define(version: 2019_04_20_014643) do
     t.string "last_name"
     t.string "first_kana"
     t.string "last_kana"
-    t.string "tel", comment: "携帯電話番号"
-    t.string "foxed_line_tel", comment: "固定電話番号"
+    t.string "tel"
     t.string "pc_mail", comment: "pcメール。fileMakerから移行"
     t.string "phone_mail", comment: "携帯メール。fileMakerから移行"
     t.boolean "can_receive_mail", default: true, comment: "お知らせメールなどの受け取り可否"
@@ -198,19 +197,17 @@ ActiveRecord::Schema.define(version: 2019_04_20_014643) do
   create_table "reservations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "children_count", default: 0, comment: "随伴するお子様の数"
     t.text "reservation_comment"
-    t.bigint "staff_id", comment: "対応予定のスタッフid。キャンセル時にシフトとのリレーションを消すため、追加"
     t.bigint "customer_id"
     t.bigint "pregnant_state_id"
     t.date "reservation_date"
     t.time "start_time"
     t.time "end_time"
     t.boolean "is_first"
-    t.date "canceled_at", comment: "キャンセルされた日時"
+    t.date "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["customer_id"], name: "index_reservations_on_customer_id"
     t.index ["pregnant_state_id"], name: "index_reservations_on_pregnant_state_id"
-    t.index ["staff_id"], name: "index_reservations_on_staff_id"
   end
 
   create_table "roles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -315,8 +312,8 @@ ActiveRecord::Schema.define(version: 2019_04_20_014643) do
     t.datetime "updated_at", null: false
   end
 
-  add_foreign_key "coupon_histories", "coupons", on_delete: :cascade
-  add_foreign_key "coupon_histories", "customers", on_delete: :cascade
+  add_foreign_key "coupon_histories", "coupons"
+  add_foreign_key "coupon_histories", "customers"
   add_foreign_key "customers", "baby_ages"
   add_foreign_key "customers", "nearest_stations"
   add_foreign_key "customers", "occupations"
@@ -330,22 +327,21 @@ ActiveRecord::Schema.define(version: 2019_04_20_014643) do
   add_foreign_key "menus", "skills"
   add_foreign_key "options", "departments"
   add_foreign_key "options", "skills"
-  add_foreign_key "reservation_coupons", "coupons", on_delete: :cascade
-  add_foreign_key "reservation_coupons", "reservations", on_delete: :cascade
-  add_foreign_key "reservation_detail_options", "options", on_delete: :nullify
-  add_foreign_key "reservation_detail_options", "reservation_details", on_delete: :cascade
-  add_foreign_key "reservation_details", "menus", on_delete: :nullify
-  add_foreign_key "reservation_details", "reservations", on_delete: :cascade
-  add_foreign_key "reservation_details", "stores", on_delete: :cascade
-  add_foreign_key "reservation_shifts", "reservations", on_delete: :cascade
-  add_foreign_key "reservation_shifts", "shifts", on_delete: :cascade
-  add_foreign_key "reservations", "customers", on_delete: :cascade
+  add_foreign_key "reservation_coupons", "coupons"
+  add_foreign_key "reservation_coupons", "reservations"
+  add_foreign_key "reservation_detail_options", "options"
+  add_foreign_key "reservation_detail_options", "reservation_details"
+  add_foreign_key "reservation_details", "menus"
+  add_foreign_key "reservation_details", "reservations"
+  add_foreign_key "reservation_details", "stores"
+  add_foreign_key "reservation_shifts", "reservations"
+  add_foreign_key "reservation_shifts", "shifts"
+  add_foreign_key "reservations", "customers"
   add_foreign_key "reservations", "pregnant_states"
-  add_foreign_key "reservations", "staffs", on_delete: :cascade
-  add_foreign_key "shifts", "staffs", on_delete: :cascade
-  add_foreign_key "shifts", "stores", on_delete: :cascade
-  add_foreign_key "skill_staffs", "skills", on_delete: :cascade
-  add_foreign_key "skill_staffs", "staffs", on_delete: :cascade
+  add_foreign_key "shifts", "staffs"
+  add_foreign_key "shifts", "stores"
+  add_foreign_key "skill_staffs", "skills"
+  add_foreign_key "skill_staffs", "staffs"
   add_foreign_key "staffs", "roles"
   add_foreign_key "staffs", "stores"
   add_foreign_key "store_menus", "menus"
