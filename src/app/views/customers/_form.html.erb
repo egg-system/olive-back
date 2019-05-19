@@ -21,13 +21,14 @@
         <%= f.input :last_visit_store_id, as: :select, collection: @stores.map{|store| [store.name, store.id]}, label: '直近ご来店店舗', default: @customer.last_visit_store_id%>
         <%= f.input :comment, label: 'コメント'%>
         <%= f.input :zip_code, label: '郵便番号(XXX-XXXX)'%>
-        <%= f.input :address, label: '住所', required: true%>
+        <%= f.input :address, label: '住所'%>
         <%= f.input :birthday, label: '生年月日', wrapper: :horizontal_multi_select, start_year: 1940, end_year: Date.today.year%>
         <% if request.path_info != new_customer_path %>
             <%= f.input :age, label: '年齢', readonly: true%>
         <%end%>
+        <%= f.input :provider, label: '会員/非会員', as: :select, collection: { '非会員' => :none, '会員' => :email } %>
         <% if request.path_info == new_customer_path %>
-            <%= f.input :password, label: 'パスワード', required: true%>
+            <%= f.input :password, label: 'パスワード'%>
         <%end%>
         <%= f.button :submit, class: 'btn btn-primary'%>
         <%= link_to '戻る', customers_path, class: 'btn btn-light' %>

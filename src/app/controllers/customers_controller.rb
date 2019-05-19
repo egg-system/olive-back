@@ -24,7 +24,8 @@ class CustomersController < ApplicationController
 
   # GET /customers/new
   def new
-    @customer = Customer.new
+    # 画面入力の場合、非会員をデフォルト値にする
+    @customer = Customer.new(provider: 'none')
     @stores = Store.all
   end
 
@@ -87,6 +88,6 @@ class CustomersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def customer_params
-      params.require(:customer).permit(:first_name, :last_name, :first_kana, :last_kana, :tel, :pc_mail, :can_receive_mail, :first_visit_store_id, :last_visit_store_id, :comment, :zip_code, :address, :birthday, :phone_mail, :email, :password)
+      params.require(:customer).permit(:first_name, :last_name, :first_kana, :last_kana, :tel, :pc_mail, :can_receive_mail, :first_visit_store_id, :last_visit_store_id, :comment, :zip_code, :address, :birthday, :phone_mail, :email, :provider, :password)
     end
 end
