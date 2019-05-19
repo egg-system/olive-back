@@ -12,7 +12,6 @@
 <%=f.input :close_at, label: "閉店時間"%>
 <%=f.input :break_from, label: "休憩開始時間"%>
 <%=f.input :break_to, label: "休憩終了時間"%>
-<%=f.input :break_to, label: "休憩終了時間"%>
 <%= f.input :menu_ids, as: :check_boxes, wrapper: :horizontal_collection_inline, 
             collection: @menus.map{|menu| [menu.name, menu.id]}, label: 'メニュー', checked: @store_menus.present? ?
             @store_menus.map{|item| item.menu_id} : [], include_hidden:

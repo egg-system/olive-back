@@ -1,19 +1,30 @@
 class Staff < ApplicationRecord
   acts_as_paranoid
-  
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :database_authenticatable, :rememberable, 
+  devise :database_authenticatable, :rememberable,
     authentication_keys: [:login, :store_id]
 
   has_many :skill_staff
-  has_many :skills, through: :skill_staff 
+  has_many :skills, through: :skill_staff
   accepts_nested_attributes_for :skill_staff, update_only: true
 
   belongs_to :store
   belongs_to :role
-    
+
   has_many :shifts
+
+  def full_name
+    return self.last_name + ' ' + self.first_name
+  end
+
+  def employment_type_name
+    if self.employment_type.nil?
+        return ""
+    end
+    return Settings.employment_type[self.employment_type]
+  end
 
   scope :can_treats, -> (menu_ids, option_ids) {
     menus = Menu.where(id: menu_ids).select('skill_id').distinct

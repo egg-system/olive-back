@@ -10,16 +10,22 @@
         <tr>
         <th>所属店舗</th>
         <td>
-          <%= select_tag :store_id, options_for_select(@stores.collect{|store| [store.name, store.id]}, selected: @store_id), class: "form-control", prompt: "全店舗"%>
-        <td>
+          <%= select_tag :store_id, options_for_select(@stores.collect{ |store| [store.name, store.id] }, selected: @store_id), class: "form-control", prompt: "全店舗" %>
+        </td>
+        </tr>
+        <tr>
+          <th>スタッフ氏名</th>
+          <td>
+            <%= text_field_tag :staff_name, @staff_name.present? ? @staff_name : "" , { class: "form-control" } %>
+          </td>
         </tr>
       </tbody>
     </table>
-    <%end%>
+    <% end %>
   </div>
   <div class="button-section">
-    <%=link_to "新規登録へ", new_staff_path, {class: "btn btn-primary btn-new"}%>
-    <%=submit_tag "検索実行", {class: "btn btn-info btn-search", form: "search"}%>
+    <%= link_to "新規登録へ", new_staff_path, { class: "btn btn-primary btn-new" }%>
+    <%= submit_tag "検索実行", { class: "btn btn-info btn-search", form: "search" }%>
   </div>
   <div class="clear"></div>
 </div>
@@ -27,6 +33,7 @@
   <table class="table">
     <thead class="thead-light">
       <tr>
+        <th scope="col">スタッフID</th>
         <th scope="col">店舗名</th>
         <th scope="col">スタッフ氏名（姓）</th>
         <th scope="col">スタッフ氏名（名）</th>
@@ -37,15 +44,16 @@
       </tr>
     </thead>
     <tbody>
-    <% @staffs.each do |staff|%>
+    <% @staffs.each do |staff| %>
       <tr>
-        <td scope="row"><%=staff.store_name%></td>
-        <td><%=staff.last_name%></td>
-        <td><%=staff.first_name%></td>
-        <td></td>
-        <td></td>
-        <td><%=staff.updated_at.strftime('%Y/%m/%d')%></td>
-        <td><%=link_to "詳細へ", staff_path(staff.id)%></td>
+        <td><%= staff.id %></td>
+        <td scope="row"><%= staff.store_name %></td>
+        <td><%= staff.last_name %></td>
+        <td><%= staff.first_name %></td>
+        <td><%= safe_join(staff.skills.pluck(:name), tag(:br)) %></td>
+        <td><%= staff.employment_type_name %></td>
+        <td><%= staff.updated_at.strftime('%Y/%m/%d') %></td>
+        <td><%= link_to "詳細へ", staff_path(staff.id) %></td>
       </tr>
     <%end%>
     </tbody>

@@ -1,12 +1,14 @@
 <% breadcrumb :root %>
-<h1>Dashboards#index</h1>
-<p>Find me in app/views/dashboards/index.html.erb</p>
+<h1>ダッシュボード</h1>
 
-<%=link_to "Store", stores_path%>
-<%=link_to "Skill", skills_path%>
-<%=link_to "Role", roles_path%>
-<%=link_to "Menu", menus_path%>
-<%=link_to "MenuCategory", menu_categories_path%>
-<%=link_to "Coupon", coupons_path%>
-<%=link_to "CouponHistory", coupon_histories_path%>
-<%=link_to "Department", departments_path%>
+<ul>
+  <li><%= link_to "Store", stores_path %></li>
+  <li><%= link_to "Skill", skills_path %></li>
+  <li><%= link_to "Role", roles_path %></li>
+  <li><%= link_to "Menu", menus_path %></li>
+  <li><%= link_to "MenuCategory", menu_categories_path %></li>
+  <li><%= link_to "Option", options_path %></li>
+  <li><%= link_to "Coupon", coupons_path %></li>
+  <li><%= link_to "CouponHistory", coupon_histories_path %></li>
+  <li><%= link_to "Department", departments_path %></li>
+</ul>

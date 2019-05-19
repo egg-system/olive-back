@@ -110,3 +110,6 @@ gem 'tod'
 
 # corsやexpose-headerの調整のため
 gem 'rack-cors'
+
+# ぺジネーション用
+gem 'kaminari'

@@ -21,14 +21,14 @@ Store.where(id: 4).first_or_create(
   close_at:'20:00'
 )  
 
-Customer.where(id: 1).first_or_create!(
-  first_name: '高橋', 
-  last_name: '顧客1', 
-  first_kana: '高橋',
-  last_kana: 'こきゃく１', 
+customer = Customer.where(id: 1).first_or_initialize(
+  first_name: '顧客', 
+  last_name: '高橋', 
+  first_kana: 'コキャク',
+  last_kana: 'タカハシ', 
   tel: '09010001000', 
   email: 'test@test.com',
-  password: 'password',
+  password: 'test1234',
   pc_mail: 'tt.wing001@gmail.com', 
   phone_mail: 'tt.wing002@gmail.com', 
   can_receive_mail: true, 
@@ -54,13 +54,15 @@ Customer.where(id: 1).first_or_create!(
   size_id: 1,
   has_registration_card: false
 )
+customer.should_send_mail = false
+customer.save!
 
 # テストデータ用
-Staff.where(id: 2).first_or_create!(login: 'test1', password: 'password', first_name:'本部', last_name:'恵子', first_kana:'ほんぶ', last_kana:'けいこ', store_id:1, role_id:2, employment_type:0)
-Staff.where(id: 3).first_or_create!(login: 'test2', password: 'password', first_name:'店長', last_name:'愛子', first_kana:'たかはし', last_kana:'あいこ', store_id:1, role_id:3, employment_type:1)
-Staff.where(id: 4).first_or_create!(login: 'test3', password: 'password', first_name:'佐藤', last_name:'綾子', first_kana:'さとう', last_kana:'あやこ', store_id:1, role_id:4, employment_type:1)
-Staff.where(id: 5).first_or_create!(login: 'test4', password: 'password', first_name:'田中', last_name:'恵理子', first_kana:'たなか', last_kana:'えりこ', store_id:2, role_id:4, employment_type:2)
-Staff.where(id: 6).first_or_create!(login: 'test5', password: 'password', first_name:'鈴木', last_name:'恵理子', first_kana:'すずき', last_kana:'えりこ', store_id:3, role_id:4, employment_type:2)
+Staff.where(id: 2).first_or_create!(login: 'test1', password: 'password', first_name:'恵子', last_name:'本部', first_kana:'けいこ', last_kana:'ほんぶ', store_id:1, role_id:2, employment_type:0)
+Staff.where(id: 3).first_or_create!(login: 'test2', password: 'password', first_name:'愛子', last_name:'店長', first_kana:'あいこ', last_kana:'てんちょう', store_id:1, role_id:3, employment_type:1)
+Staff.where(id: 4).first_or_create!(login: 'test3', password: 'password', first_name:'綾子', last_name:'佐藤', first_kana:'あやこ', last_kana:'さとう', store_id:1, role_id:4, employment_type:1)
+Staff.where(id: 5).first_or_create!(login: 'test4', password: 'password', first_name:'恵理子', last_name:'田中', first_kana:'えりこ', last_kana:'たなか', store_id:2, role_id:4, employment_type:2)
+Staff.where(id: 6).first_or_create!(login: 'test5', password: 'password', first_name:'恵理子', last_name:'鈴木', first_kana:'えりこ', last_kana:'すずき', store_id:3, role_id:4, employment_type:2)
 
 SkillStaff.where(id: 1).first_or_create(staff_id:1, skill_id:1)
 SkillStaff.where(id: 2).first_or_create(staff_id:1, skill_id:2)
