@@ -19,14 +19,9 @@ class Customer < ApplicationRecord
 
   has_many :reservations
 
-  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
-    validates :email, format: {with: VALID_EMAIL_REGEX}, allow_blank: true
-
   before_validation :sync_none_uid
 
   after_commit :send_register_mail, on: :create
-
-  after_validation :modify_errors
 
   #left join
   scope :join_size, ->{
@@ -69,17 +64,6 @@ class Customer < ApplicationRecord
     end
 
     CustomerMailer.confirm_register(self).deliver_now
-  end
-
-  def modify_errors
-    #emailのフォーマット不正があった場合に"はメールアドレスではありません"のメッセージが出てくるのを
-    #さしかえる処理
-    is_email_format_error = self.errors.details[:email].find {|email_error_detail|
-        email_error_detail[:error] == :invalid
-    }.count
-    if is_email_format_error then
-        self.errors.messages[:email] = [I18n.t('.invalid')]
-    end
   end
 end
 
