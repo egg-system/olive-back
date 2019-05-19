@@ -4,11 +4,11 @@ class ReservationsController < ApplicationController
   # GET /reservations
   # GET /reservations.json
   def index
-    @reservations = Reservation.join_tables
+    @reservations = Reservation.joins(:customer)
 
     if params[:customer_name].present?
-      @reservations = @staffs.where("concat(last_name, first_name) like ?", "%#{params[:customer_name]}%")
       @customer_name = params[:customer_name]
+      @reservations.where_customer_name(@customer_name)
     end
     @stores = Store.all
   end

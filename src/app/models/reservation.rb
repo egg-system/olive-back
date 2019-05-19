@@ -28,6 +28,10 @@ class Reservation < ApplicationRecord
 
   after_commit :send_confirm_mail, on: :create
 
+  scope :where_customer_name, -> (customer_name) {
+    where("concat(last_name, first_name) like ?", "%#{params[:customer_name]}%")  
+  }
+
   scope :order_reserved_at, -> {	
     order(reservation_date: :desc)	
     .order(start_time: :desc)	
