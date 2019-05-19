@@ -3,7 +3,7 @@ ja:
   activerecord:
     attributes:
       customer:
-        email: "emailアドレス"
+        email: "メールアドレス(会員ID)"
   errors:
     messages:
       not_email: "は不正な値です"
