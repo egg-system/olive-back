@@ -1,34 +1,65 @@
 <div class="form-wrapper">
-    <%= simple_form_for(@customer, wrapper: :horizontal_form, html: {class: 'form-horizontal'}) do |f|%>
+    <%= simple_form_for(@customer, wrapper: :horizontal_form, html: { class: 'form-horizontal' }) do |f|%>
     <%= f.error_notification %>
     <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
     <div class="form-center">
-        <% if request.path_info != new_customer_path %>
-            <%= f.input :id, label: '顧客ID', readonly: true%>
+        <% if @customer.persisted? %>
+            <%= f.input :id, label: '顧客ID', readonly: true %>
         <%end%>
-        <%= f.input :last_name, label: '姓', required: true%>
-        <%= f.input :first_name, label: '名', required: true%>
-        <%= f.input :last_kana, label: 'セイ', required: true%>
-        <%= f.input :first_kana, label: 'メイ', required: true%>
-        <%= f.input :tel, label: '自宅番号'%>
-        <%= f.input :phone_mail, label: '携帯番号'%>
+        <%= f.input :last_name, label: '姓', required: true %>
+        <%= f.input :first_name, label: '名', required: true %>
+        <%= f.input :last_kana, label: 'セイ', required: true %>
+        <%= f.input :first_kana, label: 'メイ', required: true %>
+        <%# webからの登録の場合、電話番号が存在しない可能性があるため、新規登録の場合のみ必須にする %>
+        <%= f.input :tel, label: '電話番号', required: @customer.new_record? %>
+        <%= f.input :foxed_line_tel, label: '固定電話番号' %>
+        <%= f.input :phone_mail, label: '携帯メールアドレス' %>
         <%= f.input :pc_mail, label: 'PCメールアドレス'%>
-        <%= f.input :email, label: 'emailアドレス'%>
-        <%= f.input :can_receive_mail, as: :radio_buttons, wrapper: :horizontal_collection_inline,
-            collection: [["受け取る", true], ["受け取らない", false]], label: 'メール受け取り', checked: @customer.can_receive_mail%>
-        <%= f.input :first_visit_store_id, as: :select, collection: @stores.map{|store| [store.name, store.id]}, label: '初回ご来店店舗', default: @customer.first_visit_store_id%>
-        <%= f.input :last_visit_store_id, as: :select, collection: @stores.map{|store| [store.name, store.id]}, label: '直近ご来店店舗', default: @customer.last_visit_store_id%>
+        <%= f.input :email, label: 'メールアドレス(会員ID)'%>
+        <%= f.input(
+            :can_receive_mail, 
+            as: :radio_buttons, 
+            wrapper: :horizontal_collection_inline, 
+            collection: { "受け取る" => true, "受け取らない" => false }, 
+            label: 'メール受け取り', 
+            checked: @customer.can_receive_mail 
+        ) %>
+        <%= f.input( 
+            :first_visit_store_id, 
+            as: :select, 
+            collection: @stores.map{|store| [store.name, store.id] }, 
+            label: '初回ご来店店舗', 
+            default: @customer.first_visit_store_id
+        )%>
+        <%= f.input(
+            :last_visit_store_id, 
+            as: :select, 
+            collection: @stores.map{|store| [store.name, store.id]}, 
+            label: '直近ご来店店舗', 
+            default: @customer.last_visit_store_id 
+        ) %>
         <%= f.input :comment, label: 'コメント'%>
         <%= f.input :zip_code, label: '郵便番号(XXX-XXXX)'%>
-        <%= f.input :address, label: '住所', required: true%>
-        <%= f.input :birthday, label: '生年月日', wrapper: :horizontal_multi_select, start_year: 1940, end_year: Date.today.year%>
-        <% if request.path_info != new_customer_path %>
-            <%= f.input :age, label: '年齢', readonly: true%>
+        <%= f.input :address, label: '住所'%>
+        <%= f.input(
+            :birthday, 
+            label: '生年月日', 
+            wrapper: :horizontal_multi_select, 
+            start_year: 1940, 
+            end_year: Date.today.year
+        ) %>
+        <% if @customer.persisted? %>
+            <%= f.input :age, label: '年齢', readonly: true %>
         <%end%>
-        <% if request.path_info == new_customer_path %>
-            <%= f.input :password, label: 'パスワード', required: true%>
-        <%end%>
+        <%= f.input(
+            :provider, 
+            label: '会員/非会員', 
+            as: :select, 
+            hint: '会員にする場合、メールアドレス(会員ID)とパスワードの入力が必須になります', 
+            collection: { '非会員' => :none, '会員' => :email } 
+        ) %>
+        <%= f.input :password, label: 'パスワード'%>
         <%= f.button :submit, class: 'btn btn-primary'%>
         <%= link_to '戻る', customers_path, class: 'btn btn-light' %>
         <% end %>
