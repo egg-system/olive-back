@@ -1,13 +1,22 @@
 class Customer < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :database_authenticatable, :registerable,
-        :recoverable, :rememberable
+  devise :database_authenticatable, :registerable, :recoverable, :rememberable
 
   include DeviseTokenAuth::Concerns::User
 
-  belongs_to :first_visit_store, optional: true, class_name: 'Store', foreign_key: 'first_visit_store_id'
-  belongs_to :last_visit_store, optional: true, class_name: 'Store', foreign_key: 'last_visit_store_id'
+  belongs_to(
+    :first_visit_store, 
+    optional: true, 
+    class_name: 'Store', 
+    foreign_key: 'first_visit_store_id'
+  )
+  belongs_to(
+    :last_visit_store, 
+    optional: true, 
+    class_name: 'Store', 
+    foreign_key: 'last_visit_store_id'
+  )
 
   belongs_to :job_type, optional: true
   belongs_to :zoomancy, optional: true
@@ -44,6 +53,10 @@ class Customer < ApplicationRecord
   def age
     return nil if self.birthday.nil?
     return (Date.today.strftime('%Y%m%d').to_i - self.birthday.strftime('%Y%m%d').to_i) / 10000
+  end
+
+  def full_name
+    return self.last_name + ' ' + self.first_name
   end
 
   protected
