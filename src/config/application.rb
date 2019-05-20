@@ -38,7 +38,6 @@ module Src
         user_name:            ENV.fetch('MAIL_USER', ''),
         password:             ENV.fetch('MAIL_PASSWORD', ''),
         authentication:       ENV.fetch('MAIL_AUTH', 'login').to_sym,
-        enable_starttls_auto: ENV.fetch('MAIL_AUTO_TTLS', '0') === '1'
     }
     
     # Settings in config/environments/* take precedence over those specified here.
