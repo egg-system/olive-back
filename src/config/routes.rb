@@ -13,9 +13,16 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :departments, :roles  
-  resources :skills, :menu_categories, :menus, :options
-  resources :coupons, :coupon_histories
+  resources(
+    :departments,
+    :roles,
+    :skills,
+    :menu_categories,
+    :menus,
+    :options,
+    :coupons, 
+    :coupon_histories
+  )
 
   namespace :api do
     devise_for :customers, skip: :all
