@@ -57,15 +57,16 @@ class ShiftsController < ApplicationController
     params[:shifts].each do |date, checks_by_time|
       checks_by_time.each do |time, check|
         if check != '1' then
-          shift = Shift.shift_of_staff_at_datetime(staff, DateTime.parse(time))
-          if shift != nil && shift.reservation != nil then
-            error_messages.push(time + "のシフトは予約済みのため削除できません")
+          datetime = DateTime.parse(time)
+          shift = Shift.shift_of_staff_at_datetime(staff, datetime)
+          if shift != nil && !shift.can_delete then
+            error_messages.push(datetime.strftime("%Y/%m/%d %H:%M") + "のシフトは予約済みのため削除できません")
           end
         end
       end
     end
     if 0 < error_messages.count then
-    #TODO エラーメッセージを出力する
+      flash[:notice] = error_messages.join("  ")
     else
     #登録処理
       params[:shifts].each do |date, checks_by_time|
@@ -74,7 +75,6 @@ class ShiftsController < ApplicationController
         end
       end
     end
-    #abort params[:shifts].inspect
     redirect_to action: :index
   end
 

@@ -70,6 +70,10 @@ class Shift < ApplicationRecord
     self.start_at.on(self.date).strftime('%Y%m%d%H%M')
   end
 
+  def can_delete()
+    return self.reservation == nil || self.reservation.canceled_at != nil
+  end
+
   def self.shift_of_staff_at_datetime(staff, datetime)
     result = staff.shifts.where(date: datetime).where(start_at: datetime)
     return 0 < result.count ? result.first : nil
