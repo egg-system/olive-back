@@ -1,14 +1,16 @@
 class ShiftsController < ApplicationController
   before_action :set_shift, only: [:show, :edit, :update, :destroy]
-  
+
   require 'csv'
+  require 'time'
 
   # GET /shifts
   # GET /shifts.json
   def index
     @month = search_params[:search_month]
+    @staff_id = search_params[:staff_id]
     @date_shifts = Shift.where(
-      store_id: search_params[:store_id], 
+      store_id: search_params[:store_id],
       staff_id: search_params[:staff_id]
     ).where_months(@month)
     .group_by { |shift| shift.date.strftime('%Y-%m-%d') }
@@ -22,15 +24,15 @@ class ShiftsController < ApplicationController
   # POST /shifts.json
   def create
     csv_rows = CSV.read(
-      csv_params[:shift_csv].path, 
-      headers: true, encoding: 
+      csv_params[:shift_csv].path,
+      headers: true, encoding:
       "Shift_JIS:UTF-8"
     )
-    
+
     @shifts = csv_rows.map { |row|
       Shift.import(row)
     }
-    
+
     redirect_to action: :index
   end
 
@@ -46,6 +48,34 @@ class ShiftsController < ApplicationController
         format.json { render json: @shift.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def register
+    staff = Staff.find(params[:target_staff_id])
+    error_messages = []
+    #バリデーション
+    params[:shifts].each do |date, checks_by_time|
+      checks_by_time.each do |time, check|
+        if check != '1' then
+          shift = Shift.shift_of_staff_at_datetime(staff, DateTime.parse(time))
+          if shift != nil && shift.reservation != nil then
+            error_messages.push(time + "のシフトは予約済みのため削除できません")
+          end
+        end
+      end
+    end
+    if 0 < error_messages.count then
+    #TODO エラーメッセージを出力する
+    else
+    #登録処理
+      params[:shifts].each do |date, checks_by_time|
+        checks_by_time.each do |time, check|
+          Shift.reflect_check(staff, DateTime.parse(time), check == '1')
+        end
+      end
+    end
+    #abort params[:shifts].inspect
+    redirect_to action: :index
   end
 
   private

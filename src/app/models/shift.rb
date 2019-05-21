@@ -9,7 +9,7 @@ class Shift < ApplicationRecord
 
   has_one :reservation_shift
   has_one :reservation, through: :reservation_shift
-  
+
   belongs_to :store
   belongs_to :staff
 
@@ -23,8 +23,8 @@ class Shift < ApplicationRecord
   }
 
   def self.to_time_slots
-    return all.group_by { |shift| 
-      shift.date 
+    return all.group_by { |shift|
+      shift.date
     }.map { |date, shifts|
       time_slots = shifts.group_by { |shift|
         shift.shift_at
@@ -35,7 +35,7 @@ class Shift < ApplicationRecord
       [date.strftime('%Y%m%d'), time_slots]
     }.to_h
   end
-  
+
   def self.import(csv_row)
     shift_date = "#{csv_row['年月']}-#{csv_row['日']}"
     store_id = csv_row['店舗ID']
@@ -46,9 +46,9 @@ class Shift < ApplicationRecord
     }.each { |key, value|
       shift_time = Tod::TimeOfDay.parse(SHIFT_TIMES[key])
       shift = Shift.where(
-        store_id: store_id, 
+        store_id: store_id,
         staff_id: staff_id,
-        date: shift_date, 
+        date: shift_date,
         start_at: shift_time,
         end_at: shift_time + SLOT_INCREMENT_MITUNES.minutes,
       ).first_or_create()
@@ -61,7 +61,7 @@ class Shift < ApplicationRecord
       Tod::TimeOfDay.parse(time_slot).on(day)
     }
   end
-  
+
   def self.slot_time_labels
     return SHIFT_TIMES.keys
   end
@@ -70,6 +70,26 @@ class Shift < ApplicationRecord
     self.start_at.on(self.date).strftime('%Y%m%d%H%M')
   end
 
+  def self.shift_of_staff_at_datetime(staff, datetime)
+    result = staff.shifts.where(date: datetime).where(start_at: datetime)
+    return 0 < result.count ? result.first : nil
+  end
+
+  def self.reflect_check(staff, datetime, check)
+    shift = shift_of_staff_at_datetime(staff, datetime)
+    if check && shift == nil then
+      shift = Shift.new
+      shift.date = datetime
+      shift.start_at = datetime
+      shift.end_at = datetime.since(SLOT_INCREMENT_MITUNES.minutes)
+      shift.staff = staff
+      shift.store = staff.store
+      return shift.save
+    elsif !check && shift != nil then
+      return shift.destroy
+    end
+    return true
+  end
 
   private
 
