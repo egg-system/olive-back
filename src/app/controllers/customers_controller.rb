@@ -20,6 +20,10 @@ class CustomersController < ApplicationController
     @customer = Customer.join_tables.find(params[:id])
     @stores = Store.all
     @reservations = @customer.reservations.order('reservation_date DESC, start_time DESC')
+    @occupations = Occupation.all
+    @zoomancies = Zoomancy.all
+    @baby_ages = BabyAge.all
+    @sizes = Size.all
   end
 
   # GET /customers/new

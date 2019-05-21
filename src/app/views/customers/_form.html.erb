@@ -32,6 +32,7 @@
             label: '初回ご来店店舗', 
             default: @customer.first_visit_store_id
         )%>
+        <%= f.input :first_visited_at, wrapper: :horizontal_multi_select, label: '初回来店日'%>
         <%= f.input(
             :last_visit_store_id, 
             as: :select, 
@@ -39,6 +40,7 @@
             label: '直近ご来店店舗', 
             default: @customer.last_visit_store_id 
         ) %>
+        <%= f.input :last_visited_at, wrapper: :horizontal_multi_select, label: '最終来店日'%>
         <%= f.input :comment, label: 'コメント'%>
         <%= f.input :zip_code, label: '郵便番号(XXX-XXXX)'%>
         <%= f.input :address, label: '住所'%>
@@ -57,10 +59,47 @@
             label: '会員/非会員', 
             as: :select, 
             hint: '会員にする場合、メールアドレス(会員ID)とパスワードの入力が必須になります', 
-            collection: { '非会員' => :none, '会員' => :email } 
+            collection: { '非会員' => :none, '会員' => :email }
         ) %>
         <%= f.input :password, label: 'パスワード'%>
-        <%= f.button :submit, class: 'btn btn-primary'%>
+        <%= f.input :card_number, label: 'カルテNo'%>
+        <%= f.input(
+            :has_registration_card,
+            as: :select, 
+            collection: Settings.has_registration_card.map.with_index{|status, index| [status, index]},
+            label: '診察券発行有無',
+            default: @customer.has_registration_card
+        ) %>
+        <%= f.input :introducer, label: '紹介者'%>
+        <%= f.input :children_count, label: 'お子様の数'%>
+        <%= f.input(
+            :baby_age_id,
+            as: :select, 
+            collection: @baby_ages.map{|item| [item.name, item.id]},
+            label: '赤ちゃんの年齢',
+            default: @customer.baby_age_id
+        ) %>
+        <%= f.input(
+            :has_registration_card,
+            as: :select, 
+            collection: @occupations.map{|item| [item.name, item.id]},
+            label: '職業',
+            default: @customer.occupation_id
+        ) %>
+        <%= f.input(
+            :zoomancy_id,
+            as: :select, 
+            collection: @zoomancies.map{|item| [item.name, item.id]},
+            label: '動物占い',
+            default: @customer.occupation_id
+        ) %>
+        <%= f.input(
+            :size_id,
+            as: :select, 
+            collection: @sizes.map{|item| [item.name, item.id]},
+            label: 'サイズ',
+            default: @customer.size_id
+        ) %> <%= f.button :submit, class: 'btn btn-primary'%>
         <%= link_to '戻る', customers_path, class: 'btn btn-light' %>
         <% end %>
     </div>
