@@ -1,4 +1,4 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: 'info@olive.co.jp'
+  default from: 'no-reply@olivebodycare.healthcare'
   layout 'mailer'
 end

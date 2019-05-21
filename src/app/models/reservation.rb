@@ -28,6 +28,10 @@ class Reservation < ApplicationRecord
 
   after_commit :send_confirm_mail, on: :create
 
+  scope :where_customer_name, -> (customer_name) {
+    where("concat(last_name, first_name) like ?", "%#{params[:customer_name]}%")  
+  }
+
   scope :order_reserved_at, -> {	
     order(reservation_date: :desc)	
     .order(start_time: :desc)	
@@ -38,14 +42,13 @@ class Reservation < ApplicationRecord
   end
 
   def to_resource
-    reservation_detail = self.reservation_details.first
     return {
       id: self.id,
       state: self.state,
-      store: reservation_detail.store,
+      store: self.reservation_details.first.store,
       start_at: self.start_time.on(self.reservation_date),
       end_at: self.end_time.on(self.reservation_date),
-      menu: reservation_detail.menu,
+      menus: reservation_details.map { |detail| detail.menu },
       fee: self.total_fee,
     }
   end

@@ -1,7 +1,7 @@
 
 <%= simple_form_for(@reservation) do |f| %>
-<% if request.path_info != new_reservation_path%>
-<%=f.input :id, label: "id", readonly: true%>
+<% if @reservation.persisted? %>
+    <%= f.input :id, label: "id", readonly: true %>
 <%end%>
 <%=f.input :customer_id, label: "顧客ID"%>
 <%=f.input :reservation_date, label: "予約日"%>
