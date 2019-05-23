@@ -51,7 +51,6 @@ class ShiftsController < ApplicationController
   end
 
   def register
-    #abort params.inspect
     staff = Staff.find(params[:target_staff_id])
 
     #バリデーション
