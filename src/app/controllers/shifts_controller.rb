@@ -51,30 +51,20 @@ class ShiftsController < ApplicationController
   end
 
   def register
+    #abort params.inspect
     staff = Staff.find(params[:target_staff_id])
-    error_messages = []
+
     #バリデーション
-    params[:shifts].each do |date, checks_by_time|
-      checks_by_time.each do |time, check|
-        if check != '1' then
-          datetime = DateTime.parse(time)
-          shift = Shift.shift_of_staff_at_datetime(staff, datetime)
-          if shift != nil && !shift.can_delete then
-            error_messages.push(datetime.strftime("%Y/%m/%d %H:%M") + "のシフトは予約済みのため削除できません")
-          end
-        end
-      end
-    end
+    shift_checks = params[:shifts].permit!.to_hash
+    error_messages = Shift.validate_checks(shift_checks, staff)
+    #abort error_messages.inspect
     if 0 < error_messages.count then
       flash[:notice] = error_messages.join("  ")
-    else
-    #登録処理
-      params[:shifts].each do |date, checks_by_time|
-        checks_by_time.each do |time, check|
-          Shift.reflect_check(staff, DateTime.parse(time), check == '1')
-        end
-      end
+      return redirect_to action: :index
     end
+
+    #登録処理
+    Shift.register_checks(shift_checks, staff)
     redirect_to action: :index
   end
 
