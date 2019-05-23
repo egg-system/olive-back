@@ -70,7 +70,7 @@ class Shift < ApplicationRecord
     self.start_at.on(self.date).strftime('%Y%m%d%H%M')
   end
 
-  def can_delete()
+  def is_reserved
     return self.reservation == nil || self.reservation.canceled_at != nil
   end
 
@@ -81,7 +81,7 @@ class Shift < ApplicationRecord
       else
         datetime = DateTime.parse(datetime_str)
         shift = Shift.shift_of_staff_at_datetime(staff, datetime)
-        shift != nil && !shift.can_delete
+        shift != nil && !shift.is_reserved
       end
     }.map { |datetime_str, check|
       DateTime.parse(datetime_str).strftime("%Y/%m/%d %H:%M") + "のシフトは予約済みのため削除できません"
@@ -109,11 +109,6 @@ class Shift < ApplicationRecord
     self.bulk_import(shifts_to_create)
   end
 
-  def self.shift_of_staff_at_datetime(staff, datetime)
-    result = staff.shifts.where(date: datetime).where(start_at: datetime)
-    return 0 < result.count ? result.first : nil
-  end
-
   private
 
   # 30分刻みでシフトを設定する
@@ -137,4 +132,9 @@ class Shift < ApplicationRecord
     '19:00~19:30'  => '19:00:00',
     '19:30~20:00'  => '19:30:00',
   }
+
+  def self.shift_of_staff_at_datetime(staff, datetime)
+    result = staff.shifts.where(date: datetime).where(start_at: datetime)
+    return 0 < result.count ? result.first : nil
+  end
 end
