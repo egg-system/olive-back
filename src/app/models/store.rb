@@ -4,6 +4,9 @@ class Store < ApplicationRecord
   has_many :store_menu
   has_many :menus, through: :store_menu
 
+  has_many :store_option
+  has_many :options, through: :store_option
+
   def to_shop
     shop_attributes
   end
@@ -33,11 +36,10 @@ class Store < ApplicationRecord
   end
 
   def sub_shop_attributes
-    menus = self.menus.to_sub_menus
     return { 
       id: self.id, 
       name: self.name, 
-      menus: menus 
+      menus: self.menus.map { |menu| menu.to_sub_menu_attributes(self.options) }
     }
   end
 end

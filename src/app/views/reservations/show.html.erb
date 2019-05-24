@@ -1,4 +1,8 @@
-<p id="notice"><%= notice %></p>
+<h1>予約詳細</h1>
+<%= render "form" %>
 
-<%= link_to 'Edit', edit_reservation_path(@reservation) %> |
-<%= link_to 'Back', reservations_path %>
+<%= link_to(reservation_path(@reservation.id), { method: 'delete' }) do %>
+	<button type="button" class="btn btn-outline-primary">
+		<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>削除
+	</button>
+<% end %>

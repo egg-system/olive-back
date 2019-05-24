@@ -4,28 +4,14 @@ class Menu < ApplicationRecord
   has_many :skill_menus
   has_many :skills, through: :skill_menus
   
-  has_many :store_menus
+  has_many :store_menus, inverse_of: :store
   has_many :stores, through: :store_menus
-
-  def self.to_sub_menus
-    @@all_options = Option.all
-    
-    return self.all.map { |menu|
-      menu.to_sub_menu_attributes
-    }
-  end
 
   def is_acupuncture
     self.menu_category_id === MenuCategory::ACUPUNTURE_CATEGORY_ID
   end
   
-  def to_sub_menu_attributes()
-    options = @@all_options
-    
-    if options.nil?
-      options = Option.all
-    end
-
+  def to_sub_menu_attributes(options)
     if self.is_acupuncture
       options = options.reject{ |option| 
         option.is_acupuncture 
@@ -33,7 +19,7 @@ class Menu < ApplicationRecord
     end
 
     return {
-      id: self.id, 
+      id: self.id,
       name: self.name,
       price: self.fee, 
       minutes: self.service_minutes,
