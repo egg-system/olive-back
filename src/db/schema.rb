@@ -45,7 +45,7 @@ ActiveRecord::Schema.define(version: 2019_04_20_014643) do
     t.string "first_kana"
     t.string "last_kana"
     t.string "tel", comment: "携帯電話番号"
-    t.string "foxed_line_tel", comment: "固定電話番号"
+    t.string "fixed_line_tel", comment: "固定電話番号"
     t.string "pc_mail", comment: "pcメール。fileMakerから移行"
     t.string "phone_mail", comment: "携帯メール。fileMakerから移行"
     t.boolean "can_receive_mail", default: true, comment: "お知らせメールなどの受け取り可否"
