@@ -16,6 +16,7 @@
 			<th scope="col">来店店舗</th>
 			<th scope="col">メニュー</th>
 			<th scope="col">オプション</th>
+			<th scope="col"></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -44,6 +45,11 @@
 					<td>
 						<%= detail.has_options ? safe_join(detail.option_names, tag(:br)) : '無' %></td>
 					</td>
+					<% if index === 0 %>
+						<td rowspan="<%= row_span %>">
+							<%= link_to "詳細へ", reservation_path(reservation.id) %>
+						</td>
+					<% end %>
 				</tr>
 			<% end %>
 		<% end %>

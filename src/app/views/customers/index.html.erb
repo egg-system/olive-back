@@ -38,11 +38,15 @@
       <tbody>
         <% @customers.each do |customer|%>
         <tr>
-          <td scope="row"><%=customer.id%></td>
-          <td><%=customer.last_name + customer.first_name%></td>
-          <td><%=customer.address%></td>
-          <td><%=customer.size_name%></td>
-          <td><%=link_to "詳細へ", customer_path(customer.id)%></td>
+          <td scope="row"><%= customer.id %></td>
+          <td><%= customer.last_name + customer.first_name %></td>
+          <td><%= customer.address %></td>
+          <td><%= customer.zoomancy.name if customer.zoomancy.present? %></td>
+          <td><%= customer.size_name %></td>
+          <td><ul>
+            <li><%= link_to '詳細へ', customer_path(customer.id) %></li>
+            <li><%= link_to '予約登録へ', new_reservation_path(customer_id: customer.id) %></li>
+          </ul></td>
         </tr>
         <%end%>
       </tbody>
