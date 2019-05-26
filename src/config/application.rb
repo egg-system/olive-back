@@ -29,15 +29,14 @@ module Src
     end
     
     config.action_mailer.raise_delivery_errors = true
-    
     config.action_mailer.delivery_method = :smtp
     config.action_mailer.smtp_settings = {
-        port:                 ENV.fetch('MAIL_PORT', ''),
-        domain:               ENV.fetch('MAIL_HOST', ''),
-        address:              ENV.fetch('MAIL_ADDRESS', ''),
-        user_name:            ENV.fetch('MAIL_USER', ''),
-        password:             ENV.fetch('MAIL_PASSWORD', ''),
-        authentication:       ENV.fetch('MAIL_AUTH', 'login').to_sym,
+      port:                 ENV.fetch('MAIL_PORT', ''),
+      domain:               ENV.fetch('MAIL_DOMAIN', ''),
+      address:              ENV.fetch('MAIL_HOST', ''),
+      user_name:            ENV.fetch('MAIL_USER', ''),
+      password:             ENV.fetch('MAIL_PASSWORD', ''),
+      authentication:       ENV.fetch('MAIL_AUTH', 'login').to_sym,
     }
     
     # Settings in config/environments/* take precedence over those specified here.

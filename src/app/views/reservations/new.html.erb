@@ -1,2 +1,9 @@
-<h1>New Reservation</h1>
+<h1>予約登録</h1>
+<%= link_to(
+  @resrvation_details_count === 1 ? '2時間で予約する' : '1時間で予約する', 
+  new_reservation_path(
+    customer_id: @reservation.customer_id,
+    count: @resrvation_details_count === 1 ? 2 : 1
+  )
+) %>
 <%= render 'form', reservation: @reservation %>

@@ -3,7 +3,14 @@ ja:
   activerecord:
     attributes:
       customer:
-        email: "emailアドレス"
+        email: "メールアドレス(会員ID)"
+    errors:
+      models:
+        reservation:
+          attributes:
+            staff:
+              required: 'がございません。お手数ですが、予約日時を変更してください。'
+
   errors:
     messages:
       not_email: "は不正な値です"

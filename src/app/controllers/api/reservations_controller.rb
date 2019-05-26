@@ -23,12 +23,14 @@ class Api::ReservationsController < Api::ApiController
     }
   end
 
-  def destroy
-    # 予約枠取得時に影響しないよう、リレーションを削除する
-    Reservation.transaction {
-      Reservation.find(params[:id]).delete
-      ReservationShift.where(reservation_id: params[:id]).delete_all
+  def show
+    render json: { 
+      data: Reservation.find(params[:id]).to_resource,
     }
+  end
+
+  def destroy
+    Reservation.find(params[:id]).cancel
     render json: { data: 'ok' }
   end
   

@@ -1,43 +1,5 @@
 <% breadcrumb :root  %>
 <h1>基本情報</h1>
+<%= link_to "予約登録へ", new_reservation_path(customer_id: @customer.id) %>
 <%= render "form" %>
-<table class="table">
-	<thead class="thead-light">
-		<tr>
-			<th scope="col">ステータス</th>
-			<th scope="col">予約日時</th>
-			<th scope="col">担当者</th>
-			<th scope="col">売上金額</th>
-			<th scope="col">時間数</th>
-			<th scope="col">来店店舗</th>
-			<th scope="col">メニュー</th>
-			<th scope="col">オプション</th>
-		</tr>
-	</thead>
-	<tbody>
-		<% @reservations.each do |reservation| %>
-			<% row_span = reservation.reservation_details.count %>
-			<tr>
-				<td rowspan="<%= row_span %>"><%= reservation.state %></td>
-				<td rowspan="<%= row_span %>">
-					<%= reservation.reservation_date %>&nbsp;
-					<%= reservation.start_time.strftime("%H:%M") %>〜<%= reservation.end_time.strftime("%H:%M") %>
-				</td>
-				<td rowspan="<%= row_span %>"><%= reservation.staff.full_name %></td>
-				<td rowspan="<%= row_span %>"><%= number_with_delimiter(reservation.total_fee) %>円</td>
-
-			<% reservation.reservation_details.each_with_index do |detail, index| %>
-				<% if index > 0 %>
-					<tr>
-				<% end %>
-					<td><%= "#{index + 1}時間目" %></td>
-					<td><%= detail.store.name %></td>
-					<td><%= detail.menu.name %></td>
-					<td>
-						<%= detail.has_options ? safe_join(detail.option_names, tag(:br)) : '無' %></td>
-					</td>
-				</tr>
-			<% end %>
-		<% end %>
-	</tbody>
-</table>
+<%= render 'reservations/list' %>
