@@ -1,91 +1,57 @@
 // Place all the styles related to the shifts controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+// ---検索欄部分---
 .shift-list p {
   font-size: 30px;
   text-align: center;
-}
-.shift-list div.field {
-  vertical-align: baseline;
 }
 .shift-list .field select {
   margin-bottom: 3px;
   margin-top: 3px;
   margin-right: 3px;
 }
+.shift-list div.field {
+  vertical-align: middle;
+}
 .shift-list .actions {
   margin-top: 3px;
   margin-bottom: 3px;
 }
-.shift-list .tbl {
-  overflow-y: scroll;
-}
+// --------------
+
 .shift-list table {
-  color: #545454;
   display: block;
   position: relative;
-  overflow: scroll;
+  border: 1px solid #cfcece;
   width: calc(100vw - 3rem);
   height: calc(75vh);
-  border-collapse: collapse;
+  border-collapse: separate;
+  overflow: scroll;
+  z-index: 10;
 }
-.shift-list .sticky_table thead,
-.shift-list .sticky_table tbody {
-  display: block;
-  width: max-content;
-}
-.shift-list .sticky_table th,
-.shift-list .sticky_table td {
-  display: inline-block;
-  background: #f8f8f8;
-  width: 7rem;
-  font-size: 1rem;
-  text-align: center;
-}
-// 日付
-.shift-list .sticky_table th.sticky_th {
-  width: 7rem;
-}
-// 列ヘッダの固定
-.shift-list .sticky_table thead tr th {
-  position: sticky;
-  left: 0;
-  z-index: 1;
-}
-.shift-list .sticky_table tbody tr th.td-date {
-  color: red;
-  position: sticky;
-  left: 0;
-  width: 7rem;
-}
-// 行ヘッダの固定
-.shift-list .sticky_table thead {
-  position: sticky;
-  top: 0;
-  z-index: 2;
-  color: blue;
-}
-// 行・列ヘッダの交差部分の固定
-// .sticky_table thead th.blank {
-//   position: -webkit-sticky;
-//   position: sticky;
-//   top: 0;
-//   left: 0;
-//   z-index: 1;
-// }
-
+.shift-list .sticky_table td,
 .shift-list .sticky_table th {
-  background: #f7edf8;
-}
-.shift-list table tbody.cls-tbody {
-  overflow-x: scroll;
-}
-.shift-list table thead tr th {
+  white-space: nowrap;
+  border: 1px solid #e4e4e4;
+  width: 7rem;
+  font-size: 0.9rem;
   text-align: center;
 }
-.shift-list table tbody tr td {
-  text-align: center;
+// 行の固定(縦スクロール時)
+.shift-list .sticky_table th {
+  background-color: #f7edf8;
+  position: sticky;
+  top: -1px;
+  z-index: 2;
 }
-.shift-list div.field {
-  vertical-align: middle;
+// 列の固定(横スクロール時)
+.shift-list .sticky_table tbody tr td:first-of-type {
+  display: inline-block;
+  background-color: #f7edf8;
+  position: sticky;
+  left: -1px;
+  width: 7rem;
+  font-size: 0.9rem;
+  text-align: center;
 }
