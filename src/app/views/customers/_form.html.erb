@@ -13,7 +13,7 @@
         <%= f.input :first_kana, label: 'メイ', required: true %>
         <%# webからの登録の場合、電話番号が存在しない可能性があるため、新規登録の場合のみ必須にする %>
         <%= f.input :tel, label: '電話番号', required: @customer.new_record? %>
-        <%= f.input :foxed_line_tel, label: '固定電話番号' %>
+        <%= f.input :fixed_line_tel, label: '固定電話番号' %>
         <%= f.input :phone_mail, label: '携帯メールアドレス' %>
         <%= f.input :pc_mail, label: 'PCメールアドレス'%>
         <%= f.input :email, label: 'メールアドレス(会員ID)'%>
