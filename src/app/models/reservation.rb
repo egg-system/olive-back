@@ -90,10 +90,10 @@ class Reservation < ApplicationRecord
 
   def cancel
     # 予約枠取得時に影響しないよう、リレーションを削除する
-    self.transaction {
+    self.transaction do
       self.update(canceled_at: DateTime.now)
       self.reservation_shifts.delete_all
-    }
+    end
   end
 
   def canceled?
