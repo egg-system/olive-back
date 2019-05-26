@@ -15,7 +15,7 @@
   </div>
 <% end %>
 
-<%= form_with url: updates_shifts_path, methods: :patch, local: true do |form| %>
+<%= form_with url: updates_shifts_path, method: :patch, local: true do |form| %>
   <table>
     <thead>
       <tr>
@@ -33,8 +33,10 @@
           <% Shift.get_time_slots(date).each do |shift_time| %> 
             <td>
               <%= form.check_box(
-                shift_exist(shift_time) ? "save_shifts" : "insert_shifts",
-                { checked: shift_exist(shift_time), disabled: resrvation_exist(shift_time), }
+                get_shift_parameter(shift_time), { 
+                  checked: shift_exist(shift_time), 
+                  disabled: resrvation_exist(shift_time)
+                }
               ) %>
               <% if resrvation_exist(shift_time) %>
                 <span>予約済み</span>
@@ -46,7 +48,8 @@
     </tbody>
   </table>
   
-  <%= hidden_field_tag('staff_id', @staff_id) %>
+  <%= hidden_field_tag('staff_id', @search_params[:staff_id]) %>
+  <%= hidden_field_tag('store_id', @search_params[:store_id]) %>
   <input type="submit" name="commit" value="登録" data-disable-with="登録">
 <% end %>
 
