@@ -67,11 +67,11 @@ class Shift < ApplicationRecord
   end
 
   def shift_at
-    self.start_at.on(self.date).strftime('%Y%m%d%H%M')
+    self.start_at.on(self.date)
   end
 
-  def is_reserved
-    return self.reservation == nil || self.reservation.canceled_at != nil
+  def reserved
+    return self.reservation.present? && self.reservation.canceled_at.nil?
   end
 
   def self.validate_checks(shift_checks, staff)
