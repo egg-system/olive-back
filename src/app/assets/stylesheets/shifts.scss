@@ -1,3 +1,62 @@
 // Place all the styles related to the shifts controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+// ---検索欄部分---
+.shift-list p {
+  font-size: 30px;
+  text-align: center;
+}
+.shift-list .field select {
+  margin-bottom: 3px;
+  margin-top: 3px;
+  margin-right: 3px;
+}
+.shift-list div.field select {
+  vertical-align: middle;
+  margin-bottom: 3px;
+  margin-top: 3px;
+  margin-right: 3px;
+}
+.shift-list .actions {
+  margin-top: 3px;
+  margin-bottom: 3px;
+}
+// --------------
+
+.shift-list table {
+  display: block;
+  position: relative;
+  border: 1px solid #cfcece;
+  width: calc(100vw - 3rem);
+  height: calc(75vh);
+  border-collapse: separate;
+  overflow: scroll;
+  z-index: 10;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+.shift-list .sticky_table td,
+.shift-list .sticky_table th {
+  white-space: nowrap;
+  border: 1px solid #e4e4e4;
+  width: 7rem;
+  font-size: 0.9rem;
+  text-align: center;
+}
+// 行の固定(縦スクロール時)
+.shift-list .sticky_table th {
+  background-color: #f7edf8;
+  position: sticky;
+  top: -1px;
+  z-index: 2;
+}
+// 列の固定(横スクロール時)
+.shift-list .sticky_table tbody tr td:first-of-type {
+  display: inline-block;
+  background-color: #f7edf8;
+  position: sticky;
+  left: -1px;
+  width: 7rem;
+  font-size: 0.9rem;
+  text-align: center;
+}

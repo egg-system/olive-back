@@ -1,56 +1,57 @@
-<h1>シフト一覧</h1>
+<div class="shift-list">
+  <p>シフト一覧</p>
 
-<%= form_with url: shifts_path, method: :get, local: true do |form| %>
-  <div class="field">
-    <%= form.date_select :month, discard_day: true, default: @search_params[:month] %>
-  </div>
-  <div class="field">
-    <%= form.select :store_id, options_from_collection_for_select(Store.all, :id, :name, @search_params[:store_id]) %>
-  </div>
-  <div class="field">
-    <%= form.select :staff_id, options_from_collection_for_select(Staff.all, :id, :name, @search_params[:staff_id]) %>
-  </div>
-  <div class="actions">
-    <%= form.submit "検索" %>
-  </div>
-<% end %>
+  <%= form_with url: shifts_path, method: :get, local: true do |form| %>
+    <div class="field">
+      <%= form.date_select :month, discard_day: true, default: @search_params[:month] %>
+    </div>
+    <div class="field">
+      <%= form.select :store_id, options_from_collection_for_select(Store.all, :id, :name, @search_params[:store_id]) %>
+    </div>
+    <div class="field">
+      <%= form.select :staff_id, options_from_collection_for_select(Staff.all, :id, :name, @search_params[:staff_id]) %>
+    </div>
+    <div class="actions">
+      <%= form.submit "検索" %>
+    </div>
+  <% end %>
 
-<%= form_with url: updates_shifts_path, method: :patch, local: true do |form| %>
-  <table>
-    <thead>
-      <tr>
-        <th>日付</th>
-        <% Shift.slot_time_labels.each do |key, value| %>
-          <th><%= key %></th>
-        <% end %>
-      </tr>
-    </thead>
-
-    <tbody>
-      <% (@start_date..@end_date).each do |date| %>
+  <%= form_with url: updates_shifts_path, method: :patch, local: true do |form| %>
+    <table class="sticky_table">
+      <thead>
         <tr>
-          <td><%= date %></td>
-          <% Shift.get_time_slots(date).each do |shift_time| %> 
-            <td>
-              <%= form.check_box(
-                get_shift_parameter(shift_time), { 
-                  checked: shift_exist(shift_time), 
-                  disabled: resrvation_exist(shift_time)
-                }
-              ) %>
-              <% if resrvation_exist(shift_time) %>
-                <span>予約済み</span>
-              <% end %>
-            </td>
+          <th>日付</th>
+          <% Shift.slot_time_labels.each do |key, value| %>
+            <th><%= key %></th>
           <% end %>
         </tr>
-      <% end %>
-    </tbody>
-  </table>
-  
-  <%= hidden_field_tag('staff_id', @search_params[:staff_id]) %>
-  <%= hidden_field_tag('store_id', @search_params[:store_id]) %>
-  <input type="submit" name="commit" value="登録" data-disable-with="登録">
-<% end %>
+      </thead>
 
-<br>
+      <tbody>
+        <% (@start_date..@end_date).each do |date| %>
+          <tr>
+            <td><%= date %></td>
+            <% Shift.get_time_slots(date).each do |shift_time| %>
+              <td>
+                <%= form.check_box(
+                  get_shift_parameter(shift_time), {
+                    checked: shift_exist(shift_time),
+                    disabled: resrvation_exist(shift_time)
+                  }
+                ) %>
+                <% if resrvation_exist(shift_time) %>
+                  <span>予約済み</span>
+                <% end %>
+              </td>
+            <% end %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <%= hidden_field_tag('staff_id', @search_params[:staff_id]) %>
+    <%= hidden_field_tag('store_id', @search_params[:store_id]) %>
+    <input type="submit" name="commit" value="登録" data-disable-with="登録">
+  <% end %>
+  <br>
+</div>
