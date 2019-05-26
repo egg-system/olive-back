@@ -47,7 +47,8 @@
             label: '生年月日', 
             wrapper: :horizontal_multi_select, 
             start_year: 1940, 
-            end_year: Date.today.year
+            end_year: Date.today.year,
+            include_blank: true
         ) %>
         <% if @customer.persisted? %>
             <%= f.input :age, label: '年齢', readonly: true %>
