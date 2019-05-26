@@ -22,4 +22,12 @@ module ShiftsHelper
 		
 		return extract_shift(date, shift_time).reserved
 	end
+
+	def get_shift_parameter(shift_time)
+		return "new_shifts[#{shift_time}]" unless shift_exist(shift_time)
+
+		date = extract_date(shift_time)
+		shift = extract_shift(date, shift_time)
+		return "remain_shift_ids[#{shift.id}]"
+	end
 end
