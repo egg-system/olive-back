@@ -74,39 +74,8 @@ class Shift < ApplicationRecord
     return self.reservation.present? && self.reservation.canceled_at.nil?
   end
 
-  def self.validate_checks(shift_checks, staff)
-    messages = shift_checks.select { |datetime_str, check|
-      if check == '1' then
-        false
-      else
-        datetime = DateTime.parse(datetime_str)
-        shift = Shift.shift_of_staff_at_datetime(staff, datetime)
-        shift != nil && !shift.is_reserved
-      end
-    }.map { |datetime_str, check|
-      DateTime.parse(datetime_str).strftime("%Y/%m/%d %H:%M") + "のシフトは予約済みのため削除できません"
-    }
-    return messages
-  end
-
-  def self.register_checks(shift_checks, staff)
-    shifts_to_create = []
-    shift_checks.each do |datetime_str, check|
-      datetime = DateTime.parse(datetime_str)
-      shift = shift_of_staff_at_datetime(staff, datetime)
-      if check == '1' && shift == nil then
-        shift = Shift.new
-        shift.date = datetime
-        shift.start_at = datetime
-        shift.end_at = datetime.since(SLOT_INCREMENT_MITUNES.minutes)
-        shift.staff = staff
-        shift.store = staff.store
-        shifts_to_create.push(shift)
-      elsif check != '1' && shift != nil then
-        shift.delete
-      end
-    end
-    self.bulk_import(shifts_to_create)
+  def self.get_shift_increment
+    return SLOT_INCREMENT_MITUNES.minute
   end
 
   private
