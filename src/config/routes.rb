@@ -6,9 +6,9 @@ Rails.application.routes.draw do
     sessions: 'staffs/sessions',
   }
 
-  resources :shifts, only: [:index, :new, :create, :update] do
+  resources :shifts, only: [:index, :new, :create] do 
     collection do
-        post :register
+      patch :updates
     end
   end
   resources :stores, :staffs, :customers, :reservations do
