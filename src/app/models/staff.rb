@@ -9,6 +9,7 @@ class Staff < ApplicationRecord
   has_many :skill_staff
   has_many :skills, through: :skill_staff
   accepts_nested_attributes_for :skill_staff, update_only: true
+  validates :skill_staff, presence: true
 
   belongs_to :store
   belongs_to :role

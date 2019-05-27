@@ -1,5 +1,6 @@
 class StaffsController < ApplicationController
   before_action :set_staff, only: [:show, :update, :destroy]
+  before_action :set_relation_models, only: [:new, :create, :show]
 
   # GET /staffs
   # GET /staffs.json
@@ -26,9 +27,6 @@ class StaffsController < ApplicationController
   # GET /staffs/1.json
   def show
     @staff = Staff.join_tables.find(params[:id])
-    @stores = Store.all
-    @roles = Role.all
-    @skills = Skill.all
     @staff_skills = SkillStaff.where({staff_id: params[:id]})
   end
 
@@ -36,25 +34,20 @@ class StaffsController < ApplicationController
   def new
     @staff = Staff.new
     @staff.skill_staff.build
-    @stores = Store.all
-    @roles = Role.all
-    @skills = Skill.all
   end
 
   # POST /staffs
   # POST /staffs.json
   def create
     @staff = Staff.new(staff_params)
-    @stores = Store.all
-    @skills = Skill.all
-    @roles = Role.all
     respond_to do |format|
       begin
         @staff.save!
-        format.html { redirect_to @staff, notice: '新規Staffが作成されました。' }
+        format.html { redirect_to @staff, notice: 'スタッフが登録されました。' }
         format.json { render :show, status: :created, location: @staff }
       rescue => exception
-        format.html { redirect_to :new_staff , notice: 'Staffの新規作成に失敗しました。'  }
+        error_message = @staff.skill_staff.present? ? 'スタッフを登録できませんでした。' : '保有スキルは１件以上入力してください。'
+        format.html { redirect_to :new_staff , notice: error_message }
         format.json { render json: @staff.errors, status: :unprocessable_entity }
       end
     end
@@ -90,6 +83,13 @@ class StaffsController < ApplicationController
     end
   end
 
+  protected
+    def set_relation_models
+      @stores = Store.all
+      @roles = Role.all
+      @skills = Skill.all
+    end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_staff
@@ -98,7 +98,22 @@ class StaffsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def staff_params
-      params.require(:staff).permit(:first_name, :last_name, :first_kana, :last_kana, :store_id, :employment_type, :role_id, :login, :password, {skill_ids: []})
+      staff_params = params
+        .require(:staff)
+        .permit(
+          :first_name,
+          :last_name,
+          :first_kana,
+          :last_kana,
+          :store_id,
+          :employment_type,
+          :role_id,
+          :login,
+          :password,
+          { skill_ids: [] }
+        )
+        staff_params.delete(:password) if staff_params[:password].empty?
+        return staff_params
     end
 
 end

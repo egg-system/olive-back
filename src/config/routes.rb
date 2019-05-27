@@ -5,8 +5,12 @@ Rails.application.routes.draw do
   devise_for :staffs, only: :sessions, controllers: {
     sessions: 'staffs/sessions',
   }
-  
-  resources :shifts, only: [:index, :new, :create, :update]
+
+  resources :shifts, only: [:index, :new, :create] do 
+    collection do
+      patch :updates
+    end
+  end
   resources :stores, :staffs, :customers, :reservations do
     collection do
       post :search
@@ -20,7 +24,7 @@ Rails.application.routes.draw do
     :menu_categories,
     :menus,
     :options,
-    :coupons, 
+    :coupons,
     :coupon_histories
   )
 

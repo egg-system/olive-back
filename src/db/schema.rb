@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_20_014643) do
+ActiveRecord::Schema.define(version: 2019_05_22_113423) do
 
   create_table "baby_ages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
@@ -45,7 +45,7 @@ ActiveRecord::Schema.define(version: 2019_04_20_014643) do
     t.string "first_kana"
     t.string "last_kana"
     t.string "tel", comment: "携帯電話番号"
-    t.string "foxed_line_tel", comment: "固定電話番号"
+    t.string "fixed_line_tel", comment: "固定電話番号"
     t.string "pc_mail", comment: "pcメール。fileMakerから移行"
     t.string "phone_mail", comment: "携帯メール。fileMakerから移行"
     t.boolean "can_receive_mail", default: true, comment: "お知らせメールなどの受け取り可否"
@@ -205,7 +205,8 @@ ActiveRecord::Schema.define(version: 2019_04_20_014643) do
     t.time "start_time"
     t.time "end_time"
     t.boolean "is_first"
-    t.date "canceled_at", comment: "キャンセルされた日時"
+    t.datetime "canceled_at", comment: "キャンセルされた日時"
+    t.date "deleted_at", comment: "キャンセルは基本的に表示するので、削除フラグとわける"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["customer_id"], name: "index_reservations_on_customer_id"
@@ -281,6 +282,15 @@ ActiveRecord::Schema.define(version: 2019_04_20_014643) do
     t.index ["store_id"], name: "index_store_menus_on_store_id"
   end
 
+  create_table "store_options", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "store_id"
+    t.bigint "option_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["option_id"], name: "index_store_options_on_option_id"
+    t.index ["store_id"], name: "index_store_options_on_store_id"
+  end
+
   create_table "stores", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "store_type", default: 0, comment: "モデル内でenum型に定義 0:直営店 1:FC店"
     t.string "name"
@@ -350,4 +360,6 @@ ActiveRecord::Schema.define(version: 2019_04_20_014643) do
   add_foreign_key "staffs", "stores"
   add_foreign_key "store_menus", "menus"
   add_foreign_key "store_menus", "stores"
+  add_foreign_key "store_options", "options"
+  add_foreign_key "store_options", "stores"
 end
