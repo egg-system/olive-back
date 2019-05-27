@@ -33,7 +33,7 @@ class StaffsController < ApplicationController
   # GET /staffs/new
   def new
     @staff = Staff.new
-    @staff.skill_staff.build
+    @staff.skill_staffs.build
   end
 
   # POST /staffs
@@ -46,7 +46,7 @@ class StaffsController < ApplicationController
         format.html { redirect_to @staff, notice: 'スタッフが登録されました。' }
         format.json { render :show, status: :created, location: @staff }
       rescue => exception
-        error_message = @staff.skill_staff.present? ? 'スタッフを登録できませんでした。' : '保有スキルは１件以上入力してください。'
+        error_message = @staff.skill_staffs.present? ? 'スタッフを登録できませんでした。' : '保有スキルは１件以上入力してください。'
         format.html { redirect_to :new_staff , notice: error_message }
         format.json { render json: @staff.errors, status: :unprocessable_entity }
       end

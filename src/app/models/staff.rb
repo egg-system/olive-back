@@ -6,10 +6,10 @@ class Staff < ApplicationRecord
   devise :database_authenticatable, :rememberable,
     authentication_keys: [:login, :store_id]
 
-  has_many :skill_staff
-  has_many :skills, through: :skill_staff
-  accepts_nested_attributes_for :skill_staff, update_only: true
-  validates :skill_staff, presence: true
+  has_many :skill_staffs
+  has_many :skills, through: :skill_staffs
+  accepts_nested_attributes_for :skill_staffs, update_only: true
+  validates :skill_staffs, presence: true
 
   belongs_to :store
   belongs_to :role
