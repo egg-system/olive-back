@@ -1,5 +1,5 @@
 <div class="form-wrapper">
-    <%= simple_form_for(@customer, wrapper: :horizontal_form, html: { class: 'form-horizontal' }) do |f|%>
+    <%= simple_form_for(@customer, wrapper: :horizontal_form, html: { class: 'form-horizontal', autocomplete: 'off' }) do |f|%>
     <%= f.error_notification %>
     <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
@@ -15,8 +15,8 @@
         <%= f.input :tel, label: '電話番号', required: @customer.new_record? %>
         <%= f.input :fixed_line_tel, label: '固定電話番号' %>
         <%= f.input :phone_mail, label: '携帯メールアドレス' %>
-        <%= f.input :pc_mail, label: 'PCメールアドレス'%>
-        <%= f.input :email, label: 'メールアドレス(会員ID)'%>
+        <%= f.input :pc_mail, label: 'PCメールアドレス' %>
+        <%= f.input :email, label: 'メールアドレス(会員ID)' %>
         <%= f.input(
             :can_receive_mail, 
             as: :radio_buttons, 
@@ -39,9 +39,9 @@
             label: '直近ご来店店舗', 
             default: @customer.last_visit_store_id 
         ) %>
-        <%= f.input :comment, label: 'コメント'%>
-        <%= f.input :zip_code, label: '郵便番号(XXX-XXXX)'%>
-        <%= f.input :address, label: '住所'%>
+        <%= f.input :comment, label: 'コメント' %>
+        <%= f.input :zip_code, label: '郵便番号(XXX-XXXX)' %>
+        <%= f.input :address, label: '住所' %>
         <%= f.input(
             :birthday, 
             label: '生年月日', 
@@ -60,8 +60,8 @@
             hint: '会員にする場合、メールアドレス(会員ID)とパスワードの入力が必須になります', 
             collection: { '非会員' => :none, '会員' => :email } 
         ) %>
-        <%= f.input :password, label: 'パスワード'%>
-        <%= f.button :submit, class: 'btn btn-primary'%>
+        <%= f.input :password, label: 'パスワード' %>
+        <%= f.button :submit, class: 'btn btn-primary' %>
         <%= link_to '戻る', customers_path, class: 'btn btn-light' %>
         <% end %>
     </div>
