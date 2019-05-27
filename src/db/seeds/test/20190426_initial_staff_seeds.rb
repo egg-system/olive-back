@@ -7,6 +7,8 @@ staff.update_attributes!(
   store_id: 1,
   first_name: '管理者', 
   last_name: 'オリーブ',
+  first_kana: 'カンリシャ', 
+  last_kana: 'オリーブ',
   login: 'test',
   password: 'password'
 )
