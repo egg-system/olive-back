@@ -24,6 +24,8 @@ class CustomersController < ApplicationController
     @zoomancies = Zoomancy.all
     @baby_ages = BabyAge.all
     @sizes = Size.all
+    @visit_reasons = VisitReason.all
+    @nearest_stations = NearestStation.all
   end
 
   # GET /customers/new
@@ -31,6 +33,13 @@ class CustomersController < ApplicationController
     # 画面入力の場合、非会員をデフォルト値にする
     @customer = Customer.new(provider: 'none')
     @stores = Store.all
+    @reservations = @customer.reservations.order('reservation_date DESC, start_time DESC')
+    @occupations = Occupation.all
+    @zoomancies = Zoomancy.all
+    @baby_ages = BabyAge.all
+    @sizes = Size.all
+    @visit_reasons = VisitReason.all
+    @nearest_stations = NearestStation.all
   end
 
   # GET /customers/1/edit
