@@ -1,5 +1,6 @@
 class CustomersController < ApplicationController
   before_action :set_customer, only: [:show, :edit, :update, :destroy]
+  before_action :set_relation_models, only: [:new, :show]
 
   # GET /customers
   # GET /customers.json
@@ -27,10 +28,7 @@ class CustomersController < ApplicationController
     # 画面入力の場合、非会員をデフォルト値にする
     @customer = Customer.new(provider: 'none')
     @stores = Store.all
-  end
-
-  # GET /customers/1/edit
-  def edit
+    @reservations = @customer.reservations.order('reservation_date DESC, start_time DESC')
   end
 
   # POST /customers
@@ -84,6 +82,15 @@ class CustomersController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_customer
       @customer = Customer.find(params[:id])
+    end
+
+    def set_relation_models
+      @occupations = Occupation.all
+      @zoomancies = Zoomancy.all
+      @baby_ages = BabyAge.all
+      @sizes = Size.all
+      @visit_reasons = VisitReason.all
+      @nearest_stations = NearestStation.all   
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

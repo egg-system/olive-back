@@ -3,7 +3,7 @@ employment_type:
   - 契約社員
   - パート・アルバイト
 
-patient_card:
+has_registration_card:
   - 未
   - 済
 
