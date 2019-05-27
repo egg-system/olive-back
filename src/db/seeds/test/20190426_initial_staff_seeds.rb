@@ -2,6 +2,8 @@
 
 # csvインポートのテストなどのため、名前を固定にしておく
 staff = Staff.find_or_initialize_by(id: 1)
+staff.skill_staffs.where(id: 1).first_or_initialize(skill_id: 1)
+staff.skill_staffs.where(id: 2).first_or_initialize(skill_id: 2)
 staff.update_attributes!(
   role_id: 1,
   store_id: 1,
