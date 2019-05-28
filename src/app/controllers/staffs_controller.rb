@@ -1,6 +1,6 @@
 class StaffsController < ApplicationController
   before_action :set_staff, only: [:show, :update, :destroy]
-  before_action :set_relation_models, only: [:new, :create, :show]
+  before_action :set_relation_models, only: [:new, :create, :show, :update]
 
   # GET /staffs
   # GET /staffs.json
@@ -47,7 +47,8 @@ class StaffsController < ApplicationController
         format.html { redirect_to @staff, notice: 'スタッフが登録されました。' }
         format.json { render :show, status: :created, location: @staff }
       rescue => exception
-        format.html { redirect_to :new_staff , notice: 'スタッフを登録できませんでした。' }
+        flash[:alert] = 'スタッフを登録できませんでした。'
+        format.html { render :new }
         format.json { render json: @staff.errors, status: :unprocessable_entity }
       end
     end
@@ -66,7 +67,8 @@ class StaffsController < ApplicationController
         format.html { redirect_to @staff, notice: '更新しました。' }
         format.json { render :show, status: :ok, location: @staff }
       rescue => exception
-        format.html { redirect_to @staff, notice: '更新に失敗しました。'  }
+        flash[:alert] = '更新に失敗しました。'
+        format.html { render :show }
         format.json { render json: @staff.errors, status: :unprocessable_entity }
       end
     end
