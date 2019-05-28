@@ -41,7 +41,6 @@ class StaffsController < ApplicationController
   # POST /staffs.json
   def create
     @staff = Staff.new(staff_params)
-    binding.pry
     respond_to do |format|
       begin
         @staff.save!
