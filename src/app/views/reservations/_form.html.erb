@@ -2,7 +2,7 @@
 <%= simple_form_for(@reservation) do |f| %>
 
 	<% if @reservation.persisted? %>
-			<%= f.input :id, label: "id", readonly: true %>
+		<%= f.input :id, label: "id", readonly: true %>
 	<% end %>
 	<%= f.input :customer_id, label: "顧客ID", readonly: true %>
 	<%= f.input(
@@ -46,14 +46,14 @@
 	<% @reservation.reservation_details.each.with_index(1) do |detail, index| %>
 		<%= f.fields_for :reservation_details, detail, child_index: index do |detail_form| %>
 			<%= detail_form.hidden_field :id, value: detail.id %>
-			<%= detail_form.hidden_field :store_id, value: @store.id %>
+			<%= detail_form.input :store_id, collection: Store.all, label: '予約店舗', required: true %>
 			<%= detail_form.input(
 				:menu_id,
-				collection: @store.menus,
+				collection: Menu.all,
 				label: @reservation.reservation_details.count > 1 ? "#{index}時間目のメニュー" : 'メニュー',
 				required: index === 1
 			) %>
-			<%= detail_form.collection_check_boxes :option_ids, @store.options, :id, :name %>
+			<%= detail_form.collection_check_boxes :option_ids, Option.all, :id, :name %>
 			<%= detail_form.input :mimitsubo_count, label: '耳つぼジュエリーの個数', required: false %>
 		<% end %>
 	<% end %>
