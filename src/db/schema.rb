@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_22_113423) do
+ActiveRecord::Schema.define(version: 2019_05_28_102117) do
 
   create_table "baby_ages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
@@ -258,7 +258,6 @@ ActiveRecord::Schema.define(version: 2019_05_22_113423) do
     t.string "last_name"
     t.string "first_kana"
     t.string "last_kana"
-    t.bigint "store_id"
     t.bigint "role_id"
     t.integer "employment_type", comment: "model内でenumにする。0:正社員, 1:契約社員, 2:パート・アルバイト"
     t.datetime "deleted_at"
@@ -268,9 +267,8 @@ ActiveRecord::Schema.define(version: 2019_05_22_113423) do
     t.string "login", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.datetime "remember_created_at"
-    t.index ["login", "store_id"], name: "index_staffs_on_login_and_store_id", unique: true
+    t.index ["login"], name: "index_staffs_on_login", unique: true
     t.index ["role_id"], name: "index_staffs_on_role_id"
-    t.index ["store_id"], name: "index_staffs_on_store_id"
   end
 
   create_table "store_menus", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -289,6 +287,15 @@ ActiveRecord::Schema.define(version: 2019_05_22_113423) do
     t.datetime "updated_at", null: false
     t.index ["option_id"], name: "index_store_options_on_option_id"
     t.index ["store_id"], name: "index_store_options_on_store_id"
+  end
+
+  create_table "store_staffs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "store_id"
+    t.bigint "staff_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["staff_id"], name: "index_store_staffs_on_staff_id"
+    t.index ["store_id"], name: "index_store_staffs_on_store_id"
   end
 
   create_table "stores", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -357,9 +364,10 @@ ActiveRecord::Schema.define(version: 2019_05_22_113423) do
   add_foreign_key "skill_staffs", "skills", on_delete: :cascade
   add_foreign_key "skill_staffs", "staffs", on_delete: :cascade
   add_foreign_key "staffs", "roles"
-  add_foreign_key "staffs", "stores"
   add_foreign_key "store_menus", "menus"
   add_foreign_key "store_menus", "stores"
   add_foreign_key "store_options", "options"
   add_foreign_key "store_options", "stores"
+  add_foreign_key "store_staffs", "staffs"
+  add_foreign_key "store_staffs", "stores"
 end

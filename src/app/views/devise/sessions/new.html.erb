@@ -5,7 +5,9 @@
     <hr>
     <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
       <div class="form-group">
-        <%= f.text_field :store_id, autofocus: true, placeholder: '店舗ID', class: 'form-control' %>
+        <%= f.fields_for :store_staffs do |store_form| %>
+          <%= store_form.text_field :store_id, autofocus: true, placeholder: '店舗ID', class: 'form-control' %>
+        <% end %>
       </div>
 
       <div class="form-group">
