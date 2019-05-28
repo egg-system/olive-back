@@ -47,7 +47,8 @@ class StaffsController < ApplicationController
         format.json { render :show, status: :created, location: @staff }
       rescue => exception
         error_message = @staff.skill_staffs.present? ? 'スタッフを登録できませんでした。' : '保有スキルは１件以上入力してください。'
-        format.html { render :new , notice: error_message }
+        flash[:alert] = error_message
+        format.html { render :new }
         format.json { render json: @staff.errors, status: :unprocessable_entity }
       end
     end
@@ -66,7 +67,8 @@ class StaffsController < ApplicationController
         format.html { redirect_to @staff, notice: '更新しました。' }
         format.json { render :show, status: :ok, location: @staff }
       rescue => exception
-        format.html { render :show , notice: '更新に失敗しました。'  }
+        flash[:alert] = '更新に失敗しました。'
+        format.html { render :show }
         format.json { render json: @staff.errors, status: :unprocessable_entity }
       end
     end

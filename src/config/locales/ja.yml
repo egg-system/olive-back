@@ -24,4 +24,4 @@ ja:
 
   simple_form:
     error_notification:
-      default_message: "データの登録に失敗しました。エラーメッセージを確認してください。"
+      default_message: "データの登録に失敗しました。"
