@@ -3,17 +3,22 @@ class Staff < ApplicationRecord
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :database_authenticatable, :rememberable,
-    authentication_keys: [:login, :store_id]
+  devise :database_authenticatable, :rememberable, authentication_keys: [:login]
 
   has_many :skill_staffs
   has_many :skills, through: :skill_staffs
   accepts_nested_attributes_for :skill_staffs, update_only: true
+
+  validates :skill_staffs, presence: true
+  validates :first_kana, full_width_kana: true
+  validates :last_kana, full_width_kana: true
+
+  has_many :store_staffs
+  has_many :stores, through: :store_staffs
+  accepts_nested_attributes_for :skill_staffs, update_only: true
   validates :skill_staffs, presence: true
 
-  belongs_to :store
   belongs_to :role
-
   has_many :shifts
 
   def full_name
@@ -42,7 +47,8 @@ class Staff < ApplicationRecord
 
   # 全部のスキルを持っているスタッフで絞りこむ
   scope :has_must_skills, -> (skill_ids) {
-    staffIds = SkillStaff.where(skill_id: skill_ids)
+    staffIds = SkillStaff
+      .where(skill_id: skill_ids)
       .group(:staff_id)
       .having('count(skill_id) >= ?', skill_ids.count)
       .select(:staff_id)
@@ -51,13 +57,8 @@ class Staff < ApplicationRecord
   }
 
   #店舗idによる絞り込み
-  scope :get_by_store, -> (store_id) {
-    where(store_id: store_id)
-  }
-
-  #left join
-  scope :join_store, -> {
-    left_joins(:store).select("stores.name as store_name")
+  scope :where_store_id, -> (store_id) {
+    joins(:stores).merge(Store.where(id: store_id))
   }
 
   scope :join_role, -> {
@@ -65,10 +66,15 @@ class Staff < ApplicationRecord
   }
 
   scope :join_tables, -> {
-    select('staffs.*').join_store.join_role
+    select('staffs.*').join_role
   }
 
   def name
     return "#{self.last_name} #{self.first_name}"
+  end
+
+  def self.find_for_authentication(tainted_conditions)
+    # TODO: ここで店舗の検索処理を実装する
+    super
   end
 end

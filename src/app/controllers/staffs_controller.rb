@@ -1,13 +1,13 @@
 class StaffsController < ApplicationController
   before_action :set_staff, only: [:show, :update, :destroy]
-  before_action :set_relation_models, only: [:new, :create, :show]
+  before_action :set_relation_models, only: [:new, :create, :show, :update]
 
   # GET /staffs
   # GET /staffs.json
   def index
-    @staffs = Staff.join_tables
+    @staffs = Staff.all
     if params[:store_id].present?
-      @staffs = @staffs.get_by_store params[:store_id]
+      @staffs = @staffs.where_store_id(params[:store_id])
       @store_id = params[:store_id]
     end
 
@@ -15,6 +15,7 @@ class StaffsController < ApplicationController
       @staffs = @staffs.where("concat(last_name, first_name) like ?", "%#{params[:staff_name]}%")
       @staff_name = params[:staff_name]
     end
+
     @stores = Store.all
     @staff_skills_list = ActiveRecord::Base.connection.select_all('select skill_staffs.staff_id, group_concat(skills.name) as skills_list FROM `skill_staffs` INNER JOIN `skills` ON `skills`.`id` = `skill_staffs`.`skill_id` GROUP BY `skill_staffs`.`staff_id`').to_hash
   end
@@ -46,8 +47,8 @@ class StaffsController < ApplicationController
         format.html { redirect_to @staff, notice: 'スタッフが登録されました。' }
         format.json { render :show, status: :created, location: @staff }
       rescue => exception
-        error_message = @staff.skill_staffs.present? ? 'スタッフを登録できませんでした。' : '保有スキルは１件以上入力してください。'
-        format.html { redirect_to :new_staff , notice: error_message }
+        flash[:alert] = 'スタッフを登録できませんでした。'
+        format.html { render :new }
         format.json { render json: @staff.errors, status: :unprocessable_entity }
       end
     end
@@ -66,7 +67,8 @@ class StaffsController < ApplicationController
         format.html { redirect_to @staff, notice: '更新しました。' }
         format.json { render :show, status: :ok, location: @staff }
       rescue => exception
-        format.html { redirect_to @staff, notice: '更新に失敗しました。'  }
+        flash[:alert] = '更新に失敗しました。'
+        format.html { render :show }
         format.json { render json: @staff.errors, status: :unprocessable_entity }
       end
     end
@@ -105,12 +107,12 @@ class StaffsController < ApplicationController
           :last_name,
           :first_kana,
           :last_kana,
-          :store_id,
           :employment_type,
           :role_id,
           :login,
           :password,
-          { skill_ids: [] }
+          { skill_ids: [] },
+          { store_ids: [] }
         )
         staff_params.delete(:password) if staff_params[:password].empty?
         return staff_params

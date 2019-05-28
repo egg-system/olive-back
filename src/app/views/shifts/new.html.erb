@@ -2,7 +2,7 @@
 
 <%= form_for @shift do |form| %>
   <div class="field">
-    <%= form.file_field :shift_csv %>
+    <%= form.file_field :shift_csv, required: true %>
   </div>
   <div class="actions">
     <%= form.submit "登録" %>

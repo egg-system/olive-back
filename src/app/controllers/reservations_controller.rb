@@ -83,8 +83,7 @@ class ReservationsController < ApplicationController
     end
 
     def set_relation_models
-      @pregnant_state = PregnantState.all  
-      @store = current_staff.store
+      @pregnant_state = PregnantState.all
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

@@ -4,6 +4,12 @@ ja:
     attributes:
       customer:
         email: "メールアドレス(会員ID)"
+      staff:
+        last_name: "姓"
+        first_name: "名"
+        last_kana: "セイ"
+        first_kana: "メイ"
+        login: "ログインID"
     errors:
       models:
         reservation:
@@ -14,3 +20,8 @@ ja:
   errors:
     messages:
       not_email: "は不正な値です"
+      not_full_width_kana: "は全角カナで入力してください。"
+
+  simple_form:
+    error_notification:
+      default_message: "データの登録に失敗しました。"

@@ -25,15 +25,17 @@ class ShiftsController < ApplicationController
   # POST /shifts
   # POST /shifts.json
   def create
-    @shifts = CSV.read(
-      csv_params[:shift_csv].path,
-      headers: true,
-      encoding: "Shift_JIS:UTF-8"
-    ).map { |row|
-      Shift.import(row)
-    }
+    begin
+      Shift.transaction do
+        imports
+      end
+      redirect_to action: :index
 
-    redirect_to action: :index
+    rescue Encoding::UndefinedConversionError => e
+    rescue Encoding::InvalidByteSequenceError => e
+      flash[:alert] = "文字コードがShift-JISのファイルをアップロードしてください。"
+      return redirect_to action: :new
+    end
   end
 
   def updates
@@ -41,11 +43,19 @@ class ShiftsController < ApplicationController
       create_shifts
       delete_shifts if delete_shift_ids.present?
     end
-    
+
     redirect_to action: :index
   end
 
   protected
+  def imports
+    CSV
+      .read(csv_params[:shift_csv].path, headers: true, encoding: "Shift_JIS:UTF-8")
+      .map { |row|
+        Shift.import(row)
+      }
+  end
+
   def create_shifts
     updates_params[:new_shifts]
       .select { |shift_at, checked| checked === '1' }
@@ -83,7 +93,7 @@ class ShiftsController < ApplicationController
 
     return {
       staff_id: params[:staff_id] || current_staff.id,
-      store_id: params[:store_id] || current_staff.store_id,
+      store_id: params[:store_id] || current_staff.stores.first.id,
       month: search_month
     }
   end

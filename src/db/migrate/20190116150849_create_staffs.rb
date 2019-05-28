@@ -5,7 +5,6 @@ class CreateStaffs < ActiveRecord::Migration[5.1]
       t.string :last_name
       t.string :first_kana
       t.string :last_kana
-      t.references :store, foreign_key: true
       t.references :role, foreign_key: true
       t.integer :employment_type, comment: 'model内でenumにする。0:正社員, 1:契約社員, 2:パート・アルバイト'
       t.datetime :deleted_at
