@@ -13,8 +13,6 @@ class Staff < ApplicationRecord
   validates :skill_staffs, presence: true
   validates :first_kana, full_width_kana: true
   validates :last_kana, full_width_kana: true
-  validates :login, uniqueness: { scope: :store_id }
-
 
   belongs_to :store
   belongs_to :role
