@@ -1,7 +1,6 @@
 class ReservationDetail < ApplicationRecord
 	belongs_to :reservation
 	belongs_to :menu
-	belongs_to :store
 
 	has_many :reservation_detail_options
 	has_many :options, through: :reservation_detail_options
