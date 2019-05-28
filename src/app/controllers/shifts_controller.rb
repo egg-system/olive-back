@@ -83,7 +83,7 @@ class ShiftsController < ApplicationController
 
     return {
       staff_id: params[:staff_id] || current_staff.id,
-      store_id: params[:store_id] || current_staff.store_id,
+      store_id: params[:store_id] || current_staff.stores.first.id,
       month: search_month
     }
   end

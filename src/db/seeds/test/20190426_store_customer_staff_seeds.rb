@@ -58,29 +58,30 @@ customer.should_send_mail = false
 customer.save!
 
 # テストデータ用
-Staff.where(id: 2).first_or_create(
+Staff.where(id: 2).first_or_create!(
   login: 'test1', 
   password: 'password',
   first_name: '恵子',
   last_name: '本部',
   first_kana: 'けいこ',
   last_kana: 'ほんぶ',
-  store_id: 1,
   role_id: 2,
   employment_type: 0,
-  skill_staffs: [ SkillStaff.where(id: 3).first_or_initialize(staff_id: 2, skill_id: 1) ]
+  skill_staffs: [ SkillStaff.where(id: 3).first_or_initialize(staff_id: 2, skill_id: 1) ],
+  store_staffs: [ StoreStaff.where(id: 2).first_or_initialize(staff_id: 2, store_id: 1) ],
 )
-Staff.where(id: 3).first_or_create(
+
+Staff.where(id: 3).first_or_create!(
   login: 'test2',
   password: 'password',
   first_name: '愛子',
   last_name: '店長',
   first_kana: 'あいこ',
   last_kana: 'てんちょう',
-  store_id: 1,
   role_id: 3,
   employment_type:1,
-  skill_staffs: [ SkillStaff.where(id: 4).first_or_initialize(staff_id: 3, skill_id: 1) ]
+  skill_staffs: [ SkillStaff.where(id: 4).first_or_initialize(staff_id: 3, skill_id: 1) ],
+  store_staffs: [ StoreStaff.where(id: 3).first_or_initialize(staff_id: 3, store_id: 1) ],
 )
 
 Staff.where(id: 4).first_or_create!(
@@ -90,11 +91,15 @@ Staff.where(id: 4).first_or_create!(
   last_name: '佐藤',
   first_kana: 'あやこ',
   last_kana: 'さとう',
-  store_id: 1,
   role_id: 4,
   employment_type: 1,
-  skill_staffs: [ SkillStaff.where(id: 5).first_or_initialize(staff_id: 4, skill_id: 2) ]
+  skill_staffs: [ SkillStaff.where(id: 5).first_or_initialize(staff_id: 4, skill_id: 2) ],
+  store_staffs: [ 
+    StoreStaff.where(id: 4).first_or_initialize(staff_id: 4, store_id: 1),
+    StoreStaff.where(id: 5).first_or_initialize(staff_id: 4, store_id: 2),
+  ],
 )
+
 Staff.where(id: 5).first_or_create!(
   login: 'test4',
   password: 'password',
@@ -102,11 +107,12 @@ Staff.where(id: 5).first_or_create!(
   last_name: '田中',
   first_kana: 'えりこ',
   last_kana: 'たなか',
-  store_id: 2,
   role_id: 4,
   employment_type: 2,
-  skill_staffs: [ SkillStaff.where(id: 6).first_or_initialize(staff_id: 5, skill_id: 2) ]
+  skill_staffs: [ SkillStaff.where(id: 6).first_or_initialize(staff_id: 5, skill_id: 2) ],
+  store_staffs: [ StoreStaff.where(id: 6).first_or_initialize(staff_id: 5, store_id: 2) ],
 )
+
 Staff.where(id: 6).first_or_create!(
   login: 'test5',
   password: 'password', 
@@ -114,11 +120,13 @@ Staff.where(id: 6).first_or_create!(
   last_name:'鈴木',
   first_kana:'えりこ',
   last_kana:'すずき', 
-  store_id: 3,
   role_id: 4,
   employment_type: 2,
   skill_staffs: [
     SkillStaff.where(id: 7).first_or_initialize(staff_id: 6, skill_id: 1),
     SkillStaff.where(id: 8).first_or_initialize(staff_id: 6, skill_id: 2)
-  ]
+  ],
+  store_staffs: [
+    StoreStaff.where(id: 7).first_or_initialize(staff_id: 6, store_id: 3),
+  ],
 )
