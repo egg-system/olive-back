@@ -113,3 +113,6 @@ gem 'rack-cors'
 
 # ぺジネーション用
 gem 'kaminari'
+
+# cron制御用
+gem 'whenever', require: false
