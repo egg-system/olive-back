@@ -1,6 +1,6 @@
 class StaffsController < ApplicationController
   before_action :set_staff, only: [:show, :update, :destroy]
-  before_action :set_relation_models, only: [:new, :create, :show]
+  before_action :set_relation_models, only: [:new, :create, :show, :update]
 
   # GET /staffs
   # GET /staffs.json
@@ -47,7 +47,7 @@ class StaffsController < ApplicationController
         format.json { render :show, status: :created, location: @staff }
       rescue => exception
         error_message = @staff.skill_staffs.present? ? 'スタッフを登録できませんでした。' : '保有スキルは１件以上入力してください。'
-        format.html { redirect_to :new_staff , notice: error_message }
+        format.html { render :new , notice: error_message }
         format.json { render json: @staff.errors, status: :unprocessable_entity }
       end
     end
@@ -66,7 +66,7 @@ class StaffsController < ApplicationController
         format.html { redirect_to @staff, notice: '更新しました。' }
         format.json { render :show, status: :ok, location: @staff }
       rescue => exception
-        format.html { redirect_to @staff, notice: '更新に失敗しました。'  }
+        format.html { render :show , notice: '更新に失敗しました。'  }
         format.json { render json: @staff.errors, status: :unprocessable_entity }
       end
     end
