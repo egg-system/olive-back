@@ -46,7 +46,7 @@ class Reservation < ApplicationRecord
     return {
       id: self.id,
       state: self.state,
-      store: self.reservation_details.first.store,
+      store: self.store,
       start_at: self.start_time.on(self.reservation_date),
       end_at: self.end_time.on(self.reservation_date),
       menus: reservation_details.map { |detail| detail.menu },
