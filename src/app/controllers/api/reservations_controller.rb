@@ -42,6 +42,7 @@ class Api::ReservationsController < Api::ApiController
   def reservation_params
     params.permit(
       :customer_id,
+      :store_id,
       :pregnant_state_id,
       :children_count,
       :reservation_comment,
@@ -50,7 +51,6 @@ class Api::ReservationsController < Api::ApiController
       :is_first,
       coupon_ids: [],
       reservation_details_attributes: [
-        :store_id,
         :menu_id, 
         :mimitsubo_count,
         option_ids: [],
