@@ -7,13 +7,13 @@
 			<th scope="col">ID</th>
 			<th scope="col">ステータス</th>
 			<th scope="col">予約日時</th>
+			<th scope="col">来店店舗</th>
       <% if is_shown_customer_name %>
         <th scope="col">顧客名</th>
       <% end %>
 			<th scope="col">担当者</th>
 			<th scope="col">売上金額</th>
 			<th scope="col">時間数</th>
-			<th scope="col">来店店舗</th>
 			<th scope="col">メニュー</th>
 			<th scope="col">オプション</th>
 			<th scope="col"></th>
@@ -29,6 +29,7 @@
 					<%= reservation.reservation_date %>&nbsp;
 					<%= reservation.start_time.strftime("%H:%M") %>〜<%= reservation.end_time.strftime("%H:%M") %>
 				</td>
+				<td rowspan="<%= row_span %>"><%= reservation.store.name %></td>
         <% if is_shown_customer_name %>
           <th rowspan="<%= row_span %>"><%= reservation.customer.full_name %></th>
         <% end %>
@@ -40,7 +41,6 @@
 					<tr>
 				<% end %>
 					<td><%= "#{index + 1}時間目" %></td>
-					<td><%= detail.store.name %></td>
 					<td><%= detail.menu.name %></td>
 					<td>
 						<%= detail.has_options ? safe_join(detail.option_names, tag(:br)) : '無' %></td>
