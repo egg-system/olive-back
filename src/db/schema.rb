@@ -49,6 +49,7 @@ ActiveRecord::Schema.define(version: 2019_05_22_113423) do
     t.string "pc_mail", comment: "pcメール。fileMakerから移行"
     t.string "phone_mail", comment: "携帯メール。fileMakerから移行"
     t.boolean "can_receive_mail", default: true, comment: "お知らせメールなどの受け取り可否"
+    t.boolean "can_receive_dm_mail", default: true, comment: "DM配信受け取り可否"
     t.date "birthday"
     t.string "zip_code"
     t.string "prefecture"
@@ -81,6 +82,9 @@ ActiveRecord::Schema.define(version: 2019_05_22_113423) do
     t.string "uid", default: "", null: false
     t.text "tokens"
     t.boolean "allow_password_change", default: false, comment: "パスワード変更に必要"
+    t.boolean "is_receive_thank_you_letter", default: false, comment: "サンキューレター送付済みかどうか"
+    t.string "gender", comment: "性別"
+    t.bigint "age", comment: "年齢"
     t.index ["baby_age_id"], name: "index_customers_on_baby_age_id"
     t.index ["email"], name: "index_customers_on_email"
     t.index ["first_visit_store_id"], name: "index_customers_on_first_visit_store_id"
