@@ -12,6 +12,7 @@ class Reservation < ApplicationRecord
 
   belongs_to :customer
   belongs_to :staff
+  belongs_to :store
   belongs_to :pregnant_state, optional: true
 
   has_many :reservation_details
