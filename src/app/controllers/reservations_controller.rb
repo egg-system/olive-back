@@ -91,6 +91,7 @@ class ReservationsController < ApplicationController
       params.require(:reservation).permit(
         :id,
         :customer_id,
+        :store_id,
         :reservation_date,
         :start_time,
         :end_time,
@@ -100,7 +101,6 @@ class ReservationsController < ApplicationController
         :is_first,
         reservation_details_attributes: [
           :id,
-          :store_id,
           :menu_id, 
           :mimitsubo_count,
           option_ids: [],
