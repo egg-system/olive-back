@@ -12,7 +12,7 @@
     disabled: @reservation.new_record?
   ) %>
   <%= f.input :store_id, collection: Store.all, label: '予約店舗', required: true %>
-  <%= f.input :reservation_date, label: "予約日", required: true %>
+  <%= f.input :reservation_date, label: "予約日", required: true, disabled: @reservation.persisted? %>
   <%= f.input(
     :start_time,
     as: :string,
@@ -37,8 +37,7 @@
     ),
     include_blank: true,
     include_seconds: true,
-    readonly: @reservation.persisted?,
-    disabled: @reservation.new_record?
+    readonly: true
   ) %>
   <%= f.input :reservation_comment, label: "コメント" %>
   <%= f.input(
