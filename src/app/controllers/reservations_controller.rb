@@ -5,7 +5,7 @@ class ReservationsController < ApplicationController
   # GET /reservations
   # GET /reservations.json
   def index
-    @reservations = Reservation.joins(:customer)
+    @reservations = Reservation.joins(:customer).order_reserved_at
 
     if params[:customer_name].present?
       @customer_name = params[:customer_name]
@@ -32,7 +32,7 @@ class ReservationsController < ApplicationController
   def create
     @reservation = Reservation.new(reservation_params)
     @reservation.build_shifts
-   
+
     respond_to do |format|
       if @reservation.save
         format.html { redirect_to @reservation, notice: '予約登録に成功しました。' }
@@ -40,7 +40,7 @@ class ReservationsController < ApplicationController
       else
         @resrvation_details_count = @reservation.reservation_details.length
         flash[:alert] = @reservation.staff.nil?  ? "入力日時の予約枠は埋まっております。日時を変更してください。" : '予約の登録に失敗しました。'
-        
+
         format.html { render :new }
         format.json { render json: @reservation.errors, status: :unprocessable_entity }
       end
@@ -101,7 +101,7 @@ class ReservationsController < ApplicationController
         :is_first,
         reservation_details_attributes: [
           :id,
-          :menu_id, 
+          :menu_id,
           :mimitsubo_count,
           option_ids: [],
         ]
