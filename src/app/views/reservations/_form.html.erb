@@ -1,63 +1,71 @@
 
 <%= simple_form_for(@reservation) do |f| %>
 
-	<% if @reservation.persisted? %>
-		<%= f.input :id, label: "id", readonly: true %>
-	<% end %>
-	<%= f.input :customer_id, label: "顧客ID", readonly: true %>
-	<%= f.input(
-		:staff_id,
-		label: "スタッフID",
-		hint: '予約登録時は空いているスタッフが自動補完されます',
-		disabled: @reservation.new_record?
-	) %>
-	<%= f.input :store_id, collection: Store.all, label: '予約店舗', required: true %>
-	<%= f.input :reservation_date, label: "予約日", required: true %>
-	<%= f.input(
-		:start_time,
-		as: :string,
-		hint: "「hh:mm」の形式で入力してください。例)12時30分の場合は「12:30」と入力",
-		label: "開始時刻",
-		minute_step: 30,
-		include_seconds: true,
-		required: true
-	) %>
-	<%= f.input(
-		:end_time,
-		as: :string,
-		label: "終了時刻",
-		minute_step: 30,
-		hint: @reservation.new_record? ? '予約登録時は選択されたメニューを元に補完されます' : '「hh:mm」の形式で入力してください。例)12時30分の場合は「12:30」と入力',
-		include_blank: true,
-		include_seconds: true,
-		disabled: @reservation.new_record?
-	) %>
-	<%= f.input :reservation_comment, label: "コメント" %>
-	<%= f.input(
-		:pregnant_state_id,
-		as: :select,
-		label: "妊娠状態",
-		collection: @pregnant_state.map{|item| [item.name, item.id]},
-		include_blank: true
-	) %>
-	<%= f.input :children_count, label: "子供の数"%>
-	<%= f.input :is_first, label: "初回フラグ"%>
+  <% if @reservation.persisted? %>
+    <%= f.input :id, label: "id", readonly: true %>
+  <% end %>
+  <%= f.input :customer_id, label: "顧客ID", readonly: true %>
+  <%= f.input(
+    :staff_id,
+    label: "スタッフID",
+    hint: '予約登録時は空いているスタッフが自動補完されます',
+    disabled: @reservation.new_record?
+  ) %>
+  <%= f.input :store_id, collection: Store.all, label: '予約店舗', required: true %>
+  <%= f.input :reservation_date, label: "予約日", required: true %>
+  <%= f.input(
+    :start_time,
+    as: :string,
+    hint: (@reservation.persisted? ?
+      '時刻を変更する場合、削除して登録しなおしてください'
+      : '「hh:mm」の形式で入力してください。例)12時30分の場合は「12:30」と入力'
+    ),
+    label: "開始時刻",
+    minute_step: 30,
+    include_seconds: true,
+    required: true,
+    readonly: @reservation.persisted?
+  ) %>
+  <%= f.input(
+    :end_time,
+    as: :string,
+    label: "終了時刻",
+    minute_step: 30,
+    hint: (@reservation.new_record? ? 
+      '予約登録時は選択されたメニューを元に補完されます'
+      : '時刻を変更する場合、削除して登録しなおしてください'
+    ),
+    include_blank: true,
+    include_seconds: true,
+    readonly: @reservation.persisted?,
+    disabled: @reservation.new_record?
+  ) %>
+  <%= f.input :reservation_comment, label: "コメント" %>
+  <%= f.input(
+    :pregnant_state_id,
+    as: :select,
+    label: "妊娠状態",
+    collection: @pregnant_state.map{|item| [item.name, item.id]},
+    include_blank: true
+  ) %>
+  <%= f.input :children_count, label: "子供の数"%>
+  <%= f.input :is_first, label: "初回フラグ"%>
 
-	<h2>メニュー</h2>
-	<% @reservation.reservation_details.each.with_index(1) do |detail, index| %>
-		<%= f.fields_for :reservation_details, detail, child_index: index do |detail_form| %>
-			<%= detail_form.hidden_field :id, value: detail.id %>
-			<%= detail_form.input(
-				:menu_id,
-				collection: Menu.all,
-				label: @reservation.reservation_details.count > 1 ? "#{index}時間目のメニュー" : 'メニュー',
-				required: index === 1
-			) %>
-			<%= detail_form.collection_check_boxes :option_ids, Option.all, :id, :name %>
-			<%= detail_form.input :mimitsubo_count, label: '耳つぼジュエリーの個数', required: false %>
-		<% end %>
-	<% end %>
+  <h2>メニュー</h2>
+  <% @reservation.reservation_details.each.with_index(1) do |detail, index| %>
+    <%= f.fields_for :reservation_details, detail, child_index: index do |detail_form| %>
+      <%= detail_form.hidden_field :id, value: detail.id %>
+      <%= detail_form.input(
+        :menu_id,
+        collection: Menu.all,
+        label: @reservation.reservation_details.count > 1 ? "#{index}時間目のメニュー" : 'メニュー',
+        required: index === 1
+      ) %>
+      <%= detail_form.collection_check_boxes :option_ids, Option.all, :id, :name %>
+      <%= detail_form.input :mimitsubo_count, label: '耳つぼジュエリーの個数', required: false %>
+    <% end %>
+  <% end %>
 
-	<%= f.button :submit, class: 'btn btn-primary'%>
-	<%= link_to '戻る', reservations_path, class: 'btn' %>
+  <%= f.button :submit, class: 'btn btn-primary'%>
+  <%= link_to '戻る', reservations_path, class: 'btn' %>
 <% end %>
