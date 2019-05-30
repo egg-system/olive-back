@@ -28,7 +28,7 @@ class CustomersController < ApplicationController
     # 画面入力の場合、非会員をデフォルト値にする
     @customer = Customer.new(provider: 'none')
     @stores = Store.all
-    @reservations = @customer.reservations.order('reservation_date DESC, start_time DESC')
+    @reservations = @customer.reservations.order_reserved_at
   end
 
   # POST /customers
@@ -90,7 +90,7 @@ class CustomersController < ApplicationController
       @baby_ages = BabyAge.all
       @sizes = Size.all
       @visit_reasons = VisitReason.all
-      @nearest_stations = NearestStation.all   
+      @nearest_stations = NearestStation.all
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
