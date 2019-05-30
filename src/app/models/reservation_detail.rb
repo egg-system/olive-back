@@ -14,7 +14,7 @@ class ReservationDetail < ApplicationRecord
 
 			# 耳つぼジュエリの場合、個数とかけた金額にする
 			if option.is_mimitsubo_jewelry
-				total_fee = option.fee * self.mimitsubo_count 
+				total_fee = option.fee * self.mimitsubo_count
 			end
 
 			total_fee
@@ -30,13 +30,16 @@ class ReservationDetail < ApplicationRecord
 	def option_names
 		return self.options.map { |option|
 			option_name = option.name
-			
+
 			# 耳つぼジュエリの個数を表記するための実装
 			if option.is_mimitsubo_jewelry
-				option_name = "#{option.name} × #{self.mimitsubo_count.to_s}個" 
+				option_name = "#{option.name} × #{self.mimitsubo_count.to_s}個"
 			end
 
 			option_name
 		}
 	end
+
+	MIMITSUBO_JEWELRY_OPTIONS = [2, 4, 6, 8, 10]
+
 end

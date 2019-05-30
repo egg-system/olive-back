@@ -54,7 +54,12 @@
 				required: index === 1
 			) %>
 			<%= detail_form.collection_check_boxes :option_ids, Option.all, :id, :name %>
-			<%= detail_form.input :mimitsubo_count, label: '耳つぼジュエリーの個数', required: false %>
+			<%= detail_form.input(
+      				:mimitsubo_count,
+      				collection: ReservationDetail::MIMITSUBO_JEWELRY_OPTIONS.map { |option| ["#{option}粒", option] },
+      				label: '耳つぼジュエリーの個数',
+      				required: false
+      			) %>
 		<% end %>
 	<% end %>
 
