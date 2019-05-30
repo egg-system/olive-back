@@ -23,13 +23,16 @@ class Shift < ApplicationRecord
   }
 
   def self.to_time_slots
-    return all.group_by { |shift|
-      shift.date
-    }.map { |date, shifts|
-      time_slots = shifts.group_by { |shift|
+    date_shift_groups = all.group_by { |shift| shift.date }
+    return date_shift_groups.map { |date, shifts|
+      time_shift_groups = shifts.group_by { |shift|
         shift.shift_at
-      }.map { |shift_at, shift_group|
-        { start_time: shift_at, remain: shift_group.count }
+      }
+      time_slots = time_shift_groups.map { |shift_at, shift_group|
+        { 
+          start_time: shift_at, 
+          staff_ids: shift_group.map { |shift| shift.staff_id },
+        }
       }
 
       [date.strftime('%Y%m%d'), time_slots]
