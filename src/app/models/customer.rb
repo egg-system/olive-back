@@ -29,8 +29,6 @@ class Customer < ApplicationRecord
 
   before_validation :sync_none_uid
 
-  after_commit :send_register_mail, on: :create
-
   #left join
   scope :join_size, ->{
     left_joins(:size).select("sizes.name as size_name")
@@ -44,11 +42,7 @@ class Customer < ApplicationRecord
     where("concat(last_name, first_name) like ?", "%#{name}%")
   }
 
-  attr_accessor :age, :should_send_mail
-
-  after_initialize do
-    self.should_send_mail = true
-  end
+  attr_accessor :age
 
   def age
     return nil if self.birthday.nil?
@@ -59,6 +53,10 @@ class Customer < ApplicationRecord
     return self.last_name + ' ' + self.first_name
   end
 
+  def send_register_mail
+    CustomerMailer.confirm_register(self).deliver_now
+  end
+
   protected
 
   def is_none_provider?
@@ -67,14 +65,5 @@ class Customer < ApplicationRecord
 
   def sync_none_uid
     self.uid = Time.now.to_s if is_none_provider?
-  end
-
-  private
-  def send_register_mail
-    unless self.should_send_mail
-      return
-    end
-
-    CustomerMailer.confirm_register(self).deliver_now
   end
 end
