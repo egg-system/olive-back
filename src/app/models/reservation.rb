@@ -26,8 +26,6 @@ class Reservation < ApplicationRecord
   has_many :reservation_shifts, dependent: :delete_all
   has_many :shifts, through: :reservation_shifts
 
-  after_commit :send_confirm_mail, on: :create
-
   scope :where_customer_name, -> (customer_name) {
     where("concat(last_name, first_name) like ?", "%#{params[:customer_name]}%")  
   }
@@ -36,6 +34,10 @@ class Reservation < ApplicationRecord
     order(reservation_date: :desc)
       .order(start_time: :desc)
       .order(created_at: :desc)
+  }
+
+  scope :where_reserved_date, -> (date) {
+    where(reservation_date: date, canceled_at: nil)
   }
 
   def self.to_resources
@@ -94,6 +96,7 @@ class Reservation < ApplicationRecord
     self.transaction do
       self.update(canceled_at: DateTime.now)
       self.reservation_shifts.delete_all
+      ReservationMailer.cancel_reservation(self).deliver_now
     end
   end
 
@@ -114,9 +117,5 @@ class Reservation < ApplicationRecord
   def extract_end_time_from_details
     reservation_minutes = self.reservation_details.sum { |detail| detail.menu.service_minutes }
     return self.start_time + reservation_minutes.minutes unless self.start_time.nil?
-  end
-
-  def send_confirm_mail
-    ReservationMailer.confirm_reservation(self).deliver_now
   end
 end
