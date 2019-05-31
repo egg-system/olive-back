@@ -52,7 +52,7 @@ GEM
     ast (2.4.0)
     autoprefixer-rails (9.5.1.1)
       execjs
-    backport (1.1.1)
+    backport (0.3.0)
     bcrypt (3.1.12)
     bindex (0.7.0)
     bootsnap (1.4.4)
@@ -296,9 +296,8 @@ GEM
     simple_form (4.1.0)
       actionpack (>= 5.0)
       activemodel (>= 5.0)
-    solargraph (0.32.4)
-      backport (~> 1.1)
-      bundler (>= 1.17.2)
+    solargraph (0.31.3)
+      backport (~> 0.3)
       htmlentities (~> 4.3, >= 4.3.4)
       jaro_winkler (~> 1.5)
       kramdown (~> 1.16)
@@ -398,4 +397,4 @@ RUBY VERSION
    ruby 2.6.3p62
 
 BUNDLED WITH
-   1.17.3
+   1.16.6

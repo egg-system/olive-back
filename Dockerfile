@@ -3,11 +3,11 @@ FROM ruby:2.6.3
 ENV LANG C.UTF-8
 ENV WORKSPACE=/usr/local/src
 
-# install bundler. -v 2.0.1 はエラーが発生するため、1.17.3をinstall
+# install bundler. -v 1.16.6 は本番環境のバージョンに合わせている
 RUN apt-get update && \
     apt-get install -y vim less && \
     apt-get install -y build-essential libpq-dev nodejs graphviz cron && \
-    gem install bundler -v 1.17.3 && \
+    gem install bundler -v 1.16.6 && \
     apt-get clean && \
     rm -r /var/lib/apt/lists/*
 
@@ -27,9 +27,8 @@ RUN mkdir -p $WORKSPACE $BUNDLE_APP_CONFIG && \
 USER rails
 WORKDIR $WORKSPACE
 
-# install ruby on rails.
 ADD --chown=rails:rails src $WORKSPACE
-RUN bundle install
+RUN bundle _1.16.6_ install
 
 EXPOSE 3000
 CMD ["rails", "server", "-b", "0.0.0.0"]
