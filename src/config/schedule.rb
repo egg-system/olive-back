@@ -3,7 +3,7 @@
 # It's helpful, but not entirely necessary to understand cron before proceeding.
 # http://en.wikipedia.org/wiki/Cron
 
-rails_env = ENV.fetch('RAILS_ENV', :development)
+rails_env = ENV.fetch('RAILS_ENV', :production)
 set :environment, rails_env
 is_developement = rails_env.to_sym === :development
 
