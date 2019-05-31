@@ -12,6 +12,7 @@ class Reservation < ApplicationRecord
 
   belongs_to :customer
   belongs_to :staff
+  belongs_to :store
   belongs_to :pregnant_state, optional: true
 
   has_many :reservation_details
@@ -45,7 +46,7 @@ class Reservation < ApplicationRecord
     return {
       id: self.id,
       state: self.state,
-      store: self.reservation_details.first.store,
+      store: self.store,
       start_at: self.start_time.on(self.reservation_date),
       end_at: self.end_time.on(self.reservation_date),
       menus: reservation_details.map { |detail| detail.menu },

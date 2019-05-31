@@ -49,6 +49,7 @@ ActiveRecord::Schema.define(version: 2019_05_28_102117) do
     t.string "pc_mail", comment: "pcメール。fileMakerから移行"
     t.string "phone_mail", comment: "携帯メール。fileMakerから移行"
     t.boolean "can_receive_mail", default: true, comment: "お知らせメールなどの受け取り可否"
+    t.boolean "can_receive_dm_mail", default: true, comment: "DM配信受け取り可否"
     t.date "birthday"
     t.string "zip_code"
     t.string "prefecture"
@@ -81,6 +82,9 @@ ActiveRecord::Schema.define(version: 2019_05_28_102117) do
     t.string "uid", default: "", null: false
     t.text "tokens"
     t.boolean "allow_password_change", default: false, comment: "パスワード変更に必要"
+    t.boolean "is_receive_thank_you_letter", default: false, comment: "サンキューレター送付済みかどうか"
+    t.string "gender", comment: "性別"
+    t.bigint "age", comment: "年齢"
     t.index ["baby_age_id"], name: "index_customers_on_baby_age_id"
     t.index ["email"], name: "index_customers_on_email"
     t.index ["first_visit_store_id"], name: "index_customers_on_first_visit_store_id"
@@ -177,13 +181,11 @@ ActiveRecord::Schema.define(version: 2019_05_28_102117) do
   create_table "reservation_details", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", comment: "予約の詳細。シフトやメニューなどに紐づく", force: :cascade do |t|
     t.bigint "reservation_id"
     t.bigint "menu_id"
-    t.bigint "store_id"
     t.integer "mimitsubo_count", comment: "耳つぼジュエリの個数。"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["menu_id"], name: "index_reservation_details_on_menu_id"
     t.index ["reservation_id"], name: "index_reservation_details_on_reservation_id"
-    t.index ["store_id"], name: "index_reservation_details_on_store_id"
   end
 
   create_table "reservation_shifts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -198,6 +200,7 @@ ActiveRecord::Schema.define(version: 2019_05_28_102117) do
   create_table "reservations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "children_count", default: 0, comment: "随伴するお子様の数"
     t.text "reservation_comment"
+    t.bigint "store_id"
     t.bigint "staff_id", comment: "対応予定のスタッフid。キャンセル時にシフトとのリレーションを消すため、追加"
     t.bigint "customer_id"
     t.bigint "pregnant_state_id"
@@ -212,6 +215,7 @@ ActiveRecord::Schema.define(version: 2019_05_28_102117) do
     t.index ["customer_id"], name: "index_reservations_on_customer_id"
     t.index ["pregnant_state_id"], name: "index_reservations_on_pregnant_state_id"
     t.index ["staff_id"], name: "index_reservations_on_staff_id"
+    t.index ["store_id"], name: "index_reservations_on_store_id"
   end
 
   create_table "roles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -353,12 +357,12 @@ ActiveRecord::Schema.define(version: 2019_05_28_102117) do
   add_foreign_key "reservation_detail_options", "reservation_details", on_delete: :cascade
   add_foreign_key "reservation_details", "menus", on_delete: :nullify
   add_foreign_key "reservation_details", "reservations", on_delete: :cascade
-  add_foreign_key "reservation_details", "stores", on_delete: :cascade
   add_foreign_key "reservation_shifts", "reservations", on_delete: :cascade
   add_foreign_key "reservation_shifts", "shifts", on_delete: :cascade
   add_foreign_key "reservations", "customers", on_delete: :cascade
   add_foreign_key "reservations", "pregnant_states"
   add_foreign_key "reservations", "staffs", on_delete: :cascade
+  add_foreign_key "reservations", "stores", on_delete: :cascade
   add_foreign_key "shifts", "staffs", on_delete: :cascade
   add_foreign_key "shifts", "stores", on_delete: :cascade
   add_foreign_key "skill_staffs", "skills", on_delete: :cascade
