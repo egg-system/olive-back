@@ -4,6 +4,12 @@
   <% if @reservation.persisted? %>
     <%= f.input :id, label: "id", readonly: true %>
   <% end %>
+  <%= f.input(
+    :customer_id,
+    label: "顧客ID",
+    readonly: true,
+    hint: "顧客名称：#{@reservation.customer.full_name}"
+  ) %>
   <%= f.input :customer_id, label: "顧客ID", readonly: true %>
   <%= f.input(
     :staff_id,
@@ -61,7 +67,11 @@
         required: index === 1
       ) %>
       <%= detail_form.collection_check_boxes :option_ids, Option.all, :id, :name %>
-      <%= detail_form.input :mimitsubo_count, label: '耳つぼジュエリーの個数', required: false %>
+      <%= detail_form.input(
+        :mimitsubo_count,
+        label: '耳つぼジュエリーの個数',
+        collection: mimitsubo_jwery_options
+      ) %>
     <% end %>
   <% end %>
 
