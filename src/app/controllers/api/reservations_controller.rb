@@ -7,7 +7,11 @@ class Api::ReservationsController < Api::ApiController
   def create
     reservation = Reservation.new(reservation_params)
     reservation.build_shifts
-    reservation.save!
+
+    Reservation.transaction do
+      reservation.save!
+      ReservationMailer.confirm_reservation(reservation).deliver_now
+    end
   end
 
   def index

@@ -6,7 +6,8 @@ class Api::Customers::RegistrationsController < DeviseTokenAuth::RegistrationsCo
   
   def create
     if should_sign_up?
-      return super
+      customer = super
+      customer.send_register_mail
     end
 
     new_customer = Customer.find_or_initialize_by({
@@ -22,9 +23,9 @@ class Api::Customers::RegistrationsController < DeviseTokenAuth::RegistrationsCo
   private
 
   CUSTMER_PARAMETES = [
-    :first_name, 
+    :first_name,
     :last_name,
-    :first_kana, 
+    :first_kana,
     :last_kana,
     :tel,
     :zip_code,

@@ -35,5 +35,13 @@
    - 抜ける際は `ctrl + p` `ctrl + q`
       - `ctrl + c` だとコンテナも止まってしまう
 
+- cronの実行
+   - root権限でcronを起動する
+      - `docker exec -uroot -it olive-app bash`
+      - `service cron start`
+   - wheneverの実行
+      - `bundle exec whenever --update-crontab`
+      - `service cron restart`
+
 ### トラブルシューティングページ
 - https://github.com/egg-system/olive-back/wiki/%E3%83%88%E3%83%A9%E3%83%96%E3%83%AB%E3%82%B7%E3%83%A5%E3%83%BC%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0
