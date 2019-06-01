@@ -10,7 +10,13 @@
           <tr>
             <th>氏名</th>
             <td>
-              <%=f.text_field :name, class: "form-control"%>
+              <%=f.text_field :name, {class: "form-control", value: @search_params["name"]} %>
+            <td>
+          </tr>
+          <tr>
+            <th>電話番号</th>
+            <td>
+              <%= f.text_field :tel, {class: "form-control", value: @search_params["tel"]} %>
             <td>
           </tr>
         </tbody>

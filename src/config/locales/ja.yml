@@ -4,6 +4,7 @@ ja:
     attributes:
       customer:
         email: "メールアドレス(会員ID)"
+        tel: "電話番号"
       staff:
         last_name: "姓"
         first_name: "名"
@@ -21,6 +22,7 @@ ja:
     messages:
       not_email: "は不正な値です"
       not_full_width_kana: "は全角カナで入力してください。"
+      not_half_width_digit: "は半角数字で入力してください。"
 
   simple_form:
     error_notification:
