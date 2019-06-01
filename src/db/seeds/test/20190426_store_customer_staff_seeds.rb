@@ -1,5 +1,5 @@
 # store_id:2はエステの店舗が予約済み
-Store.where(id: 3).first_or_create(
+Store.where(id: 3).first_or_create!(
   store_type: 0, 
   name:'女性専門の治療院オリーヴボディケア　直営テスト店', 
   address:'東京都新宿区', 
@@ -10,7 +10,7 @@ Store.where(id: 3).first_or_create(
   close_at:'20:00'
 )
   
-Store.where(id: 4).first_or_create(
+Store.where(id: 4).first_or_create!(
   store_type: 1, 
   name:'女性専門の治療院オリーヴボディケア　FCテスト店', 
   address:'東京都新宿区', 
@@ -21,7 +21,7 @@ Store.where(id: 4).first_or_create(
   close_at:'20:00'
 ) 
 
-customer = Customer.where(id: 1).first_or_initialize(
+customer = Customer.where(id: 1).first_or_create!(
   first_name: '顧客', 
   last_name: '高橋', 
   first_kana: 'コキャク',
@@ -54,8 +54,6 @@ customer = Customer.where(id: 1).first_or_initialize(
   size_id: 1,
   has_registration_card: false
 )
-customer.should_send_mail = false
-customer.save!
 
 # テストデータ用
 Staff.where(id: 2).first_or_create!(
