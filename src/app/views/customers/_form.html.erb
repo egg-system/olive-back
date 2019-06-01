@@ -58,7 +58,7 @@
       <%= f.input(
         :has_registration_card,
         as: :select,
-        collection: Settings.has_registration_card.map.with_index{|status, index| [status, index === 1]},
+        collection: Settings.has_registration_card.map {|value, status| [status, value]},
         default: @customer.has_registration_card,
         label: '診察券発行有無'
       ) %>
