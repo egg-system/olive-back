@@ -12,7 +12,9 @@ Skill.where(id: 1).first_or_create!(name:'柔道整体師')
 Skill.where(id: 2).first_or_create!(name:'鍼灸師')
 
 Menu.where(id: 1).first_or_create!(name:'通常整体コース', skill_id: 1, fee:6000, service_minutes:60, start_at:'2019-01-01', menu_category_id:1)
-Menu.where(id: 2).first_or_create!(name:'整体スペシャルパックコース', skill_id: 1, fee:25000, service_minutes:120, start_at:'2019-01-01', menu_category_id:1)
+
+# スキル要件が複雑なため、一旦非表示にする
+#Menu.where(id: 2).first_or_create!(name:'整体スペシャルパックコース', skill_id: 1, fee:25000, service_minutes:120, start_at:'2019-01-01', menu_category_id:1)
 Menu.where(id: 3).first_or_create!(name:'骨盤矯正', skill_id: 1, fee:6000, service_minutes:60, start_at:'2019-01-01', menu_category_id:1)
 Menu.where(id: 4).first_or_create!(name:'マッサージ', skill_id: 1, fee:6000, service_minutes:60, start_at:'2019-01-01', menu_category_id:1)
 Menu.where(id: 5).first_or_create!(name:'産後の骨盤矯正', skill_id: 1, fee:6000, service_minutes:60, start_at:'2019-01-01', menu_category_id:1)
