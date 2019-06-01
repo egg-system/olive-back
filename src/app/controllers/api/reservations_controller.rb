@@ -35,6 +35,8 @@ class Api::ReservationsController < Api::ApiController
 
   def destroy
     Reservation.find(params[:id]).cancel
+    ReservationMailer.cancel_reservation(self).deliver_now
+
     render json: { data: 'ok' }
   end
   

@@ -15,7 +15,6 @@ class CreateReservations < ActiveRecord::Migration[5.1]
 
       t.boolean :is_first
       t.datetime :canceled_at, comment: 'キャンセルされた日時'
-      t.date :deleted_at, comment: 'キャンセルは基本的に表示するので、削除フラグとわける'
       t.timestamps
     end
   end
