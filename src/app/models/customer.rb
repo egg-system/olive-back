@@ -29,7 +29,7 @@ class Customer < ApplicationRecord
 
   before_validation :sync_none_uid
 
-  validates :tel, half_width_digit: true
+  validates :tel, numericality: true
 
   #left join
   scope :join_size, ->{
