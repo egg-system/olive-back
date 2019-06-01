@@ -58,9 +58,9 @@
       <%= f.input(
         :has_registration_card,
         as: :select,
-        collection: Settings.has_registration_card.map.with_index{|status, index| [status, index]},
-        label: '診察券発行有無',
-        default: @customer.has_registration_card
+        collection: Settings.has_registration_card.map.with_index{|status, index| [status, index === 1]},
+        default: @customer.has_registration_card,
+        label: '診察券発行有無'
       ) %>
       <%= f.input :introducer, label: '紹介者'%>
       <%= f.input :children_count, label: 'お子様の数'%>
