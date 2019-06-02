@@ -49,7 +49,6 @@ class Api::ReservationsController < Api::ApiController
     params.permit(
       :customer_id,
       :store_id,
-      :pregnant_state_id,
       :children_count,
       :reservation_comment,
       :reservation_date,

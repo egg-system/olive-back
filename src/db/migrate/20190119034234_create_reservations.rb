@@ -7,7 +7,6 @@ class CreateReservations < ActiveRecord::Migration[5.1]
       t.references :store, foreign_key: { on_delete: :cascade }
       t.references :staff, foreign_key: { on_delete: :cascade }, comment: '対応予定のスタッフid。キャンセル時にシフトとのリレーションを消すため、追加'
       t.references :customer, foreign_key: { on_delete: :cascade } 
-      t.references :pregnant_state, null: true, default: nil, foreign_key: true
       
       t.date :reservation_date
       t.time :start_time

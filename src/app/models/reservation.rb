@@ -11,7 +11,6 @@ class Reservation < ApplicationRecord
   belongs_to :customer
   belongs_to :staff, optional: true
   belongs_to :store
-  belongs_to :pregnant_state, optional: true
 
   has_many :reservation_details
   accepts_nested_attributes_for :reservation_details

@@ -55,13 +55,6 @@
   ) %>
   <%= f.input :reservation_comment, label: "コメント" %>
   <%= f.collection_check_boxes :coupon_ids, @coupons, :id, :name %>
-  <%= f.input(
-    :pregnant_state_id,
-    as: :select,
-    label: "妊娠状態",
-    collection: @pregnant_state.map{|item| [item.name, item.id]},
-    include_blank: true
-  ) %>
   <%= f.input :children_count, label: "子供の数"%>
   <%= f.input :is_first, label: "初回フラグ"%>
 

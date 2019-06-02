@@ -78,7 +78,6 @@ class ReservationsController < ApplicationController
     end
 
     def set_relation_models
-      @pregnant_state = PregnantState.all
       @coupons = Coupon.all
       @options = Option.all
       @stores = Store.all
@@ -94,7 +93,6 @@ class ReservationsController < ApplicationController
         :start_time,
         :end_time,
         :reservation_comment,
-        :pregnant_state_id,
         :children_count,
         :is_first,
         coupon_ids: [],
