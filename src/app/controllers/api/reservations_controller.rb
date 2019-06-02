@@ -3,7 +3,7 @@ class Api::ReservationsController < Api::ApiController
 
   # TODO: customerが非会員かどうかに応じて、認証処理を追加する
   skip_before_action :authenticate_api_customer!, only: :create
-  
+
   def create
     reservation = Reservation.new(reservation_params)
     reservation.build_shifts
@@ -39,7 +39,7 @@ class Api::ReservationsController < Api::ApiController
 
     render json: { data: 'ok' }
   end
-  
+
   private
   def index_params
     params.permit(:page)
