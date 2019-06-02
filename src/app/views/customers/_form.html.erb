@@ -83,7 +83,7 @@
         as: :select,
         collection: @zoomancies.map{|item| [item.name, item.id]},
         label: '動物占い',
-        default: @customer.occupation_id
+        default: @customer.zoomancy_id
       ) %>
       <%= f.input(
         :size_id,
