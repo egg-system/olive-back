@@ -7,9 +7,17 @@
   <%= f.input(
     :customer_id,
     label: "顧客ID",
-    readonly: true,
-    hint: "顧客名称：#{@reservation.customer.full_name}"
+    readonly: true
   ) %>
+  <%= simple_fields_for :no_model_fields do |n| %>
+      <%= n.input(
+        :customer_full_name,
+        label: "顧客名称",
+        readonly: true,
+        input_html: { value: @reservation.customer.full_name }
+      ) %>
+  <% end %>
+  <%= f.input :customer_id, label: "顧客ID", readonly: true %>
   <%= f.input :customer_id, label: "顧客ID", readonly: true %>
   <%= f.input(
     :staff_id,
@@ -37,7 +45,7 @@
     as: :string,
     label: "終了時刻",
     minute_step: 30,
-    hint: (@reservation.new_record? ? 
+    hint: (@reservation.new_record? ?
       '予約登録時は選択されたメニューを元に補完されます'
       : '時刻を変更する場合、削除して登録しなおしてください'
     ),

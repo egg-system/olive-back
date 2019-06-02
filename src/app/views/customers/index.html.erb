@@ -10,7 +10,13 @@
           <tr>
             <th>氏名</th>
             <td>
-              <%=f.text_field :name, class: "form-control"%>
+              <%=f.text_field :name, {class: "form-control", value: @search_params["name"]} %>
+            <td>
+          </tr>
+          <tr>
+            <th>電話番号</th>
+            <td>
+              <%= f.text_field :tel, {class: "form-control", value: @search_params["tel"]} %>
             <td>
           </tr>
         </tbody>
@@ -33,7 +39,6 @@
           <th scope="col">TEL</th>
           <th scope="col">個性</th>
           <th scope="col">サイズ</th>
-          <th scope="col">予約日</th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -46,7 +51,6 @@
           <td><%= customer.tel %></td>
           <td><%= customer.zoomancy.name if customer.zoomancy.present? %></td>
           <td><%= customer.size_name %></td>
-          <td><%= customer.reservation_date %></td>
           <td><ul>
             <li><%= link_to '詳細へ', customer_path(customer.id) %></li>
             <li><%= link_to '予約登録へ', new_reservation_path(customer_id: customer.id) %></li>

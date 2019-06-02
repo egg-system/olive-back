@@ -6,15 +6,15 @@ class Customer < ApplicationRecord
   include DeviseTokenAuth::Concerns::User
 
   belongs_to(
-    :first_visit_store, 
-    optional: true, 
-    class_name: 'Store', 
+    :first_visit_store,
+    optional: true,
+    class_name: 'Store',
     foreign_key: 'first_visit_store_id'
   )
   belongs_to(
-    :last_visit_store, 
-    optional: true, 
-    class_name: 'Store', 
+    :last_visit_store,
+    optional: true,
+    class_name: 'Store',
     foreign_key: 'last_visit_store_id'
   )
 
@@ -29,13 +29,11 @@ class Customer < ApplicationRecord
 
   before_validation :sync_none_uid
 
+  validates :tel, numericality: true
+
   #left join
   scope :join_size, ->{
     left_joins(:size).select("sizes.name as size_name")
-  }
-
-  scope :join_reservation, ->{
-    left_joins(:reservations).select("reservations.reservation_date as reservation_date")
   }
 
   scope :join_tables, ->{
@@ -55,10 +53,6 @@ class Customer < ApplicationRecord
 
   def full_name
     return self.last_name + ' ' + self.first_name
-  end
-
-  def send_register_mail
-    CustomerMailer.confirm_register(self).deliver_now
   end
 
   protected

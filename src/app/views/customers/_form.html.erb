@@ -14,40 +14,38 @@
       <%# webからの登録の場合、電話番号が存在しない可能性があるため、新規登録の場合のみ必須にする %>
       <%= f.input :tel, label: '電話番号', required: @customer.new_record? %>
       <%= f.input :fixed_line_tel, label: '固定電話番号' %>
-      <%= f.input :phone_mail, label: '携帯メールアドレス' %>
-      <%= f.input :pc_mail, label: 'PCメールアドレス' %>
-      <%= f.input :email, label: 'メールアドレス(会員ID)' %>
+      <%= f.input :email, label: 'メールアドレス' %>
       <%= f.input(
-        :can_receive_mail, 
-        as: :radio_buttons, 
-        wrapper: :horizontal_collection_inline, 
-        collection: { "受け取る" => true, "受け取らない" => false }, 
-        label: 'メール受け取り', 
-        checked: @customer.can_receive_mail 
+        :can_receive_mail,
+        as: :radio_buttons,
+        wrapper: :horizontal_collection_inline,
+        collection: { "受け取る" => true, "受け取らない" => false },
+        label: 'メール受け取り',
+        checked: @customer.can_receive_mail
       ) %>
-      <%= f.input( 
-        :first_visit_store_id, 
-        as: :select, 
-        collection: @stores.map{|store| [store.name, store.id] }, 
-        label: '初回ご来店店舗', 
+      <%= f.input(
+        :first_visit_store_id,
+        as: :select,
+        collection: @stores.map{|store| [store.name, store.id] },
+        label: '初回ご来店店舗',
         default: @customer.first_visit_store_id
       )%>
       <%= f.input :first_visited_at, wrapper: :horizontal_multi_select, label: '初回来店日'%>
       <%= f.input(
-        :last_visit_store_id, 
-        as: :select, 
-        collection: @stores.map{|store| [store.name, store.id]}, 
-        label: '直近ご来店店舗', 
-        default: @customer.last_visit_store_id 
+        :last_visit_store_id,
+        as: :select,
+        collection: @stores.map{|store| [store.name, store.id]},
+        label: '直近ご来店店舗',
+        default: @customer.last_visit_store_id
       ) %>
       <%= f.input :comment, label: 'コメント' %>
       <%= f.input :zip_code, label: '郵便番号(XXX-XXXX)' %>
       <%= f.input :address, label: '住所' %>
       <%= f.input(
-        :birthday, 
-        label: '生年月日', 
-        wrapper: :horizontal_multi_select, 
-        start_year: 1940, 
+        :birthday,
+        label: '生年月日',
+        wrapper: :horizontal_multi_select,
+        start_year: 1940,
         end_year: Date.today.year,
         include_blank: true
       ) %>
@@ -57,48 +55,54 @@
       <%= f.input :card_number, label: 'カルテNo'%>
       <%= f.input(
         :has_registration_card,
-        as: :select, 
-        collection: Settings.has_registration_card.map.with_index{|status, index| [status, index]},
-        label: '診察券発行有無',
-        default: @customer.has_registration_card
+        as: :select,
+        collection: Settings.has_registration_card.map {|value, status| [status, value]},
+        default: @customer.has_registration_card,
+        label: '診察券発行有無'
       ) %>
       <%= f.input :introducer, label: '紹介者'%>
       <%= f.input :children_count, label: 'お子様の数'%>
       <%= f.input(
         :baby_age_id,
-        as: :select, 
+        as: :select,
         collection: @baby_ages.map{|item| [item.name, item.id]},
         label: '赤ちゃんの年齢',
-        default: @customer.baby_age_id
+        default: @customer.baby_age_id,
+        include_blank: true
       ) %>
       <%= f.input(
-        :has_registration_card,
-        as: :select, 
+        :occupation_id,
+        as: :select,
         collection: @occupations.map{|item| [item.name, item.id]},
         label: '職業',
-        default: @customer.occupation_id
+        default: @customer.occupation_id,
+        include_blank: true
       ) %>
       <%= f.input(
         :zoomancy_id,
-        as: :select, 
+        as: :select,
         collection: @zoomancies.map{|item| [item.name, item.id]},
         label: '動物占い',
         default: @customer.occupation_id
       ) %>
       <%= f.input(
         :size_id,
-        as: :select, 
+        as: :select,
         collection: @sizes.map{|item| [item.name, item.id]},
         label: 'サイズ',
-        default: @customer.size_id
+        default: @customer.size_id,
+        include_blank: true
       ) %>
       <%= f.input(
         :provider, 
         label: '会員/非会員', 
         as: :select, 
-        hint: '会員にする場合、メールアドレス(会員ID)とパスワードの入力が必須になります', 
+        hint: '会員にする場合、メールアドレスとパスワードの入力が必須になります', 
         collection: { '非会員' => :none, '会員' => :email }
       ) %>
+      <% if @customer.provider === 'email' %>
+        <%= f.input :uid, label: 'ログインID', hint: '会員の場合、メールアドレスを元に補完されます。', readonly: true %>
+      <% end %>
       <%= f.input :password, label: 'パスワード'%>
       <%= f.button :submit, class: 'btn btn-primary' %>
       <%= link_to '戻る', customers_path, class: 'btn btn-light' %>
