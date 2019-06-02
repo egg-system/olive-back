@@ -9,7 +9,7 @@ class Reservation < ApplicationRecord
   include PaginationModule
 
   belongs_to :customer
-  belongs_to :staff
+  belongs_to :staff, optional: true
   belongs_to :store
   belongs_to :pregnant_state, optional: true
 
