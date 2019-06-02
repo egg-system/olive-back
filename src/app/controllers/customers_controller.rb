@@ -1,45 +1,38 @@
 class CustomersController < ApplicationController
   before_action :set_customer, only: [:show, :edit, :update, :destroy]
-  before_action :set_relation_models, only: [:new, :show]
+  before_action :set_relation_models, only: [:new, :show, :update, :create]
 
   # GET /customers
   # GET /customers.json
   def index
     @customers = Customer.all.join_tables
-    if params[:name].present?
-      @customers = @customers.like_name(params[:name])
-    end
+    
+    @search_params = search_params
+    @customers = @customers.like_name(@search_params[:name]) if @search_params[:name].present?    
+    @customers = @customers.where(tel: @search_params[:tel]) if @search_params[:tel].present?
   end
 
   def search
-    redirect_to customers_path(name: params[:name])
+    redirect_to customers_path(search_params)
   end
 
   # GET /customers/1
   # GET /customers/1.json
   def show
     @customer = Customer.join_tables.find(params[:id])
-    @stores = Store.all
-    @reservations = @customer.reservations.order('reservation_date DESC, start_time DESC')
+    @reservations = @customer.reservations.order_reserved_at
   end
 
   # GET /customers/new
   def new
     # 画面入力の場合、非会員をデフォルト値にする
     @customer = Customer.new(provider: 'none')
-    @stores = Store.all
-    @reservations = @customer.reservations.order_reserved_at
   end
 
   # POST /customers
   # POST /customers.json
   def create
-    @stores = Store.all
     @customer = Customer.new(customer_params)
-
-    # メールが送信されないようにする
-    # 下記の実装漏れによるバグ可能性が高いため、要改修
-    @customer.should_send_mail = false
 
     respond_to do |format|
       begin
@@ -62,7 +55,8 @@ class CustomersController < ApplicationController
         format.html { redirect_to @customer, notice: '更新しました。' }
         format.json { render :show, status: :ok, location: @customer }
       rescue => exception
-        format.html { redirect_to :show, location: @customer }
+        @reservations = @customer.reservations.order_reserved_at
+        format.html { render :show }
         format.json { render json: @customer.errors, status: :unprocessable_entity }
       end
     end
@@ -91,10 +85,20 @@ class CustomersController < ApplicationController
       @sizes = Size.all
       @visit_reasons = VisitReason.all
       @nearest_stations = NearestStation.all
+      @stores = Store.all
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def customer_params
-      params.require(:customer).permit(:first_name, :last_name, :first_kana, :last_kana, :tel, :pc_mail, :can_receive_mail, :first_visit_store_id, :last_visit_store_id, :comment, :zip_code, :address, :birthday, :phone_mail, :email, :provider, :password)
+      params.require(:customer).permit(
+        :first_name, :last_name, :first_kana, :last_kana, :tel, :pc_mail, :can_receive_mail,
+        :first_visit_store_id, :last_visit_store_id, :comment, :zip_code, :address, :birthday,
+        :phone_mail, :email, :provider, :password, :occupation_id, :zoomancy_id,
+        :children_count, :baby_age_id, :size_id, :has_registration_card, :card_number
+        )
+    end
+
+    def search_params
+      params.permit(:name, :tel)
     end
 end

@@ -4,8 +4,8 @@ employment_type:
   - パート・アルバイト
 
 has_registration_card:
-  - 未
-  - 済
+  false: 未
+  true: 済
 
 store_type:
   owned: 直営店
