@@ -24,7 +24,7 @@ class ReservationsController < ApplicationController
   end
 
   def search
-      redirect_to reservations_path({customer_name: params[:customer_name]})
+    redirect_to reservations_path({customer_name: params[:customer_name]})
   end
 
   # POST /reservations
@@ -64,12 +64,7 @@ class ReservationsController < ApplicationController
   # DELETE /reservations/1
   # DELETE /reservations/1.json
   def destroy
-    # 速度改善のため、シフトとの紐付けも削除する
-    Reservation.transaction do
-      @reservation.reservation_shifts.delete_all
-      @reservation.destroy
-    end
-
+    Reservation.find(params[:id]).cancel
     respond_to do |format|
       format.html { redirect_to reservations_url, notice: '予約を削除いたしました。' }
       format.json { head :no_content }

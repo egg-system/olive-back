@@ -7,8 +7,6 @@ class CreateCustomers < ActiveRecord::Migration[5.1]
       t.string :last_kana
       t.string :tel, comment: '携帯電話番号'
       t.string :fixed_line_tel, comment: '固定電話番号'
-      t.string :pc_mail, comment: 'pcメール。fileMakerから移行'
-      t.string :phone_mail, comment: '携帯メール。fileMakerから移行'
       t.boolean :can_receive_mail, nil: false, default: true, comment: 'お知らせメールなどの受け取り可否'
       t.date :birthday
       t.string :zip_code

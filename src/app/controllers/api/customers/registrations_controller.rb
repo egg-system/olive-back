@@ -3,12 +3,10 @@ class Api::Customers::RegistrationsController < DeviseTokenAuth::RegistrationsCo
 
   skip_before_action :authenticate_staff!
   skip_before_action :authenticate_api_customer!, only: :create
+  after_action :send_registration_mail, only: :create
   
   def create
-    if should_sign_up?
-      customer = super
-      customer.send_register_mail
-    end
+    return super if should_sign_up?
 
     new_customer = Customer.find_or_initialize_by({
       email: sign_up_params[:email],
@@ -51,5 +49,9 @@ class Api::Customers::RegistrationsController < DeviseTokenAuth::RegistrationsCo
   
   def should_sign_up?
     sign_up_params[:provider] === 'email'
+  end
+
+  def send_registration_mail
+    CustomerMailer.confirm_register(@resource).deliver_now if should_sign_up? && @resource.errors.blank?
   end
 end
