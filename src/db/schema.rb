@@ -151,12 +151,6 @@ ActiveRecord::Schema.define(version: 2019_05_28_102117) do
     t.index ["skill_id"], name: "index_options_on_skill_id"
   end
 
-  create_table "pregnant_states", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.text "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "reservation_coupons", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "reservation_id"
     t.bigint "coupon_id"
@@ -200,7 +194,6 @@ ActiveRecord::Schema.define(version: 2019_05_28_102117) do
     t.bigint "store_id"
     t.bigint "staff_id", comment: "対応予定のスタッフid。キャンセル時にシフトとのリレーションを消すため、追加"
     t.bigint "customer_id"
-    t.bigint "pregnant_state_id"
     t.date "reservation_date"
     t.time "start_time"
     t.time "end_time"
@@ -209,7 +202,6 @@ ActiveRecord::Schema.define(version: 2019_05_28_102117) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["customer_id"], name: "index_reservations_on_customer_id"
-    t.index ["pregnant_state_id"], name: "index_reservations_on_pregnant_state_id"
     t.index ["staff_id"], name: "index_reservations_on_staff_id"
     t.index ["store_id"], name: "index_reservations_on_store_id"
   end
@@ -356,7 +348,6 @@ ActiveRecord::Schema.define(version: 2019_05_28_102117) do
   add_foreign_key "reservation_shifts", "reservations", on_delete: :cascade
   add_foreign_key "reservation_shifts", "shifts", on_delete: :cascade
   add_foreign_key "reservations", "customers", on_delete: :cascade
-  add_foreign_key "reservations", "pregnant_states"
   add_foreign_key "reservations", "staffs", on_delete: :cascade
   add_foreign_key "reservations", "stores", on_delete: :cascade
   add_foreign_key "shifts", "staffs", on_delete: :cascade
@@ -368,6 +359,6 @@ ActiveRecord::Schema.define(version: 2019_05_28_102117) do
   add_foreign_key "store_menus", "stores"
   add_foreign_key "store_options", "options"
   add_foreign_key "store_options", "stores"
-  add_foreign_key "store_staffs", "staffs"
-  add_foreign_key "store_staffs", "stores"
+  add_foreign_key "store_staffs", "staffs", on_delete: :cascade
+  add_foreign_key "store_staffs", "stores", on_delete: :cascade
 end

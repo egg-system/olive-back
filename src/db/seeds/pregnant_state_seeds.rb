@@ -1,6 +1,0 @@
-PregnantState.where(id: 1).first_or_create!(name:'妊娠なし')
-PregnantState.where(id: 2).first_or_create!(name:'4ヶ月未満')
-PregnantState.where(id: 3).first_or_create!(name:'5ヶ月')
-PregnantState.where(id: 4).first_or_create!(name:'6ヶ月')
-PregnantState.where(id: 5).first_or_create!(name:'7ヶ月')
-PregnantState.where(id: 6).first_or_create!(name:'8ヶ月')

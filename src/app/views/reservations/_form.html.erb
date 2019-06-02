@@ -4,11 +4,12 @@
   <% if @reservation.persisted? %>
     <%= f.input :id, label: "id", readonly: true %>
   <% end %>
-  <%= f.input(
-    :customer_id,
-    label: "顧客ID",
-    readonly: true
-  ) %>
+  <%= f.input :customer_id, label: "顧客ID", readonly: true %>
+
+  <% if @reservation.customer.present? %>
+    <%= link_to @reservation.customer.full_name, customer_path(@reservation.customer_id) %>
+  <% end %>
+
   <%= simple_fields_for :no_model_fields do |n| %>
       <%= n.input(
         :customer_full_name,
@@ -25,7 +26,7 @@
     hint: '予約登録時は空いているスタッフが自動補完されます',
     disabled: @reservation.new_record?
   ) %>
-  <%= f.input :store_id, collection: Store.all, label: '予約店舗', required: true %>
+  <%= f.input :store_id, collection: @stores, label: '予約店舗', required: true %>
   <%= f.input :reservation_date, label: "予約日", required: true, disabled: @reservation.persisted? %>
   <%= f.input(
     :start_time,
@@ -54,15 +55,9 @@
     readonly: true
   ) %>
   <%= f.input :reservation_comment, label: "コメント" %>
-  <%= f.input(
-    :pregnant_state_id,
-    as: :select,
-    label: "妊娠状態",
-    collection: @pregnant_state.map{|item| [item.name, item.id]},
-    include_blank: true
-  ) %>
-  <%= f.input :children_count, label: "子供の数"%>
-  <%= f.input :is_first, label: "初回フラグ"%>
+  <%= f.collection_check_boxes :coupon_ids, @coupons, :id, :name %>
+  <%= f.input :children_count, label: "お子様連れ"%>
+  <%= f.input :is_first, label: "初診の場合はチェック"%>
 
   <h2>メニュー</h2>
   <% @reservation.reservation_details.each.with_index(1) do |detail, index| %>
@@ -74,7 +69,7 @@
         label: @reservation.reservation_details.count > 1 ? "#{index}時間目のメニュー" : 'メニュー',
         required: index === 1
       ) %>
-      <%= detail_form.collection_check_boxes :option_ids, Option.all, :id, :name %>
+      <%= detail_form.collection_check_boxes :option_ids, @options, :id, :name %>
       <%= detail_form.input(
         :mimitsubo_count,
         label: '耳つぼジュエリーの個数',
