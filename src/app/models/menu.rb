@@ -1,8 +1,6 @@
 class Menu < ApplicationRecord
   belongs_to :menu_category
-
-  has_many :skill_menus
-  has_many :skills, through: :skill_menus
+  belongs_to :skill
   
   has_many :store_menus, inverse_of: :store
   has_many :stores, through: :store_menus
