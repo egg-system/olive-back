@@ -6,13 +6,10 @@ class CustomersController < ApplicationController
   # GET /customers.json
   def index
     @customers = Customer.all.join_tables
+    
     @search_params = search_params
-    if params[:name].present?
-      @customers = @customers.like_name(params[:name])
-    end
-    if params[:tel].present?
-      @customers = @customers.where(tel: params[:tel])
-    end
+    @customers = @customers.like_name(@search_params[:name]) if @search_params[:name].present?    
+    @customers = @customers.where(tel: @search_params[:tel]) if @search_params[:tel].present?
   end
 
   def search
