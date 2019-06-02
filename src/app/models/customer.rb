@@ -34,6 +34,10 @@ class Customer < ApplicationRecord
     left_joins(:size).select("sizes.name as size_name")
   }
 
+  scope :join_reservation, ->{
+    left_joins(:reservations).select("reservations.reservation_date as reservation_date")
+  }
+
   scope :join_tables, ->{
     select('customers.*').join_size
   }

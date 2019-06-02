@@ -5,7 +5,9 @@ class CustomersController < ApplicationController
   # GET /customers
   # GET /customers.json
   def index
-    @customers = Customer.all.join_tables
+    @customers = Customer.all.join_tables.join_reservation
+    p "---------"
+    p @customers
     if params[:name].present?
       @customers = @customers.like_name(params[:name])
     end
@@ -39,7 +41,7 @@ class CustomersController < ApplicationController
 
     # メールが送信されないようにする
     # 下記の実装漏れによるバグ可能性が高いため、要改修
-    @customer.should_send_mail = false
+    # @customer.should_send_mail = false
 
     respond_to do |format|
       begin

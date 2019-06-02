@@ -30,8 +30,10 @@
           <th scope="col">顧客ID</th>
           <th scope="col">氏名</th>
           <th scope="col">住所</th>
+          <th scope="col">TEL</th>
           <th scope="col">個性</th>
           <th scope="col">サイズ</th>
+          <th scope="col">予約日</th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -41,8 +43,10 @@
           <td scope="row"><%= customer.id %></td>
           <td><%= customer.last_name + customer.first_name %></td>
           <td><%= customer.address %></td>
+          <td><%= customer.tel %></td>
           <td><%= customer.zoomancy.name if customer.zoomancy.present? %></td>
           <td><%= customer.size_name %></td>
+          <td><%= customer.reservation_date %></td>
           <td><ul>
             <li><%= link_to '詳細へ', customer_path(customer.id) %></li>
             <li><%= link_to '予約登録へ', new_reservation_path(customer_id: customer.id) %></li>
