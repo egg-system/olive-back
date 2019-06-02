@@ -7,7 +7,10 @@ class CreateCustomers < ActiveRecord::Migration[5.1]
       t.string :last_kana
       t.string :tel, comment: '携帯電話番号'
       t.string :fixed_line_tel, comment: '固定電話番号'
+      t.string :gender, comment: "性別"
       t.boolean :can_receive_mail, nil: false, default: true, comment: 'お知らせメールなどの受け取り可否'
+      t.boolean :is_receive_thank_you_letter, default: false, comment: "サンキューレター送付済みかどうか"	
+      t.boolean :can_receive_dm_mail, default: true, comment: "DM配信受け取り可否"
       t.date :birthday
       t.string :zip_code
       t.string :prefecture
