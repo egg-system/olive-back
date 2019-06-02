@@ -32,7 +32,7 @@
           <tr>
             <td><%= date %></td>
             <% Shift.get_time_slots(date).each do |shift_time| %>
-              <td>
+              <td class="td-checkbox">
                 <%= form.check_box(
                   get_shift_parameter(shift_time), {
                     checked: shift_exist(shift_time),
