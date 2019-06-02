@@ -29,8 +29,6 @@ customer = Customer.where(id: 1).first_or_create!(
   tel: '09010001000', 
   email: 'test@test.com',
   password: 'test1234',
-  pc_mail: 'tt.wing001@gmail.com', 
-  phone_mail: 'tt.wing002@gmail.com', 
   can_receive_mail: true, 
   birthday: '1985-1-1', 
   zip_code: '160-0022', 

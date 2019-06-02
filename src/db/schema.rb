@@ -46,10 +46,7 @@ ActiveRecord::Schema.define(version: 2019_05_28_102117) do
     t.string "last_kana"
     t.string "tel", comment: "携帯電話番号"
     t.string "fixed_line_tel", comment: "固定電話番号"
-    t.string "pc_mail", comment: "pcメール。fileMakerから移行"
-    t.string "phone_mail", comment: "携帯メール。fileMakerから移行"
     t.boolean "can_receive_mail", default: true, comment: "お知らせメールなどの受け取り可否"
-    t.boolean "can_receive_dm_mail", default: true, comment: "DM配信受け取り可否"
     t.date "birthday"
     t.string "zip_code"
     t.string "prefecture"
@@ -82,9 +79,6 @@ ActiveRecord::Schema.define(version: 2019_05_28_102117) do
     t.string "uid", default: "", null: false
     t.text "tokens"
     t.boolean "allow_password_change", default: false, comment: "パスワード変更に必要"
-    t.boolean "is_receive_thank_you_letter", default: false, comment: "サンキューレター送付済みかどうか"
-    t.string "gender", comment: "性別"
-    t.bigint "age", comment: "年齢"
     t.index ["baby_age_id"], name: "index_customers_on_baby_age_id"
     t.index ["email"], name: "index_customers_on_email"
     t.index ["first_visit_store_id"], name: "index_customers_on_first_visit_store_id"
@@ -209,7 +203,6 @@ ActiveRecord::Schema.define(version: 2019_05_28_102117) do
     t.time "end_time"
     t.boolean "is_first"
     t.datetime "canceled_at", comment: "キャンセルされた日時"
-    t.date "deleted_at", comment: "キャンセルは基本的に表示するので、削除フラグとわける"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["customer_id"], name: "index_reservations_on_customer_id"
