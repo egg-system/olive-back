@@ -1,5 +1,5 @@
 class ReservationsController < ApplicationController
-  before_action :set_reservation, only: [:show, :search, :update, :destroy]
+  before_action :set_reservation, only: [:show, :update, :destroy]
   before_action :set_relation_models, only: [:new, :create, :show, :search, :update, :destroy]
 
   # GET /reservations
@@ -8,10 +8,14 @@ class ReservationsController < ApplicationController
     @stores = Store.all
     @reservations = Reservation.joins(:customer).order_reserved_at
   
-    if params[:customer_name].present?
-      @customer_name = params[:customer_name]
-      @reservations.where_customer_name(@customer_name)
-    end
+    @customer_name = params[:customer_name]
+    @reservations = @reservations.where_customer_name(@customer_name) if @customer_name.present?
+  
+    @from_date = Date.parse(params[:from_date]) if params.has_key?(:from_date)
+    @reservations = @reservations.where('reservation_date >= ?', @from_date) if @from_date.present?
+
+    @to_date = Date.parse(params[:to_date]) if params.has_key?(:to_date)
+    @reservations = @reservations.where('reservation_date < ?', @to_date) if @to_date.present?
   end
 
   # GET /reservations/new
@@ -24,7 +28,27 @@ class ReservationsController < ApplicationController
   end
 
   def search
-    redirect_to reservations_path({customer_name: params[:customer_name]})
+    if params['from_date(1i)'].present? && params['from_date(1i)'].present? && params['from_date(1i)'].present?
+      from_date = Date.new(
+        params['from_date(1i)'].to_i,
+        params['from_date(2i)'].to_i,
+        params['from_date(3i)'].to_i
+      )
+    end
+
+    if params['to_date(1i)'].present? && params['to_date(2i)'].present? && params['to_date(3i)'].present?
+      to_date = Date.new(
+        params['to_date(1i)'].to_i,
+        params['to_date(2i)'].to_i,
+        params['to_date(3i)'].to_i
+      )
+    end
+    
+    redirect_to reservations_path({
+      customer_name: params[:customer_name],
+      from_date: from_date,
+      to_date: to_date,
+    })
   end
 
   # POST /reservations

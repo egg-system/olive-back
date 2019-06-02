@@ -2,13 +2,31 @@
     <div class="upper-frame">
       <h4>検索条件入力</h4>
       <div class="condition-section">
-        <%= form_with url: search_reservations_path, id:"search", method: :post do |form| %>
+        <%= form_with url: search_reservations_path, id:"search", method: :post, local: true do |form| %>
           <table>
             <tbody>
               <tr>
                 <th>顧客名</th>
                 <td>
-                  <%=form.text_field :customer_name, class: "form-control"%>
+                  <%= form.text_field :customer_name, class: "form-control" %>
+                </td>
+              </tr>
+              <tr>
+                <th>予約日</th>
+                <td>
+                  <%= form.date_select(
+                    :from_date,
+                    class: "form-control",
+                    selected: @from_date,
+                    include_blank: true
+                  ) %>
+                  〜
+                  <%= form.date_select(
+                    :to_date,
+                    class: "form-control",
+                    selected: @to_date,
+                    include_blank: true
+                  ) %>
                 </td>
               </tr>
             </tbody>

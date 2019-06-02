@@ -33,7 +33,9 @@
         <% if is_shown_customer_name %>
           <th rowspan="<%= row_span %>"><%= reservation.customer.full_name %></th>
         <% end %>
-				<td rowspan="<%= row_span %>"><%= reservation.staff.full_name %></td>
+				<td rowspan="<%= row_span %>">
+					<%= reservation.staff.present? ? reservation.staff.full_name : '' %>
+				</td>
 				<td rowspan="<%= row_span %>"><%= number_with_delimiter(reservation.total_fee) %>円</td>
 
 			<% reservation.reservation_details.each_with_index do |detail, index| %>
