@@ -5,13 +5,11 @@ class Reservation < ApplicationRecord
   serialize :start_time, Tod::TimeOfDay
   serialize :end_time, Tod::TimeOfDay
 
-  acts_as_paranoid
-
   extend DateModule
   include PaginationModule
 
   belongs_to :customer
-  belongs_to :staff
+  belongs_to :staff, optional: true
   belongs_to :store
   belongs_to :pregnant_state, optional: true
 
@@ -71,7 +69,6 @@ class Reservation < ApplicationRecord
     return if shifts.nil?
 
     self.shifts = shifts
-    self.staff_id = self.shifts.first.staff_id
   end
 
   def total_fee
@@ -96,7 +93,6 @@ class Reservation < ApplicationRecord
     self.transaction do
       self.update(canceled_at: DateTime.now)
       self.reservation_shifts.delete_all
-      ReservationMailer.cancel_reservation(self).deliver_now
     end
   end
 

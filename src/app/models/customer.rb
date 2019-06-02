@@ -55,10 +55,6 @@ class Customer < ApplicationRecord
     return self.last_name + ' ' + self.first_name
   end
 
-  def send_register_mail
-    CustomerMailer.confirm_register(self).deliver_now
-  end
-
   protected
 
   def is_none_provider?
