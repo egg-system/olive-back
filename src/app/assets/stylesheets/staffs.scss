@@ -70,4 +70,9 @@ p {
   #is_delete {
     margin-left: 30px;
   }
+  .form-center div.staff_skill_ids label.col-sm-3:after {
+    color: red;
+    content: " (必須)";
+    padding-left: 7px;
+  }
 }

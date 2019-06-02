@@ -16,7 +16,7 @@ ja:
         reservation:
           attributes:
             staff:
-              required: 'がございません。お手数ですが、予約日時を変更してください。'
+              required: "がございません。お手数ですが、予約日時を変更してください。"
 
   errors:
     messages:
@@ -27,3 +27,5 @@ ja:
   simple_form:
     error_notification:
       default_message: "データの登録に失敗しました。"
+    required:
+      html: '<abbr class="req">&nbsp;(必須)</abbr>'
