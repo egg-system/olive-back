@@ -17,7 +17,7 @@
     hint: '予約登録時は空いているスタッフが自動補完されます',
     disabled: @reservation.new_record?
   ) %>
-  <%= f.input :store_id, collection: Store.all, label: '予約店舗', required: true %>
+  <%= f.input :store_id, collection: @stores, label: '予約店舗', required: true %>
   <%= f.input :reservation_date, label: "予約日", required: true, disabled: @reservation.persisted? %>
   <%= f.input(
     :start_time,
@@ -46,6 +46,7 @@
     readonly: true
   ) %>
   <%= f.input :reservation_comment, label: "コメント" %>
+  <%= f.collection_check_boxes :coupon_ids, @coupons, :id, :name %>
   <%= f.input(
     :pregnant_state_id,
     as: :select,
@@ -66,7 +67,7 @@
         label: @reservation.reservation_details.count > 1 ? "#{index}時間目のメニュー" : 'メニュー',
         required: index === 1
       ) %>
-      <%= detail_form.collection_check_boxes :option_ids, Option.all, :id, :name %>
+      <%= detail_form.collection_check_boxes :option_ids, @options, :id, :name %>
       <%= detail_form.input(
         :mimitsubo_count,
         label: '耳つぼジュエリーの個数',

@@ -5,13 +5,13 @@ class ReservationsController < ApplicationController
   # GET /reservations
   # GET /reservations.json
   def index
+    @stores = Store.all
     @reservations = Reservation.joins(:customer).order_reserved_at
-
+  
     if params[:customer_name].present?
       @customer_name = params[:customer_name]
       @reservations.where_customer_name(@customer_name)
     end
-    @stores = Store.all
   end
 
   # GET /reservations/new
@@ -79,6 +79,9 @@ class ReservationsController < ApplicationController
 
     def set_relation_models
       @pregnant_state = PregnantState.all
+      @coupons = Coupon.all
+      @options = Option.all
+      @stores = Store.all
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
@@ -94,6 +97,7 @@ class ReservationsController < ApplicationController
         :pregnant_state_id,
         :children_count,
         :is_first,
+        coupon_ids: [],
         reservation_details_attributes: [
           :id,
           :menu_id,
