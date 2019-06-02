@@ -4,11 +4,12 @@
   <% if @reservation.persisted? %>
     <%= f.input :id, label: "id", readonly: true %>
   <% end %>
-  <%= f.input(
-    :customer_id,
-    label: "顧客ID",
-    readonly: true
-  ) %>
+  <%= f.input :customer_id, label: "顧客ID", readonly: true %>
+
+  <% if @reservation.customer.present? %>
+    <%= link_to @reservation.customer.full_name, customer_path(@reservation.customer_id) %>
+  <% end %>
+
   <%= simple_fields_for :no_model_fields do |n| %>
       <%= n.input(
         :customer_full_name,
@@ -55,8 +56,8 @@
   ) %>
   <%= f.input :reservation_comment, label: "コメント" %>
   <%= f.collection_check_boxes :coupon_ids, @coupons, :id, :name %>
-  <%= f.input :children_count, label: "子供の数"%>
-  <%= f.input :is_first, label: "初回フラグ"%>
+  <%= f.input :children_count, label: "お子様連れ"%>
+  <%= f.input :is_first, label: "初診の場合はチェック"%>
 
   <h2>メニュー</h2>
   <% @reservation.reservation_details.each.with_index(1) do |detail, index| %>
