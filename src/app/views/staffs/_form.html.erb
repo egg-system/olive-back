@@ -35,7 +35,8 @@
         label: '保有スキル',
         checked: @staff_skills.present? ? @staff_skills.map{|item| item.skill_id} : [],
         include_hidden: false,
-        hint: '１件以上、入力してください'
+        hint: '１件以上、入力してください',
+        class: 'foobarbaz'
       ) %>
       <%= f.input :employment_type, as: :select, label: '雇用区分', collection: Settings.employment_type.map.with_index{|name, id| [name, id]}, default: @staff.employment_type%>
       <% if request.path_info != new_staff_path || current_staff.role_id == 1%>

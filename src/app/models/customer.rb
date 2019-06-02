@@ -6,15 +6,15 @@ class Customer < ApplicationRecord
   include DeviseTokenAuth::Concerns::User
 
   belongs_to(
-    :first_visit_store, 
-    optional: true, 
-    class_name: 'Store', 
+    :first_visit_store,
+    optional: true,
+    class_name: 'Store',
     foreign_key: 'first_visit_store_id'
   )
   belongs_to(
-    :last_visit_store, 
-    optional: true, 
-    class_name: 'Store', 
+    :last_visit_store,
+    optional: true,
+    class_name: 'Store',
     foreign_key: 'last_visit_store_id'
   )
 
@@ -28,6 +28,8 @@ class Customer < ApplicationRecord
   has_many :reservations
 
   before_validation :sync_none_uid
+
+  validates :tel, numericality: true
 
   #left join
   scope :join_size, ->{
