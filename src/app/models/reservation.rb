@@ -55,15 +55,16 @@ class Reservation < ApplicationRecord
 
   def build_shifts
     self.end_time = extract_end_time_from_details
-    shifts = Shift
+    treatable_shifts = Shift
       .where(date: self.reservation_date)
       .where(start_at: (self.start_time.to_s)...(self.end_time.to_s))
       .where(staff_id: extract_can_treat_staff_ids)
       .where_not_reserved
-      .group_by { |shift| shift.staff_id }
+
+    shifts = treatable_shifts.group_by { |shift| shift.staff.id }
       .select { |staff_id, shifts| shifts.length === necessary_shift_count }
       .values
-      .first
+      .min_by { |shifts| shifts.first.staff.skill_staffs.length }
 
     return if shifts.nil?
 
