@@ -13,7 +13,7 @@ Skill.where(id: 2).first_or_create!(name:'鍼灸師')
 
 Menu.where(id: 1).first_or_create!(name:'通常整体コース', skill_id: 1, fee:6000, service_minutes:60, start_at:'2019-01-01', menu_category_id:1)
 
-# スキル要件が複雑なため、一旦非表示にする
+# 整体スペシャルパックコースはスキル要件が複雑なため、一旦非表示にする
 #Menu.where(id: 2).first_or_create!(name:'整体スペシャルパックコース', skill_id: 1, fee:25000, service_minutes:120, start_at:'2019-01-01', menu_category_id:1)
 Menu.where(id: 3).first_or_create!(name:'骨盤矯正', skill_id: 1, fee:6000, service_minutes:60, start_at:'2019-01-01', menu_category_id:1)
 Menu.where(id: 4).first_or_create!(name:'マッサージ', skill_id: 1, fee:6000, service_minutes:60, start_at:'2019-01-01', menu_category_id:1)
@@ -38,7 +38,8 @@ Menu.where(id: 19).first_or_create!(name:'ラグジュアリープラン', skill
 Option.where(id: 1).first_or_create!(name:'足つぼ', skill_id: 1, fee:2000, start_at:'2019-01-01', department_id:1)
 Option.where(id: 2).first_or_create!(name:'小顔矯正', skill_id: 1, fee:4000, start_at:'2019-01-01', department_id:1)
 Option.where(id: 3).first_or_create!(name:'テーピング', skill_id: 1, fee:2000, start_at:'2019-01-01', department_id:1)
-Option.where(id: 4).first_or_create!(name:'インデプス', skill_id: 1, fee:2000, start_at:'2019-01-01', department_id:1)
+# インデプスは機械の台数制約があるため、一旦非表示にする
+# Option.where(id: 4).first_or_create!(name:'インデプス', skill_id: 1, fee:2000, start_at:'2019-01-01', department_id:1)
 Option.where(id: 5).first_or_create!(name:'本治療', skill_id: 2, fee:2000, start_at:'2019-01-01', department_id:1, description: '鍼のオプションのため、鍼につけることはできない')
 Option.where(id: 6).first_or_create!(name:'耳つぼ', skill_id: 1, fee:2000, start_at:'2019-01-01', department_id:1)
 Option.where(id: 7).first_or_create!(name:'耳つぼジュエリー', skill_id: 1, fee:500, start_at:'2019-01-01', department_id:1)
