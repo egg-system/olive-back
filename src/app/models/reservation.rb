@@ -59,6 +59,7 @@ class Reservation < ApplicationRecord
       .where(date: self.reservation_date)
       .where(start_at: (self.start_time.to_s)...(self.end_time.to_s))
       .where(staff_id: extract_can_treat_staff_ids)
+      .where(store_id: self.store_id)
       .where_not_reserved
 
     shifts = treatable_shifts.group_by { |shift| shift.staff.id }
