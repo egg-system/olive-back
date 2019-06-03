@@ -70,6 +70,7 @@ class Reservation < ApplicationRecord
     return if shifts.nil?
 
     self.shifts = shifts
+    self.staff = shifts.first.staff
   end
 
   def total_fee
@@ -100,7 +101,7 @@ class Reservation < ApplicationRecord
   def canceled?
     return self.canceled_at.present?
   end
-  
+
   private
 
   def extract_can_treat_staff_ids
