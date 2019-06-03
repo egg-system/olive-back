@@ -6,6 +6,20 @@
           <table>
             <tbody>
               <tr>
+                <th>担当者</th>
+                <td>
+                  <%= form.collection_select(
+                    :staff_id,
+                    [Staff.new(id: '', last_name: '担当者なし', first_name: '')] + @staffs,
+                    :id,
+                    :full_name,
+                    prompt: true,
+                    selected: @staff_id,
+                    class: "form-control"
+                  ) %>
+                </td>
+              </tr>
+              <tr>
                 <th>顧客名</th>
                 <td>
                   <%= form.text_field :customer_name, class: "form-control" %>

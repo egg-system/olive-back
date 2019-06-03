@@ -16,6 +16,15 @@ class ReservationsController < ApplicationController
 
     @to_date = Date.parse(params[:to_date]) if params.has_key?(:to_date)
     @reservations = @reservations.where('reservation_date < ?', @to_date) if @to_date.present?
+
+    @staffs = Staff.all
+    @staff_id = params[:staff_id]
+
+    return if @staff_id.nil?
+
+    # 検索値が空文字の時は、担当者なしで検索する　※ ''.present? はfalse
+    @reservations = @reservations.where(staff_id: @staff_id) if @staff_id.present?
+    @reservations = @reservations.where(staff_id: nil) if @staff_id.empty?
   end
 
   # GET /reservations/new
@@ -46,6 +55,7 @@ class ReservationsController < ApplicationController
     
     redirect_to reservations_path({
       customer_name: params[:customer_name],
+      staff_id: params[:staff_id],
       from_date: from_date,
       to_date: to_date,
     })

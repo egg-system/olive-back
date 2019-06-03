@@ -22,7 +22,7 @@ class Staff < ApplicationRecord
   has_many :shifts
 
   def full_name
-    return self.last_name + ' ' + self.first_name
+    return (self.last_name + ' ' + self.first_name).strip
   end
 
   def employment_type_name
