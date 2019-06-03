@@ -21,15 +21,6 @@ class Staff < ApplicationRecord
   belongs_to :role
   has_many :shifts
 
-  def full_name
-    return (self.last_name + ' ' + self.first_name).strip
-  end
-
-  def employment_type_name
-    return "" if self.employment_type.nil?
-    return Settings.employment_type[self.employment_type]
-  end
-
   scope :can_treats, -> (menu_ids, option_ids) {
     menus = Menu.where(id: menu_ids).select('skill_id').distinct
     must_skill_ids = menus.map { |menu| menu.skill_id }
@@ -51,7 +42,7 @@ class Staff < ApplicationRecord
       .having('count(skill_id) >= ?', skill_ids.count)
       .select(:staff_id)
 
-    return where(id: staffIds)
+    return where(id: staffIds).order(id: :desc)
   }
 
   #店舗idによる絞り込み
@@ -66,6 +57,15 @@ class Staff < ApplicationRecord
   scope :join_tables, -> {
     select('staffs.*').join_role
   }
+
+  def full_name
+    return (self.last_name + ' ' + self.first_name).strip
+  end
+
+  def employment_type_name
+    return "" if self.employment_type.nil?
+    return Settings.employment_type[self.employment_type]
+  end
 
   def name
     return "#{self.last_name} #{self.first_name}"
