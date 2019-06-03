@@ -42,7 +42,7 @@ class Staff < ApplicationRecord
       .having('count(skill_id) >= ?', skill_ids.count)
       .select(:staff_id)
 
-    return where(id: staffIds).order(id: :desc)
+    return where(id: staffIds)
   }
 
   #店舗idによる絞り込み
