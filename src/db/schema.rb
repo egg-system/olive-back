@@ -172,7 +172,7 @@ ActiveRecord::Schema.define(version: 2019_05_28_102117) do
   create_table "reservation_details", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", comment: "予約の詳細。シフトやメニューなどに紐づく", force: :cascade do |t|
     t.bigint "reservation_id"
     t.bigint "menu_id"
-    t.integer "mimitsubo_count", comment: "耳つぼジュエリの個数。"
+    t.integer "mimitsubo_count", default: 0, comment: "耳つぼジュエリの個数。デフォルト値はオプションが選択されていて、個数がnilの場合を防ぐため"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["menu_id"], name: "index_reservation_details_on_menu_id"
