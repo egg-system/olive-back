@@ -18,7 +18,8 @@ class ReservationMailer < ApplicationMailer
   def remind_reservation(reservation)
     @reservation = reservation
     @customer = reservation.customer
-    mail(subject: '予約リマインド', to: @customer.email) do |format|
+    @store = @reservation.store
+    mail(subject: "ご予約日が近づいて参りました。 | #{@store.name}", to: @customer.email) do |format|
       format.text
     end
   end
