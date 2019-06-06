@@ -24,10 +24,10 @@ class Reservation < ApplicationRecord
   has_many :shifts, through: :reservation_shifts
 
   scope :where_customer_name, -> (customer_name) {
-    where("concat(last_name, first_name) like ?", "%#{params[:customer_name]}%")  
+    where("concat(last_name, first_name) like ?", "%#{params[:customer_name]}%")
   }
 
-  scope :order_reserved_at, -> {	
+  scope :order_reserved_at, -> {
     order(reservation_date: :desc)
       .order(start_time: :desc)
       .order(created_at: :desc)
@@ -100,7 +100,24 @@ class Reservation < ApplicationRecord
   def canceled?
     return self.canceled_at.present?
   end
-  
+
+  START_AT_OPTIONS = [
+    '10:00:00',
+    '10:30:00',
+    '11:00:00',
+    '11:30:00',
+    '12:00:00',
+    '12:30:00',
+    '13:00:00',
+    '16:00:00',
+    '16:30:00',
+    '17:00:00',
+    '17:30:00',
+    '18:00:00',
+    '18:30:00',
+    '19:00:00'
+  ]
+
   private
 
   def extract_can_treat_staff_ids

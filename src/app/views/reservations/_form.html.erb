@@ -18,19 +18,12 @@
   ) %>
   <%= f.input :store_id, collection: @stores, label: '予約店舗', required: true %>
   <%= f.input :reservation_date, label: "予約日", required: true, disabled: @reservation.persisted? %>
-  <%= f.input(
-    :start_time,
-    as: :string,
-    hint: (@reservation.persisted? ?
-      '時刻を変更する場合、削除して登録しなおしてください'
-      : '「hh:mm」の形式で入力してください。例)12時30分の場合は「12:30」と入力'
-    ),
-    label: "開始時刻",
-    minute_step: 30,
-    include_seconds: true,
-    required: true,
-    readonly: @reservation.persisted?
-  ) %>
+  <%= f.input :start_time,
+              collection: Reservation::START_AT_OPTIONS,
+              label: '開始時刻',
+              disabled: @reservation.persisted?,
+              required: true
+              %>
   <%= f.input(
     :end_time,
     as: :string,
