@@ -7,15 +7,15 @@ class ReservationsController < ApplicationController
   def index
     @stores = Store.all
     @reservations = Reservation.joins(:customer).order_reserved_at
-  
+
     @customer_name = params[:customer_name]
     @reservations = @reservations.where_customer_name(@customer_name) if @customer_name.present?
-  
+
     @from_date = Date.parse(params[:from_date]) if params.has_key?(:from_date)
     @reservations = @reservations.where('reservation_date >= ?', @from_date) if @from_date.present?
 
     @to_date = Date.parse(params[:to_date]) if params.has_key?(:to_date)
-    @reservations = @reservations.where('reservation_date < ?', @to_date) if @to_date.present?
+    @reservations = @reservations.where('reservation_date <= ?', @to_date) if @to_date.present?
 
     @staffs = Staff.all
     @staff_id = params[:staff_id]
@@ -52,7 +52,7 @@ class ReservationsController < ApplicationController
         params['to_date(3i)'].to_i
       )
     end
-    
+
     redirect_to reservations_path({
       customer_name: params[:customer_name],
       staff_id: params[:staff_id],
