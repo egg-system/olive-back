@@ -13,6 +13,7 @@
       <% end %>
 			<th scope="col">担当者</th>
 			<th scope="col">売上金額</th>
+			<th scope="col">コメント</th>
 			<th scope="col">時間数</th>
 			<th scope="col">メニュー</th>
 			<th scope="col">オプション</th>
@@ -37,6 +38,7 @@
 					<%= reservation.staff.present? ? reservation.staff.full_name : '' %>
 				</td>
 				<td rowspan="<%= row_span %>"><%= number_with_delimiter(reservation.total_fee) %>円</td>
+				<td rowspan="<%= row_span %>"><%= simple_format(reservation.reservation_comment, {}, wrapper_tag: "div") %></td>
 
 			<% reservation.reservation_details.each_with_index do |detail, index| %>
 				<% if index > 0 %>
