@@ -4,13 +4,29 @@ employment_type:
   - パート・アルバイト
 
 has_registration_card:
-  false: 未
-  true: 済
+  "未": false
+  "済": true
 
 store_type:
-  owned: 直営店
-  franchised: FC店
+  "直営店": "owned"
+  "FC店": "franchised"
 
 stores:
   head_store_id: 1
   head_este_store_id: 2
+
+reservation_at_options:
+  - '10:00:00'
+  - '10:30:00'
+  - '11:00:00'
+  - '11:30:00'
+  - '12:00:00'
+  - '12:30:00'
+  - '13:00:00'
+  - '16:00:00'
+  - '16:30:00'
+  - '17:00:00'
+  - '17:30:00'
+  - '18:00:00'
+  - '18:30:00'
+  - '19:00:00'
