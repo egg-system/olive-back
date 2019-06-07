@@ -2,7 +2,7 @@
 <% if request.path_info != new_store_path%>
 <%=f.input :id, label: "id", readonly: true%>
 <%end%>
-<%=f.input :store_type, as: :select, label: "店舗区分", collection: Settings.store_type.map{|key, val| [val, key]}, default: "owned"%>
+<%=f.input :store_type, as: :select, label: "店舗区分", collection: Settings.store_type, default: "owned"%>
 <%=f.input :name, label: "店舗名"%>
 <%=f.input :address, label: "店舗住所"%>
 <%=f.input :tel, label: "電話番号"%>
