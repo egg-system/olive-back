@@ -1,9 +1,12 @@
-<h1>予約登録</h1>
-<%# link_to(
-  @resrvation_details_count === 1 ? '2時間で予約する' : '1時間で予約する', 
-  new_reservation_path(
-    customer_id: @reservation.customer_id,
-    count: @resrvation_details_count === 1 ? 2 : 1
-  )
-) %>
-<%= render 'form', reservation: @reservation %>
+<div id="new_reservation_form">
+  <p>予約登録</p>
+  <%# link_to(
+    @resrvation_details_count === 1 ? '2時間で予約する' : '1時間で予約する', 
+    new_reservation_path(
+      customer_id: @reservation.customer_id,
+      count: @resrvation_details_count === 1 ? 2 : 1
+    )
+  ) %>
+  <%= render 'form', reservation: @reservation %>
+</div>
+<br>

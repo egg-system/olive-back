@@ -17,7 +17,9 @@
     disabled: @reservation.new_record?
   ) %>
   <%= f.input :store_id, collection: @stores, label: '予約店舗', required: true %>
-  <%= f.input :reservation_date, label: "予約日", required: true, disabled: @reservation.persisted? %>
+  <div class="row">
+    <%= f.input :reservation_date, label: "予約日", required: true, disabled: @reservation.persisted?, :input_html => {:class => 'col-sm-12'} %>
+  </div>
   <%= f.input(
     :start_time,
     collection: Settings.reservation_at_options,
@@ -34,12 +36,7 @@
     include_blank: true,
     readonly: true
   ) %>
-  <%= f.input :reservation_comment, label: "コメント" %>
-  <%= f.collection_check_boxes :coupon_ids, @coupons, :id, :name %>
-  <%= f.input :children_count, label: "お子様連れ"%>
-  <%= f.input :is_first, label: "初診の場合はチェック"%>
 
-  <h2>メニュー</h2>
   <% @reservation.reservation_details.each.with_index(1) do |detail, index| %>
     <%= f.fields_for :reservation_details, detail, child_index: index do |detail_form| %>
       <%= detail_form.hidden_field :id, value: detail.id %>
@@ -49,7 +46,17 @@
         label: @reservation.reservation_details.count > 1 ? "#{index}時間目のメニュー" : 'メニュー',
         required: index === 1
       ) %>
-      <%= detail_form.collection_check_boxes :option_ids, @options, :id, :name %>
+      <div class="custom_row row">
+        <div class="custom_left col-sm-3">
+          <label ></label>
+        </div>
+        <div class="custom_right col-sm-9">
+          <%= detail_form.collection_check_boxes :option_ids, @options, :id, :name %>
+        </div>
+      </div>
+
+      <hr>
+
       <%= detail_form.input(
         :mimitsubo_count,
         label: '耳つぼジュエリーの個数',
@@ -58,6 +65,27 @@
     <% end %>
   <% end %>
 
-  <%= f.button :submit, class: 'btn btn-primary'%>
-  <%= link_to '戻る', reservations_path, class: 'btn' %>
+  <%= f.input :reservation_comment, label: "コメント" %>
+  <div class="custom_row row">
+    <div class="custom_left col-sm-3">
+      <label >回数券</label>
+    </div>
+    <div class="custom_right col-sm-9">
+      <%= f.collection_check_boxes :coupon_ids, @coupons, :id, :name, label: "回数券" %>
+    </div>
+  </div>
+  <%= f.input :children_count, label: "お子様連れ"%>
+  <div class="custom_row row">
+    <div class="custom_left col-sm-3">
+      <label ></label>
+    </div>
+    <div class="custom_right col-sm-9">
+      <%= f.input :is_first, label: "初診の場合はチェック"%>
+    </div>
+  </div>
+
+  <div class="rsv_btn">
+    <%= f.button :submit, class: 'btn btn-primary'%>
+    <%= link_to '戻る', reservations_path, class: 'btn bg-light' %>
+  </div>
 <% end %>
