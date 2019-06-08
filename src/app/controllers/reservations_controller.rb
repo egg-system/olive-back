@@ -72,8 +72,7 @@ class ReservationsController < ApplicationController
         format.html { redirect_to @reservation, notice: '予約登録に成功しました。' }
         format.json { render :show, status: :created, location: @reservation }
       else
-        @resrvation_details_count = @reservation.reservation_details.length
-        flash[:alert] = @reservation.staff.nil?  ? "入力日時の予約枠は埋まっております。日時を変更してください。" : '予約の登録に失敗しました。'
+        flash[:alert] = @reservation.shifts.nil? ? "入力日時の予約枠は埋まっております。日時を変更してください。" : '予約の登録に失敗しました。'
 
         format.html { render :new }
         format.json { render json: @reservation.errors, status: :unprocessable_entity }
@@ -89,7 +88,8 @@ class ReservationsController < ApplicationController
         format.html { redirect_to @reservation, notice: '予約の更新に成功しました。' }
         format.json { render :show, status: :ok, location: @reservation }
       else
-        format.html { render :edit }
+        flash[:alert] = '予約の更新に失敗しました。'
+        format.html { render :show }
         format.json { render json: @reservation.errors, status: :unprocessable_entity }
       end
     end

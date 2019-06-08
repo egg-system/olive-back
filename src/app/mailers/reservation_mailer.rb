@@ -2,15 +2,18 @@ class ReservationMailer < ApplicationMailer
   def confirm_reservation(reservation)
     @reservation = reservation
     @customer = reservation.customer
-    mail(subject: '予約確定', to: @customer.email) do |format|
+    @store = @reservation.store
+    mail(subject: 'ご予約の確認メール', to: @customer.email) do |format|
       format.text
     end
   end
 
   def cancel_reservation(reservation)
+    logger.debug(reservation)
     @reservation = reservation
     @customer = reservation.customer
-    mail(subject: '予約キャンセル', to: @customer.email) do |format|
+    @store = @reservation.store
+    mail(subject: 'ご予約のキャンセル', to: @customer.email) do |format|
       format.text
     end
   end
@@ -18,8 +21,10 @@ class ReservationMailer < ApplicationMailer
   def remind_reservation(reservation)
     @reservation = reservation
     @customer = reservation.customer
-    mail(subject: '予約リマインド', to: @customer.email) do |format|
+    @store = @reservation.store
+    mail(subject: "ご予約日が近づいて参りました。 | #{@store.name}", to: @customer.email) do |format|
       format.text
     end
   end
+
 end

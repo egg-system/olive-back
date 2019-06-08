@@ -11,6 +11,7 @@ Rails.application.routes.draw do
       patch :updates
     end
   end
+
   resources :stores, :staffs, :customers, :reservations do
     collection do
       post :search

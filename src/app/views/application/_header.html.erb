@@ -1,32 +1,12 @@
 <nav class="navbar navbar-dark bg-primary navbar-expand">
   <%= link_to 'olive system', home_path, :class => 'navbar-brand' %>
   <div class="navbar-collapse">
-    <% if staff_signed_in? %>  
+    <% if staff_signed_in? %> 
       <ul class="navbar-nav">
-        <li class="nav-item dropdown">
-          <a 
-            id="shift-menu"
-            class="nav-link dropdown-toggle"  
-            data-toggle="dropdown" 
-          >
-            シフト管理
-          </a>
-          <div class="dropdown-menu" aria-labelledby="shift-menu">
-            <%= link_to 'インポート', new_shift_path, :class => "dropdown-item" %>
-            <%= link_to '一覧', shifts_path, :class => "dropdown-item" %>
-          </div>
-        </li>
         <li class="nav-item">
           <%= 
             link_to '予約管理', 
               reservations_path, 
-              :class => "nav-link" 
-          %>
-        </li>
-        <li class="nav-item">
-          <%= 
-            link_to 'スタッフ管理', 
-              staffs_path, 
               :class => "nav-link" 
           %>
         </li>
@@ -37,12 +17,66 @@
               :class => "nav-link" 
           %>
         </li>
+        <% if current_staff.role.manager? %>
+          <li class="nav-item">
+            <%= 
+              link_to 'スタッフ管理', 
+                staffs_path, 
+                :class => "nav-link" 
+            %>
+          </li>
+          <li class="nav-item dropdown">
+            <a 
+              id="shift-menu"
+              class="nav-link dropdown-toggle"  
+              data-toggle="dropdown" 
+            >
+              シフト管理
+            </a>
+            <div class="dropdown-menu" aria-labelledby="shift-menu">
+              <%= link_to 'インポート', new_shift_path, class: "dropdown-item" %>
+              <%= link_to '一覧', shifts_path, class: "dropdown-item" %>
+            </div>
+          </li>
+        <% end %>
+        <% if current_staff.role.admin? %>
+          <li class="nav-item dropdown">
+            <a 
+              id="shift-menu"
+              class="nav-link dropdown-toggle"  
+              data-toggle="dropdown" 
+            >
+              マスタ管理
+            </a>
+            <div class="dropdown-menu" aria-labelledby="shift-menu">
+              <%= link_to "店舗マスタ", stores_path, class: "dropdown-item" %>
+              <%= link_to "技術マスタ", skills_path, class: "dropdown-item" %>
+              <%= link_to "権限マスタ", roles_path, class: "dropdown-item" %>
+              <%= link_to "メニューマスタ", menus_path, class: "dropdown-item" %>
+              <%= link_to "オプションマスタ", options_path, class: "dropdown-item" %>
+              <%= link_to "クーポンマスタ", coupons_path, class: "dropdown-item" %>
+              <%# link_to "メニューカテゴリマスタ", menu_categories_path, class: "dropdown-item" %>
+              <%# link_to "部門マスタ", departments_path, class: "dropdown-item" %>
+              <%# link_to "CouponHistory", coupon_histories_path, class: "dropdown-item" %>
+            </div>
+          </li>
+        <% end %>
+        <li class="nav-item">
+          <%= link_to(
+            "ログインユーザー：#{current_staff.full_name}",
+            staff_path(current_staff.id),
+            method: :get,
+            class: 'nav-link'
+          ) %>
+        </li>
         <li class="nav-item">
           <%= 
-            link_to 'ログアウト', 
+            link_to(
+              'ログアウト', 
               destroy_staff_session_path, 
               method: :delete,
-              :class => "nav-link" 
+              class: "nav-link"
+            )
           %>
         </li>
       </ul>
