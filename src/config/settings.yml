@@ -33,4 +33,5 @@ reservation_at_options:
 
 brand:
   name: '女性専門の治療院オリーヴボディケア'
-  email: 'gaku.machida@gmail.com'
+  system_email: 'no-reply@olivebodycare.healthcare'
+
