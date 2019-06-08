@@ -1,4 +1,4 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: 'no-reply@olivebodycare.healthcare'
+  default from: Settings.brand.system_email
   layout 'mailer'
 end
