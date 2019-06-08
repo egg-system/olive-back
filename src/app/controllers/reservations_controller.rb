@@ -20,11 +20,21 @@ class ReservationsController < ApplicationController
     @staffs = Staff.all
     @staff_id = params[:staff_id]
 
+
     return if @staff_id.nil?
 
     # 検索値が空文字の時は、担当者なしで検索する　※ ''.present? はfalse
-    @reservations = @reservations.where(staff_id: @staff_id) if @staff_id.present?
-    @reservations = @reservations.where(staff_id: nil) if @staff_id.empty?
+    if @staff_id.present?
+      if @staff_id === 'none'
+        @reservations = @reservations.where(staff_id: nil)
+      elsif @staff_id === 'any'
+        @reservations = @reservations.where.not(staff_id: nil)
+      else
+        @reservations = @reservations.where(staff_id: @staff_id)
+      end
+    end
+
+    #
   end
 
   # GET /reservations/new
@@ -32,12 +42,12 @@ class ReservationsController < ApplicationController
     return redirect_to customers_path, flash: { alert: '顧客が選択されていません。' } unless params.has_key?(:customer_id)
 
     @reservation = Customer.find(params[:customer_id]).reservations.new
-    @resrvation_details_count = params.has_key?(:count) ? params[:count].to_i : 1
-    @reservation.reservation_details.build(Array.new(@resrvation_details_count))
+    @reservation_details_count = params.has_key?(:count) ? params[:count].to_i : 1
+    @reservation.reservation_details.build(Array.new(@reservation_details_count))
   end
 
   def search
-    if params['from_date(1i)'].present? && params['from_date(1i)'].present? && params['from_date(1i)'].present?
+    if params['from_date(1i)'].present? && params['from_date(2i)'].present? && params['from_date(i)'].present?
       from_date = Date.new(
         params['from_date(1i)'].to_i,
         params['from_date(2i)'].to_i,

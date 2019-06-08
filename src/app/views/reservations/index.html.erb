@@ -8,11 +8,11 @@
               <tr>
                 <th>担当者</th>
                 <td>
-                  <%= form.collection_select(
+                  <%= form.select(
                     :staff_id,
-                    [Staff.new(id: '', last_name: '担当者なし', first_name: '')] + @staffs,
-                    :id,
-                    :full_name,
+                    '<option value="none">担当者なし</option>'.html_safe +
+                    '<option value="any">担当者あり</option>'.html_safe +
+                    options_from_collection_for_select(@staffs,'id','full_name'),
                     prompt: true,
                     selected: @staff_id,
                     class: "form-control"
