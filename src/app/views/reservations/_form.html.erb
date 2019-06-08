@@ -20,28 +20,18 @@
   <%= f.input :reservation_date, label: "予約日", required: true, disabled: @reservation.persisted? %>
   <%= f.input(
     :start_time,
-    as: :string,
-    hint: (@reservation.persisted? ?
-      '時刻を変更する場合、削除して登録しなおしてください'
-      : '「hh:mm」の形式で入力してください。例)12時30分の場合は「12:30」と入力'
-    ),
-    label: "開始時刻",
-    minute_step: 30,
-    include_seconds: true,
-    required: true,
-    readonly: @reservation.persisted?
+    collection: Settings.reservation_at_options,
+    label: '開始時刻',
+    hint: @reservation.persisted? ? '時刻を変更する場合、削除して登録しなおしてください' : '',
+    disabled: @reservation.persisted?,
+    required: true
   ) %>
   <%= f.input(
     :end_time,
     as: :string,
     label: "終了時刻",
-    minute_step: 30,
-    hint: (@reservation.new_record? ?
-      '予約登録時は選択されたメニューを元に補完されます'
-      : '時刻を変更する場合、削除して登録しなおしてください'
-    ),
+    hint: @reservation.persisted? ? '時刻を変更する場合、削除して登録しなおしてください' : '',
     include_blank: true,
-    include_seconds: true,
     readonly: true
   ) %>
   <%= f.input :reservation_comment, label: "コメント" %>
