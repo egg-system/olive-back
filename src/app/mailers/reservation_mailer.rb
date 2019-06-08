@@ -2,7 +2,8 @@ class ReservationMailer < ApplicationMailer
   def confirm_reservation(reservation)
     @reservation = reservation
     @customer = reservation.customer
-    mail(subject: '予約確定', to: @customer.email) do |format|
+    @store = @reservation.store
+    mail(subject: '【ご予約の確認メール】※確定のお知らせではありません。', to: @customer.email) do |format|
       format.text
     end
   end
@@ -10,7 +11,8 @@ class ReservationMailer < ApplicationMailer
   def cancel_reservation(reservation)
     @reservation = reservation
     @customer = reservation.customer
-    mail(subject: '予約キャンセル', to: @customer.email) do |format|
+    @store = @reservation.store
+    mail(subject: '【ご予約のキャンセル】※キャンセル処理は完了しておりません。', to: @customer.email) do |format|
       format.text
     end
   end
@@ -23,4 +25,5 @@ class ReservationMailer < ApplicationMailer
       format.text
     end
   end
+
 end
