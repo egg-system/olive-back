@@ -31,4 +31,6 @@ reservation_at_options:
   - '18:30:00'
   - '19:00:00'
 
-brand_name: 'オリーブボディケア'
+brand:
+  name: '女性専門の治療院オリーヴボディケア'
+  email: 'gaku.machida@gmail.com'
