@@ -36,7 +36,7 @@
     required: true,
     default: Date.today,
     disabled: @reservation.persisted?,
-    :input_html => { :class => 'rsv_day' }
+    input_html: { class: 'rsv_day' }
   ) %>
   <%= f.input(
     :start_time,
