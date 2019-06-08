@@ -30,7 +30,7 @@
         label: '初回ご来店店舗',
         default: @customer.first_visit_store_id
       )%>
-      <%= f.input :first_visited_at, wrapper: :horizontal_multi_select, label: '初回来店日'%>
+      <%= f.input :first_visited_at, wrapper: :horizontal_multi_select, label: '初回ご来店日'%>
       <%= f.input(
         :last_visit_store_id,
         as: :select,

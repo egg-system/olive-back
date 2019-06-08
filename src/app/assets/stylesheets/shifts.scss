@@ -97,7 +97,7 @@ $borderRight: 2px solid white;
   z-index: 2;
 }
 // 行と列の交差部分
-.shift-list .sticky_table tr .th-corner {
+.shift-list .sticky_table thead .th-corner {
   position: sticky;
   top: 0px;
   left: 0px;
