@@ -102,7 +102,8 @@ class ReservationsController < ApplicationController
         format.html { redirect_to @reservation, notice: '予約の更新に成功しました。' }
         format.json { render :show, status: :ok, location: @reservation }
       else
-        format.html { render :edit }
+        flash[:alert] = '予約の更新に失敗しました。'
+        format.html { render :show }
         format.json { render json: @reservation.errors, status: :unprocessable_entity }
       end
     end
