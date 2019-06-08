@@ -51,7 +51,8 @@ class Reservation < ApplicationRecord
       store: self.store,
       start_at: self.start_time.on(self.reservation_date),
       end_at: self.end_time.on(self.reservation_date),
-      menus: reservation_details.map { |detail| detail.menu },
+      details: reservation_details.map { |detail| detail.to_resource },
+      coupons: self.coupons,
       fee: self.total_fee,
     }
   end
@@ -81,7 +82,9 @@ class Reservation < ApplicationRecord
   end
 
   def total_fee
-    return self.reservation_details.sum { |detail| detail.total_fee }
+    total_fee = self.reservation_details.sum { |detail| detail.total_fee }
+    total_fee = total_fee - self.coupons.length * 6000 if self.coupons.present?
+    return total_fee
   end
 
   def necessary_shift_count
