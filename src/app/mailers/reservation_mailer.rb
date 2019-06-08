@@ -3,16 +3,17 @@ class ReservationMailer < ApplicationMailer
     @reservation = reservation
     @customer = reservation.customer
     @store = @reservation.store
-    mail(subject: '【ご予約の確認メール】※確定のお知らせではありません。', to: @customer.email) do |format|
+    mail(subject: 'ご予約の確認メール', to: @customer.email) do |format|
       format.text
     end
   end
 
   def cancel_reservation(reservation)
+    logger.debug(reservation)
     @reservation = reservation
     @customer = reservation.customer
     @store = @reservation.store
-    mail(subject: '【ご予約のキャンセル】※キャンセル処理は完了しておりません。', to: @customer.email) do |format|
+    mail(subject: 'ご予約のキャンセル', to: @customer.email) do |format|
       format.text
     end
   end
