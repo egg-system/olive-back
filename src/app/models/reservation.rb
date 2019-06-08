@@ -52,6 +52,7 @@ class Reservation < ApplicationRecord
       start_at: self.start_time.on(self.reservation_date),
       end_at: self.end_time.on(self.reservation_date),
       details: reservation_details.map { |detail| detail.to_resource },
+      coupons: self.coupons,
       fee: self.total_fee,
     }
   end
