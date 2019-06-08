@@ -50,7 +50,7 @@ class ReservationsController < ApplicationController
   end
 
   def search
-    if params['from_date(1i)'].present? && params['from_date(2i)'].present? && params['from_date(i)'].present?
+    if params['from_date(1i)'].present? && params['from_date(2i)'].present? && params['from_date(3i)'].present?
       from_date = Date.new(
         params['from_date(1i)'].to_i,
         params['from_date(2i)'].to_i,
