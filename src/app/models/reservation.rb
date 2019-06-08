@@ -8,6 +8,8 @@ class Reservation < ApplicationRecord
   extend DateModule
   include PaginationModule
 
+  validate :validate_reservation_date, on: :create
+
   belongs_to :customer
   belongs_to :staff, optional: true
   belongs_to :store
@@ -22,6 +24,7 @@ class Reservation < ApplicationRecord
 
   has_many :reservation_shifts, dependent: :delete_all
   has_many :shifts, through: :reservation_shifts
+  validates_presence_of :shifts, on: :create
 
   scope :where_customer_name, -> (customer_name) {
     where("concat(last_name, first_name) like ?", "%#{params[:customer_name]}%")
@@ -119,5 +122,11 @@ class Reservation < ApplicationRecord
   def extract_end_time_from_details
     reservation_minutes = self.reservation_details.sum { |detail| detail.menu.service_minutes }
     return self.start_time + reservation_minutes.minutes unless self.start_time.nil?
+  end
+
+  def validate_reservation_date
+    if self.reservation_date < Date.today
+      errors.add(:reservation_date, "：過去の日付は使えません")
+    end
   end
 end
