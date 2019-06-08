@@ -1,13 +1,9 @@
 <%= @customer.full_name %> 様
 
-<%= @store.name %>にユーザー登録して頂きありがとうございます。
-
-こちらのページから、施術の予約をお取りする事ができます。
-https://reserve.olivebodycare.healthcare/menus?menuIndex=1
+<%= Settings.brand_name %>にユーザー登録して頂きありがとうございます。
 
 こちらでお客様の予約内容をご確認する事ができます。
+ログインの際には、ご登録いただいたメールアドレス・パスワードをご入力ください。
 https://reserve.olivebodycare.healthcare/mypage
 
-ログインの際には、ご登録いただいたメールアドレス・パスワードをご入力ください。
-
-<%= render 'mailer/store_signature' %>
+<%= render 'mailer/brand_signature' %>
