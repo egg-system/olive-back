@@ -11,6 +11,8 @@ ja:
         last_kana: "セイ"
         first_kana: "メイ"
         login: "ログインID"
+      reservation:
+        reservation_date: '予約日'
     errors:
       models:
         reservation:
