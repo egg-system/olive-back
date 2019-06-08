@@ -40,5 +40,13 @@ class ReservationDetail < ApplicationRecord
     }
   end
 
+  def to_resource
+    return {
+      id: self.id,
+      menu: self.menu,
+      option_names: self.option_names
+    }
+  end
+
   MIMITSUBO_JEWELRY_OPTIONS = [2, 4, 6, 8, 10]
 end
