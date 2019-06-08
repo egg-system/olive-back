@@ -6,7 +6,10 @@ class ReservationsController < ApplicationController
   # GET /reservations.json
   def index
     @stores = Store.all
-    @reservations = Reservation.joins(:customer).order_reserved_at
+    @reservations = Reservation.joins(:customer)
+
+    @reservations = params[:order].present? && params[:order] === 'id' ?
+      @reservations.order('id DESC') : @reservations.order_reserved_at
 
     @customer_name = params[:customer_name]
     @reservations = @reservations.where_customer_name(@customer_name) if @customer_name.present?
@@ -19,7 +22,7 @@ class ReservationsController < ApplicationController
 
     @staffs = Staff.all
     @staff_id = params[:staff_id]
-
+    @order = params[:order]
 
     return if @staff_id.nil?
 
@@ -68,6 +71,7 @@ class ReservationsController < ApplicationController
       staff_id: params[:staff_id],
       from_date: from_date,
       to_date: to_date,
+      order: params[:order]
     })
   end
 

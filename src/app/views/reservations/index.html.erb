@@ -10,11 +10,11 @@
                 <td>
                   <%= form.select(
                     :staff_id,
-                    '<option value="none">担当者なし</option>'.html_safe +
-                    '<option value="any">担当者あり</option>'.html_safe +
-                    options_from_collection_for_select(@staffs,'id','full_name'),
-                    prompt: true,
-                    selected: @staff_id,
+                    options_for_select(
+                      [['指定なし', ''], ['担当者なし', 'none'], ['担当者あり', 'any']]
+                        .concat(@staffs.map {|staff| [staff.full_name, staff.id]}),
+                        selected: @staff_id
+                      ),
                     class: "form-control"
                   ) %>
                 </td>
@@ -40,6 +40,19 @@
                     class: "form-control",
                     selected: @to_date,
                     include_blank: true
+                  ) %>
+                </td>
+              </tr>
+              <tr>
+                <th>並べ順</th>
+                <td>
+                  <%= form.select(
+                    :order,
+                    options_for_select(
+                      [['予約日時', 'reserved_at'], ['ID', 'id']],
+                      selected: @order
+                      ),
+                    class: "form-control"
                   ) %>
                 </td>
               </tr>
