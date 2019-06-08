@@ -70,6 +70,11 @@ class Reservation < ApplicationRecord
     return if shifts.nil?
 
     self.shifts = shifts
+    self.staff = shifts.first.staff
+  end
+
+  def reserved_at
+    self.start_time.on(self.reservation_date)
   end
 
   def total_fee
@@ -82,7 +87,7 @@ class Reservation < ApplicationRecord
   end
 
   def state
-    return 'キャンセル' if self.canceled?
+    return 'キャンセル済み' if self.canceled?
 
     reservation_end_at = self.end_time.on(self.reservation_date)
     visited = reservation_end_at < DateTime.now

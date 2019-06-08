@@ -1,3 +1,13 @@
 <%= @customer.last_name %> 様
 
-予約をキャンセルいたしました。
+<%= @store.name %>をご利用いただき誠にありがとうございます。
+
+下記ご予約のキャンセルが完了いたしました。
+
+ご予約ID：<%= @reservation.id %>
+予約日時：<%= @reservation.reserved_at.strftime('%Y年 %m月 %d日 %H時 %M分') %>
+予約したメニュー：<%= safe_join(@reservation.reservation_details.map { |detail| detail.menu.name }, "、") %>
+
+またのご来店をスタッフ一同心よりお待ちしております。
+
+<%= render 'mailer/store_signature' %>

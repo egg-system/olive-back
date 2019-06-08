@@ -21,21 +21,22 @@ class Api::ReservationsController < Api::ApiController
       .order_reserved_at
 
     # total_pages > data の順にキーを配置しなければ、エラーになる可能性あり
-    render json: { 
+    render json: {
       total_pages: reservations.total_pages,
       data: reservations.to_resources,
     }
   end
 
   def show
-    render json: { 
+    render json: {
       data: Reservation.find(params[:id]).to_resource,
     }
   end
 
   def destroy
-    Reservation.find(params[:id]).cancel
-    ReservationMailer.cancel_reservation(self).deliver_now
+    reservation = Reservation.find(params[:id])
+    reservation.cancel
+    ReservationMailer.cancel_reservation(reservation).deliver_now
 
     render json: { data: 'ok' }
   end
@@ -56,7 +57,7 @@ class Api::ReservationsController < Api::ApiController
       :is_first,
       coupon_ids: [],
       reservation_details_attributes: [
-        :menu_id, 
+        :menu_id,
         :mimitsubo_count,
         option_ids: [],
       ]

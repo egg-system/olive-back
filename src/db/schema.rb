@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_28_102117) do
+ActiveRecord::Schema.define(version: 2019_06_05_101723) do
 
   create_table "baby_ages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
@@ -303,6 +303,7 @@ ActiveRecord::Schema.define(version: 2019_05_28_102117) do
     t.integer "break_to", comment: "休憩の終了時間"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "zip_code"
   end
 
   create_table "taxes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|

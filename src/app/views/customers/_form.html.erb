@@ -33,18 +33,25 @@
         as: :select,
         collection: @stores.map{|store| [store.name, store.id] },
         label: '初回ご来店店舗',
-        default: @customer.first_visit_store_id
+        default: @customer.first_visit_store_id,
+        include_blank: true
       )%>
-      <%= f.input :first_visited_at, wrapper: :horizontal_multi_select, label: '初回来店日'%>
+      <%= f.input(
+        :first_visited_at,
+        wrapper: :horizontal_multi_select,
+        label: '初回来店日',
+        include_blank: true
+      ) %>
       <%= f.input(
         :last_visit_store_id,
         as: :select,
         collection: @stores.map{|store| [store.name, store.id]},
         label: '直近ご来店店舗',
-        default: @customer.last_visit_store_id
+        default: @customer.last_visit_store_id,
+        include_blank: true
       ) %>
       <%= f.input :comment, label: 'コメント' %>
-      <%= f.input :zip_code, label: '郵便番号(XXX-XXXX)' %>
+      <%= f.input :zip_code, label: '郵便番号' %>
       <%= f.input :address, label: '住所' %>
       <%= f.input(
         :birthday,
@@ -63,9 +70,10 @@
         as: :select,
         collection: Settings.has_registration_card,
         default: @customer.has_registration_card,
-        label: '診察券発行有無'
+        label: '診察券発行有無',
+        include_blank: true
       ) %>
-      <%= f.input :introducer, label: '紹介者'%>
+      <%= f.input :introducer, label: '紹介者' %>
       <%= f.input :children_count, label: 'お子様の数'%>
       <%= f.input(
         :baby_age_id,
@@ -78,7 +86,7 @@
       <%= f.input(
         :occupation_id,
         as: :select,
-        collection: @occupations.map{|item| [item.name, item.id]},
+        collection: @occupations.map{ |item| [item.name, item.id] },
         label: '職業',
         default: @customer.occupation_id,
         include_blank: true
@@ -88,7 +96,8 @@
         as: :select,
         collection: @zoomancies.map{|item| [item.name, item.id]},
         label: '動物占い',
-        default: @customer.zoomancy_id
+        default: @customer.zoomancy_id,
+        include_blank: true
       ) %>
       <%= f.input(
         :size_id,
