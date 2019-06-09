@@ -83,6 +83,27 @@ abbr {
   margin-bottom: 10px;
 }
 
+.customer-reservations-details {
+  #reservation-list {
+    table {
+      display: block;
+      position: relative;
+      // width: calc(100vw - 3rem);
+      height: calc(75vh);
+      border-collapse: collapse;
+      overflow: scroll;
+      z-index: 10;
+      margin-top: 5px;
+      margin-bottom: 5px;
+      border: 1px solid #e4e4e4;
+    }
+    table thead.thead-light tr th {
+      position: sticky;
+      top: 0px;
+      z-index: 2;
+    }
+  }
+}
 .form-wrapper {
   .form-center .collection_radio_buttons {
     margin: 0;
