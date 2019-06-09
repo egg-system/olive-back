@@ -44,6 +44,15 @@
   </div>
 
   <%= f.input(
+    :start_time,
+    collection: Settings.reservation_at_options,
+    label: '開始時刻',
+    hint: @reservation.assigned? ? '担当スタッフを空にすると、日時の変更が可能になります。' : '',
+    disabled: @reservation.assigned?,
+    required: true
+  ) %>
+
+  <%= f.input(
     :end_time,
     as: :string,
     label: '終了時刻',
