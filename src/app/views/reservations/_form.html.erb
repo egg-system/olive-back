@@ -68,7 +68,8 @@
         collection: Menu.all,
         label: @reservation.reservation_details.count > 1 ? "#{index}時間目のメニュー" : 'メニュー',
         required: index === 1,
-        hint: '担当スタッフを空にすると、メニューの変更が可能になります。'
+        disabled: @reservation.assigned?,
+        hint: @reservation.assigned? ? '担当スタッフを空にすると、メニューの変更が可能になります。' : ''
       ) %>
 
       <hr>
