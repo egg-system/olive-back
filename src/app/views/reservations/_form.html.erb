@@ -2,9 +2,9 @@
 <%= simple_form_for(@reservation) do |f| %>
 
   <% if @reservation.persisted? %>
-    <%= f.input :id, label: "id", readonly: true %>
+    <%= f.input :id, label: 'id', readonly: true %>
   <% end %>
-  <%= f.input :customer_id, label: "顧客ID", readonly: true %>
+  <%= f.input :customer_id, label: '顧客ID', readonly: true %>
 
   <div class="custom_row row">
     <div class="custom_left col-sm-3">
@@ -23,34 +23,30 @@
     </div>
   </div>
 
-  <%= f.input(
-    :staff_id,
-    label: "スタッフID",
-    hint: '予約登録時は空いているスタッフが自動補完されます',
-    disabled: @reservation.new_record?
-  ) %>
+  <%= f.input :staff_id, collection: @staffs, label: '担当スタッフ', include_blank: true %>
   <%= f.input :store_id, collection: @stores, label: '予約店舗', required: true %>
   <%= f.input(
     :reservation_date,
-    label: "予約日",
+    label: '予約日',
     required: true,
+    disabled: @reservation.assigned?,
+    hint: @reservation.assigned? ? '担当スタッフを空にすると、日時の変更が可能になります。' : '',
     default: Date.today,
-    disabled: @reservation.persisted?,
     input_html: { class: 'rsv_day' }
   ) %>
   <%= f.input(
     :start_time,
     collection: Settings.reservation_at_options,
     label: '開始時刻',
-    hint: @reservation.persisted? ? '時刻を変更する場合、削除して登録しなおしてください' : '',
-    disabled: @reservation.persisted?,
+    hint: @reservation.assigned? ? '担当スタッフを空にすると、日時の変更が可能になります。' : '',
+    disabled: @reservation.assigned?,
     required: true
   ) %>
   <%= f.input(
     :end_time,
     as: :string,
-    label: "終了時刻",
-    hint: @reservation.persisted? ? '時刻を変更する場合、削除して登録しなおしてください' : '',
+    label: '終了時刻',
+    hint: '登録されたメニューと開始時刻を元に自動で保管されます。',
     include_blank: true,
     readonly: true
   ) %>
@@ -62,7 +58,8 @@
         :menu_id,
         collection: Menu.all,
         label: @reservation.reservation_details.count > 1 ? "#{index}時間目のメニュー" : 'メニュー',
-        required: index === 1
+        required: index === 1,
+        hint: '担当スタッフを空にすると、メニューの変更が可能になります。'
       ) %>
 
       <hr>

@@ -24,7 +24,8 @@ class Reservation < ApplicationRecord
 
   has_many :reservation_shifts, dependent: :delete_all
   has_many :shifts, through: :reservation_shifts
-  validates_presence_of :shifts, on: :create
+  
+  validate :validate_staff_shift, if: :should_validate?
 
   scope :where_customer_name, -> (customer_name) {
     where("concat(last_name, first_name) like ?", "%#{customer_name}%")
@@ -66,15 +67,15 @@ class Reservation < ApplicationRecord
       .where(store_id: self.store_id)
       .where_not_reserved
 
+    treatable_shifts = treatable_shifts.where(staff_id: self.staff_id) if self.staff_id.present?
     shifts = treatable_shifts.group_by { |shift| shift.staff.id }
       .select { |staff_id, shifts| shifts.length === necessary_shift_count }
       .values
       .min_by { |shifts| shifts.first.staff.skill_staffs.length }
 
     return if shifts.nil?
-
     self.shifts = shifts
-    self.staff = shifts.first.staff
+    self.staff = shifts.first.staff if self.staff_id.nil?
   end
 
   def reserved_at
@@ -112,7 +113,24 @@ class Reservation < ApplicationRecord
     return self.canceled_at.present?
   end
 
+  def assigned?
+    return self.shifts.present?
+  end
+
   private
+  def should_validate?
+    return self.staff_id.present? && !self.canceled?
+  end
+
+  def validate_staff_shift
+    if self.shifts.empty?
+      errors.add(:staff_id, 'の予約は埋まっております。別の日時を指定してください。')
+    end
+
+    if self.shifts.any? { |shift| shift.staff_id != self.staff_id }
+      errors.add(:staff_id, '異常データが検知されました。')
+    end
+  end
 
   def extract_can_treat_staff_ids
     menu_ids = self.reservation_details.map { |detail| detail.menu.id }
