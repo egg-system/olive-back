@@ -1,5 +1,5 @@
 class ReservationsController < ApplicationController
-  before_action :set_reservation, only: [:show, :update, :destroy]
+  before_action :set_reservation, only: [:show, :update, :destroy, :cancel_confirm]
   before_action :set_relation_models, only: [:new, :create, :show, :search, :update, :destroy]
 
   # GET /reservations
@@ -101,6 +101,9 @@ class ReservationsController < ApplicationController
         format.json { render json: @reservation.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def cancel_confirm
   end
 
   # DELETE /reservations/1

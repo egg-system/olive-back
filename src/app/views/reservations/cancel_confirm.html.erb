@@ -1,0 +1,8 @@
+<p>キャンセルを実行します。よろしいですか？</p>
+<%= link_to(reservation_path(@reservation.id), { method: 'delete' }) do %>
+  <button type="button" class="btn btn-outline-primary">
+    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>削除
+  </button>
+<% end %>
+
+<%= link_to '戻る', reservation_path(@reservation.id), class: 'btn bg-light' %>
