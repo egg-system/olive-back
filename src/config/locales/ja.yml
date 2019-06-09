@@ -26,6 +26,12 @@ ja:
       not_full_width_kana: "は全角カナで入力してください。"
       not_half_width_digit: "は半角数字で入力してください。"
 
+  successes:
+    messages:
+      create: "新規登録しました。"
+      update: "更新しました。"
+      destroy: "削除しました。"
+
   simple_form:
     error_notification:
       default_message: "データの登録に失敗しました。"
