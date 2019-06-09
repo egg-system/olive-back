@@ -1,6 +1,6 @@
   <div id="reservation_index">
+    <p class="common">予約一覧</p>
     <div class="upper-frame">
-      <h4>検索条件入力</h4>
       <div class="condition-section">
         <%= form_with url: search_reservations_path, id:"search", method: :post, local: true do |form| %>
           <table>
@@ -31,14 +31,18 @@
                     :from_date,
                     class: "form-control",
                     selected: @from_date,
-                    include_blank: true
+                    use_month_numbers: true,
+                    include_blank: true,
+                    date_separator: '/',
                   ) %>
                   〜
                   <%= form.date_select(
                     :to_date,
                     class: "form-control",
                     selected: @to_date,
-                    include_blank: true
+                    include_blank: true,
+                    use_month_numbers: true,
+                    date_separator: '/'
                   ) %>
                 </td>
               </tr>
@@ -59,14 +63,12 @@
           </table>
         <%end%>
       </div>
-      <div class="button-section">
-        <%# TODO: 予約の新規登録画面を実装する %>
-        <%# <%= link_to "新規登録へ", new_reservation_path, { class: "btn btn-primary btn-new" } %>
+      <div class="button-selection">
         <%= submit_tag "検索実行", { class: "btn btn-info btn-search", form: "search" } %>
       </div>
-      <div class="clear"></div>
     </div>
-    <div class="upper-frame">
+
+    <div class="customer-details">
       <div>予約の新規登録は顧客の詳細画面から実行可能です</div>
       <ul>
         <li><%= link_to '新規顧客を登録して、予約登録する', new_customer_path %></li>

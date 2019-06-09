@@ -5,16 +5,15 @@
 	<thead class="thead-light">
 		<tr>
 			<th scope="col">ID</th>
-			<th scope="col">ステータス</th>
-			<th scope="col">予約日時</th>
-			<th scope="col">来店店舗</th>
-      <% if is_shown_customer_name %>
-        <th scope="col">顧客名</th>
-      <% end %>
+			<th scope="col">予約状況</th>
+			<th scope="col" class="reservation-date">予約日時</th>
+			<th scope="col" class="visited_store">来店店舗</th>
+			<% if is_shown_customer_name %>
+				<th scope="col">顧客名</th>
+			<% end %>
 			<th scope="col">担当者</th>
-			<th scope="col">売上金額</th>
-			<th scope="col">コメント</th>
-			<th scope="col">時間数</th>
+			<th scope="col" class="gross-profit">売上金</th>
+			<th scope="col" class="comment">コメント</th>
 			<th scope="col">メニュー</th>
 			<th scope="col">オプション</th>
 			<th scope="col"></th>
@@ -26,25 +25,24 @@
 			<tr>
         <td rowspan="<%= row_span %>"><%= reservation.id %></td>
 				<td rowspan="<%= row_span %>"><%= reservation.state %></td>
-				<td rowspan="<%= row_span %>">
-					<%= reservation.reservation_date %>&nbsp;
+				<td rowspan="<%= row_span %>" class="reservation-date">
+					<%= reservation.reservation_date %><br>
 					<%= reservation.start_time.strftime("%H:%M") %>〜<%= reservation.end_time.strftime("%H:%M") %>
 				</td>
-				<td rowspan="<%= row_span %>"><%= reservation.store.name %></td>
-        <% if is_shown_customer_name %>
-          <td rowspan="<%= row_span %>"><%= reservation.customer.full_name %></td>
-        <% end %>
+				<td rowspan="<%= row_span %>" class="visited_store"><%= reservation.store.name %></td>
+				<% if is_shown_customer_name %>
+				<td rowspan="<%= row_span %>"><%= reservation.customer.full_name %></td>
+				<% end %>
 				<td rowspan="<%= row_span %>">
 					<%= reservation.staff.present? ? reservation.staff.full_name : '' %>
 				</td>
-				<td rowspan="<%= row_span %>"><%= number_with_delimiter(reservation.total_fee) %>円</td>
-				<td rowspan="<%= row_span %>"><%= simple_format(reservation.reservation_comment, {}, wrapper_tag: "div") %></td>
+				<td rowspan="<%= row_span %>" class="gross-profit"><%= number_with_delimiter(reservation.total_fee) %>円</td>
+				<td rowspan="<%= row_span %>" class="comment"><%= simple_format(reservation.reservation_comment, {}, wrapper_tag: "div") %></td>
 
 			<% reservation.reservation_details.each_with_index do |detail, index| %>
 				<% if index > 0 %>
 					<tr>
 				<% end %>
-					<td><%= "#{index + 1}時間目" %></td>
 					<td><%= detail.menu.name %></td>
 					<td>
 						<%= detail.has_options ? safe_join(detail.option_names, tag(:br)) : '無' %></td>
