@@ -1,47 +1,65 @@
 <%= simple_form_for(@store) do |f| %>
-<% if request.path_info != new_store_path%>
-<%=f.input :id, label: "id", readonly: true%>
-<%end%>
-<%= f.input :store_type,
-            as: :select,
-            label: "店舗区分",
-            collection: Settings.store_type,
-            required: true,
-            default: "owned"%>
-<%= f.input :name,
-           label: "店舗名",
-           required: true %>
-<%= f.input :zip_code,
-            label: "郵便番号",
-            required: true %>
-<%= f.input :address,
-            label: "店舗住所",
-            required: true %>
-<%= f.input :tel,
-            label: "電話番号",
-            required: true %>
-<%= f.input :mail,
-            label: "メールアドレス",
-            required: true %>
-<%= f.input :url, label: "url"%>
-<%= f.input :open_at,
-            label: "開店時間",
-            required: true %>
-<%= f.input :close_at,
-            label: "閉店時間",
-            required: true %>
-<%= f.input :break_from, label: "休憩開始時間"%>
-<%= f.input :break_to, label: "休憩終了時間"%>
-<%= f.input :menu_ids,
-            as: :check_boxes,
-            wrapper: :horizontal_collection_inline,
-            collection: @menus.map{|menu| [menu.name, menu.id]},
-            label: 'メニュー',
-            checked: @store_menus.present? ? @store_menus.map{|item| item.menu_id} : [],
-            include_hidden: false %>
-<%= f.button :submit, class: 'btn btn-primary'%>
-<% if request.path_info != new_store_path%>
-<%= link_to '削除', store_path(@store),method: :delete, class: 'btn btn-danger' %>
-<%end%>
-<%= link_to '戻る', stores_path, class: 'btn' %>
+  <% if request.path_info != new_store_path %>
+    <%=f.input :id, label: "id", readonly: true %>
+  <% end %>
+  <%= f.input(
+      :store_type,
+      as: :select,
+      label: "店舗区分",
+      collection: Settings.store_type,
+      required: true,
+      default: "owned" 
+  ) %>
+  <%= f.input(
+    :name,
+    label: "店舗名",
+    required: true
+  ) %>
+  <%= f.input(
+    :zip_code,
+    label: "郵便番号",
+    required: true 
+  ) %>
+  <%= f.input( 
+    :address,
+    label: "店舗住所",
+    required: true 
+  ) %>
+  <%= f.input( 
+    :tel,
+    label: "電話番号",
+    required: true
+  ) %>
+  <%= f.input( 
+    :mail,
+    label: "メールアドレス",
+    required: true
+  ) %>
+  <%= f.input :url, label: "url"%>
+  <%= f.input(
+    :open_at,
+    label: "開店時間",
+    required: true
+  ) %>
+  <%= f.input( 
+    :close_at,
+    label: "閉店時間",
+    required: true
+  ) %>
+  <%= f.input :break_from, label: "休憩開始時間"%>
+  <%= f.input :break_to, label: "休憩終了時間"%>
+  <%= f.input(
+    :menu_ids,
+    as: :check_boxes,
+    wrapper: :horizontal_collection_inline,
+    collection: @menus.map{ |menu| [menu.name, menu.id] },
+    label: 'メニュー',
+    checked: @store_menus.present? ? @store_menus.map{ |item| item.menu_id } : [],
+    include_hidden: false 
+  ) %>
+  <%= f.button :submit, class: 'btn btn-primary'%>
+  <% if request.path_info != new_store_path%>
+    <%= link_to '削除', store_path(@store), method: :delete, class: 'btn btn-danger' %>
+  <%end%>
+  <%= link_to '戻る', stores_path, class: 'btn' %>
 <% end %>
