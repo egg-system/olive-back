@@ -27,7 +27,7 @@ class Reservation < ApplicationRecord
   validates_presence_of :shifts, on: :create
 
   scope :where_customer_name, -> (customer_name) {
-    where("concat(last_name, first_name) like ?", "%#{params[:customer_name]}%")
+    where("concat(last_name, first_name) like ?", "%#{customer_name}%")
   }
 
   scope :order_reserved_at, -> {
