@@ -53,7 +53,7 @@
           <td><%= customer.tel %></td>
           <td><%= customer.zoomancy.name if customer.zoomancy.present? %></td>
           <td><%= customer.size_name %></td>
-          <td><%= customer.has_registration_card == true ? '有' : '無' %></td>
+          <td><%= customer.has_regist ration_card == true ? '有' : '無' %></td>
           <td><%= customer.first_visited_at %></td>
           <td><ul>
             <li><%= link_to '詳細へ', customer_path(customer.id) %></li>

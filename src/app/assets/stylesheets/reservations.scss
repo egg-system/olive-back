@@ -56,26 +56,26 @@
       width: 185px;
     }
   }
-  .lower-frame {
-    font-size: 14px;
-    .reservation-date {
-      min-width: 100px;
-    }
-    .visited_store {
-      max-width: 180px;
-    }
-    .gross-profit {
-      min-width: 80px;
-    }
-    .comment {
-      max-width: 160px;
-      word-wrap: break-word;
-    }
-    table th,
-    table td {
-      padding-left: 3px;
-      padding-right: 3px;
-    }
+}
+#reservation-list {
+  font-size: 14px;
+  .reservation-date {
+    min-width: 100px;
+  }
+  .visited_store {
+    max-width: 180px;
+  }
+  .gross-profit {
+    min-width: 80px;
+  }
+  .comment {
+    max-width: 160px;
+    word-wrap: break-word;
+  }
+  table th,
+  table td {
+    padding-left: 3px;
+    padding-right: 3px;
   }
 }
 #new_reservation_form {
