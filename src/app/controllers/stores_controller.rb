@@ -36,7 +36,7 @@ class StoresController < ApplicationController
 
     respond_to do |format|
       if @store.save
-        format.html { redirect_to @store, notice: 'Store was successfully created.' }
+        format.html { redirect_to @store, notice: I18n.t("successes.messages.create") }
         format.json { render :show, status: :created, location: @store }
       else
         format.html { render :new }
@@ -50,7 +50,7 @@ class StoresController < ApplicationController
   def update
     respond_to do |format|
       if @store.update(store_params)
-        format.html { redirect_to @store, notice: 'Store was successfully updated.' }
+        format.html { redirect_to @store, notice: I18n.t("successes.messages.update") }
         format.json { render :show, status: :ok, location: @store }
       else
         format.html { render :edit }
@@ -65,14 +65,14 @@ class StoresController < ApplicationController
     begin
       @store.destroy!
       respond_to do |format|
-        format.html { redirect_to stores_url, notice: 'Role was successfully destroyed.' }
+        format.html { redirect_to stores_url, notice: I18n.t("successes.messages.destroy") }
         format.json { head :no_content }
       end
     rescue => exception
       respond_to do |format|
         format.html { redirect_to store_url(@store.id), notice: 'すでに利用されているため、削除できません' }
         format.json { render json: @store.errors, status: :unprocessable_entity }
-      end 
+      end
     end
   end
 
@@ -84,6 +84,6 @@ class StoresController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def store_params
-      params.require(:store).permit(:store_type, :name, :address, :tel, :mail, :url, :open_at, :close_at, :break_from, :break_to, {menu_ids: []})
+      params.require(:store).permit(:store_type, :name, :zip_code, :address, :tel, :mail, :url, :open_at, :close_at, :break_from, :break_to, {menu_ids: []})
     end
 end

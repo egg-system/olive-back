@@ -6,7 +6,11 @@ class ReservationsController < ApplicationController
   # GET /reservations.json
   def index
     @stores = Store.all
-    @reservations = Reservation.joins(:customer).order_reserved_at
+    @reservations = Reservation.joins(:customer)
+
+    @order = params[:order] if params[:order].present?
+    @reservations = @reservations.order('id DESC') if @order === 'id'
+    @reservations = @reservations.order_reserved_at
 
     @customer_name = params[:customer_name]
     @reservations = @reservations.where_customer_name(@customer_name) if @customer_name.present?
@@ -19,12 +23,13 @@ class ReservationsController < ApplicationController
 
     @staffs = Staff.all
     @staff_id = params[:staff_id]
+    @order = params[:order]
 
     return if @staff_id.nil?
 
-    # 検索値が空文字の時は、担当者なしで検索する　※ ''.present? はfalse
-    @reservations = @reservations.where(staff_id: @staff_id) if @staff_id.present?
-    @reservations = @reservations.where(staff_id: nil) if @staff_id.empty?
+    @reservations = @reservations.where(staff_id: @staff_id) if @staff_id.to_i > 0
+    @reservations = @reservations.where(staff_id: nil) if @staff_id === 'none'
+    @reservations = @reservations.where.not(staff_id: nil) if @staff_id === 'any'
   end
 
   # GET /reservations/new
@@ -32,12 +37,12 @@ class ReservationsController < ApplicationController
     return redirect_to customers_path, flash: { alert: '顧客が選択されていません。' } unless params.has_key?(:customer_id)
 
     @reservation = Customer.find(params[:customer_id]).reservations.new
-    @resrvation_details_count = params.has_key?(:count) ? params[:count].to_i : 1
-    @reservation.reservation_details.build(Array.new(@resrvation_details_count))
+    @reservation_details_count = params.has_key?(:count) ? params[:count].to_i : 1
+    @reservation.reservation_details.build(Array.new(@reservation_details_count))
   end
 
   def search
-    if params['from_date(1i)'].present? && params['from_date(1i)'].present? && params['from_date(1i)'].present?
+    if params['from_date(1i)'].present? && params['from_date(2i)'].present? && params['from_date(3i)'].present?
       from_date = Date.new(
         params['from_date(1i)'].to_i,
         params['from_date(2i)'].to_i,
@@ -58,6 +63,7 @@ class ReservationsController < ApplicationController
       staff_id: params[:staff_id],
       from_date: from_date,
       to_date: to_date,
+      order: params[:order]
     })
   end
 
