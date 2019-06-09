@@ -6,10 +6,11 @@ class CustomersController < ApplicationController
   # GET /customers.json
   def index
     @customers = Customer.all.join_tables
-    
+
     @search_params = search_params
-    @customers = @customers.like_name(@search_params[:name]) if @search_params[:name].present?    
+    @customers = @customers.like_name(@search_params[:name]) if @search_params[:name].present?
     @customers = @customers.where(tel: @search_params[:tel]) if @search_params[:tel].present?
+    @customers = @customers.paginate(params[:page])
   end
 
   def search
@@ -76,6 +77,10 @@ class CustomersController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_customer
       @customer = Customer.find(params[:id])
+    end
+
+    def index_params
+      params.permit(:page)
     end
 
     def set_relation_models
