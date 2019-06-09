@@ -30,6 +30,7 @@ class Customer < ApplicationRecord
   before_validation :sync_none_uid
 
   validates :tel, numericality: true
+  validates :password, presence: true, if: :member?
 
   #left join
   scope :join_size, ->{
@@ -56,6 +57,10 @@ class Customer < ApplicationRecord
   end
 
   protected
+
+  def member?
+    return self.provider != 'none'
+  end
 
   def is_none_provider?
     provider === 'none'
