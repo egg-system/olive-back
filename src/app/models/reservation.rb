@@ -124,7 +124,7 @@ class Reservation < ApplicationRecord
 
   def validate_staff_shift
     if self.shifts.empty?
-      errors.add(:staff_id, 'の予約は埋まっております。別の日時を指定してください。')
+      errors.add(:staff_id, 'は対応できません。日時、または担当者を変更してください。')
     end
 
     if self.shifts.any? { |shift| shift.staff_id != self.staff_id }
