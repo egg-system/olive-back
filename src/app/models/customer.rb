@@ -4,6 +4,7 @@ class Customer < ApplicationRecord
   devise :database_authenticatable, :registerable, :recoverable, :rememberable
 
   include DeviseTokenAuth::Concerns::User
+  include PaginationModule
 
   belongs_to(
     :first_visit_store,
