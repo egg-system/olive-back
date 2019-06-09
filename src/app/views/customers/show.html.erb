@@ -1,5 +1,10 @@
 <% breadcrumb :root  %>
-<h1>基本情報</h1>
+<p>基本情報</p>
 <%= link_to "予約登録へ", new_reservation_path(customer_id: @customer.id) %>
 <%= render "form" %>
-<%= render 'reservations/list' %>
+<br>
+<hr>
+<span class="lower-reservation-title">予約一覧</span>
+<div class="customer-reservations-details">
+    <%= render 'reservations/list' %>
+</div>
