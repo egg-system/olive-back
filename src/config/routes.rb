@@ -18,11 +18,8 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :reservations do
-    get 'cancel_confirm', on: :member
-  end
-
   resources(
+    :reservations,
     :departments,
     :roles,
     :skills,

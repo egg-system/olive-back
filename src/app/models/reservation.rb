@@ -8,8 +8,6 @@ class Reservation < ApplicationRecord
   extend DateModule
   include PaginationModule
 
-  validate :validate_reservation_date, on: :create
-
   belongs_to :customer
   belongs_to :staff, optional: true
   belongs_to :store
@@ -26,6 +24,7 @@ class Reservation < ApplicationRecord
   has_many :shifts, through: :reservation_shifts
   
   validate :validate_staff_shift, if: :should_validate?
+  validate :validate_reservation_date, on: :create
 
   scope :where_customer_name, -> (customer_name) {
     where("concat(last_name, first_name) like ?", "%#{customer_name}%")
@@ -114,7 +113,7 @@ class Reservation < ApplicationRecord
   end
 
   def assigned?
-    return self.shifts.present?
+    return self.persisted? && self.shifts.present?
   end
 
   private
@@ -146,8 +145,9 @@ class Reservation < ApplicationRecord
   end
 
   def validate_reservation_date
-    if self.reservation_date < Date.today
-      errors.add(:reservation_date, "：過去の日付は使えません")
+    if self.reserved_at < Time.current
+      errors.add(:reservation_date, "：過去の日時は使えません")
+      errors.add(:start_time, "：過去の日時は使えません")
     end
   end
 end

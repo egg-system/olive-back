@@ -3,7 +3,11 @@
 
 <% unless @reservation.canceled? %>
   <div class="mt-4">
-    <%= link_to(cancel_confirm_reservation_path(@reservation.id)) do %>
+    <%= link_to(
+      reservation_path(@reservation.id),
+      method: :delete,
+      data: { confirm: '本当にキャンセルしますか？' }
+    ) do %>
       <button type="button" class="btn btn-outline-primary">
         <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>キャンセル
       </button>
