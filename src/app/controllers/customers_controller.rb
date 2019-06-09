@@ -10,7 +10,7 @@ class CustomersController < ApplicationController
     @search_params = search_params
     @customers = @customers.like_name(@search_params[:name]) if @search_params[:name].present?
     @customers = @customers.where(tel: @search_params[:tel]) if @search_params[:tel].present?
-    @customers = @customers.paginate(params[:page])
+    @customers = @customers.paginate(params[:page], 20)
   end
 
   def search
