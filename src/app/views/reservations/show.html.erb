@@ -2,9 +2,11 @@
 <%= render "form" %>
 
 <% unless @reservation.canceled? %>
-  <%= link_to(cancel_confirm_reservation_path(@reservation.id)) do %>
-    <button type="button" class="btn btn-outline-primary">
-      <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>キャンセル
-    </button>
-  <% end %>
+  <div class="mt-4">
+    <%= link_to(cancel_confirm_reservation_path(@reservation.id)) do %>
+      <button type="button" class="btn btn-outline-primary">
+        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>キャンセル
+      </button>
+    <% end %>
+  </div>
 <% end %>
