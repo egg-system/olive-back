@@ -1,8 +1,10 @@
 <h1>予約詳細</h1>
 <%= render "form" %>
 
-<%= link_to(reservation_path(@reservation.id), { method: 'delete' }) do %>
-	<button type="button" class="btn btn-outline-primary">
-		<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>削除
-	</button>
+<% unless @reservation.canceled? %>
+  <%= link_to(cancel_confirm_reservation_path(@reservation.id)) do %>
+    <button type="button" class="btn btn-outline-primary">
+      <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>キャンセル
+    </button>
+  <% end %>
 <% end %>

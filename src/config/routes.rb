@@ -6,7 +6,7 @@ Rails.application.routes.draw do
     sessions: 'staffs/sessions',
   }
 
-  resources :shifts, only: [:index, :new, :create] do 
+  resources :shifts, only: [:index, :new, :create] do
     collection do
       patch :updates
     end
@@ -16,6 +16,10 @@ Rails.application.routes.draw do
     collection do
       post :search
     end
+  end
+
+  resources :reservations do
+    get 'cancel_confirm', on: :member
   end
 
   resources(
