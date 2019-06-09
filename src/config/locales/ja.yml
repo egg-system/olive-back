@@ -13,6 +13,8 @@ ja:
         login: "ログインID"
       reservation:
         reservation_date: '予約日'
+      reservation_detail:
+        mimitsubo_count: '粒数'
     errors:
       models:
         reservation:

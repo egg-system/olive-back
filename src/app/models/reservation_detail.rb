@@ -56,7 +56,7 @@ class ReservationDetail < ApplicationRecord
     selected_mimitsubo_count = self.mimitsubo_count.present? && self.mimitsubo_count > 0
 
     unless selected_mimitsubo_option === selected_mimitsubo_count
-      errors.add(:mimitsubo_count, "耳つぼジュエリーのオプションが選択されている場合、耳つぼジュエリの個数入力は必須になります。")
+      errors.add(:mimitsubo_count, "は、耳つぼジュエリーのオプションが選択されている場合、入力必須になります。")
     end
   end
 end
