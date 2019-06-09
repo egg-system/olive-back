@@ -6,10 +6,11 @@ class CustomersController < ApplicationController
   # GET /customers.json
   def index
     @customers = Customer.all.join_tables
-    
+
     @search_params = search_params
-    @customers = @customers.like_name(@search_params[:name]) if @search_params[:name].present?    
+    @customers = @customers.like_name(@search_params[:name]) if @search_params[:name].present?
     @customers = @customers.where(tel: @search_params[:tel]) if @search_params[:tel].present?
+    @customers = @customers.paginate(@search_params[:page], 20)
   end
 
   def search
@@ -99,6 +100,6 @@ class CustomersController < ApplicationController
     end
 
     def search_params
-      params.permit(:name, :tel)
+      params.permit(:name, :tel, :page)
     end
 end
