@@ -103,15 +103,12 @@ class ReservationsController < ApplicationController
     end
   end
 
-  def cancel_confirm
-  end
-
   # DELETE /reservations/1
   # DELETE /reservations/1.json
   def destroy
     Reservation.find(params[:id]).cancel
     respond_to do |format|
-      format.html { redirect_to reservations_url, notice: '予約を削除いたしました。' }
+      format.html { redirect_to reservations_url, notice: '予約をキャンセルいたしました。' }
       format.json { head :no_content }
     end
   end
