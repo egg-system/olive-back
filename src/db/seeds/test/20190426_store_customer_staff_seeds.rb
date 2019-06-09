@@ -36,7 +36,7 @@ customer = Customer.where(id: 1).first_or_create!(
   city: '新宿区新宿１−１−１　なんとかビル１階', 
   address: '東京都	新宿区新宿１−１−１　なんとかビル１階',
   comment: 'コメントです', 
-  first_visit_store_id: 1, 
+  first_visit_store_id: 1,
   last_visit_store_id: 2, 
   first_visited_at: '2019-01-01', 
   last_visited_at: '2019-02-01',
