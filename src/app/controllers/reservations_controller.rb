@@ -8,8 +8,9 @@ class ReservationsController < ApplicationController
     @stores = Store.all
     @reservations = Reservation.joins(:customer)
 
-    @reservations = params[:order].present? && params[:order] === 'id' ?
-      @reservations.order('id DESC') : @reservations.order_reserved_at
+    @order = params[:order] if params[:order].present?
+    @reservations = @reservations.order('id DESC') if @order === 'id'
+    @reservations = @reservations.order_reserved_at
 
     @customer_name = params[:customer_name]
     @reservations = @reservations.where_customer_name(@customer_name) if @customer_name.present?
@@ -26,18 +27,9 @@ class ReservationsController < ApplicationController
 
     return if @staff_id.nil?
 
-    # 検索値が空文字の時は、担当者なしで検索する　※ ''.present? はfalse
-    if @staff_id.present?
-      if @staff_id === 'none'
-        @reservations = @reservations.where(staff_id: nil)
-      elsif @staff_id === 'any'
-        @reservations = @reservations.where.not(staff_id: nil)
-      else
-        @reservations = @reservations.where(staff_id: @staff_id)
-      end
-    end
-
-    #
+    @reservations = @reservations.where(staff_id: @staff_id) if @staff_id.to_i > 0
+    @reservations = @reservations.where(staff_id: nil) if @staff_id === 'none'
+    @reservations = @reservations.where.not(staff_id: nil) if @staff_id === 'any'
   end
 
   # GET /reservations/new

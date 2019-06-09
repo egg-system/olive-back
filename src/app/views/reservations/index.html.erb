@@ -11,19 +11,18 @@
                   <%= form.select(
                     :staff_id,
                     options_for_select(
-                      [['指定なし', ''], ['担当者なし', 'none'], ['担当者あり', 'any']]
-                        .concat(@staffs.map {|staff| [staff.full_name, staff.id]}),
-                        selected: @staff_id
+                      Settings.reservations.staff_options.to_h.merge(
+                        @staffs.map {|staff| [staff.full_name, staff.id]}.to_h
                       ),
+                      selected: @staff_id
+                    ),
                     class: "form-control"
                   ) %>
                 </td>
               </tr>
               <tr>
                 <th>顧客名</th>
-                <td>
-                  <%= form.text_field :customer_name, class: "form-control" %>
-                </td>
+                <td><%= form.text_field :customer_name, class: "form-control" %></td>
               </tr>
               <tr>
                 <th>予約日</th>
@@ -49,9 +48,9 @@
                   <%= form.select(
                     :order,
                     options_for_select(
-                      [['予約日時', 'reserved_at'], ['ID', 'id']],
+                      Settings.reservations.order_options,
                       selected: @order
-                      ),
+                    ),
                     class: "form-control"
                   ) %>
                 </td>

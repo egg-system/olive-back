@@ -15,6 +15,15 @@ stores:
   head_store_id: 1
   head_este_store_id: 2
 
+reservations:
+  staff_options:
+    '指定なし': ''
+    '担当者なし': 'none'
+    '担当者あり': 'any'
+  order_options:
+    '予約日時': 'reserved_at'
+    'ID': 'id'
+
 reservation_at_options:
   - '10:00:00'
   - '11:00:00'
