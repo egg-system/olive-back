@@ -32,15 +32,6 @@ class ReservationsController < ApplicationController
     @reservations = @reservations.where.not(staff_id: nil) if @staff_id === 'any'
   end
 
-  # GET /reservations/new
-  def new
-    return redirect_to customers_path, flash: { alert: '顧客が選択されていません。' } unless params.has_key?(:customer_id)
-
-    @reservation = Customer.find(params[:customer_id]).reservations.new
-    @reservation_details_count = params.has_key?(:count) ? params[:count].to_i : 1
-    @reservation.reservation_details.build(Array.new(@reservation_details_count))
-  end
-
   def search
     if params['from_date(1i)'].present? && params['from_date(2i)'].present? && params['from_date(3i)'].present?
       from_date = Date.new(
@@ -67,6 +58,15 @@ class ReservationsController < ApplicationController
     })
   end
 
+  # GET /reservations/new
+  def new
+    return redirect_to customers_path, flash: { alert: '顧客が選択されていません。' } unless params.has_key?(:customer_id)
+
+    @reservation = Customer.find(params[:customer_id]).reservations.new
+    @reservation_details_count = params.has_key?(:count) ? params[:count].to_i : 1
+    @reservation.reservation_details.build(Array.new(@reservation_details_count))
+  end
+
   # POST /reservations
   # POST /reservations.json
   def create
@@ -78,8 +78,6 @@ class ReservationsController < ApplicationController
         format.html { redirect_to @reservation, notice: '予約登録に成功しました。' }
         format.json { render :show, status: :created, location: @reservation }
       else
-        flash[:alert] = @reservation.shifts.nil? ? "入力日時の予約枠は埋まっております。日時を変更してください。" : '予約の登録に失敗しました。'
-
         format.html { render :new }
         format.json { render json: @reservation.errors, status: :unprocessable_entity }
       end
@@ -89,8 +87,12 @@ class ReservationsController < ApplicationController
   # PATCH/PUT /reservations/1
   # PATCH/PUT /reservations/1.json
   def update
+    @reservation.assign_attributes(reservation_params)
+    @reservation.build_shifts if @reservation.shifts.empty? && @reservation.staff_id.present?
+    @reservation.shifts.delete_all if @reservation.staff_id.nil?
+
     respond_to do |format|
-      if @reservation.update(reservation_params)
+      if @reservation.save
         format.html { redirect_to @reservation, notice: '予約の更新に成功しました。' }
         format.json { render :show, status: :ok, location: @reservation }
       else
@@ -121,6 +123,7 @@ class ReservationsController < ApplicationController
       @coupons = Coupon.all
       @options = Option.all
       @stores = Store.all
+      @staffs = Staff.all
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
@@ -129,6 +132,7 @@ class ReservationsController < ApplicationController
         :id,
         :customer_id,
         :store_id,
+        :staff_id,
         :reservation_date,
         :start_time,
         :end_time,

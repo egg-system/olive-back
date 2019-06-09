@@ -14,7 +14,7 @@ class ReservationDetail < ApplicationRecord
       total_fee = option.fee
 
       # 耳つぼジュエリの場合、個数とかけた金額にする
-      if option.is_mimitsubo_jewelry
+      if self.mimitsubo_count.present? && option.is_mimitsubo_jewelry
         total_fee = option.fee * self.mimitsubo_count
       end
 
@@ -51,13 +51,12 @@ class ReservationDetail < ApplicationRecord
 
   MIMITSUBO_JEWELRY_OPTIONS = [2, 4, 6, 8, 10]
 
-  private
   def validate_mimitsubo_option
     selected_mimitsubo_option = self.option_ids.include?(Option::MIMITSUBO_JWELRY_OPTION_ID)
     selected_mimitsubo_count = self.mimitsubo_count.present? && self.mimitsubo_count > 0
 
     unless selected_mimitsubo_option === selected_mimitsubo_count
-      errors.add(:mimitsubo_count, "耳つぼジュエリーのオプションが選択されている場合、耳つぼジュエリの個数入力は必須になります。")
+      errors.add(:mimitsubo_count, "は、耳つぼジュエリーのオプションが選択されている場合、入力必須になります。")
     end
   end
 end
