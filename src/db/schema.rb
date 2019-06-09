@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_05_101723) do
+ActiveRecord::Schema.define(version: 2019_06_09_103154) do
 
   create_table "baby_ages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
@@ -358,8 +358,8 @@ ActiveRecord::Schema.define(version: 2019_06_05_101723) do
   add_foreign_key "staffs", "roles"
   add_foreign_key "store_menus", "menus"
   add_foreign_key "store_menus", "stores"
-  add_foreign_key "store_options", "options"
-  add_foreign_key "store_options", "stores"
+  add_foreign_key "store_options", "options", on_delete: :cascade
+  add_foreign_key "store_options", "stores", on_delete: :cascade
   add_foreign_key "store_staffs", "staffs", on_delete: :cascade
   add_foreign_key "store_staffs", "stores", on_delete: :cascade
 end
