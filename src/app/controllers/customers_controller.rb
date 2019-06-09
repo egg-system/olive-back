@@ -10,7 +10,7 @@ class CustomersController < ApplicationController
     @search_params = search_params
     @customers = @customers.like_name(@search_params[:name]) if @search_params[:name].present?
     @customers = @customers.where(tel: @search_params[:tel]) if @search_params[:tel].present?
-    @customers = @customers.paginate(params[:page], 20)
+    @customers = @customers.paginate(@search_params[:page], 20)
   end
 
   def search
@@ -79,10 +79,6 @@ class CustomersController < ApplicationController
       @customer = Customer.find(params[:id])
     end
 
-    def index_params
-      params.permit(:page)
-    end
-
     def set_relation_models
       @occupations = Occupation.all
       @zoomancies = Zoomancy.all
@@ -104,6 +100,6 @@ class CustomersController < ApplicationController
     end
 
     def search_params
-      params.permit(:name, :tel)
+      params.permit(:name, :tel, :page)
     end
 end

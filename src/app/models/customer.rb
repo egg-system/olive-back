@@ -3,7 +3,6 @@ class Customer < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable, :recoverable, :rememberable
 
-  PAGE_COUNT = 20
   include DeviseTokenAuth::Concerns::User
   include PaginationModule
 
