@@ -6,7 +6,7 @@ class ReservationsController < ApplicationController
   # GET /reservations.json
   def index
     @stores = Store.all
-    @reservations = Reservation.joins(:customer)
+    @reservations = Reservation.joins(:customer).paginate(params[:page], 2)
 
     @order = params[:order] if params[:order].present?
     @reservations = @reservations.order('id DESC') if @order === 'id'
