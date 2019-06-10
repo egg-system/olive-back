@@ -48,10 +48,11 @@
         <% end %>
       </tbody>
     </table>
-
-    <%= hidden_field_tag('staff_id', @search_params[:staff_id]) %>
-    <%= hidden_field_tag('store_id', @search_params[:store_id]) %>
-    <input type="submit" name="commit" value="登録" data-disable-with="登録">
+    <% if current_staff.role.manager? %>
+      <%= hidden_field_tag('staff_id', @search_params[:staff_id]) %>
+      <%= hidden_field_tag('store_id', @search_params[:store_id]) %>
+      <input type="submit" name="commit" value="登録" data-disable-with="登録">
+    <% end %>
   <% end %>
   <br>
 </div>
