@@ -1,0 +1,86 @@
+<%= form.input(
+  :staff_id,
+  collection: is_assigned ? [@reservation.staff] : @staffs,
+  label: '担当スタッフ',
+  include_blank: true,
+  readonly: @reservation.new_record?,
+  hint: @reservation.new_record? ? '日時、メニューを元に自動で割当てられます。' : ''
+) %>
+
+<%= form.input(
+  :store_id,
+  collection: @stores,
+  label: '予約店舗',
+  required: true,
+  disabled: is_assigned
+) %>
+
+<div class="custom_row row">
+  <div class="custom_left col-sm-3">
+    <label>予約日</label>
+    <abbr>&nbsp;(必須)</abbr>
+  </div>
+  <div class="custom_right col-sm-9">
+    <%= form.input(
+        :reservation_date,
+        label: false,
+        required: true,
+        disabled: is_assigned,
+        hint: is_assigned ? '担当スタッフを空にすると、日時の変更が可能になります。' : '',
+        default: Date.today,
+        input_html: { class: 'rsv_day' }
+      ) %>
+  </div>
+</div>
+
+<%= form.input(
+  :start_time,
+  collection: Settings.reservation_at_options,
+  label: '開始時刻',
+  hint: is_assigned ? '担当スタッフを空にすると、日時の変更が可能になります。' : '',
+  disabled: is_assigned,
+  required: true
+) %>
+
+<%= form.input(
+  :end_time,
+  as: :string,
+  label: '終了時刻',
+  hint: '登録されたメニューと開始時刻を元に自動で保管されます。',
+  include_blank: true,
+  readonly: true
+) %>
+
+<% @reservation.reservation_details.each.with_index(1) do |detail, index| %>
+  <%= form.fields_for :reservation_details, detail, child_index: index do |detail_form| %>
+    <%= detail_form.hidden_field :id, value: detail.id %>
+    <%= detail_form.input(
+      :menu_id,
+      collection: Menu.all,
+      label: @reservation.reservation_details.count > 1 ? "#{index}時間目のメニュー" : 'メニュー',
+      required: index === 1,
+      disabled: is_assigned,
+      hint: is_assigned ? '担当スタッフを空にすると、メニューとオプションの変更が可能になります。' : ''
+    ) %>
+
+    <hr>
+
+    <div class="custom_row row">
+      <div class="custom_left col-sm-3">
+        <label></label>
+      </div>
+      <div class="custom_right col-sm-9">
+        <%= detail_form.collection_check_boxes :option_ids, @options, :id, :name do |option| %>
+          <%= option.check_box disabled: is_assigned %>
+          <%= option.label %>
+        <% end %>
+      </div>
+    </div>
+    <%= detail_form.input(
+      :mimitsubo_count,
+      label: '耳つぼジュエリーの個数',
+      collection: mimitsubo_jwery_options,
+      disabled: is_assigned
+    ) %>
+  <% end %>
+<% end %>
