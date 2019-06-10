@@ -139,6 +139,7 @@ class ReservationsController < ApplicationController
         :reservation_comment,
         :children_count,
         :is_first,
+        :is_confirmed,
         coupon_ids: [],
         reservation_details_attributes: [
           :id,

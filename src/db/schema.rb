@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_09_103154) do
+ActiveRecord::Schema.define(version: 2019_06_10_061757) do
 
   create_table "baby_ages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
@@ -201,6 +201,7 @@ ActiveRecord::Schema.define(version: 2019_06_09_103154) do
     t.datetime "canceled_at", comment: "キャンセルされた日時"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_confirmed", comment: "担当者が確認したかどうかの目印を保持する"
     t.index ["customer_id"], name: "index_reservations_on_customer_id"
     t.index ["staff_id"], name: "index_reservations_on_staff_id"
     t.index ["store_id"], name: "index_reservations_on_store_id"
