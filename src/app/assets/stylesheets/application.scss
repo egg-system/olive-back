@@ -20,3 +20,31 @@ p.common {
   　font-size: 30px;
   　text-align: center;
 }
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .current {
+    margin: 0 5px;
+    padding: 7px 14px 5px;
+    border-radius: 5px;
+    border: solid 1px lightgray;
+    background-color: lightgray;
+    color: gray;
+    height: 40px;
+  }
+
+  a {
+    margin: 0 5px;
+    padding: 10px 14px;
+    border-radius: 5px;
+    border: solid 1px #007bff;
+    &:hover {
+      background-color: #007bff;
+      color: white;
+      text-decoration: none;
+    }
+  }
+}
