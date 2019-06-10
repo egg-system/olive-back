@@ -1,6 +1,6 @@
 <%# デフォルトでは、顧客名を見せる %>
 <div id="reservation-list">
-  <%= is_shown_customer_name = true unless defined? is_shown_customer_name %>
+  <% is_shown_customer_name = true if is_shown_customer_name.nil? %>
   <table class="table">
     <thead class="thead-light">
       <tr>
