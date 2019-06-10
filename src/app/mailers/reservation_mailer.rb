@@ -3,7 +3,7 @@ class ReservationMailer < ApplicationMailer
     @reservation = reservation
     @customer = reservation.customer
     @store = @reservation.store
-    mail(subject: 'ご予約の確認メール', to: @customer.email) do |format|
+    mail(subject: 'ご予約の確定メール', to: @customer.email) do |format|
       format.text
     end
   end
