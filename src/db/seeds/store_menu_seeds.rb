@@ -51,8 +51,8 @@ Store.where(id: 1).first_or_create!(
   name: '女性専門の治療院オリーヴボディケア たまプラーザ店',
   address: '横浜市青葉区新石川3-15-16 メディカルモールたまプラーザ301',
   tel: '045-530-1688',
-  mail: 'gaku.machida@gmail.com',
-  url: 'https://olivebodycare.jp',
+  mail: 'info@olivebodycare.jp',
+  url: 'https://olivebodycare.healthcare/salon/tamaplaza',
   open_at: '10:00',
   close_at: '20:00'
 )
