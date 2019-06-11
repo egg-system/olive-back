@@ -9,8 +9,8 @@ class ReservationsController < ApplicationController
     @reservations = Reservation.joins(:customer).paginate(params[:page], 20)
 
     @order = params[:order] if params[:order].present?
-    @reservations = @reservations.order('id DESC') if @order === 'id'
-    @reservations = @reservations.order_reserved_at
+    @reservations = @reservations.order_reserved_at if @order === 'reserved_at'
+    @reservations = @reservations.order('id DESC')
 
     @customer_name = params[:customer_name]
     @reservations = @reservations.where_customer_name(@customer_name) if @customer_name.present?

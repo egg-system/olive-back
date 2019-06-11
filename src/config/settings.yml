@@ -21,8 +21,8 @@ reservations:
     '担当者なし': 'none'
     '担当者あり': 'any'
   order_options:
-    '予約日時': 'reserved_at'
     'ID': 'id'
+    '予約日時': 'reserved_at'
 
 reservation_at_options:
   - '10:00:00'
