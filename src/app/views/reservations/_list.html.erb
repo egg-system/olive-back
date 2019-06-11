@@ -13,6 +13,8 @@
         <% end %>
         <th scope="col">担当者</th>
         <th scope="col" class="gross-profit">売上金</th>
+        <th scope="col" class="gross-profit">初診</th>
+        <th scope="col" class="gross-profit">確認有無</th>
         <th scope="col" class="comment">コメント</th>
         <%# TODO: 二時間予約を機能解放する際に、コメントアウトを解く %>
         <%# <th scope="col">時間数</th> %>
@@ -40,6 +42,12 @@
           </td>
           <td rowspan="<%= row_span %>" class="gross-profit">
             <%= number_with_delimiter(reservation.total_fee) %>円
+          </td>
+          <td rowspan="<%= row_span %>">
+            <%= reservation.is_first ? '初診' : '二回目以降' %>
+          </td>
+          <td rowspan="<%= row_span %>">
+            <%= reservation.is_confirmed ? '確認済み' : '未確認' %>
           </td>
           <td rowspan="<%= row_span %>" class="comment">
             <%= simple_format(reservation.reservation_comment, {}, wrapper_tag: "div") %>
