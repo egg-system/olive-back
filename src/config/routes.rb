@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  get 'dashboards/index'
+  resources :dashboards, :masters, only: [:index]
   root to: 'dashboards#index'
 
   devise_for :staffs, only: :sessions, controllers: {

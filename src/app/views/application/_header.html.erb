@@ -17,50 +17,17 @@
               class: "nav-link" 
           %>
         </li>
-        <% if current_staff.role.manager? %>
-          <li class="nav-item dropdown">
-            <a 
-              id="shift-menu"
-              class="nav-link dropdown-toggle"  
-              data-toggle="dropdown" 
-            >
-              シフト管理
-            </a>
-            <div class="dropdown-menu" aria-labelledby="shift-menu">
-              <%= link_to 'インポート', new_shift_path, class: "dropdown-item" %>
-              <%= link_to '一覧', shifts_path, class: "dropdown-item" %>
-            </div>
-          </li>
-        <% else %>
-          <li class="nav-item">
-            <%= link_to 'シフト管理', shifts_path,  class: "nav-link" %>
-          </li>
-        <% end %>
+        <li class="nav-item">
+          <%= link_to 'シフト管理', shifts_path,  class: "nav-link" %>
+        </li>
         <% if current_staff.role.manager? %>
           <li class="nav-item">
             <%= link_to 'スタッフ管理', staffs_path, class: "nav-link" %>
           </li>
         <% end %>
         <% if current_staff.role.admin? %>
-          <li class="nav-item dropdown">
-            <a 
-              id="shift-menu"
-              class="nav-link dropdown-toggle"  
-              data-toggle="dropdown" 
-            >
-              マスタ管理
-            </a>
-            <div class="dropdown-menu" aria-labelledby="shift-menu">
-              <%= link_to "店舗マスタ", stores_path, class: "dropdown-item" %>
-              <%= link_to "スキルマスタ", skills_path, class: "dropdown-item" %>
-              <%= link_to "権限マスタ", roles_path, class: "dropdown-item" %>
-              <%= link_to "メニューマスタ", menus_path, class: "dropdown-item" %>
-              <%= link_to "オプションマスタ", options_path, class: "dropdown-item" %>
-              <%= link_to "クーポンマスタ", coupons_path, class: "dropdown-item" %>
-              <%# link_to "メニューカテゴリマスタ", menu_categories_path, class: "dropdown-item" %>
-              <%# link_to "部門マスタ", departments_path, class: "dropdown-item" %>
-              <%# link_to "CouponHistory", coupon_histories_path, class: "dropdown-item" %>
-            </div>
+          <li class="nav-item">
+            <%= link_to 'マスタ管理', masters_path, class: 'nav-link' %> 
           </li>
         <% end %>
         <li class="nav-item">
