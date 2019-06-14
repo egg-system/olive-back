@@ -78,6 +78,7 @@ class ReservationsController < ApplicationController
         format.html { redirect_to @reservation, notice: '予約登録に成功しました。' }
         format.json { render :show, status: :created, location: @reservation }
       else
+        flash[:alert] = '入力された日時は予約できません。別の日時に変更してください。' unless @reservation.shifts.present?
         format.html { render :new }
         format.json { render json: @reservation.errors, status: :unprocessable_entity }
       end

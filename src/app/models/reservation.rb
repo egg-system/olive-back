@@ -22,6 +22,7 @@ class Reservation < ApplicationRecord
 
   has_many :reservation_shifts, dependent: :delete_all
   has_many :shifts, through: :reservation_shifts
+  validates_presence_of :shifts, on: :create
   
   validate :validate_staff_shift, if: :should_validate?
   validate :validate_reservation_date, on: :create
