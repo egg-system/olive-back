@@ -30,7 +30,7 @@ class Customer < ApplicationRecord
 
   before_validation :sync_none_uid
 
-  validates :tel, numericality: true
+  validates :tel, numericality: { allow_blank: true }
   validates :password, presence: true, on: :create, if: :member?
 
   #left join
