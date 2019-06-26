@@ -117,7 +117,8 @@ class Reservation < ApplicationRecord
   end
 
   def assigned?
-    return self.persisted? && self.shifts.present?
+    # シフトへの紐付けが存在する or キャンセル済みかどうかで判定
+    return self.persisted? && self.shifts.present? || self.canceled?
   end
 
   private
