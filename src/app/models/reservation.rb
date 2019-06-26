@@ -59,6 +59,9 @@ class Reservation < ApplicationRecord
   end
 
   def build_shifts
+    # キャンセル済みの場合、シフトへの紐付け処理は実行しない
+    return if self.canceled?
+
     self.end_time = extract_end_time_from_details
     treatable_shifts = Shift
       .where(date: self.reservation_date)
