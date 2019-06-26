@@ -3,7 +3,7 @@
   collection: is_assigned ? [@reservation.staff] : @staffs,
   label: '担当スタッフ',
   include_blank: true,
-  disabled: @reservation.new_record?,
+  disabled: @reservation.new_record? || @reservation.canceled?,
   hint: @reservation.new_record? ? '日時、メニューを元に自動で割当てられます。' : ''
 ) %>
 
