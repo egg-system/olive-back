@@ -121,4 +121,4 @@ gem 'kaminari'
 gem 'whenever', require: false
 
 # 変更履歴の取得用
-gem 'paper_trail'
+gem 'audited'
