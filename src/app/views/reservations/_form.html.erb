@@ -52,6 +52,16 @@
     </div>
   </div>
 
+  <div class="custom_row row">
+    <div class="custom_left col-sm-3">
+      <label>変更履歴</label>
+    </div>
+    <div class="custom_right col-sm-3">
+      <%= create_audit_log %>
+      <%= cancel_audit_log if @reservation.canceled? %>
+    </div>
+  </div>
+
   <div class="rsv_btn">
     <%= f.button :submit, class: 'btn btn-primary'%>
     <%= link_to '戻る', reservations_path, class: 'btn bg-light' %>
