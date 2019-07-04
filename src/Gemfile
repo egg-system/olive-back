@@ -58,6 +58,9 @@ group :development do
   gem 'pry-byebug'
 
   gem "solargraph"
+
+  # for Security, just in case
+  gem "yard", ">= 0.9.20"
 end
 
 group :test do
@@ -116,3 +119,6 @@ gem 'kaminari'
 
 # cron制御用
 gem 'whenever', require: false
+
+# 変更履歴の取得用
+gem 'paper_trail'
