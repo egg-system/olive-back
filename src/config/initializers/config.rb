@@ -47,4 +47,5 @@ Config.setup do |config|
   #   required(:email).filled(format?: EMAIL_REGEX)
   # end
 
+  Audited.current_user_method = :audited_user
 end
