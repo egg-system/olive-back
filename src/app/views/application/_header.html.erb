@@ -1,4 +1,4 @@
-<nav class="navbar navbar-dark bg-primary navbar-expand">
+<nav class=" navbar navbar-dark navbar-expand <%= Rails.env.development? ? "bg-warning" : "bg-primary" %>">
   <%= link_to 'olive system', home_path, class: 'navbar-brand' %>
   <div class="navbar-collapse">
     <% if staff_signed_in? %> 
