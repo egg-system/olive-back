@@ -38,3 +38,7 @@ brand:
   name: '女性専門の治療院オリーヴボディケア'
   system_email: 'no-reply@olivebodycare.healthcare'
 
+audit:
+  changed_by:
+   '顧客': 'Customer'
+   '店舗': 'Staff'

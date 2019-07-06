@@ -33,13 +33,13 @@
       <%= f.collection_check_boxes :coupon_ids, @coupons, :id, :name, label: "回数券" %>
     </div>
   </div>
-  <%= f.input :children_count, label: "お子様連れ"%>
+  <%= f.input :children_count, label: "お子様連れ" %>
   <div class="custom_row row">
     <div class="custom_left col-sm-3">
       <label></label>
     </div>
     <div class="custom_right col-sm-9">
-      <%= f.input :is_first, label: "初診の場合はチェック"%>
+      <%= f.input :is_first, label: "初診の場合はチェック" %>
     </div>
   </div>
 
@@ -52,15 +52,29 @@
     </div>
   </div>
 
-  <div class="custom_row row">
-    <div class="custom_left col-sm-3">
-      <label>変更履歴</label>
-    </div>
-    <div class="custom_right col-sm-3">
-      <%= create_audit_log %>
-      <%= cancel_audit_log if @reservation.canceled? %>
-    </div>
-  </div>
+  <% if @reservation.persisted? %>
+    <%= f.input(
+      :created_by,
+      label: '登録実行者',
+      wrapper: :horizontal_collection_inline,
+      as: :radio_buttons,
+      collection: Settings.audit.changed_by,
+      disabled: !@reservation.can_update_created_by?,
+      hint: @reservation.can_update_created_by? ? '' : 'システムが自動登録したため、変更できません。'
+    ) %>
+  <% end %>
+
+  <% if @reservation.canceled? %>
+    <%= f.input(
+      :canceled_by,
+      label: 'キャンセル実行者',
+      wrapper: :horizontal_collection_inline,
+      as: :radio_buttons,
+      collection: Settings.audit.changed_by,
+      disabled: !@reservation.can_update_canceled_by?,
+      hint: @reservation.can_update_canceled_by? ? '' : 'システムが自動登録したため、変更できません。'
+    ) %>
+  <% end %>
 
   <div class="rsv_btn">
     <%= f.button :submit, class: 'btn btn-primary'%>
