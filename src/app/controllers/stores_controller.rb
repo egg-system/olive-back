@@ -1,5 +1,6 @@
 class StoresController < ApplicationController
   before_action :set_store, only: [:show, :update, :destroy]
+  before_action :set_relations, only: [:new, :show]
 
   # GET /stores
   # GET /stores.json
@@ -19,14 +20,13 @@ class StoresController < ApplicationController
   # GET /stores/1.json
   def show
     @store = Store.find(params[:id]);
-    @store_menus = StoreMenu.where({store_id: params[:id]});
-    @menus = Menu.all
+    @store_menus = StoreMenu.where(store_id: params[:id]);
+    @store_options = StoreOption.where(store_id: params[:id])
   end
 
   # GET /stores/new
   def new
     @store = Store.new
-    @menus = Menu.all
   end
 
   # POST /stores
@@ -82,8 +82,27 @@ class StoresController < ApplicationController
       @store = Store.find(params[:id])
     end
 
+    def set_relations
+      @menus = Menu.all
+      @options = Option.all
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def store_params
-      params.require(:store).permit(:store_type, :name, :zip_code, :address, :tel, :mail, :url, :open_at, :close_at, :break_from, :break_to, {menu_ids: []})
+      params.require(:store).permit(
+        :store_type,
+        :name,
+        :zip_code,
+        :address,
+        :tel,
+        :mail,
+        :url,
+        :open_at,
+        :close_at,
+        :break_from,
+        :break_to,
+        menu_ids: [],
+        option_ids: []
+      )
     end
 end
