@@ -10,8 +10,11 @@ class Reservation < ApplicationRecord
   extend DateModule
   include PaginationModule
 
-  # shift周りの処理は下記moduleに切り出している
+  # shift周りの処理の切り出しmodule
   include ShiftBuildModule
+
+  # 変更履歴周りの処理の切り出しmodule
+  include ReservationAuditModule
 
   belongs_to :customer
   belongs_to :staff, optional: true
