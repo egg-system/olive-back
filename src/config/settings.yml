@@ -42,3 +42,6 @@ audit:
   changed_by:
    '顧客': 'Customer'
    '店舗': 'Staff'
+
+domain:
+  production: 'dashboard.olivebodycare.healthcare'

@@ -57,6 +57,15 @@
     checked: @store_menus.present? ? @store_menus.map{ |item| item.menu_id } : [],
     include_hidden: false 
   ) %>
+  <%= f.input(
+    :option_ids,
+    as: :check_boxes,
+    wrapper: :horizontal_collection_inline,
+    collection: @options.map{ |option| [option.name, option.id] },
+    label: 'オプション',
+    checked: @store_options.present? ? @store_options.map{ |item| item.option_id } : [],
+    include_hidden: false 
+  ) %>
   <%= f.button :submit, class: 'btn btn-primary'%>
   <% if request.path_info != new_store_path%>
     <%= link_to '削除', store_path(@store), method: :delete, class: 'btn btn-danger' %>
