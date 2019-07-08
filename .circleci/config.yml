@@ -1,0 +1,33 @@
+jobs:
+  build:
+    machine: true
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - docker-cache-{{ checksum "Dockerfile" }}-{{ checksum "src/Gemfile.lock" }}
+          paths:
+            - ~/caches/images.tar
+      - run:
+          command: |
+            if [[ -e ~/caches/images.tar ]]; then
+              docker load -i ~/caches/images.tar
+            fi
+          name: docker load
+      - run:
+          command: docker-compose up -d --build
+          name: docker up
+      - run:
+          command: mkdir -p ~/caches
+          name: mkdir -p ~/caches
+      - run:
+          command: |
+            if [[ ! -e ~/caches/images.tar ]]; then
+              docker save -o ~/caches/images.tar $(docker images --filter "dangling=false" --format "{{.Repository}}:{{.Tag}}")
+            fi
+          name: docker save
+      - save_cache:
+          key: docker-cache-{{ checksum "Dockerfile" }}-{{ checksum "src/Gemfile.lock" }}
+          paths:
+            - ~/caches/images.tar
+version: 2
