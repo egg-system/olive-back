@@ -5,7 +5,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - docker-cache-{{ checksum "Dockerfile" }}
+            - docker-cache-{{ checksum "Dockerfile" }}-{{ checksum "src/Gemfile.lock" }}
           paths:
             - ~/caches/images.tar
       - run:
