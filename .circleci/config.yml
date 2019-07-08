@@ -27,7 +27,7 @@ jobs:
             fi
           name: docker save
       - save_cache:
-          key: v1-{{ checksum "Gemfile.lock" }}-{{ checksum "yarn.lock" }}
+          key: docker-cache-{{ checksum "Dockerfile" }}-{{ checksum "src/Gemfile.lock" }}
           paths:
             - ~/caches/images.tar
 version: 2
