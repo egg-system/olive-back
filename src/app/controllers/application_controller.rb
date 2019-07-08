@@ -9,4 +9,10 @@ class ApplicationController < ActionController::Base
   def set_host
     Rails.application.routes.default_url_options[:host] = request.host_with_port
   end
+
+  protected
+
+  def audited_user
+    return current_staff if staff_signed_in?
+  end
 end
