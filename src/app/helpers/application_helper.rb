@@ -6,4 +6,12 @@ module ApplicationHelper
 
     return new_staff_session_path
   end
+
+  def production?
+    request.host === Settings.domain.production
+  end
+
+  def bg_color
+    production? ? 'bg-primary' : 'bg-warning'
+  end
 end
