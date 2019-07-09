@@ -10,10 +10,6 @@ $cellWidth: 7rem;
 $borderRight: 2px solid white;
 
 // ---検索欄部分---
-.shift-list p {
-  font-size: 30px;
-  text-align: center;
-}
 .shift-list .field select {
   margin-bottom: 3px;
   margin-top: 3px;
@@ -86,6 +82,11 @@ $borderRight: 2px solid white;
   font-size: 0.9rem;
   text-align: center;
 }
+// 1時間ごとに区切り線を入れる
+.shift-list .sticky_table tbody .td-checkbox:nth-child(odd) {
+  border-right: 2px solid $coloumBackColor;
+}
+// 一行ごとに色を付ける
 .shift-list .sticky_table tbody tr:nth-child(odd) {
   background: $tdOddColor;
   border: none;
@@ -101,7 +102,7 @@ $borderRight: 2px solid white;
   position: sticky;
   top: 0px;
   left: 0px;
-  z-index: 3;
+  z-index: 5;
   color: $headStrColor;
 }
 // 列の固定(横スクロール時)
