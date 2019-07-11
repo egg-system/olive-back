@@ -18,6 +18,7 @@ services:
 
   mysql:
     image: mysql:5.7
+    command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
     container_name: "olive-mysql"
     restart: always
     environment:
@@ -32,4 +33,6 @@ services:
 
 volumes:
   bundle-data:
+    driver: 'local'
   db-data:
+    driver: 'local'
