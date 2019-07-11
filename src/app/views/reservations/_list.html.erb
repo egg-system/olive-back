@@ -1,6 +1,9 @@
 <%# デフォルトでは、顧客名を見せる %>
 <div id="reservation-list">
   <% is_shown_customer_name = true if is_shown_customer_name.nil? %>
+  <% if @reservations.blank?%>
+    <p>該当データがありません</p>
+  <% else %>
   <table class="table">
     <thead class="thead-light">
       <tr>
@@ -72,5 +75,6 @@
       <% end %>
     </tbody>
   </table>
+  <% end %>
 </div>
 <br>

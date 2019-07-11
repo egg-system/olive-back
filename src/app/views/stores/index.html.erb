@@ -23,6 +23,9 @@
       <div class="clear"></div>
     </div>
     <div class="lower-frame">
+      <% if @stores.blank? %>
+      <p>該当データがありません</p>
+      <% else %>
       <table class="table">
         <thead class="thead-light">
           <tr>
@@ -49,5 +52,6 @@
           <%end%>
         </tbody>
       </table>
+      <% end %>
     </div>
   </div>

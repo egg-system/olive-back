@@ -1,5 +1,8 @@
   <h1>Coupon一覧</h1>
   <%=link_to "新規登録へ", new_coupon_path, {class: "btn btn-primary btn-new"}%>
+  <% if @coupons.blank? %>
+  <p>該当データがありません</p>
+  <% else %>
   <table class="table">
     <thead class="thead-light">
       <tr>
@@ -30,3 +33,4 @@
       <%end%>
     </tbody>
   </table>
+  <% end %>
