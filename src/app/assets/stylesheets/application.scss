@@ -16,9 +16,9 @@
 @import "bootstrap";
 
 // 今後共通化できるものはここに書いていきたい
-p.common {
-  　font-size: 30px;
-  　text-align: center;
+.common_title {
+  font-size: 30px;
+  text-align: center;
 }
 
 .pagination {
