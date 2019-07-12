@@ -1,8 +1,8 @@
-  <h1>Role一覧</h1>
-  <%=link_to "新規登録へ", new_role_path, {class: "btn btn-primary btn-new"}%>
-  <% if @roles.blank? %>
+<h1>Role一覧</h1>
+<%=link_to "新規登録へ", new_role_path, {class: "btn btn-primary btn-new"}%>
+<% if @roles.blank? %>
   <p>該当データがありません</p>
-  <% else %>
+<% else %>
   <table class="table">
     <thead class="thead-light">
       <tr>
@@ -23,4 +23,4 @@
       <%end%>
     </tbody>
   </table>
-  <% end %>
+<% end %>

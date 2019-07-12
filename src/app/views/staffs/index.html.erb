@@ -5,22 +5,22 @@
     <h4>検索条件入力</h4>
     <div class="condition-section">
       <%= form_with url: search_staffs_path, id:"search", method: :post do |form| %>
-      <table>
-        <tbody>
-          <tr>
-            <th>所属店舗</th>
-            <td>
-              <%= select_tag :store_id, options_for_select(@stores.collect{ |store| [store.name, store.id] }, selected: @store_id), class: "form-control", prompt: "全店舗" %>
-            </td>
-          </tr>
-          <tr>
-            <th>スタッフ氏名</th>
-            <td>
-              <%= text_field_tag :staff_name, @staff_name.present? ? @staff_name : "" , { class: "form-control" } %>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+        <table>
+          <tbody>
+            <tr>
+              <th>所属店舗</th>
+              <td>
+                <%= select_tag :store_id, options_for_select(@stores.collect{ |store| [store.name, store.id] }, selected: @store_id), class: "form-control", prompt: "全店舗" %>
+              </td>
+            </tr>
+            <tr>
+              <th>スタッフ氏名</th>
+              <td>
+                <%= text_field_tag :staff_name, @staff_name.present? ? @staff_name : "" , { class: "form-control" } %>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       <% end %>
     </div>
     <div class="button-section">
@@ -31,36 +31,36 @@
   </div>
   <div class="lower-frame">
     <% if @staffs.blank? %>
-    <p>該当データがありません</p>
+      <p>該当データがありません</p>
     <% else %>
-    <table class="table">
-      <thead class="thead-light">
-        <tr>
-          <th scope="col">スタッフID</th>
-          <th scope="col">店舗名</th>
-          <th scope="col">スタッフ氏名（姓）</th>
-          <th scope="col">スタッフ氏名（名）</th>
-          <th scope="col">保有スキル</th>
-          <th scope="col">雇用区分</th>
-          <th scope="col">更新日</th>
-          <th scope="col"></th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @staffs.each do |staff| %>
-        <tr>
-          <td><%= staff.id %></td>
-          <td scope="row"><%= safe_join(staff.stores.pluck(:name), tag(:br)) %></td>
-          <td><%= staff.last_name %></td>
-          <td><%= staff.first_name %></td>
-          <td><%= safe_join(staff.skills.pluck(:name), tag(:br)) %></td>
-          <td><%= staff.employment_type_name %></td>
-          <td><%= staff.updated_at.strftime('%Y/%m/%d') %></td>
-          <td><%= link_to "詳細へ", staff_path(staff.id) %></td>
-        </tr>
-        <%end%>
-      </tbody>
-    </table>
+      <table class="table">
+        <thead class="thead-light">
+          <tr>
+            <th scope="col">スタッフID</th>
+            <th scope="col">店舗名</th>
+            <th scope="col">スタッフ氏名（姓）</th>
+            <th scope="col">スタッフ氏名（名）</th>
+            <th scope="col">保有スキル</th>
+            <th scope="col">雇用区分</th>
+            <th scope="col">更新日</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @staffs.each do |staff| %>
+          <tr>
+            <td><%= staff.id %></td>
+            <td scope="row"><%= safe_join(staff.stores.pluck(:name), tag(:br)) %></td>
+            <td><%= staff.last_name %></td>
+            <td><%= staff.first_name %></td>
+            <td><%= safe_join(staff.skills.pluck(:name), tag(:br)) %></td>
+            <td><%= staff.employment_type_name %></td>
+            <td><%= staff.updated_at.strftime('%Y/%m/%d') %></td>
+            <td><%= link_to "詳細へ", staff_path(staff.id) %></td>
+          </tr>
+          <%end%>
+        </tbody>
+      </table>
     <% end %>
   </div>
 </div>
