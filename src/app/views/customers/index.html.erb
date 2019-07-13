@@ -49,22 +49,22 @@
         </thead>
         <tbody>
           <% @customers.each do |customer|%>
-          <tr>
-            <td scope="row"><%= customer.id %></td>
-            <td><%= customer.last_name + customer.first_name %></td>
-            <td class="address"><%= customer.address %></td>
-            <td><%= customer.tel %></td>
-            <td><%= customer.zoomancy.name if customer.zoomancy.present? %></td>
-            <td><%= customer.size_name %></td>
-            <td><%= customer.has_registration_card == true ? '有' : '無' %></td>
-            <td><%= customer.first_visited_at %></td>
-            <td>
-              <ul>
-                <li><%= link_to '詳細へ', customer_path(customer.id) %></li>
-                <li><%= link_to '予約登録へ', new_reservation_path(customer_id: customer.id) %></li>
-              </ul>
-            </td>
-          </tr>
+            <tr>
+              <td scope="row"><%= customer.id %></td>
+              <td><%= customer.last_name + customer.first_name %></td>
+              <td class="address"><%= customer.address %></td>
+              <td><%= customer.tel %></td>
+              <td><%= customer.zoomancy.name if customer.zoomancy.present? %></td>
+              <td><%= customer.size_name %></td>
+              <td><%= customer.has_registration_card == true ? '有' : '無' %></td>
+              <td><%= customer.first_visited_at %></td>
+              <td>
+                <ul>
+                  <li><%= link_to '詳細へ', customer_path(customer.id) %></li>
+                  <li><%= link_to '予約登録へ', new_reservation_path(customer_id: customer.id) %></li>
+                </ul>
+              </td>
+            </tr>
           <%end%>
         </tbody>
       </table>

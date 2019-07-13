@@ -18,14 +18,14 @@
 
     <tbody>
       <% @options.each do |option| %>
-      <tr>
-        <td><%=option.id%></td>
-        <td><%=option.name%></td>
-        <td><%=option.description%></td>
-        <td><%=number_with_delimiter(option.fee)%>円</td>
-        <td><%=option.updated_at.strftime('%Y/%m/%d')%></td>
-        <td><%=link_to "詳細へ", option_path(option.id)%></td>
-      </tr>
+        <tr>
+          <td><%=option.id%></td>
+          <td><%=option.name%></td>
+          <td><%=option.description%></td>
+          <td><%=number_with_delimiter(option.fee)%>円</td>
+          <td><%=option.updated_at.strftime('%Y/%m/%d')%></td>
+          <td><%=link_to "詳細へ", option_path(option.id)%></td>
+        </tr>
       <% end %>
     </tbody>
   </table>

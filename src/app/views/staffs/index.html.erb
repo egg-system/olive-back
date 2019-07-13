@@ -48,16 +48,16 @@
         </thead>
         <tbody>
           <% @staffs.each do |staff| %>
-          <tr>
-            <td><%= staff.id %></td>
-            <td scope="row"><%= safe_join(staff.stores.pluck(:name), tag(:br)) %></td>
-            <td><%= staff.last_name %></td>
-            <td><%= staff.first_name %></td>
-            <td><%= safe_join(staff.skills.pluck(:name), tag(:br)) %></td>
-            <td><%= staff.employment_type_name %></td>
-            <td><%= staff.updated_at.strftime('%Y/%m/%d') %></td>
-            <td><%= link_to "詳細へ", staff_path(staff.id) %></td>
-          </tr>
+            <tr>
+              <td><%= staff.id %></td>
+              <td scope="row"><%= safe_join(staff.stores.pluck(:name), tag(:br)) %></td>
+              <td><%= staff.last_name %></td>
+              <td><%= staff.first_name %></td>
+              <td><%= safe_join(staff.skills.pluck(:name), tag(:br)) %></td>
+              <td><%= staff.employment_type_name %></td>
+              <td><%= staff.updated_at.strftime('%Y/%m/%d') %></td>
+              <td><%= link_to "詳細へ", staff_path(staff.id) %></td>
+            </tr>
           <%end%>
         </tbody>
       </table>

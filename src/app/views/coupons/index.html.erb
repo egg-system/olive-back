@@ -19,18 +19,18 @@
     </thead>
     <tbody>
       <% @coupons.each do |coupon|%>
-      <tr>
-        <td><%=coupon.id%></td>
-        <td><%=coupon.name%></td>
-        <td><%=coupon.fee%></td>
-        <td><%=coupon.count%></td>
-        <td><%=coupon.start_at%></td>
-        <td><%=coupon.end_at%></td>
-        <td><%=coupon.expired_at%></td>
-        <td><%=coupon.updated_at.strftime('%Y/%m/%d')%></td>
-        <td><%=link_to "詳細へ", coupon_path(coupon.id)%></td>
-      </tr>
-    <%end%>
-  </tbody>
-</table>
+        <tr>
+          <td><%=coupon.id%></td>
+          <td><%=coupon.name%></td>
+          <td><%=coupon.fee%></td>
+          <td><%=coupon.count%></td>
+          <td><%=coupon.start_at%></td>
+          <td><%=coupon.end_at%></td>
+          <td><%=coupon.expired_at%></td>
+          <td><%=coupon.updated_at.strftime('%Y/%m/%d')%></td>
+          <td><%=link_to "詳細へ", coupon_path(coupon.id)%></td>
+        </tr>
+      <%end%>
+    </tbody>
+  </table>
 <% end %>

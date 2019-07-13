@@ -14,12 +14,12 @@
     </thead>
     <tbody>
       <% @roles.each do |role|%>
-      <tr>
-        <td><%=role.id%></td>
-        <td><%=role.name%></td>
-        <td><%=role.updated_at.strftime('%Y/%m/%d')%></td>
-        <td><%=link_to "詳細へ", role_path(role.id)%></td>
-      </tr>
+        <tr>
+          <td><%=role.id%></td>
+          <td><%=role.name%></td>
+          <td><%=role.updated_at.strftime('%Y/%m/%d')%></td>
+          <td><%=link_to "詳細へ", role_path(role.id)%></td>
+        </tr>
       <%end%>
     </tbody>
   </table>
