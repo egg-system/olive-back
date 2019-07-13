@@ -32,8 +32,7 @@ class Customer < ApplicationRecord
   before_validation :sync_none_uid
 
   validates :tel, numericality: { allow_blank: true }
-  VALID_PW = /\A(?=.*?[a-z])(?=.*?\d)([a-z\d\.\*\+\\A\|\[\]\(\)\?\$\{\}\-\"\'\`_<>~!=#@$%&]){8,100}\z/i
-  validates :password, presence: true, if: :member?, format: { with: VALID_PW, message: 'は英字/数字を含む8文字以上にしてください' }
+  validates :password, presence: true, on: :create, if: :member?
 
   #left join
   scope :join_size, ->{
