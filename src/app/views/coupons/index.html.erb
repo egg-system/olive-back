@@ -1,5 +1,8 @@
-  <h1>Coupon一覧</h1>
-  <%=link_to "新規登録へ", new_coupon_path, {class: "btn btn-primary btn-new"}%>
+<h1>Coupon一覧</h1>
+<%=link_to "新規登録へ", new_coupon_path, {class: "btn btn-primary btn-new"}%>
+<% if @coupons.blank? %>
+  <p>該当データがありません</p>
+<% else %>
   <table class="table">
     <thead class="thead-light">
       <tr>
@@ -16,17 +19,18 @@
     </thead>
     <tbody>
       <% @coupons.each do |coupon|%>
-      <tr>
-        <td><%=coupon.id%></td>
-        <td><%=coupon.name%></td>
-        <td><%=coupon.fee%></td>
-        <td><%=coupon.count%></td>
-        <td><%=coupon.start_at%></td>
-        <td><%=coupon.end_at%></td>
-        <td><%=coupon.expired_at%></td>
-        <td><%=coupon.updated_at.strftime('%Y/%m/%d')%></td>
-        <td><%=link_to "詳細へ", coupon_path(coupon.id)%></td>
-      </tr>
+        <tr>
+          <td><%=coupon.id%></td>
+          <td><%=coupon.name%></td>
+          <td><%=coupon.fee%></td>
+          <td><%=coupon.count%></td>
+          <td><%=coupon.start_at%></td>
+          <td><%=coupon.end_at%></td>
+          <td><%=coupon.expired_at%></td>
+          <td><%=coupon.updated_at.strftime('%Y/%m/%d')%></td>
+          <td><%=link_to "詳細へ", coupon_path(coupon.id)%></td>
+        </tr>
       <%end%>
     </tbody>
   </table>
+<% end %>

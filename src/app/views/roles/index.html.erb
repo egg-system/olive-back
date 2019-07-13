@@ -1,5 +1,8 @@
-  <h1>Role一覧</h1>
-  <%=link_to "新規登録へ", new_role_path, {class: "btn btn-primary btn-new"}%>
+<h1>Role一覧</h1>
+<%=link_to "新規登録へ", new_role_path, {class: "btn btn-primary btn-new"}%>
+<% if @roles.blank? %>
+  <p>該当データがありません</p>
+<% else %>
   <table class="table">
     <thead class="thead-light">
       <tr>
@@ -11,12 +14,13 @@
     </thead>
     <tbody>
       <% @roles.each do |role|%>
-      <tr>
-        <td><%=role.id%></td>
-        <td><%=role.name%></td>
-        <td><%=role.updated_at.strftime('%Y/%m/%d')%></td>
-        <td><%=link_to "詳細へ", role_path(role.id)%></td>
-      </tr>
+        <tr>
+          <td><%=role.id%></td>
+          <td><%=role.name%></td>
+          <td><%=role.updated_at.strftime('%Y/%m/%d')%></td>
+          <td><%=link_to "詳細へ", role_path(role.id)%></td>
+        </tr>
       <%end%>
     </tbody>
   </table>
+<% end %>

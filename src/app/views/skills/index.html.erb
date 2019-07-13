@@ -1,5 +1,8 @@
-  <h1>スキル一覧</h1>
-  <%=link_to "新規登録へ", new_skill_path, {class: "btn btn-primary btn-new"}%>
+<h1>スキル一覧</h1>
+<%=link_to "新規登録へ", new_skill_path, {class: "btn btn-primary btn-new"}%>
+<% if @skills.blank? %>
+  <p>該当データがありません</p>
+<% else %>
   <table class="table">
     <thead class="thead-light">
       <tr>
@@ -20,3 +23,4 @@
       <%end%>
     </tbody>
   </table>
+<% end %>
