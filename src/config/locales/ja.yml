@@ -41,4 +41,4 @@ ja:
     error_notification:
       default_message: 'データの登録に失敗しました。'
     required:
-      html: '<abbr class='req'>&nbsp;(必須)</abbr>'
+      html: '<abbr class="req">&nbsp;(必須)</abbr>'
