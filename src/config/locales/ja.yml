@@ -3,14 +3,15 @@ ja:
   activerecord:
     attributes:
       customer:
-        email: "メールアドレス(会員ID)"
-        tel: "電話番号"
+        email: 'メールアドレス(会員ID)'
+        tel: '電話番号'
+        password: 'パスワード'
       staff:
-        last_name: "姓"
-        first_name: "名"
-        last_kana: "セイ"
-        first_kana: "メイ"
-        login: "ログインID"
+        last_name: '姓'
+        first_name: '名'
+        last_kana: 'セイ'
+        first_kana: 'メイ'
+        login: 'ログインID'
       reservation:
         reservation_date: '予約日'
         start_time: '開始時刻'
@@ -22,22 +23,22 @@ ja:
         reservation:
           attributes:
             staff:
-              required: "がございません。お手数ですが、予約日時を変更してください。"
+              required: 'がございません。お手数ですが、予約日時を変更してください。'
 
   errors:
     messages:
-      not_email: "は不正な値です"
-      not_full_width_kana: "は全角カナで入力してください。"
-      not_half_width_digit: "は半角数字で入力してください。"
+      not_email: 'は不正な値です'
+      not_full_width_kana: 'は全角カナで入力してください。'
+      not_half_width_digit: 'は半角数字で入力してください。'
 
   successes:
     messages:
-      create: "新規登録しました。"
-      update: "更新しました。"
-      destroy: "削除しました。"
+      create: '新規登録しました。'
+      update: '更新しました。'
+      destroy: '削除しました。'
 
   simple_form:
     error_notification:
-      default_message: "データの登録に失敗しました。"
+      default_message: 'データの登録に失敗しました。'
     required:
       html: '<abbr class="req">&nbsp;(必須)</abbr>'
