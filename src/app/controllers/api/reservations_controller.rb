@@ -5,12 +5,12 @@ class Api::ReservationsController < Api::ApiController
   skip_before_action :authenticate_api_customer!, only: :create
 
   def create
-    reservation = Reservation.new(reservation_params)
-    reservation.build_shifts
+    @reservation = Reservation.new(reservation_params)
+    @reservation.build_shifts
 
     Reservation.transaction do
-      reservation.save!
-      ReservationMailer.confirm_reservation(reservation).deliver_now
+      @reservation.save!
+      ReservationMailer.confirm_reservation(@reservation).deliver_now
     end
   end
 
@@ -39,6 +39,13 @@ class Api::ReservationsController < Api::ApiController
     ReservationMailer.cancel_reservation(reservation).deliver_now
 
     render json: { data: 'ok' }
+  end
+
+  protected
+  def audited_user
+    audited_user = current_api_customer if api_customer_signed_in?
+    audited_user = @reservation.custoemr if audited_user.nil?
+    return audited_user
   end
 
   private
