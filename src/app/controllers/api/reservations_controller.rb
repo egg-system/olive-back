@@ -44,7 +44,7 @@ class Api::ReservationsController < Api::ApiController
   protected
   def audited_user
     audited_user = current_api_customer if api_customer_signed_in?
-    audited_user = @reservation.custoemr if audited_user.nil?
+    audited_user = Customer.find(reservation_params[:customer_id]) if audited_user.nil?
     return audited_user
   end
 
