@@ -25,6 +25,13 @@
                 <td><%= form.text_field :customer_name, class: "form-control", value: @customer_name %></td>
               </tr>
               <tr>
+                <th>店舗</th>
+                <td><%= form.select :store_id, options_for_select(
+                      {:全店舗 => ''}.merge(@stores.map {|store| [store.name, store.id]}.to_h),
+                      selected: @store_id
+                    ), class: "form-control" %></td>
+              </tr>
+              <tr>
                 <th>予約日</th>
                 <td>
                   <%= form.date_select(
