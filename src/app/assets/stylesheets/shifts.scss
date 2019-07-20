@@ -10,112 +10,115 @@ $cellWidth: 7rem;
 $borderRight: 2px solid white;
 
 // ---検索欄部分---
-.shift-list .field select {
-  margin-bottom: 3px;
-  margin-top: 3px;
-  margin-right: 3px;
-}
-.shift-list div.field select {
-  vertical-align: middle;
-  margin-bottom: 3px;
-  margin-top: 3px;
-  margin-right: 3px;
-}
-.shift-list .actions {
-  margin-top: 3px;
-  margin-bottom: 3px;
-}
-.shift-list form select {
-  border: 1px solid lightgray;
-  height: 3.5vh;
-  padding: 0.375rem 0.75rem;
-  font-size: 1rem;
-  line-height: 1;
-  border-radius: 0px;
-}
-.shift-list input[type="submit"] {
-  border: none;
-  background: #17a2b8;
-  cursor: pointer;
-  border-radius: 0.25rem;
-  color: white;
-  padding: 0.375rem 0.75rem;
-  font-weight: 400;
-  font-size: 1rem;
-  line-height: 1;
-  width: 112px;
-  &:hover {
-    background: #0e606e;
+.shift-list {
+  .field select {
+    margin-bottom: 3px;
+    margin-top: 3px;
+    margin-right: 3px;
   }
-}
-// --------------
-
-.shift-list table {
-  display: block;
-  position: relative;
-  width: calc(100vw - 3rem);
-  height: calc(75vh);
-  border-collapse: collapse;
-  overflow: scroll;
-  z-index: 10;
-  margin-top: 5px;
-  margin-bottom: 5px;
-  border: 1px solid #e4e4e4;
-}
-.shift-list .sticky_table thead th {
-  white-space: nowrap;
-  background-color: $coloumBackColor;
-  color: $headStrColor;
-  border-right: $borderRight;
-  width: $cellWidth;
-  font-size: 0.9rem;
-  text-align: center;
-  padding-right: 8px;
-  padding-left: 8px;
-  &:last-child {
+  div.field select {
+    vertical-align: middle;
+    margin-bottom: 3px;
+    margin-top: 3px;
+    margin-right: 3px;
+  }
+  .actions {
+    margin-top: 3px;
+    margin-bottom: 3px;
+  }
+  form select {
+    border: 1px solid lightgray;
+    height: 3.5vh;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1;
+    border-radius: 0px;
+  }
+  input[type="submit"] {
     border: none;
+    background: #17a2b8;
+    cursor: pointer;
+    border-radius: 0.25rem;
+    color: white;
+    padding: 0.375rem 0.75rem;
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 1;
+    width: 112px;
+    &:hover {
+      background: #0e606e;
+    }
   }
-}
-.shift-list .sticky_table tbody .td-checkbox {
-  white-space: nowrap;
-  width: $cellWidth;
-  font-size: 0.9rem;
-  text-align: center;
-}
-// 1時間ごとに区切り線を入れる
-.shift-list .sticky_table tbody .td-checkbox:nth-child(odd) {
-  border-right: 2px solid $coloumBackColor;
-}
-// 一行ごとに色を付ける
-.shift-list .sticky_table tbody tr:nth-child(odd) {
-  background: $tdOddColor;
-  border: none;
-}
-// 行の固定(縦スクロール時)
-.shift-list .sticky_table thead th {
-  position: sticky;
-  top: 0px;
-  z-index: 2;
-}
-// 行と列の交差部分
-.shift-list .sticky_table thead .th-corner {
-  position: sticky;
-  top: 0px;
-  left: 0px;
-  z-index: 5;
-  color: $headStrColor;
-}
-// 列の固定(横スクロール時)
-.shift-list .sticky_table tbody tr td:first-of-type {
-  display: inline-block;
-  background-color: $rowBackColor;
-  color: $headStrColor;
-  font-weight: bold;
-  position: sticky;
-  left: 0px;
-  width: $cellWidth;
-  font-size: 0.9rem;
-  text-align: left;
-  padding-left: 12px;
-  border-right: 1px solid white;
+  // --------------
+
+  table {
+    display: block;
+    position: relative;
+    width: calc(100vw - 3rem);
+    height: calc(75vh);
+    overflow: scroll;
+    z-index: 10;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border: 1px solid #e4e4e4;
+  }
+  .sticky_table {
+    thead th {
+      white-space: nowrap;
+      background-color: $coloumBackColor;
+      color: $headStrColor;
+      width: $cellWidth;
+      font-size: 0.9rem;
+      text-align: center;
+      padding-right: 8px;
+      padding-left: 8px;
+      &:last-child {
+        border: none;
+      }
+    }
+    tbody .td-checkbox {
+      white-space: nowrap;
+      width: $cellWidth;
+      font-size: 0.9rem;
+      text-align: center;
+    }
+    // 1時間ごとに区切り線を入れる
+    tbody .td-checkbox:nth-child(odd) {
+      border-right: 2px solid $coloumBackColor;
+    }
+    // 一行ごとに色を付ける
+    tbody tr:nth-child(odd) {
+      background: $tdOddColor;
+      border: none;
+    }
+    // 行の固定(縦スクロール時)
+    thead th {
+      position: sticky;
+      top: 0px;
+      z-index: 2;
+    }
+    // 行と列の交差部分
+    thead .th-corner {
+      position: sticky;
+      top: 0px;
+      left: 0px;
+      z-index: 5;
+      color: $headStrColor;
+      border-right: $borderRight;
+    }
+    // 列の固定(横スクロール時)
+    tbody tr td:first-of-type {
+      display: inline-block;
+      background-color: $rowBackColor;
+      color: $headStrColor;
+      font-weight: bold;
+      position: sticky;
+      left: 0px;
+      width: $cellWidth;
+      font-size: 0.9rem;
+      text-align: left;
+      padding-left: 12px;
+      border-right: 1px solid white;
+    }
+  }
 }
