@@ -117,7 +117,10 @@
         <%= f.input :uid, label: 'ログインID', hint: '会員の場合、メールアドレスを元に補完されます。', readonly: true %>
       <% end %>
       <% if current_staff.role.manager? %>
-        <%= f.input :password, label: 'パスワード'%>
+        <%= f.input :password,
+          label: 'パスワード',
+          hint: 'パスワードは英字/数字を含む8文字以上にしてください'
+        %>
       <% end %>
       <%= f.button :submit, class: 'btn btn-primary' %>
       <%= link_to '戻る', customers_path, class: 'btn btn-light' %>
