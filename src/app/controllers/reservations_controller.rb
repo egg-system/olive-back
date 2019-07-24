@@ -15,6 +15,9 @@ class ReservationsController < ApplicationController
     @customer_name = params[:customer_name]
     @reservations = @reservations.where_customer_name(@customer_name) if @customer_name.present?
 
+    @store_id = params[:store_id]
+    @reservations = @reservations.where(store_id: @store_id) if @store_id.present?
+
     @from_date = Date.parse(params[:from_date]) if params.has_key?(:from_date)
     @reservations = @reservations.where('reservation_date >= ?', @from_date) if @from_date.present?
 
@@ -52,6 +55,7 @@ class ReservationsController < ApplicationController
     redirect_to reservations_path({
       customer_name: params[:customer_name],
       staff_id: params[:staff_id],
+      store_id: params[:store_id],
       from_date: from_date,
       to_date: to_date,
       order: params[:order]

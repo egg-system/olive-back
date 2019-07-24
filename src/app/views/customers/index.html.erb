@@ -19,6 +19,12 @@
               <%= f.text_field :tel, { class: "form-control", value: @search_params["tel"] } %>
             <td>
           </tr>
+          <tr>
+            <th>メールアドレス</th>
+            <td>
+              <%= f.text_field :email, { class: "form-control", value: @search_params["email"] } %>
+            <td>
+          </tr>
         </tbody>
       </table>
       <%end%>
@@ -40,10 +46,12 @@
             <th scope="col">氏名</th>
             <th class="address" scope="col">住所</th>
             <th scope="col">TEL</th>
+            <th scope="col">Email</th>
             <th scope="col">個性</th>
             <th scope="col">サイズ</th>
             <th scope="col">診察券</th>
             <th scope="col">初回ご来店日</th>
+            <th scope="col">会員/非会員</th>
             <th scope="col"></th>
           </tr>
         </thead>
@@ -54,10 +62,12 @@
               <td><%= customer.last_name + customer.first_name %></td>
               <td class="address"><%= customer.address %></td>
               <td><%= customer.tel %></td>
+              <td><%= customer.email %></td>
               <td><%= customer.zoomancy.name if customer.zoomancy.present? %></td>
               <td><%= customer.size_name %></td>
               <td><%= customer.has_registration_card == true ? '有' : '無' %></td>
               <td><%= customer.first_visited_at %></td>
+              <td><%= customer.provider == 'none' ? '非会員' : '会員'%></td>
               <td>
                 <ul>
                   <li><%= link_to '詳細へ', customer_path(customer.id) %></li>
