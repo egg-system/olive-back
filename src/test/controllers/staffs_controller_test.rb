@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'test_helper'
 
 class StaffsControllerTest < ActionDispatch::IntegrationTest
@@ -5,40 +7,40 @@ class StaffsControllerTest < ActionDispatch::IntegrationTest
     @staff = staffs(:one)
   end
 
-  test "should get index" do
+  test 'should get index' do
     get staffs_url
     assert_response :success
   end
 
-  test "should get new" do
+  test 'should get new' do
     get new_staff_url
     assert_response :success
   end
 
-  test "should create staff" do
+  test 'should create staff' do
     assert_difference('Staff.count') do
-      post staffs_url, params: { staff: {  } }
+      post staffs_url, params: { staff: {} }
     end
 
     assert_redirected_to staff_url(Staff.last)
   end
 
-  test "should show staff" do
+  test 'should show staff' do
     get staff_url(@staff)
     assert_response :success
   end
 
-  test "should get edit" do
+  test 'should get edit' do
     get edit_staff_url(@staff)
     assert_response :success
   end
 
-  test "should update staff" do
-    patch staff_url(@staff), params: { staff: {  } }
+  test 'should update staff' do
+    patch staff_url(@staff), params: { staff: {} }
     assert_redirected_to staff_url(@staff)
   end
 
-  test "should destroy staff" do
+  test 'should destroy staff' do
     assert_difference('Staff.count', -1) do
       delete staff_url(@staff)
     end

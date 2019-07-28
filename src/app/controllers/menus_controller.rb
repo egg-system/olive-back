@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class MenusController < ApplicationController
-  before_action :set_menu, only: [:show, :update, :destroy]
+  before_action :set_menu, only: %i[show update destroy]
 
   # GET /menus
   # GET /menus.json
@@ -53,28 +55,27 @@ class MenusController < ApplicationController
   # DELETE /menus/1
   # DELETE /menus/1.json
   def destroy
-    begin
-      @menu.destroy!
-      respond_to do |format|
-        lormat.html { redirect_to menus_url, notice: 'Menu was successfully destroyed.' }
-        format.json { head :no_content }
-      end
-    rescue => exception
-      respond_to do |format|
-        format.html { redirect_to menu_url(@menu.id), notice: 'すでに利用されているため、削除できません' }
-        format.json { render json: @role.errors, status: :unprocessable_entity }
-      end 
+    @menu.destroy!
+    respond_to do |format|
+      lormat.html { redirect_to menus_url, notice: 'Menu was successfully destroyed.' }
+      format.json { head :no_content }
+    end
+  rescue StandardError => e
+    respond_to do |format|
+      format.html { redirect_to menu_url(@menu.id), notice: 'すでに利用されているため、削除できません' }
+      format.json { render json: @role.errors, status: :unprocessable_entity }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_menu
-      @menu = Menu.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def menu_params
-      params.require(:menu).permit(:id, :name, :description, :fee, :service_minutes, :start_at, :end_at, :menu_category_id, :memo)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_menu
+    @menu = Menu.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def menu_params
+    params.require(:menu).permit(:id, :name, :description, :fee, :service_minutes, :start_at, :end_at, :menu_category_id, :memo)
+  end
 end

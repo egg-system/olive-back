@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'test_helper'
 
 class CouponsControllerTest < ActionDispatch::IntegrationTest
@@ -5,40 +7,40 @@ class CouponsControllerTest < ActionDispatch::IntegrationTest
     @coupon = coupons(:one)
   end
 
-  test "should get index" do
+  test 'should get index' do
     get coupons_url
     assert_response :success
   end
 
-  test "should get new" do
+  test 'should get new' do
     get new_coupon_url
     assert_response :success
   end
 
-  test "should create coupon" do
+  test 'should create coupon' do
     assert_difference('Coupon.count') do
-      post coupons_url, params: { coupon: {  } }
+      post coupons_url, params: { coupon: {} }
     end
 
     assert_redirected_to coupon_url(Coupon.last)
   end
 
-  test "should show coupon" do
+  test 'should show coupon' do
     get coupon_url(@coupon)
     assert_response :success
   end
 
-  test "should get edit" do
+  test 'should get edit' do
     get edit_coupon_url(@coupon)
     assert_response :success
   end
 
-  test "should update coupon" do
-    patch coupon_url(@coupon), params: { coupon: {  } }
+  test 'should update coupon' do
+    patch coupon_url(@coupon), params: { coupon: {} }
     assert_redirected_to coupon_url(@coupon)
   end
 
-  test "should destroy coupon" do
+  test 'should destroy coupon' do
     assert_difference('Coupon.count', -1) do
       delete coupon_url(@coupon)
     end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Zoomancy.where(id: 1).first_or_create!(name: 'S　長距離ランナーのチータ')
 Zoomancy.where(id: 2).first_or_create!(name: 'M　社交家のたぬき')
 Zoomancy.where(id: 3).first_or_create!(name: 'E　落ち着きのない猿')

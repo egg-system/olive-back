@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class SkillsController < ApplicationController
-  before_action :set_skill, only: [:show, :update, :destroy]
+  before_action :set_skill, only: %i[show update destroy]
 
   # GET /skills
   # GET /skills.json
@@ -9,8 +11,7 @@ class SkillsController < ApplicationController
 
   # GET /skills/1
   # GET /skills/1.json
-  def show
-  end
+  def show; end
 
   # GET /skills/new
   def new
@@ -50,28 +51,27 @@ class SkillsController < ApplicationController
   # DELETE /skills/1
   # DELETE /skills/1.json
   def destroy
-    begin
-      @skill.destroy!
-      respond_to do |format|
-        format.html { redirect_to skills_url, notice: 'Skill was successfully destroyed.' }
-        format.json { head :no_content }
-      end
-    rescue => exception
-      respond_to do |format|
-        format.html { redirect_to skill_url(@skill.id), notice: 'すでに利用されているため、削除できません' }
-        format.json { render json: @skill.errors, status: :unprocessable_entity }
-      end 
+    @skill.destroy!
+    respond_to do |format|
+      format.html { redirect_to skills_url, notice: 'Skill was successfully destroyed.' }
+      format.json { head :no_content }
+    end
+  rescue StandardError => e
+    respond_to do |format|
+      format.html { redirect_to skill_url(@skill.id), notice: 'すでに利用されているため、削除できません' }
+      format.json { render json: @skill.errors, status: :unprocessable_entity }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_skill
-      @skill = Skill.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def skill_params
-      params.require(:skill).permit(:id, :name)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_skill
+    @skill = Skill.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def skill_params
+    params.require(:skill).permit(:id, :name)
+  end
 end

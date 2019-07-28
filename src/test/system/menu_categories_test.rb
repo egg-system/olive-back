@@ -1,41 +1,43 @@
-require "application_system_test_case"
+# frozen_string_literal: true
+
+require 'application_system_test_case'
 
 class MenuCategoriesTest < ApplicationSystemTestCase
   setup do
     @menu_category = menu_categories(:one)
   end
 
-  test "visiting the index" do
+  test 'visiting the index' do
     visit menu_categories_url
-    assert_selector "h1", text: "Menu Categories"
+    assert_selector 'h1', text: 'Menu Categories'
   end
 
-  test "creating a Menu category" do
+  test 'creating a Menu category' do
     visit menu_categories_url
-    click_on "New Menu Category"
+    click_on 'New Menu Category'
 
-    click_on "Create Menu category"
+    click_on 'Create Menu category'
 
-    assert_text "Menu category was successfully created"
-    click_on "Back"
+    assert_text 'Menu category was successfully created'
+    click_on 'Back'
   end
 
-  test "updating a Menu category" do
+  test 'updating a Menu category' do
     visit menu_categories_url
-    click_on "Edit", match: :first
+    click_on 'Edit', match: :first
 
-    click_on "Update Menu category"
+    click_on 'Update Menu category'
 
-    assert_text "Menu category was successfully updated"
-    click_on "Back"
+    assert_text 'Menu category was successfully updated'
+    click_on 'Back'
   end
 
-  test "destroying a Menu category" do
+  test 'destroying a Menu category' do
     visit menu_categories_url
     page.accept_confirm do
-      click_on "Destroy", match: :first
+      click_on 'Destroy', match: :first
     end
 
-    assert_text "Menu category was successfully destroyed"
+    assert_text 'Menu category was successfully destroyed'
   end
 end

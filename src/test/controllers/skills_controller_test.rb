@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'test_helper'
 
 class SkillsControllerTest < ActionDispatch::IntegrationTest
@@ -5,40 +7,40 @@ class SkillsControllerTest < ActionDispatch::IntegrationTest
     @skill = skills(:one)
   end
 
-  test "should get index" do
+  test 'should get index' do
     get skills_url
     assert_response :success
   end
 
-  test "should get new" do
+  test 'should get new' do
     get new_skill_url
     assert_response :success
   end
 
-  test "should create skill" do
+  test 'should create skill' do
     assert_difference('Skill.count') do
-      post skills_url, params: { skill: {  } }
+      post skills_url, params: { skill: {} }
     end
 
     assert_redirected_to skill_url(Skill.last)
   end
 
-  test "should show skill" do
+  test 'should show skill' do
     get skill_url(@skill)
     assert_response :success
   end
 
-  test "should get edit" do
+  test 'should get edit' do
     get edit_skill_url(@skill)
     assert_response :success
   end
 
-  test "should update skill" do
-    patch skill_url(@skill), params: { skill: {  } }
+  test 'should update skill' do
+    patch skill_url(@skill), params: { skill: {} }
     assert_redirected_to skill_url(@skill)
   end
 
-  test "should destroy skill" do
+  test 'should destroy skill' do
     assert_difference('Skill.count', -1) do
       delete skill_url(@skill)
     end

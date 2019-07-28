@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ReservationAuditModule
   extend ActiveSupport::Concern
 
@@ -7,22 +9,22 @@ module ReservationAuditModule
   end
 
   def created_audit
-    self.audits.where(action: 'create').first
+    audits.where(action: 'create').first
   end
 
   def canceled_audit
-    self.audits
+    audits
       .where(action: 'update')
-      .where("audited_changes like ?", '%canceled_at%')
+      .where('audited_changes like ?', '%canceled_at%')
       .first
   end
 
   def created_by
-    return audit_value(created_audit)
+    audit_value(created_audit)
   end
 
   def canceled_by
-    return audit_value(canceled_audit)
+    audit_value(canceled_audit)
   end
 
   def audit_value(audit)
@@ -30,22 +32,23 @@ module ReservationAuditModule
 
     # 画面から変更した履歴の実行者は文字列(username)になる
     return audit.username if can_update_audit(audit)
-    return audit.user_type
+
+    audit.user_type
   end
 
-  def created_by=created_by
+  def created_by=(created_by)
     return unless can_update_created_by?
 
     @created_audit = created_audit
-    @created_audit = self.build_created_audit if @created_audit.nil?    
+    @created_audit = build_created_audit if @created_audit.nil?
     @created_audit.user = created_by
   end
 
-  def canceled_by=canceled_by
+  def canceled_by=(canceled_by)
     return unless can_update_canceled_by?
-    
+
     @canceled_audit = canceled_audit
-    @canceled_audit = self.build_canceled_audit if @canceled_audit.nil?
+    @canceled_audit = build_canceled_audit if @canceled_audit.nil?
     @canceled_audit.user = canceled_by
   end
 
@@ -58,28 +61,29 @@ module ReservationAuditModule
   end
 
   def can_update_audit(audit)
-    return false if self.new_record?
+    return false if new_record?
     return true if audit.nil?
-    return audit.user.is_a?(String)
+
+    audit.user.is_a?(String)
   end
 
   def update_audtis
-    @created_audit.save unless @created_audit.nil?
-    @canceled_audit.save unless @canceled_audit.nil?
+    @created_audit&.save
+    @canceled_audit&.save
   end
 
   def build_created_audit
-    return self.audits.build(
+    audits.build(
       action: 'create',
-      created_at: self.created_at
+      created_at: created_at
     )
   end
 
   def build_canceled_audit
-    return self.audits.build(
+    audits.build(
       action: 'update',
-      audited_changes: { canceled_at: [nil, self.canceled_at] },
-      created_at: self.canceled_at
+      audited_changes: { canceled_at: [nil, canceled_at] },
+      created_at: canceled_at
     )
   end
 end

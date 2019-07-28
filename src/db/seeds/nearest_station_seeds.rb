@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 NearestStation.where(id: 1).first_or_create!(name: 'たまプラーザ駅')
 NearestStation.where(id: 2).first_or_create!(name: '鷲沼駅')
 NearestStation.where(id: 3).first_or_create!(name: 'あざみ野駅')

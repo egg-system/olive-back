@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Role < ApplicationRecord
   has_many :staffs
 
@@ -7,18 +9,18 @@ class Role < ApplicationRecord
   STAFF = 4
 
   def admin?
-    return self.id === ADMIN
+    id === ADMIN
   end
 
   def head?
-    return self.admin? || self.id === HEAD
+    admin? || id === HEAD
   end
 
   def manager?
-    return self.head? || self.id === MANAGER
+    head? || id === MANAGER
   end
 
   def staff?
-    return self.manager? || self.id === STAFF
+    manager? || id === STAFF
   end
 end

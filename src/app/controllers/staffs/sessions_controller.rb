@@ -24,8 +24,8 @@ class Staffs::SessionsController < Devise::SessionsController
   def configure_sign_in_params
     devise_parameter_sanitizer.permit(:sign_in) do |staff|
       staff.permit(store_staffs: [
-        :store_id
-      ])   
+                     :store_id
+                   ])
     end
   end
 end

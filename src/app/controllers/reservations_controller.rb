@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class ReservationsController < ApplicationController
-  before_action :set_reservation, only: [:show, :update, :destroy, :cancel_confirm]
-  before_action :set_relation_models, only: [:new, :create, :show, :search, :update, :destroy]
+  before_action :set_reservation, only: %i[show update destroy cancel_confirm]
+  before_action :set_relation_models, only: %i[new create show search update destroy]
 
   # GET /reservations
   # GET /reservations.json
@@ -18,10 +20,10 @@ class ReservationsController < ApplicationController
     @store_id = params[:store_id]
     @reservations = @reservations.where(store_id: @store_id) if @store_id.present?
 
-    @from_date = Date.parse(params[:from_date]) if params.has_key?(:from_date)
+    @from_date = Date.parse(params[:from_date]) if params.key?(:from_date)
     @reservations = @reservations.where('reservation_date >= ?', @from_date) if @from_date.present?
 
-    @to_date = Date.parse(params[:to_date]) if params.has_key?(:to_date)
+    @to_date = Date.parse(params[:to_date]) if params.key?(:to_date)
     @reservations = @reservations.where('reservation_date <= ?', @to_date) if @to_date.present?
 
     @staffs = Staff.all
@@ -52,22 +54,22 @@ class ReservationsController < ApplicationController
       )
     end
 
-    redirect_to reservations_path({
+    redirect_to reservations_path(
       customer_name: params[:customer_name],
       staff_id: params[:staff_id],
       store_id: params[:store_id],
       from_date: from_date,
       to_date: to_date,
       order: params[:order]
-    })
+    )
   end
 
   # GET /reservations/new
   def new
-    return redirect_to customers_path, flash: { alert: '顧客が選択されていません。' } unless params.has_key?(:customer_id)
+    return redirect_to customers_path, flash: { alert: '顧客が選択されていません。' } unless params.key?(:customer_id)
 
     @reservation = Customer.find(params[:customer_id]).reservations.new
-    @reservation_details_count = params.has_key?(:count) ? params[:count].to_i : 1
+    @reservation_details_count = params.key?(:count) ? params[:count].to_i : 1
     @reservation.reservation_details.build(Array.new(@reservation_details_count))
   end
 
@@ -82,7 +84,7 @@ class ReservationsController < ApplicationController
         format.html { redirect_to @reservation, notice: '予約登録に成功しました。' }
         format.json { render :show, status: :created, location: @reservation }
       else
-        flash[:alert] = '入力された日時は予約できません。別の日時に変更してください。' unless @reservation.shifts.present?
+        flash[:alert] = '入力された日時は予約できません。別の日時に変更してください。' if @reservation.shifts.blank?
         format.html { render :new }
         format.json { render json: @reservation.errors, status: :unprocessable_entity }
       end
@@ -119,41 +121,42 @@ class ReservationsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_reservation
-      @reservation = Reservation.find(params[:id])
-    end
 
-    def set_relation_models
-      @coupons = Coupon.all
-      @options = Option.all
-      @stores = Store.all
-      @staffs = Staff.all
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_reservation
+    @reservation = Reservation.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def reservation_params
-      params.require(:reservation).permit(
+  def set_relation_models
+    @coupons = Coupon.all
+    @options = Option.all
+    @stores = Store.all
+    @staffs = Staff.all
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def reservation_params
+    params.require(:reservation).permit(
+      :id,
+      :customer_id,
+      :store_id,
+      :staff_id,
+      :reservation_date,
+      :start_time,
+      :end_time,
+      :reservation_comment,
+      :children_count,
+      :is_first,
+      :is_confirmed,
+      :created_by,
+      :canceled_by,
+      coupon_ids: [],
+      reservation_details_attributes: [
         :id,
-        :customer_id,
-        :store_id,
-        :staff_id,
-        :reservation_date,
-        :start_time,
-        :end_time,
-        :reservation_comment,
-        :children_count,
-        :is_first,
-        :is_confirmed,
-        :created_by,
-        :canceled_by,
-        coupon_ids: [],
-        reservation_details_attributes: [
-          :id,
-          :menu_id,
-          :mimitsubo_count,
-          option_ids: [],
-        ]
-      )
-    end
+        :menu_id,
+        :mimitsubo_count,
+        option_ids: []
+      ]
+    )
+  end
 end

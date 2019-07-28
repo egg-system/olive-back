@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 crumb :root do
-  link "Home", root_path 
+  link 'Home', root_path
 end
 
-crumb :login do 
-  link "Home", new_user_session_path
+crumb :login do
+  link 'Home', new_user_session_path
 end
 
 # crumb :projects do

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'test_helper'
 
 class StoresControllerTest < ActionDispatch::IntegrationTest
@@ -5,40 +7,40 @@ class StoresControllerTest < ActionDispatch::IntegrationTest
     @store = stores(:one)
   end
 
-  test "should get index" do
+  test 'should get index' do
     get stores_url
     assert_response :success
   end
 
-  test "should get new" do
+  test 'should get new' do
     get new_store_url
     assert_response :success
   end
 
-  test "should create store" do
+  test 'should create store' do
     assert_difference('Store.count') do
-      post stores_url, params: { store: {  } }
+      post stores_url, params: { store: {} }
     end
 
     assert_redirected_to store_url(Store.last)
   end
 
-  test "should show store" do
+  test 'should show store' do
     get store_url(@store)
     assert_response :success
   end
 
-  test "should get edit" do
+  test 'should get edit' do
     get edit_store_url(@store)
     assert_response :success
   end
 
-  test "should update store" do
-    patch store_url(@store), params: { store: {  } }
+  test 'should update store' do
+    patch store_url(@store), params: { store: {} }
     assert_redirected_to store_url(@store)
   end
 
-  test "should destroy store" do
+  test 'should destroy store' do
     assert_difference('Store.count', -1) do
       delete store_url(@store)
     end

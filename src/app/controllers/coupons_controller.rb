@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class CouponsController < ApplicationController
-  before_action :set_coupon, only: [:show, :update, :destroy]
+  before_action :set_coupon, only: %i[show update destroy]
 
   # GET /coupons
   # GET /coupons.json
@@ -9,8 +11,7 @@ class CouponsController < ApplicationController
 
   # GET /coupons/1
   # GET /coupons/1.json
-  def show
-  end
+  def show; end
 
   # GET /coupons/new
   def new
@@ -50,28 +51,27 @@ class CouponsController < ApplicationController
   # DELETE /coupons/1
   # DELETE /coupons/1.json
   def destroy
-    begin
-      @coupon.destroy!
-      respond_to do |format|
-        format.html { redirect_to coupons_url, notice: 'Skill was successfully destroyed.' }
-        format.json { head :no_content }
-      end
-    rescue => exception
-      respond_to do |format|
-        format.html { redirect_to coupon_url(@coupon.id), notice: 'すでに利用されているため、削除できません' }
-        format.json { render json: @coupon.errors, status: :unprocessable_entity }
-      end 
+    @coupon.destroy!
+    respond_to do |format|
+      format.html { redirect_to coupons_url, notice: 'Skill was successfully destroyed.' }
+      format.json { head :no_content }
+    end
+  rescue StandardError => e
+    respond_to do |format|
+      format.html { redirect_to coupon_url(@coupon.id), notice: 'すでに利用されているため、削除できません' }
+      format.json { render json: @coupon.errors, status: :unprocessable_entity }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_coupon
-      @coupon = Coupon.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def coupon_params
-      params.require(:coupon).permit(:name, :fee, :count, :start_at, :end_at, :expired_at)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_coupon
+    @coupon = Coupon.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def coupon_params
+    params.require(:coupon).permit(:name, :fee, :count, :start_at, :end_at, :expired_at)
+  end
 end

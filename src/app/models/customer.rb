@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Customer < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
@@ -34,34 +36,35 @@ class Customer < ApplicationRecord
   validates :tel, numericality: { allow_blank: true }
   validates :password, presence: true, on: :create, if: :member?
 
-  #left join
-  scope :join_size, ->{
-    left_joins(:size).select("sizes.name as size_name")
+  # left join
+  scope :join_size, lambda {
+    left_joins(:size).select('sizes.name as size_name')
   }
 
-  scope :join_tables, ->{
+  scope :join_tables, lambda {
     select('customers.*').join_size
   }
 
-  scope :like_name, ->(name){
-    where("concat(last_name, first_name) like ?", "%#{name}%")
+  scope :like_name, lambda { |name|
+    where('concat(last_name, first_name) like ?', "%#{name}%")
   }
 
   attr_accessor :age
 
   def age
-    return nil if self.birthday.nil?
-    return (Date.today.strftime('%Y%m%d').to_i - self.birthday.strftime('%Y%m%d').to_i) / 10000
+    return nil if birthday.nil?
+
+    (Date.today.strftime('%Y%m%d').to_i - birthday.strftime('%Y%m%d').to_i) / 10_000
   end
 
   def full_name
-    return self.last_name + ' ' + self.first_name
+    last_name + ' ' + first_name
   end
 
   protected
 
   def member?
-    return self.provider != 'none'
+    provider != 'none'
   end
 
   def is_none_provider?
@@ -69,6 +72,6 @@ class Customer < ApplicationRecord
   end
 
   def sync_none_uid
-    self.uid = Time.now.to_s if is_none_provider?
+    self.uid = Time.zone.now.to_s if is_none_provider?
   end
 end

@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class ShiftsController < ApplicationController
-  before_action :set_shift, only: [:show, :edit, :update, :destroy]
+  before_action :set_shift, only: %i[show edit update destroy]
 
   require 'csv'
   require 'time'
@@ -9,13 +11,13 @@ class ShiftsController < ApplicationController
   def index
     @search_params = search_params
     @date_shifts = Shift
-      .where(
-        store_id: @search_params[:store_id],
-        staff_id: @search_params[:staff_id]
-      ).where_months(@search_params[:month])
-      .group_by { |shift| shift.date.strftime('%Y-%m-%d') }
+                   .where(
+                     store_id: @search_params[:store_id],
+                     staff_id: @search_params[:staff_id]
+                   ).where_months(@search_params[:month])
+                   .group_by { |shift| shift.date.strftime('%Y-%m-%d') }
 
-      @start_date, @end_date = Shift.get_month_range(@search_params[:month])
+    @start_date, @end_date = Shift.get_month_range(@search_params[:month])
   end
 
   def new
@@ -25,17 +27,14 @@ class ShiftsController < ApplicationController
   # POST /shifts
   # POST /shifts.json
   def create
-    begin
-      Shift.transaction do
-        imports
-      end
-      redirect_to action: :index
-
-    rescue Encoding::UndefinedConversionError => e
-    rescue Encoding::InvalidByteSequenceError => e
-      flash[:alert] = "文字コードがShift-JISのファイルをアップロードしてください。"
-      return redirect_to action: :new
+    Shift.transaction do
+      imports
     end
+    redirect_to action: :index
+  rescue Encoding::UndefinedConversionError => e
+  rescue Encoding::InvalidByteSequenceError => e
+    flash[:alert] = '文字コードがShift-JISのファイルをアップロードしてください。'
+    redirect_to action: :new
   end
 
   def updates
@@ -48,19 +47,20 @@ class ShiftsController < ApplicationController
   end
 
   protected
+
   def imports
     CSV
-      .read(csv_params[:shift_csv].path, headers: true, encoding: "Shift_JIS:UTF-8")
-      .map { |row|
+      .read(csv_params[:shift_csv].path, headers: true, encoding: 'Shift_JIS:UTF-8')
+      .map do |row|
         Shift.import(row)
-      }
+      end
   end
 
   def create_shifts
     updates_params[:new_shifts]
-      .select { |shift_at, checked| checked === '1' }
+      .select { |_shift_at, checked| checked === '1' }
       .keys
-      .each { |shift_at|
+      .each do |shift_at|
         Shift.create!(
           store_id: updates_params[:store_id],
           staff_id: updates_params[:staff_id],
@@ -68,7 +68,7 @@ class ShiftsController < ApplicationController
           start_at: shift_at.to_time,
           end_at: shift_at.to_time + Shift.get_shift_increment
         )
-      }
+      end
   end
 
   def delete_shifts
@@ -80,18 +80,20 @@ class ShiftsController < ApplicationController
   end
 
   def delete_shift_ids
-    return nil unless updates_params.has_key? :remain_shift_ids
-    return updates_params[:remain_shift_ids].select { |id, checked| checked === '0' }.keys
+    return nil unless updates_params.key? :remain_shift_ids
+
+    updates_params[:remain_shift_ids].select { |_id, checked| checked === '0' }.keys
   end
 
   private
+
   def search_params
     search_month = Date.today.beginning_of_month
-    if params.has_key?("month(1i)") && params.has_key?("month(2i)")
-      search_month = Date.new(params["month(1i)"].to_i, params["month(2i)"].to_i)
+    if params.key?('month(1i)') && params.key?('month(2i)')
+      search_month = Date.new(params['month(1i)'].to_i, params['month(2i)'].to_i)
     end
 
-    return {
+    {
       staff_id: params[:staff_id] || current_staff.id,
       store_id: params[:store_id] || current_staff.stores.first.id,
       month: search_month

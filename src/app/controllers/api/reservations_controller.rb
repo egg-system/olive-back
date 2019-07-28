@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Api::ReservationsController < Api::ApiController
   include Concerns::TokenAuthenticable
 
@@ -16,20 +18,20 @@ class Api::ReservationsController < Api::ApiController
 
   def index
     reservations = current_api_customer
-      .reservations
-      .paginate(index_params[:page])
-      .order_reserved_at
+                   .reservations
+                   .paginate(index_params[:page])
+                   .order_reserved_at
 
     # total_pages > data の順にキーを配置しなければ、エラーになる可能性あり
     render json: {
       total_pages: reservations.total_pages,
-      data: reservations.to_resources,
+      data: reservations.to_resources
     }
   end
 
   def show
     render json: {
-      data: Reservation.find(params[:id]).to_resource,
+      data: Reservation.find(params[:id]).to_resource
     }
   end
 
@@ -42,13 +44,15 @@ class Api::ReservationsController < Api::ApiController
   end
 
   protected
+
   def audited_user
     audited_user = current_api_customer if api_customer_signed_in?
     audited_user = Customer.find(reservation_params[:customer_id]) if audited_user.nil?
-    return audited_user
+    audited_user
   end
 
   private
+
   def index_params
     params.permit(:page)
   end
@@ -66,7 +70,7 @@ class Api::ReservationsController < Api::ApiController
       reservation_details_attributes: [
         :menu_id,
         :mimitsubo_count,
-        option_ids: [],
+        option_ids: []
       ]
     )
   end

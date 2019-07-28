@@ -1,41 +1,43 @@
-require "application_system_test_case"
+# frozen_string_literal: true
+
+require 'application_system_test_case'
 
 class StaffsTest < ApplicationSystemTestCase
   setup do
     @staff = staffs(:one)
   end
 
-  test "visiting the index" do
+  test 'visiting the index' do
     visit staffs_url
-    assert_selector "h1", text: "Staffs"
+    assert_selector 'h1', text: 'Staffs'
   end
 
-  test "creating a Staff" do
+  test 'creating a Staff' do
     visit staffs_url
-    click_on "New Staff"
+    click_on 'New Staff'
 
-    click_on "Create Staff"
+    click_on 'Create Staff'
 
-    assert_text "Staff was successfully created"
-    click_on "Back"
+    assert_text 'Staff was successfully created'
+    click_on 'Back'
   end
 
-  test "updating a Staff" do
+  test 'updating a Staff' do
     visit staffs_url
-    click_on "Edit", match: :first
+    click_on 'Edit', match: :first
 
-    click_on "Update Staff"
+    click_on 'Update Staff'
 
-    assert_text "Staff was successfully updated"
-    click_on "Back"
+    assert_text 'Staff was successfully updated'
+    click_on 'Back'
   end
 
-  test "destroying a Staff" do
+  test 'destroying a Staff' do
     visit staffs_url
     page.accept_confirm do
-      click_on "Destroy", match: :first
+      click_on 'Destroy', match: :first
     end
 
-    assert_text "Staff was successfully destroyed"
+    assert_text 'Staff was successfully destroyed'
   end
 end

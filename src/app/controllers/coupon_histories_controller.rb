@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class CouponHistoriesController < ApplicationController
-  before_action :set_coupon_history, only: [:show, :update, :destroy]
+  before_action :set_coupon_history, only: %i[show update destroy]
 
   # GET /coupon_histories
   # GET /coupon_histories.json
@@ -43,7 +45,7 @@ class CouponHistoriesController < ApplicationController
         format.html { redirect_to @coupon_history, notice: 'Coupon history was successfully updated.' }
         format.json { render :show, status: :ok, location: @coupon_history }
       else
-        format.html { redirect_to coupon_history_url(@coupon_history.id), notice: "削除に失敗しました。" }
+        format.html { redirect_to coupon_history_url(@coupon_history.id), notice: '削除に失敗しました。' }
         format.json { render json: @coupon_history.errors, status: :unprocessable_entity }
       end
     end
@@ -60,13 +62,14 @@ class CouponHistoriesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_coupon_history
-      @coupon_history = CouponHistory.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def coupon_history_params
-      params.require(:coupon_history).permit(:customer_id, :coupon_id, :used_at)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_coupon_history
+    @coupon_history = CouponHistory.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def coupon_history_params
+    params.require(:coupon_history).permit(:customer_id, :coupon_id, :used_at)
+  end
 end

@@ -1,12 +1,14 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
   resources :dashboards, :masters, only: [:index]
   root to: 'dashboards#index'
 
   devise_for :staffs, only: :sessions, controllers: {
-    sessions: 'staffs/sessions',
+    sessions: 'staffs/sessions'
   }
 
-  resources :shifts, only: [:index, :new, :create] do
+  resources :shifts, only: %i[index new create] do
     collection do
       patch :updates
     end
@@ -36,13 +38,13 @@ Rails.application.routes.draw do
       sessions: 'api/customers/sessions',
       registrations: 'api/customers/registrations',
       passwords: 'api/customers/passwords',
-      token_validations: 'api/customers/token_validations',
+      token_validations: 'api/customers/token_validations'
     }
     get 'shops(/:id)', to: 'stores#shop'
     get 'shops(/:id)/menus', to: 'stores#menus'
     get 'shops(/:id)/dates', to: 'stores#dates'
 
-    resources :reservations, only: [:create, :index, :show, :destroy]
+    resources :reservations, only: %i[create index show destroy]
   end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

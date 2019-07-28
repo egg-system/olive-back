@@ -1,41 +1,43 @@
-require "application_system_test_case"
+# frozen_string_literal: true
+
+require 'application_system_test_case'
 
 class CustomersTest < ApplicationSystemTestCase
   setup do
     @customer = customers(:one)
   end
 
-  test "visiting the index" do
+  test 'visiting the index' do
     visit customers_url
-    assert_selector "h1", text: "Customers"
+    assert_selector 'h1', text: 'Customers'
   end
 
-  test "creating a Customer" do
+  test 'creating a Customer' do
     visit customers_url
-    click_on "New Customer"
+    click_on 'New Customer'
 
-    click_on "Create Customer"
+    click_on 'Create Customer'
 
-    assert_text "Customer was successfully created"
-    click_on "Back"
+    assert_text 'Customer was successfully created'
+    click_on 'Back'
   end
 
-  test "updating a Customer" do
+  test 'updating a Customer' do
     visit customers_url
-    click_on "Edit", match: :first
+    click_on 'Edit', match: :first
 
-    click_on "Update Customer"
+    click_on 'Update Customer'
 
-    assert_text "Customer was successfully updated"
-    click_on "Back"
+    assert_text 'Customer was successfully updated'
+    click_on 'Back'
   end
 
-  test "destroying a Customer" do
+  test 'destroying a Customer' do
     visit customers_url
     page.accept_confirm do
-      click_on "Destroy", match: :first
+      click_on 'Destroy', match: :first
     end
 
-    assert_text "Customer was successfully destroyed"
+    assert_text 'Customer was successfully destroyed'
   end
 end

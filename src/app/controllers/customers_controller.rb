@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class CustomersController < ApplicationController
-  before_action :set_customer, only: [:show, :edit, :update, :destroy]
-  before_action :set_relation_models, only: [:new, :show, :update, :create]
+  before_action :set_customer, only: %i[show edit update destroy]
+  before_action :set_relation_models, only: %i[new show update create]
 
   # GET /customers
   # GET /customers.json
@@ -37,14 +39,12 @@ class CustomersController < ApplicationController
     @customer = Customer.new(customer_params)
 
     respond_to do |format|
-      begin
-        @customer.save!
-        format.html { redirect_to @customer, notice: '新規作成しました。' }
-        format.json { render :show, status: :created, location: @customer }
-      rescue => exception
-        format.html { render :new }
-        format.json { render json: @customer.errors, status: :unprocessable_entity }
-      end
+      @customer.save!
+      format.html { redirect_to @customer, notice: '新規作成しました。' }
+      format.json { render :show, status: :created, location: @customer }
+    rescue StandardError => e
+      format.html { render :new }
+      format.json { render json: @customer.errors, status: :unprocessable_entity }
     end
   end
 
@@ -52,15 +52,13 @@ class CustomersController < ApplicationController
   # PATCH/PUT /customers/1.json
   def update
     respond_to do |format|
-      begin
-        @customer.update!(customer_params)
-        format.html { redirect_to @customer, notice: '更新しました。' }
-        format.json { render :show, status: :ok, location: @customer }
-      rescue => exception
-        @reservations = @customer.reservations.order_reserved_at
-        format.html { render :show }
-        format.json { render json: @customer.errors, status: :unprocessable_entity }
-      end
+      @customer.update!(customer_params)
+      format.html { redirect_to @customer, notice: '更新しました。' }
+      format.json { render :show, status: :ok, location: @customer }
+    rescue StandardError => e
+      @reservations = @customer.reservations.order_reserved_at
+      format.html { render :show }
+      format.json { render json: @customer.errors, status: :unprocessable_entity }
     end
   end
 
@@ -75,32 +73,33 @@ class CustomersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_customer
-      @customer = Customer.find(params[:id])
-    end
 
-    def set_relation_models
-      @occupations = Occupation.all
-      @zoomancies = Zoomancy.all
-      @baby_ages = BabyAge.all
-      @sizes = Size.all
-      @visit_reasons = VisitReason.all
-      @nearest_stations = NearestStation.all
-      @stores = Store.all
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_customer
+    @customer = Customer.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def customer_params
-      params.require(:customer).permit(
-        :first_name, :last_name, :first_kana, :last_kana, :tel, :pc_mail, :can_receive_mail,
-        :first_visit_store_id, :last_visit_store_id, :comment, :zip_code, :address, :birthday,
-        :phone_mail, :email, :provider, :password, :occupation_id, :zoomancy_id,
-        :children_count, :baby_age_id, :size_id, :has_registration_card, :card_number
-        )
-    end
+  def set_relation_models
+    @occupations = Occupation.all
+    @zoomancies = Zoomancy.all
+    @baby_ages = BabyAge.all
+    @sizes = Size.all
+    @visit_reasons = VisitReason.all
+    @nearest_stations = NearestStation.all
+    @stores = Store.all
+  end
 
-    def search_params
-      params.permit(:name, :tel, :email, :page)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def customer_params
+    params.require(:customer).permit(
+      :first_name, :last_name, :first_kana, :last_kana, :tel, :pc_mail, :can_receive_mail,
+      :first_visit_store_id, :last_visit_store_id, :comment, :zip_code, :address, :birthday,
+      :phone_mail, :email, :provider, :password, :occupation_id, :zoomancy_id,
+      :children_count, :baby_age_id, :size_id, :has_registration_card, :card_number
+    )
+  end
+
+  def search_params
+    params.permit(:name, :tel, :email, :page)
+  end
 end

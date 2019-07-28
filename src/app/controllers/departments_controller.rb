@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class DepartmentsController < ApplicationController
-  before_action :set_department, only: [:show, :edit, :update, :destroy]
+  before_action :set_department, only: %i[show edit update destroy]
 
   # GET /departments
   # GET /departments.json
@@ -9,8 +11,7 @@ class DepartmentsController < ApplicationController
 
   # GET /departments/1
   # GET /departments/1.json
-  def show
-  end
+  def show; end
 
   # GET /departments/new
   def new
@@ -18,8 +19,7 @@ class DepartmentsController < ApplicationController
   end
 
   # GET /departments/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /departments
   # POST /departments.json
@@ -54,28 +54,27 @@ class DepartmentsController < ApplicationController
   # DELETE /departments/1
   # DELETE /departments/1.json
   def destroy
-    begin
-      @department.destroy!
-      respond_to do |format|
-        format.html { redirect_to departments_url, notice: 'Department was successfully destroyed.' }
-        format.json { head :no_content }
-      end
-    rescue => exception
-      respond_to do |format|
-        format.html { redirect_to department_url(@department.id), notice: 'すでに利用されているため、削除できません' }
-        format.json { render json: @department.errors, status: :unprocessable_entity }
-      end 
+    @department.destroy!
+    respond_to do |format|
+      format.html { redirect_to departments_url, notice: 'Department was successfully destroyed.' }
+      format.json { head :no_content }
+    end
+  rescue StandardError => e
+    respond_to do |format|
+      format.html { redirect_to department_url(@department.id), notice: 'すでに利用されているため、削除できません' }
+      format.json { render json: @department.errors, status: :unprocessable_entity }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_department
-      @department = Department.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def department_params
-      params.require(:department).permit(:name)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_department
+    @department = Department.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def department_params
+    params.require(:department).permit(:name)
+  end
 end

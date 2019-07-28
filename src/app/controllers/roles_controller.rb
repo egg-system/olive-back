@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class RolesController < ApplicationController
-  before_action :set_role, only: [:show, :update, :destroy]
+  before_action :set_role, only: %i[show update destroy]
 
   # GET /roles
   # GET /roles.json
@@ -9,8 +11,7 @@ class RolesController < ApplicationController
 
   # GET /roles/1
   # GET /roles/1.json
-  def show
-  end
+  def show; end
 
   # GET /roles/new
   def new
@@ -50,28 +51,27 @@ class RolesController < ApplicationController
   # DELETE /roles/1
   # DELETE /roles/1.json
   def destroy
-    begin
-      @role.destroy!
-      respond_to do |format|
-        format.html { redirect_to roles_url, notice: 'Role was successfully destroyed.' }
-        format.json { head :no_content }
-      end
-    rescue => exception
-      respond_to do |format|
-        format.html { redirect_to role_url(@role.id), notice: 'すでに利用されているため、削除できません' }
-        format.json { render json: @role.errors, status: :unprocessable_entity }
-      end 
+    @role.destroy!
+    respond_to do |format|
+      format.html { redirect_to roles_url, notice: 'Role was successfully destroyed.' }
+      format.json { head :no_content }
+    end
+  rescue StandardError => e
+    respond_to do |format|
+      format.html { redirect_to role_url(@role.id), notice: 'すでに利用されているため、削除できません' }
+      format.json { render json: @role.errors, status: :unprocessable_entity }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_role
-      @role = Role.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def role_params
-      params.require(:role).permit(:id, :name)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_role
+    @role = Role.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def role_params
+    params.require(:role).permit(:id, :name)
+  end
 end
