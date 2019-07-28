@@ -270,6 +270,9 @@ GEM
       rainbow (>= 2.2.2, < 4.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 1.4.0, < 1.7)
+    rubocop-rails (2.2.1)
+      rack (>= 1.1)
+      rubocop (>= 0.72.0)
     ruby-graphviz (1.2.4)
     ruby-progressbar (1.10.1)
     ruby_dep (1.5.0)
@@ -384,6 +387,8 @@ DEPENDENCIES
   rails (~> 5.2.2)
   rails-erd
   rails-i18n
+  rubocop
+  rubocop-rails
   sass-rails (~> 5.0)
   selenium-webdriver
   simple_form
@@ -402,4 +407,4 @@ RUBY VERSION
    ruby 2.6.3p62
 
 BUNDLED WITH
-   1.16.6
+   1.17.3

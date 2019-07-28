@@ -1,0 +1,8 @@
+inherit_from: .rubocop_todo.yml
+
+require: rubocop-rails
+AllCops:
+  Exclude:
+    - 'config/initializers/devise_token_auth.rb'
+    - 'config/environments/development.rb'
+    - 'db/migrate/*.rb'
