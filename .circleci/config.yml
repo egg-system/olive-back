@@ -18,6 +18,9 @@ jobs:
           command: docker-compose up -d --build
           name: docker up
       - run:
+          command: bundle exec rubocop
+          name: rubocop
+      - run:
           command: mkdir -p ~/caches
           name: mkdir -p ~/caches
       - run:
