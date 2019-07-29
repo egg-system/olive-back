@@ -10,6 +10,7 @@ class CustomersController < ApplicationController
     @search_params = search_params
     @customers = @customers.like_name(@search_params[:name]) if @search_params[:name].present?
     @customers = @customers.where(tel: @search_params[:tel]) if @search_params[:tel].present?
+    @customers = @customers.where('email LIKE ?', "%#{@search_params[:email]}%") if @search_params[:email].present?
     @customers = @customers.paginate(@search_params[:page], 20)
   end
 
@@ -100,6 +101,6 @@ class CustomersController < ApplicationController
     end
 
     def search_params
-      params.permit(:name, :tel, :page)
+      params.permit(:name, :tel, :email, :page)
     end
 end
