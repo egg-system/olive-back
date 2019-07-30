@@ -31,12 +31,18 @@
           </li>
         <% end %>
         <li class="nav-item">
-          <%= link_to(
-            "ログインユーザー：#{current_staff.full_name}",
-            staff_path(current_staff.id),
-            method: :get,
-            class: 'nav-link'
-          ) %>
+          <% if current_staff.role.staff? %>
+            <span class="nav-link">
+              <%= "ログインユーザー：#{current_staff.full_name}" %>
+            </span>
+          <% else %>
+            <%= link_to(
+              "ログインユーザー：#{current_staff.full_name}",
+              staff_path(current_staff.id),
+              method: :get,
+              class: 'nav-link'
+            ) %>
+          <% end %>
         </li>
         <li class="nav-item">
           <%= 
