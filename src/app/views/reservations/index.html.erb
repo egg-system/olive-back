@@ -87,6 +87,11 @@
         <li><%= link_to '既存顧客を検索して、予約登録する', customers_path %></li>
       </ul>
     </div>
+    <div class="pl-2 mt-3">
+      <% if @reservations.present? %>
+        <h5>合計件数：<%= @reservations.total_count %>件</h5>
+      <% end %>
+    </div>
     <div class="lower-frame">
       <%= render 'list' %>
     </div>
