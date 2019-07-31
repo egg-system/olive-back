@@ -7,32 +7,32 @@
           <%= 
             link_to '予約管理', 
               reservations_path, 
-              class: "nav-link" 
+              class: "nav-link active" 
           %>
         </li>
         <li class="nav-item">
           <%= 
             link_to '顧客管理', 
               customers_path, 
-              class: "nav-link" 
+              class: "nav-link active" 
           %>
         </li>
         <li class="nav-item">
-          <%= link_to 'シフト管理', shifts_path,  class: "nav-link" %>
+          <%= link_to 'シフト管理', shifts_path,  class: "nav-link active" %>
         </li>
         <% if current_staff.role.manager? %>
           <li class="nav-item">
-            <%= link_to 'スタッフ管理', staffs_path, class: "nav-link" %>
+            <%= link_to 'スタッフ管理', staffs_path, class: "nav-link active" %>
           </li>
         <% end %>
         <% if current_staff.role.admin? %>
           <li class="nav-item">
-            <%= link_to 'マスタ管理', masters_path, class: 'nav-link' %> 
+            <%= link_to 'マスタ管理', masters_path, class: 'nav-link active' %>
           </li>
         <% end %>
         <li class="nav-item">
           <% if current_staff.role.staff? %>
-            <span class="nav-link">
+            <span class="nav-link disabled">
               <%= "ログインユーザー：#{current_staff.full_name}" %>
             </span>
           <% else %>
@@ -40,7 +40,7 @@
               "ログインユーザー：#{current_staff.full_name}",
               staff_path(current_staff.id),
               method: :get,
-              class: 'nav-link'
+              class: 'nav-link active'
             ) %>
           <% end %>
         </li>
@@ -50,7 +50,7 @@
               'ログアウト', 
               destroy_staff_session_path, 
               method: :delete,
-              class: "nav-link"
+              class: "nav-link active"
             )
           %>
         </li>
