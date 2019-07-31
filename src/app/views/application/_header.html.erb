@@ -1,20 +1,20 @@
 <nav class=" navbar navbar-dark navbar-expand <%= bg_color %>">
   <%= link_to 'olive system', home_path, class: 'navbar-brand' %>
   <div class="navbar-collapse">
-    <% if staff_signed_in? %> 
+    <% if staff_signed_in? %>
       <ul class="navbar-nav">
         <li class="nav-item">
-          <%= 
-            link_to '予約管理', 
-              reservations_path, 
-              class: "nav-link" 
+          <%=
+            link_to '予約管理',
+              reservations_path,
+              class: "nav-link"
           %>
         </li>
         <li class="nav-item">
-          <%= 
-            link_to '顧客管理', 
-              customers_path, 
-              class: "nav-link" 
+          <%=
+            link_to '顧客管理',
+              customers_path,
+              class: "nav-link"
           %>
         </li>
         <li class="nav-item">
@@ -27,22 +27,28 @@
         <% end %>
         <% if current_staff.role.admin? %>
           <li class="nav-item">
-            <%= link_to 'マスタ管理', masters_path, class: 'nav-link' %> 
+            <%= link_to 'マスタ管理', masters_path, class: 'nav-link' %>
           </li>
         <% end %>
         <li class="nav-item">
-          <%= link_to(
-            "ログインユーザー：#{current_staff.full_name}",
-            staff_path(current_staff.id),
-            method: :get,
-            class: 'nav-link'
-          ) %>
+          <% if current_staff.role.manager? %>
+            <%= link_to(
+              "ログインユーザー：#{current_staff.full_name}",
+              staff_path(current_staff.id),
+              method: :get,
+              class: 'nav-link'
+            ) %>
+          <% else %>
+            <span class="navbar-text">
+              <%= "ログインユーザー：#{current_staff.full_name}" %>
+            </span>
+          <% end %>
         </li>
         <li class="nav-item">
-          <%= 
+          <%=
             link_to(
-              'ログアウト', 
-              destroy_staff_session_path, 
+              'ログアウト',
+              destroy_staff_session_path,
               method: :delete,
               class: "nav-link"
             )
