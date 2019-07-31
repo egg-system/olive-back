@@ -24,6 +24,13 @@ ja:
           attributes:
             staff:
               required: 'がございません。お手数ですが、予約日時を変更してください。'
+  views:
+    pagination:
+      first: '&laquo; First'
+      last: 'Last &raquo;'
+      previous: '&lsaquo; Prev'
+      next: 'Next &rsaquo;'
+      truncate: '&hellip;'
 
   errors:
     messages:
