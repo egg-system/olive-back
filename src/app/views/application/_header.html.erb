@@ -32,7 +32,7 @@
         <% end %>
         <li class="nav-item">
           <% if current_staff.role.staff? %>
-            <span class="nav-link disabled">
+            <span class="nav-link">
               <%= "ログインユーザー：#{current_staff.full_name}" %>
             </span>
           <% else %>
