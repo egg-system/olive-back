@@ -33,27 +33,4 @@ jobs:
           key: docker-cache-{{ checksum "Dockerfile" }}-{{ checksum "src/Gemfile.lock" }}
           paths:
             - ~/caches/images.tar
-  rubucop:
-    requires:
-      - build
-    docker:
-      - image: circleci/ruby:2.6.3
-        environment:
-          BUNDLER_VERSION: 2.0.1
-    steps:
-      - checkout
-      - run:
-          name: setup bundler
-          command: |
-            sudo gem update --system
-            sudo gem uninstall bundler
-            sudo rm /usr/local/bin/bundle
-            sudo rm /usr/local/bin/bundler
-            sudo gem install bundler
-      - run:
-          name: Bundle Install
-          command: gem install "rubocop"
-      - run:
-          name: rubocop
-          command: bundle exec rubocop
 version: 2
