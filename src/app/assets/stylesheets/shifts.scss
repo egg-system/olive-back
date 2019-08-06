@@ -5,9 +5,14 @@
 $coloumBackColor: #007bff;
 $rowBackColor: #007bff;
 $headStrColor: rgba(255, 255, 255, 0.8);
-$tdOddColor: #e5f5fc;
+$tdOddColor: #e9f3fa;
 $cellWidth: 7rem;
 $borderRight: 2px solid white;
+$fontSize: 0.9rem;
+
+$themeColorPalePink: #fff0f5;
+$themeColorPaleYellow: #fffde7;
+$themeColorOlive: #689f38;
 
 // ---検索欄部分---
 .shift-list {
@@ -34,7 +39,7 @@ $borderRight: 2px solid white;
     line-height: 1;
     border-radius: 0px;
   }
-  input[type="submit"] {
+  input[type='submit'] {
     border: none;
     background: #17a2b8;
     cursor: pointer;
@@ -58,17 +63,22 @@ $borderRight: 2px solid white;
     height: calc(75vh);
     overflow: scroll;
     z-index: 10;
-    margin-top: 5px;
     margin-bottom: 5px;
     border: 1px solid #e4e4e4;
   }
+  .span {
+    font-size: 0.8rem;
+    margin-top: 15px;
+    margin-left: 2px;
+  }
   .sticky_table {
     thead th {
+      position: sticky;
       white-space: nowrap;
       background-color: $coloumBackColor;
       color: $headStrColor;
       width: $cellWidth;
-      font-size: 0.9rem;
+      font-size: $fontSize;
       text-align: center;
       padding-right: 8px;
       padding-left: 8px;
@@ -79,17 +89,42 @@ $borderRight: 2px solid white;
     tbody .td-checkbox {
       white-space: nowrap;
       width: $cellWidth;
-      font-size: 0.9rem;
+      font-size: $fontSize;
       text-align: center;
-    }
-    // 1時間ごとに区切り線を入れる
-    tbody .td-checkbox:nth-child(odd) {
-      border-right: 2px solid $coloumBackColor;
     }
     // 一行ごとに色を付ける
     tbody tr:nth-child(odd) {
       background: $tdOddColor;
       border: none;
+    }
+    input[type='checkbox'] {
+      display: none;
+    }
+    // チェックボックス
+    .label {
+      margin: 0;
+      white-space: nowrap;
+      width: 100%;
+      height: 100%;
+      font-size: $fontSize;
+      text-align: center;
+      vertical-align: top;
+      cursor: pointer;
+    }
+    // チェックボックス：チェック後
+    input[type='checkbox']:checked + .label {
+      background: #43d0e6;
+    }
+    input[type='checkbox']:checked + .label::before {
+      content: '';
+    }
+    // 1hごとに区切り線を入れる
+    tbody .td-checkbox:nth-child(odd) {
+      border-right: 2px solid $coloumBackColor;
+    }
+    // 30minごとに区切り線を入れる
+    tbody .td-checkbox:nth-child(even) {
+      border-right: 1px solid #e4e4e4;
     }
     // 行の固定(縦スクロール時)
     thead th {
@@ -115,10 +150,9 @@ $borderRight: 2px solid white;
       position: sticky;
       left: 0px;
       width: $cellWidth;
-      font-size: 0.9rem;
-      text-align: left;
-      padding-left: 12px;
+      font-size: $fontSize;
       border-right: 1px solid white;
+      text-align: center;
     }
   }
 }

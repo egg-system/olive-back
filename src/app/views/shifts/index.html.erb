@@ -20,6 +20,9 @@
     </div>
   <% end %>
 
+  <div class="span">
+    <span>対象のセルをクリックして下さい</span>
+  </div>
   <%= form_with url: updates_shifts_path, method: :patch, local: true do |form| %>
     <table class="sticky_table">
       <thead>
@@ -30,19 +33,20 @@
           <% end %>
         </tr>
       </thead>
-
       <tbody>
-        <% (@start_date..@end_date).each do |date| %>
+        <% (@start_date..@end_date).each_with_index do |date, i| %>
           <tr>
             <td><%= date %></td>
-            <% Shift.get_time_slots(date).each do |shift_time| %>
+            <% Shift.get_time_slots(date).each_with_index do |shift_time, j| %>
               <td class="td-checkbox">
                 <%= form.check_box(
                   get_shift_parameter(shift_time), {
                     checked: shift_exist(shift_time),
-                    disabled: resrvation_exist(shift_time)
+                    disabled: resrvation_exist(shift_time),
+                    id: "new_shift_#{ i }_#{ j }"
                   }
                 ) %>
+                <label for="<%= "new_shift_#{ i }_#{ j }" %>" class="label">&nbsp;</label>
                 <% if resrvation_exist(shift_time) %>
                   <span>予約済み</span>
                 <% end %>
@@ -58,5 +62,6 @@
       <input type="submit" name="commit" value="登録" data-disable-with="登録">
     <% end %>
   <% end %>
+  <br>
   <br>
 </div>

@@ -13,8 +13,11 @@
  *= require_tree .
  *= require_self
  */
-@import "bootstrap";
+@import 'bootstrap';
 
+body {
+  background-color: #fbfbfb;
+}
 // 今後共通化できるものはここに書いていきたい
 .common_title {
   font-size: 30px;
