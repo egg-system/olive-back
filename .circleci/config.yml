@@ -18,7 +18,7 @@ jobs:
           command: docker-compose up -d --build
           name: docker up
       - run:
-          command: docker-compose run rails rubocop
+          command: docker exec olive-app rails rubocop
           name: rubocop
       - run:
           command: mkdir -p ~/caches

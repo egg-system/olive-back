@@ -35,6 +35,11 @@
     </div>
     <div class="clear"></div>
   </div>
+  <div class="pl-2 mt-3">
+    <% if @customers.present? %>
+      <h5>合計件数：<%= @customers.total_count %>件</h5>
+    <% end %>
+  </div>
   <div class="lower-frame">
     <% if @customers.blank? %>
       <p>該当データがありません</p>
