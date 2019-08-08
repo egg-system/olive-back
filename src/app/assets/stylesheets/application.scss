@@ -15,8 +15,10 @@
  */
 @import 'bootstrap';
 
+$bodyBackground: #fbfbfb;
+
 body {
-  background-color: #fbfbfb;
+  background-color: $bodyBackground;
 }
 // 今後共通化できるものはここに書いていきたい
 .common_title {
