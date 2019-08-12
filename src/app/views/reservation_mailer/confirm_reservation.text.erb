@@ -7,5 +7,4 @@
 この度はご予約いただきありがとうございました。
 
 こちらのメール配信をもちましてご予約確定とさせて頂きます。
-
-<%= render 'reservation_mailer/confirm/' + format("%03d", @store.id) %>
+<%= render "reservation_mailer/store_template/confirm/#{Settings.store_template_names[@store.id]}" %>
