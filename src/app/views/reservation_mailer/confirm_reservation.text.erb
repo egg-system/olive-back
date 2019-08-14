@@ -1,4 +1,4 @@
-<%= @customer.last_name %> 様
+<%= @customer.full_name %> 様
 
 ご予約ID：<%= @reservation.id %>
 予約日時：<%= @reservation.reserved_at.strftime('%Y年 %m月 %d日 %H時 %M分') %>
@@ -7,4 +7,4 @@
 この度はご予約いただきありがとうございました。
 
 こちらのメール配信をもちましてご予約確定とさせて頂きます。
-<%= render "reservation_mailer/store_template/confirm/#{Settings.store_template_names[@store.id]}" %>
+<%= store_template_of_confirm(@store) %>

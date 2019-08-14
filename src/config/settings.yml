@@ -47,7 +47,7 @@ domain:
   production: 'dashboard.olivebodycare.healthcare'
 
 store_template_names:
-  1: tamaplaza
-  2: tamaplaza_simplest
-  3: aobadai
-  4: maruyama
+  - tamaplaza
+  - tamaplaza_simplest
+  - aobadai
+  - maruyama
