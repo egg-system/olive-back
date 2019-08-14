@@ -24,6 +24,10 @@ RUN mkdir -p $WORKSPACE $BUNDLE_APP_CONFIG && \
     chown -R rails:rails $WORKSPACE && \
     chown -R rails:rails $BUNDLE_APP_CONFIG
 
+# server.pidのエラーをなくすための処理
+COPY --chown=rails:rails ./start_up.sh /usr/local/start_up.sh
+RUN chmod 744 /usr/local/start_up.sh
+
 USER rails
 WORKDIR $WORKSPACE
 
@@ -31,4 +35,4 @@ ADD --chown=rails:rails src $WORKSPACE
 RUN bundle _1.16.6_ install
 
 EXPOSE 3000
-CMD ["rails", "server", "-b", "0.0.0.0"]
+CMD ["/usr/local/start_up.sh"]
