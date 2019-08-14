@@ -12,4 +12,4 @@
 <%= @customer.last_name %>様のご来院を心よりお待ちしております。
 お気をつけてお越しくださいませ。
 
-<%= render "reservation_mailer/store_template/remind/#{Settings.store_template_names[@store.id]}" %>
+<%= render 'store_template', store: @store, customer: @customer, action: :remind %>
