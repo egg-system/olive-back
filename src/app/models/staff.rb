@@ -3,7 +3,15 @@ class Staff < ApplicationRecord
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :database_authenticatable, :rememberable, authentication_keys: [:login]
+  devise(
+    :database_authenticatable,
+    :rememberable,
+    authentication_keys: [:login, :login_store_id]
+  )
+
+  # devise()を実行後に記述する
+  # moduleで、devise定義のメソッドをオーバーライドしているため
+  extend LoginStoreModule
 
   has_many :skill_staffs
   has_many :skills, through: :skill_staffs
@@ -20,6 +28,8 @@ class Staff < ApplicationRecord
 
   belongs_to :role
   has_many :shifts
+
+  attr_accessor :login_store_id
 
   scope :can_treats, -> (menu_ids, option_ids) {
     menus = Menu.where(id: menu_ids).select('skill_id').distinct
@@ -69,10 +79,5 @@ class Staff < ApplicationRecord
 
   def name
     return "#{self.last_name} #{self.first_name}"
-  end
-
-  def self.find_for_authentication(tainted_conditions)
-    # TODO: ここで店舗の検索処理を実装する
-    super
   end
 end
