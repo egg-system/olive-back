@@ -72,6 +72,10 @@ class Staff < ApplicationRecord
     where("concat(last_name, first_name) like ?", "%#{full_name}%")
   }
 
+  def name
+    self.full_name
+  end
+
   def full_name
     return "#{self.last_name} #{self.first_name}".strip
   end
