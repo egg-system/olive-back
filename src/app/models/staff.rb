@@ -68,16 +68,16 @@ class Staff < ApplicationRecord
     select('staffs.*').join_role
   }
 
+  scope :like_name, -> (full_name) {
+    where("concat(last_name, first_name) like ?", "%#{full_name}%")
+  }
+
   def full_name
-    return (self.last_name + ' ' + self.first_name).strip
+    return "#{self.last_name} #{self.first_name}".strip
   end
 
   def employment_type_name
     return "" if self.employment_type.nil?
     return Settings.employment_type[self.employment_type]
-  end
-
-  def name
-    return "#{self.last_name} #{self.first_name}"
   end
 end

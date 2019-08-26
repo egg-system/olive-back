@@ -38,10 +38,10 @@
           <tr>
             <th scope="col">スタッフID</th>
             <th scope="col">店舗名</th>
-            <th scope="col">スタッフ氏名（姓）</th>
-            <th scope="col">スタッフ氏名（名）</th>
+            <th scope="col">スタッフ氏名</th>
             <th scope="col">保有スキル</th>
             <th scope="col">雇用区分</th>
+            <th scope="col">アクセス権限</th>
             <th scope="col">更新日</th>
             <th scope="col"></th>
           </tr>
@@ -51,10 +51,10 @@
             <tr>
               <td><%= staff.id %></td>
               <td scope="row"><%= safe_join(staff.stores.pluck(:name), tag(:br)) %></td>
-              <td><%= staff.last_name %></td>
-              <td><%= staff.first_name %></td>
+              <td><%= staff.full_name %></td>
               <td><%= safe_join(staff.skills.pluck(:name), tag(:br)) %></td>
               <td><%= staff.employment_type_name %></td>
+              <td><%= staff.role.name %></td>
               <td><%= staff.updated_at.strftime('%Y/%m/%d') %></td>
               <td><%= link_to "詳細へ", staff_path(staff.id) %></td>
             </tr>
