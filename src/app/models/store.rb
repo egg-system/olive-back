@@ -7,6 +7,20 @@ class Store < ApplicationRecord
   has_many :store_option
   has_many :options, through: :store_option
 
+  scope :viewable?, -> (current_store) {
+    # 直営店は全直営店を閲覧可能
+    return where(store_type: 0) if current_store.owned?
+    return where(id: current_store.id) if current_store.franchised?
+  }
+
+  def owned?
+    return self.store_type.to_sym === :owned
+  end
+
+  def franchised?
+    return self.store_type.to_sym === :franchised
+  end
+
   def to_shop
     shop_attributes
   end
