@@ -5,7 +5,7 @@ class ReservationsController < ApplicationController
   # GET /reservations
   # GET /reservations.json
   def index
-    @stores = Store.all
+    @stores = viewable_stores
     @reservations = Reservation.joins(:customer).paginate(params[:page], 20)
 
     @order = params[:order] if params[:order].present?
@@ -16,7 +16,13 @@ class ReservationsController < ApplicationController
     @reservations = @reservations.where_customer_name(@customer_name) if @customer_name.present?
 
     @store_id = params[:store_id]
-    @reservations = @reservations.where(store_id: @store_id) if @store_id.present?
+    if @store_id.present?
+      @reservations = @reservations.where(store_id: @store_id)
+    else
+      # 閲覧可能な予約に絞る
+      store_ids = @stores.pluck(:id)
+      @reservations = @reservations.where(store_id: store_ids)
+    end
 
     @from_date = Date.parse(params[:from_date]) if params.has_key?(:from_date)
     @reservations = @reservations.where('reservation_date >= ?', @from_date) if @from_date.present?
@@ -24,7 +30,7 @@ class ReservationsController < ApplicationController
     @to_date = Date.parse(params[:to_date]) if params.has_key?(:to_date)
     @reservations = @reservations.where('reservation_date <= ?', @to_date) if @to_date.present?
 
-    @staffs = Staff.all
+    @staffs = viewable_staffs
     @staff_id = params[:staff_id]
     @order = params[:order]
 
@@ -127,8 +133,8 @@ class ReservationsController < ApplicationController
     def set_relation_models
       @coupons = Coupon.all
       @options = Option.all
-      @stores = Store.all
-      @staffs = Staff.all
+      @stores = viewable_stores
+      @staffs = viewable_staffs
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

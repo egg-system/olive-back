@@ -5,19 +5,23 @@ class StaffsController < ApplicationController
   # GET /staffs
   # GET /staffs.json
   def index
-    @staffs = Staff.all
+    @staffs = viewable_staffs
     if params[:store_id].present?
       @staffs = @staffs.where_store_id(params[:store_id])
       @store_id = params[:store_id]
     end
 
     if params[:staff_name].present?
-      @staffs = @staffs.where("concat(last_name, first_name) like ?", "%#{params[:staff_name]}%")
+      @staffs = @staffs.like_name(params[:staff_name])
       @staff_name = params[:staff_name]
     end
 
-    @stores = Store.all
-    @staff_skills_list = ActiveRecord::Base.connection.select_all('select skill_staffs.staff_id, group_concat(skills.name) as skills_list FROM `skill_staffs` INNER JOIN `skills` ON `skills`.`id` = `skill_staffs`.`skill_id` GROUP BY `skill_staffs`.`staff_id`').to_hash
+    @stores = viewable_stores
+
+    # 要リファクタリング
+    @staff_skills_list = ActiveRecord::Base.connection.select_all(
+      'select skill_staffs.staff_id, group_concat(skills.name) as skills_list FROM `skill_staffs` INNER JOIN `skills` ON `skills`.`id` = `skill_staffs`.`skill_id` GROUP BY `skill_staffs`.`staff_id`'
+    ).to_hash
   end
 
   def search
@@ -87,7 +91,7 @@ class StaffsController < ApplicationController
 
   protected
     def set_relation_models
-      @stores = Store.all
+      @stores = viewable_stores
       @roles = Role.all
       @skills = Skill.all
     end
