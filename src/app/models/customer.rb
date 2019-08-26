@@ -47,6 +47,14 @@ class Customer < ApplicationRecord
     where("concat(last_name, first_name) like ?", "%#{name}%")
   }
 
+  scope :like_tel, -> (tel) {
+    where('tel LIKE ?', "%#{tel}%")
+  }
+
+  scope :like_email, -> (email) {
+    where('email LIKE ?', "%#{email}%")
+  }
+
   attr_accessor :age
 
   def age

@@ -8,9 +8,12 @@ class CustomersController < ApplicationController
     @customers = Customer.all.join_tables
 
     @search_params = search_params
-    @customers = @customers.like_name(@search_params[:name]) if @search_params[:name].present?
-    @customers = @customers.where(tel: @search_params[:tel]) if @search_params[:tel].present?
-    @customers = @customers.where('email LIKE ?', "%#{@search_params[:email]}%") if @search_params[:email].present?
+
+    # like検索ではパラメータチェックは不要
+    @customers = @customers.like_name(@search_params[:name])
+    @customers = @customers.like_tel(@search_params[:tel])
+    @customers = @customers.like_email(@search_params[:email])
+
     @customers = @customers.paginate(@search_params[:page], 20)
   end
 
