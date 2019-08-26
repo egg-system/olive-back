@@ -72,6 +72,11 @@ class Staff < ApplicationRecord
     where("concat(last_name, first_name) like ?", "%#{full_name}%")
   }
 
+  # nameもfull_nameも使われているため、削除時には要注意
+  def name
+    self.full_name
+  end
+
   def full_name
     return "#{self.last_name} #{self.first_name}".strip
   end
