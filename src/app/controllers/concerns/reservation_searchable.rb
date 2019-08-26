@@ -5,23 +5,27 @@ module Concerns::ReservationSearchable
     reservations = Reservation.joins(:customer).paginate(params[:page], 20)
     reservations = reservations.order_reserved_at if @order === 'reserved_at'
     reservations = reservations.order('id DESC')
-    reservations = reservations.where_customer_name(@customer_name) if @customer_name.present?
+
+    reservations = reservations.like_customer_name(@customer_name)
+    reservations = reservations.like_customer_tel(@customer_tel)
+    
     reservations = reservations.where('reservation_date >= ?', @from_date) if @from_date.present?
     reservations = reservations.where('reservation_date <= ?', @to_date) if @to_date.present?
 
     if @store_id.present?
       reservations = reservations.where(store_id: @store_id)
-    else
-      # 閲覧可能な予約に絞る
+    else # 検索する値がなくても、権限に応じて絞り込む
       store_ids = @stores.pluck(:id)
       reservations = reservations.where(store_id: store_ids)
     end
 
-    return reservations if @staff_id.nil?
+    reservations = reservations.where_state(@state) if @state.present?
 
-    reservations = reservations.where(staff_id: @staff_id) if @staff_id.to_i > 0
-    reservations = reservations.where(staff_id: nil) if @staff_id === 'none'
-    reservations = reservations.where.not(staff_id: nil) if @staff_id === 'any'
+    unless @staff_id.nil?
+      reservations = reservations.where(staff_id: @staff_id) if @staff_id.to_i > 0
+      reservations = reservations.where(staff_id: nil) if @staff_id === 'none'
+      reservations = reservations.where.not(staff_id: nil) if @staff_id === 'any'
+    end
 
     return reservations
   end

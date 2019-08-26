@@ -7,15 +7,22 @@ class ReservationsController < ApplicationController
   # GET /reservations
   # GET /reservations.json
   def index
+    @order = params[:order]
+
+    @states = Reservation.states
+    @state = params[:state] if params[:state].present?
+
     @stores = viewable_stores
-    @order = params[:order] if params[:order].present?
-    @customer_name = params[:customer_name]
     @store_id = params[:store_id]
-    @from_date = Date.parse(params[:from_date]) if params.has_key?(:from_date)
-    @to_date = Date.parse(params[:to_date]) if params.has_key?(:to_date)
+
     @staffs = viewable_staffs
     @staff_id = params[:staff_id]
-    @order = params[:order]
+
+    @customer_name = params[:customer_name]
+    @customer_tel = params[:customer_tel]
+    
+    @from_date = Date.parse(params[:from_date]) if params.has_key?(:from_date)
+    @to_date = Date.parse(params[:to_date]) if params.has_key?(:to_date)  
 
     # concernに検索ロジックを切り出し
     @reservations = search_reservations
@@ -24,6 +31,8 @@ class ReservationsController < ApplicationController
   def search
     redirect_to reservations_path({
       customer_name: params[:customer_name],
+      customer_tel: params[:customer_tel],
+      state: params[:state],
       staff_id: params[:staff_id],
       store_id: params[:store_id],
       from_date: parse_date_params('from_date'),
