@@ -26,7 +26,7 @@ module Concerns::ReservationSearchable
     return reservations
   end
 
-  # 使いまわしできるようにしても、よさそう
+  # 必要であれば、使い回し可能にする
   def parse_date_params(param_name)
     return nil if params["#{param_name}(1i)"].empty?
     return nil if params["#{param_name}(2i)"].empty?
