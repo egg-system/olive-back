@@ -1,0 +1,32 @@
+<div class="custom_row row">
+  <div class="custom_left col-sm-3">
+    <label>顧客名</label>
+  </div>
+  <div class="custom_right col-sm-9">
+    <% if customer.present? %>
+      <%= form.input(
+        :customer_full_name,
+        label: false,
+        readonly: true,
+        input_html: { value: "#{customer.full_name}" },
+        hint: link_to('顧客情報の詳細はこちらへ', customer_path(customer.id))
+      ) %>
+    <% end %>
+  </div>
+</div>
+
+<div class="custom_row row">
+  <div class="custom_left col-sm-3">
+    <label>顧客電話番号</label>
+  </div>
+  <div class="custom_right col-sm-9">
+    <% if customer.present? %>
+      <%= form.input(
+        :customer_full_name,
+        label: false,
+        readonly: true,
+        input_html: { value: "#{customer.tel}" }
+      ) %>
+    <% end %>
+  </div>
+</div>
