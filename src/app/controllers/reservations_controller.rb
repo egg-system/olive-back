@@ -90,7 +90,13 @@ class ReservationsController < ApplicationController
   # DELETE /reservations/1
   # DELETE /reservations/1.json
   def destroy
-    Reservation.find(params[:id]).cancel
+    reservation = Reservation.find(params[:id])
+    reservation.cancel
+
+    unless params[:do_send_cancel_mail?].nil?
+      ReservationMailer.cancel_reservation(reservation).deliver_now
+    end
+
     respond_to do |format|
       format.html { redirect_to reservations_url, notice: '予約をキャンセルいたしました。' }
       format.json { head :no_content }
