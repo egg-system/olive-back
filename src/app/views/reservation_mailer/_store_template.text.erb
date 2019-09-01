@@ -14,8 +14,15 @@
     when 2 then :simpleste
     when 3 then :aobadai
     when 4 then :maruyama
+    else nil
     # when 店舗ID then :店舗名のローマ字
   end
 
-  render "reservation_mailer/store_templates/#{store_name}/#{action}", store: store, customer: customer
+  unless store_name.nil? 
+    render(
+      "reservation_mailer/store_templates/#{store_name}/#{action}",
+      store: store,
+      customer: customer
+    )
+  end
 %>
