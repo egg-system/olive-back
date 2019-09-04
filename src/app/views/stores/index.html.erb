@@ -34,6 +34,7 @@
               <th scope="col">店舗名</th>
               <th scope="col">店舗住所</th>
               <th scope="col">店舗リンク</th>
+              <th scope="col">予約URL</th>
               <th scope="col">更新日時</th>
               <th scope="col"></th>
             </tr>
@@ -46,6 +47,7 @@
                 <td><%=store.name%></td>
                 <td><%=store.address%></td>
                 <td><%=link_to "ホームページへ", store.url%></td>
+                <td><%=link_to "予約ページへ", store.url%></td>
                 <td><%=store.updated_at.strftime('%Y/%m/%d')%></td>
                 <td><%=link_to "詳細へ", store_path(store.id)%></td>
               </tr>
