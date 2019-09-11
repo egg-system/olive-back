@@ -27,4 +27,10 @@ class ApplicationController < ActionController::Base
     store_ids = viewable_stores.pluck(:id)
     return Staff.where_store_id(store_ids).uniq
   end
+
+  # 管理者のみ管理者権限に変更できるようにする
+  def viewable_roles
+    return Role.all if current_staff.role.admin?
+    return Role.viewable?(view_context.current_store)
+  end
 end

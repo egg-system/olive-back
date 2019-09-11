@@ -92,7 +92,7 @@ class StaffsController < ApplicationController
   protected
     def set_relation_models
       @stores = viewable_stores
-      @roles = Role.all
+      @roles = viewable_roles
       @skills = Skill.all
     end
 
