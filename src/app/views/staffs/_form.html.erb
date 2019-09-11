@@ -18,7 +18,8 @@
         as: :check_boxes,
         wrapper: :horizontal_collection_inline,
         collection: @stores.map{|store| [store.name, store.id]},
-        label: '所属店舗',
+        # required: trueを使うと全チェックが必要になる 
+        label: '所属店舗<abbr>&nbsp;(必須)</abbr>'.html_safe,
         checked: @staff.stores.exists? ? @staff.stores.pluck(:id) : [],
         include_hidden: false,
         hint: '１件以上、入力してください'
