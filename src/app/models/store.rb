@@ -37,7 +37,7 @@ class Store < ApplicationRecord
   end
 
   def reserve_url
-    return "#{super.reserve_url}/menus/?shopid=#{self.id}"
+    return "#{super}/menus/?shopid=#{self.id}"
   end
 
   private
