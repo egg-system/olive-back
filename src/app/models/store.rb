@@ -27,7 +27,7 @@ class Store < ApplicationRecord
 
   def to_shop_menus
     shop_menus = [ sub_shop_attributes ]
-    
+
     if is_head
       este_store = Store.find(Settings.stores.head_este_store_id)
       shop_menus.concat(este_store.to_shop_menus)
@@ -36,8 +36,12 @@ class Store < ApplicationRecord
     return shop_menus
   end
 
+  def reserve_url
+    return "#{super}/menus/?shopid=#{self.id}"
+  end
+
   private
-  
+
   SHOP_KEYS = [ :id, :name, :open_at, :close_at, :break_from, :break_to ]
   def shop_attributes
     SHOP_KEYS.map { |json_key|
@@ -50,9 +54,9 @@ class Store < ApplicationRecord
   end
 
   def sub_shop_attributes
-    return { 
-      id: self.id, 
-      name: self.name, 
+    return {
+      id: self.id,
+      name: self.name,
       menus: self.menus.map { |menu| menu.to_sub_menu_attributes(self.options) }
     }
   end

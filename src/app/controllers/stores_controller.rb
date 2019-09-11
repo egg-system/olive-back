@@ -97,6 +97,7 @@ class StoresController < ApplicationController
         :tel,
         :mail,
         :url,
+        :reservation_url,
         :open_at,
         :close_at,
         :break_from,
