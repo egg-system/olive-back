@@ -47,7 +47,7 @@
                 <td><%=store.name%></td>
                 <td><%=store.address%></td>
                 <td><%=link_to "ホームページへ", store.url%></td>
-                <td><%=link_to "予約ページへ", store.url%></td>
+                <td><%=link_to "予約ページへ", store.reserve_url%></td>
                 <td><%=store.updated_at.strftime('%Y/%m/%d')%></td>
                 <td><%=link_to "詳細へ", store_path(store.id)%></td>
               </tr>

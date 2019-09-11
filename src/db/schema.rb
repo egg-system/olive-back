@@ -12,7 +12,7 @@
 
 ActiveRecord::Schema.define(version: 2019_07_04_122358) do
 
-  create_table "audits", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "audits", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.integer "auditable_id"
     t.string "auditable_type"
     t.integer "associated_id"
@@ -34,13 +34,13 @@ ActiveRecord::Schema.define(version: 2019_07_04_122358) do
     t.index ["user_id", "user_type"], name: "user_index"
   end
 
-  create_table "baby_ages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "baby_ages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "coupon_histories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "coupon_histories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.bigint "customer_id"
     t.bigint "coupon_id"
     t.date "used_at"
@@ -50,7 +50,7 @@ ActiveRecord::Schema.define(version: 2019_07_04_122358) do
     t.index ["customer_id"], name: "index_coupon_histories_on_customer_id"
   end
 
-  create_table "coupons", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "coupons", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.string "name"
     t.string "fee", comment: "税別料金"
     t.integer "count", comment: "利用回数"
@@ -61,7 +61,7 @@ ActiveRecord::Schema.define(version: 2019_07_04_122358) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "customers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "customers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
     t.string "first_kana"
@@ -117,13 +117,13 @@ ActiveRecord::Schema.define(version: 2019_07_04_122358) do
     t.index ["zoomancy_id"], name: "index_customers_on_zoomancy_id"
   end
 
-  create_table "departments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "departments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "menu_categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "menu_categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.string "name"
     t.bigint "department_id"
     t.datetime "created_at", null: false
@@ -131,7 +131,7 @@ ActiveRecord::Schema.define(version: 2019_07_04_122358) do
     t.index ["department_id"], name: "index_menu_categories_on_department_id"
   end
 
-  create_table "menus", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "menus", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.string "name"
     t.text "description"
     t.integer "fee"
@@ -147,19 +147,19 @@ ActiveRecord::Schema.define(version: 2019_07_04_122358) do
     t.index ["skill_id"], name: "index_menus_on_skill_id"
   end
 
-  create_table "nearest_stations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "nearest_stations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "occupations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "occupations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "options", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "options", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.string "name"
     t.bigint "skill_id", comment: "必須スキル"
     t.bigint "department_id"
@@ -173,7 +173,7 @@ ActiveRecord::Schema.define(version: 2019_07_04_122358) do
     t.index ["skill_id"], name: "index_options_on_skill_id"
   end
 
-  create_table "reservation_coupons", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "reservation_coupons", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.bigint "reservation_id"
     t.bigint "coupon_id"
     t.datetime "created_at", null: false
@@ -182,7 +182,7 @@ ActiveRecord::Schema.define(version: 2019_07_04_122358) do
     t.index ["reservation_id"], name: "index_reservation_coupons_on_reservation_id"
   end
 
-  create_table "reservation_detail_options", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "reservation_detail_options", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.bigint "reservation_detail_id"
     t.bigint "option_id"
     t.datetime "created_at", null: false
@@ -191,7 +191,7 @@ ActiveRecord::Schema.define(version: 2019_07_04_122358) do
     t.index ["reservation_detail_id"], name: "index_reservation_detail_options_on_reservation_detail_id"
   end
 
-  create_table "reservation_details", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", comment: "予約の詳細。シフトやメニューなどに紐づく", force: :cascade do |t|
+  create_table "reservation_details", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", comment: "予約の詳細。シフトやメニューなどに紐づく", force: :cascade do |t|
     t.bigint "reservation_id"
     t.bigint "menu_id"
     t.integer "mimitsubo_count", default: 0, comment: "耳つぼジュエリの個数。デフォルト値はオプションが選択されていて、個数がnilの場合を防ぐため"
@@ -201,7 +201,7 @@ ActiveRecord::Schema.define(version: 2019_07_04_122358) do
     t.index ["reservation_id"], name: "index_reservation_details_on_reservation_id"
   end
 
-  create_table "reservation_shifts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "reservation_shifts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.bigint "reservation_id"
     t.bigint "shift_id"
     t.datetime "created_at", null: false
@@ -210,7 +210,7 @@ ActiveRecord::Schema.define(version: 2019_07_04_122358) do
     t.index ["shift_id"], name: "index_reservation_shifts_on_shift_id"
   end
 
-  create_table "reservations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "reservations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.integer "children_count", default: 0, comment: "随伴するお子様の数"
     t.text "reservation_comment"
     t.bigint "store_id"
@@ -229,13 +229,13 @@ ActiveRecord::Schema.define(version: 2019_07_04_122358) do
     t.index ["store_id"], name: "index_reservations_on_store_id"
   end
 
-  create_table "roles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "roles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "shifts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", comment: "シフト。スタッフと既存の予約の組み合わせで、予約枠になる", force: :cascade do |t|
+  create_table "shifts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", comment: "シフト。スタッフと既存の予約の組み合わせで、予約枠になる", force: :cascade do |t|
     t.date "date", comment: "シフトの日時"
     t.time "start_at", comment: "シフトの開始時間"
     t.time "end_at", comment: "シフトの終了時間。30分単位になる"
@@ -247,13 +247,13 @@ ActiveRecord::Schema.define(version: 2019_07_04_122358) do
     t.index ["store_id"], name: "index_shifts_on_store_id"
   end
 
-  create_table "sizes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "sizes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "skill_staffs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "skill_staffs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.bigint "staff_id"
     t.bigint "skill_id"
     t.datetime "created_at", null: false
@@ -262,13 +262,13 @@ ActiveRecord::Schema.define(version: 2019_07_04_122358) do
     t.index ["staff_id"], name: "index_skill_staffs_on_staff_id"
   end
 
-  create_table "skills", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "skills", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "staffs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "staffs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
     t.string "first_kana"
@@ -286,7 +286,7 @@ ActiveRecord::Schema.define(version: 2019_07_04_122358) do
     t.index ["role_id"], name: "index_staffs_on_role_id"
   end
 
-  create_table "store_menus", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "store_menus", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.bigint "store_id"
     t.bigint "menu_id"
     t.datetime "created_at", null: false
@@ -295,7 +295,7 @@ ActiveRecord::Schema.define(version: 2019_07_04_122358) do
     t.index ["store_id"], name: "index_store_menus_on_store_id"
   end
 
-  create_table "store_options", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "store_options", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.bigint "store_id"
     t.bigint "option_id"
     t.datetime "created_at", null: false
@@ -304,7 +304,7 @@ ActiveRecord::Schema.define(version: 2019_07_04_122358) do
     t.index ["store_id"], name: "index_store_options_on_store_id"
   end
 
-  create_table "store_staffs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "store_staffs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.bigint "store_id"
     t.bigint "staff_id"
     t.datetime "created_at", null: false
@@ -313,7 +313,7 @@ ActiveRecord::Schema.define(version: 2019_07_04_122358) do
     t.index ["store_id"], name: "index_store_staffs_on_store_id"
   end
 
-  create_table "stores", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "stores", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.integer "store_type", default: 0, comment: "モデル内でenum型に定義 0:直営店 1:FC店"
     t.string "name"
     t.text "address"
@@ -329,20 +329,20 @@ ActiveRecord::Schema.define(version: 2019_07_04_122358) do
     t.string "zip_code"
   end
 
-  create_table "taxes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "taxes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.float "rate"
     t.boolean "is_default", default: false, null: false, comment: "このフラグが立っている税率がデフォルトになる"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "visit_reasons", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "visit_reasons", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "zoomancies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "zoomancies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
