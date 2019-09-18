@@ -40,6 +40,10 @@ class Store < ApplicationRecord
     return "#{super}/menus/?shopid=#{self.id}"
   end
 
+  def store_type_string
+    return (self.store_type.to_sym == :owned) ? "直営店" : "FC店"
+  end
+
   private
 
   SHOP_KEYS = [ :id, :name, :open_at, :close_at, :break_from, :break_to ]
