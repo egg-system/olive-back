@@ -11,6 +11,10 @@ store_type:
   "直営店": "owned"
   "FC店": "franchised"
 
+store_type_word:
+  owned: "直営店"
+  franchised: "FC店"
+
 stores:
   head_store_id: 1
   head_este_store_id: 2

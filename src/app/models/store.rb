@@ -41,7 +41,7 @@ class Store < ApplicationRecord
   end
 
   def store_type_string
-    return (self.store_type.to_sym == :owned) ? "直営店" : "FC店"
+    return Settings.store_type_word[self.store_type.to_sym]
   end
 
   private
