@@ -41,7 +41,7 @@ class Store < ApplicationRecord
   end
 
   def store_type_string
-    return Settings.store_type_word[self.store_type.to_sym]
+    return Settings.store_type.to_h.invert[self.store_type.to_sym.to_s]
   end
 
   private
