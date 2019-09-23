@@ -40,6 +40,10 @@ class Store < ApplicationRecord
     return "#{super}/menus/?shopid=#{self.id}"
   end
 
+  def store_type_string
+    return Settings.store_type.to_h.invert[self.store_type.to_sym.to_s]
+  end
+
   private
 
   SHOP_KEYS = [ :id, :name, :open_at, :close_at, :break_from, :break_to ]
