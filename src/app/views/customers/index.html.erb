@@ -57,6 +57,7 @@
             <th scope="col">診察券</th>
             <th scope="col">初回ご来店日</th>
             <th scope="col">会員/非会員</th>
+            <th scope="col">FMID</th>
             <th scope="col"></th>
           </tr>
         </thead>
@@ -73,6 +74,7 @@
               <td><%= customer.has_registration_card == true ? '有' : '無' %></td>
               <td><%= customer.first_visited_at %></td>
               <td><%= customer.provider == 'none' ? '非会員' : '会員'%></td>
+              <td><%= customer.fmid %></td>
               <td>
                 <ul>
                   <li><%= link_to '詳細へ', customer_path(customer.id) %></li>
