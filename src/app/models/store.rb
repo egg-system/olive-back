@@ -40,8 +40,9 @@ class Store < ApplicationRecord
     return "#{super}/menus/?shopId=#{self.id}"
   end
 
-  def store_type_string
-    return Settings.store_type.to_h.invert[self.store_type.to_sym.to_s]
+  def store_type_label
+    store_type_key = self.store_type.to_sym.to_s
+    return Settings.store_type.to_h.invert[store_type_key]
   end
 
   private

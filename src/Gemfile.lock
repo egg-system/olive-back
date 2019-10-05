@@ -1,3 +1,11 @@
+GIT
+  remote: https://github.com/smartinez87/exception_notification.git
+  revision: a762731d820bc0d3b60f5c80747f4fcbb0913a32
+  specs:
+    exception_notification (4.4.0)
+      actionmailer (>= 4.0, < 7)
+      activesupport (>= 4.0, < 7)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -300,6 +308,7 @@ GEM
     simple_form (4.1.0)
       actionpack (>= 5.0)
       activemodel (>= 5.0)
+    slack-notifier (2.3.2)
     solargraph (0.31.3)
       backport (~> 0.3)
       htmlentities (~> 4.3, >= 4.3.4)
@@ -367,6 +376,7 @@ DEPENDENCIES
   devise-i18n
   devise_token_auth
   dotenv-rails
+  exception_notification!
   faker
   font-awesome-rails
   gretel
@@ -388,6 +398,7 @@ DEPENDENCIES
   sass-rails (~> 5.0)
   selenium-webdriver
   simple_form
+  slack-notifier
   solargraph
   spring
   spring-watcher-listen (~> 2.0.0)

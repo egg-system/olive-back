@@ -124,3 +124,7 @@ gem 'whenever', require: false
 
 # 変更履歴の取得用
 gem 'audited'
+
+# slackによるエラー通知用
+gem 'exception_notification', :github => 'smartinez87/exception_notification'
+gem 'slack-notifier'
