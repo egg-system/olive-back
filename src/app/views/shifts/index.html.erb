@@ -50,7 +50,9 @@
       <tbody>
         <% (@start_date..@end_date).each do |date| %>
           <tr>
-            <td><%= date %></td>
+            <td class="<%= weekend?(date) ? 'td-weekend' : '' %>">
+              <%= "#{date}(#{get_weekday_label(date)})" %>
+            </td>
             <% Shift.get_time_slots(date).each do |shift_time| %>
               <td class="td-checkbox">
                 <%= form.check_box(
