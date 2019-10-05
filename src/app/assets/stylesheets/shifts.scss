@@ -6,6 +6,7 @@ $coloumBackColor: #007bff;
 $rowBackColor: #007bff;
 $headStrColor: rgba(255, 255, 255, 0.8);
 $tdOddColor: #e5f5fc;
+$weekendColor: #ffbe00;
 $cellWidth: 7rem;
 $borderRight: 2px solid white;
 
@@ -131,7 +132,7 @@ $borderRight: 2px solid white;
       }
     
       td:first-of-type.td-weekend {
-        color: #ff8300;
+        color: $weekendColor;
       }
     }
   }  
