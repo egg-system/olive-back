@@ -45,3 +45,4 @@ audit:
 
 domain:
   production: 'dashboard.olivebodycare.healthcare'
+  reserve: 'reserve.olivebodycare.healthcare'

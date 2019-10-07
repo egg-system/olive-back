@@ -7,13 +7,27 @@ class Store < ApplicationRecord
   has_many :store_option
   has_many :options, through: :store_option
 
+  scope :viewable?, -> (current_store) {
+    # 直営店は全直営店を閲覧可能
+    return where(store_type: 0) if current_store.owned?
+    return where(id: current_store.id) if current_store.franchised?
+  }
+
+  def owned?
+    return self.store_type.to_sym === :owned
+  end
+
+  def franchised?
+    return self.store_type.to_sym === :franchised
+  end
+
   def to_shop
     shop_attributes
   end
 
   def to_shop_menus
     shop_menus = [ sub_shop_attributes ]
-    
+
     if is_head
       este_store = Store.find(Settings.stores.head_este_store_id)
       shop_menus.concat(este_store.to_shop_menus)
@@ -22,8 +36,17 @@ class Store < ApplicationRecord
     return shop_menus
   end
 
+  def reserve_url
+    return "#{super}/menus/?shopId=#{self.id}"
+  end
+
+  def store_type_label
+    store_type_key = self.store_type.to_sym.to_s
+    return Settings.store_type.to_h.invert[store_type_key]
+  end
+
   private
-  
+
   SHOP_KEYS = [ :id, :name, :open_at, :close_at, :break_from, :break_to ]
   def shop_attributes
     SHOP_KEYS.map { |json_key|
@@ -36,9 +59,9 @@ class Store < ApplicationRecord
   end
 
   def sub_shop_attributes
-    return { 
-      id: self.id, 
-      name: self.name, 
+    return {
+      id: self.id,
+      name: self.name,
       menus: self.menus.map { |menu| menu.to_sub_menu_attributes(self.options) }
     }
   end

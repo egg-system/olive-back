@@ -10,10 +10,26 @@
       <%= form.date_select :month, discard_day: true, default: @search_params[:month] %>
     </div>
     <div class="field">
-      <%= form.select :store_id, options_from_collection_for_select(Store.all, :id, :name, @search_params[:store_id]) %>
+      <%= form.select(
+        :store_id,
+        options_from_collection_for_select(
+          @stores,
+          :id,
+          :name,
+          @search_params[:store_id]
+        ) 
+      ) %>
     </div>
     <div class="field">
-      <%= form.select :staff_id, options_from_collection_for_select(Staff.all, :id, :name, @search_params[:staff_id]) %>
+      <%= form.select(
+        :staff_id,
+        options_from_collection_for_select(
+          @staffs,
+          :id,
+          :full_name,
+          @search_params[:staff_id]
+        )
+      ) %>
     </div>
     <div class="actions">
       <%= form.submit "検索" %>
@@ -34,7 +50,9 @@
       <tbody>
         <% (@start_date..@end_date).each do |date| %>
           <tr>
-            <td><%= date %></td>
+            <td class="<%= weekend?(date) ? 'td-weekend' : '' %>">
+              <%= "#{date}(#{get_weekday_label(date)})" %>
+            </td>
             <% Shift.get_time_slots(date).each do |shift_time| %>
               <td class="td-checkbox">
                 <%= form.check_box(

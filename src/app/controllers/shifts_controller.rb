@@ -1,5 +1,5 @@
 class ShiftsController < ApplicationController
-  before_action :set_shift, only: [:show, :edit, :update, :destroy]
+  before_action :set_relations, only: [:index, :new, :create]
 
   require 'csv'
   require 'time'
@@ -48,6 +48,12 @@ class ShiftsController < ApplicationController
   end
 
   protected
+
+  def set_relations
+    @stores = viewable_stores
+    @staffs = viewable_staffs
+  end
+
   def imports
     CSV
       .read(csv_params[:shift_csv].path, headers: true, encoding: "Shift_JIS:UTF-8")
@@ -85,6 +91,7 @@ class ShiftsController < ApplicationController
   end
 
   private
+
   def search_params
     search_month = Date.today.beginning_of_month
     if params.has_key?("month(1i)") && params.has_key?("month(2i)")

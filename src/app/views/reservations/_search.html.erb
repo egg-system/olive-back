@@ -1,0 +1,93 @@
+<div class="condition-section">
+  <%= form_with url: search_reservations_path, id:"search", method: :post, local: true do |form| %>
+    <table>
+      <tbody>
+        <tr>
+          <th>予約状況</th>
+          <td><%= form.select(
+            :state,
+            options_for_select(
+              @states,
+              selected: @state
+            ),
+            include_blank: true,
+            class: "form-control"
+          ) %></td>
+        </tr>
+        <tr>
+          <th>担当者</th>
+          <td>
+            <%= form.select(
+              :staff_id,
+              options_for_select(
+                Settings.reservations.staff_options.to_h.merge(
+                  @staffs.map {|staff| [staff.full_name, staff.id]}.to_h
+                ),
+                selected: @staff_id
+              ),
+              class: "form-control"
+            ) %>
+          </td>
+        </tr>
+        <tr>
+          <th>店舗</th>
+          <td><%= form.select(
+            :store_id,
+            options_for_select(
+              @stores.map {|store| [store.name, store.id]}.to_h,
+              selected: @store_id
+            ),
+            include_blank: true,
+            class: "form-control"
+          ) %></td>
+        </tr>
+        <tr>
+          <th>顧客名</th>
+          <td><%= form.text_field :customer_name, class: "form-control", value: @customer_name %></td>
+        </tr>
+        <tr>
+          <th>顧客電話番号</th>
+          <td><%= form.text_field :customer_tel, class: "form-control", value: @customer_tel %></td>
+        </tr>
+        <tr>
+          <th>予約日</th>
+          <td>
+            <%= form.date_select(
+              :from_date,
+              class: "form-control",
+              selected: @from_date,
+              use_month_numbers: true,
+              include_blank: true,
+              date_separator: '/',
+            ) %>
+            〜
+            <%= form.date_select(
+              :to_date,
+              class: "form-control",
+              selected: @to_date,
+              include_blank: true,
+              use_month_numbers: true,
+              date_separator: '/'
+            ) %>
+          </td>
+        </tr>
+        <tr>
+          <th>並び順</th>
+          <td>
+            <%= form.select(
+              :order,
+              options_for_select(
+                Settings.reservations.order_options,
+                selected: @order
+              ),
+              class: "form-control"
+            ) %>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  <%end%>
+</div>
+<div class="button-selection">
+  <%= submit_tag "検索実行", { class: "btn btn-info btn-search", form: "search" } %>
+</div>

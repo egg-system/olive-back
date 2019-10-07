@@ -16,6 +16,9 @@ class Reservation < ApplicationRecord
   # 変更履歴周りの処理の切り出しmodule
   include ReservationAuditModule
 
+  # 予約状況周りの処理の切り出しmodule
+  include ReservationStateModule
+
   belongs_to :customer
   belongs_to :staff, optional: true
   belongs_to :store
@@ -30,11 +33,15 @@ class Reservation < ApplicationRecord
 
   validate :validate_reservation_date, on: :create
 
-  scope :where_customer_name, -> (customer_name) {
-    where("concat(last_name, first_name) like ?", "%#{customer_name}%")
+  scope :like_customer_name, -> (customer_name) {
+    joins(:customer).where("concat(last_name, first_name) like ?", "%#{customer_name}%")
   }
 
-  scope :order_reserved_at, -> {
+  scope :like_customer_tel, -> (customer_tel) {
+    joins(:customer).where("tel like ?", "%#{customer_tel}%")
+  }
+
+  scope :order_reserved_at, -> (order = :desc) {
     order(reservation_date: :desc)
       .order(start_time: :desc)
       .order(created_at: :desc)
@@ -69,14 +76,6 @@ class Reservation < ApplicationRecord
     total_fee = self.reservation_details.sum { |detail| detail.total_fee }
     total_fee = total_fee - self.coupons.length * 6000 if self.coupons.present?
     return total_fee
-  end
-
-  def state
-    return 'キャンセル済み' if self.canceled?
-
-    reservation_end_at = self.end_time.on(self.reservation_date)
-    visited = reservation_end_at < DateTime.now
-    return visited ? '来店済み' : '予約中'
   end
 
   def cancel

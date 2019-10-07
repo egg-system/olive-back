@@ -6,6 +6,7 @@ $coloumBackColor: #007bff;
 $rowBackColor: #007bff;
 $headStrColor: rgba(255, 255, 255, 0.8);
 $tdOddColor: #e5f5fc;
+$weekendColor: #ffbe00;
 $cellWidth: 7rem;
 $borderRight: 2px solid white;
 
@@ -62,60 +63,77 @@ $borderRight: 2px solid white;
   margin-bottom: 5px;
   border: 1px solid #e4e4e4;
 }
-.shift-list .sticky_table thead th {
-  white-space: nowrap;
-  background-color: $coloumBackColor;
-  color: $headStrColor;
-  border-right: $borderRight;
-  width: $cellWidth;
-  font-size: 0.9rem;
-  text-align: center;
-  padding-right: 8px;
-  padding-left: 8px;
-  &:last-child {
-    border: none;
+.shift-list .sticky_table {
+  thead {
+    th {
+      white-space: nowrap;
+      background-color: $coloumBackColor;
+      color: $headStrColor;
+      border-right: $borderRight;
+      width: $cellWidth;
+      font-size: 0.9rem;
+      text-align: center;
+      padding-right: 8px;
+      padding-left: 8px;
+
+      // 行の固定(縦スクロール時)
+      position: sticky;
+      top: 0px;
+      z-index: 2;
+
+      &:last-child {
+        border: none;
+      }
+    }
+
+    // 行と列の交差部分
+    .th-corner {
+      position: sticky;
+      top: 0px;
+      left: 0px;
+      z-index: 5;
+      color: $headStrColor;
+    }
   }
-}
-.shift-list .sticky_table tbody .td-checkbox {
-  white-space: nowrap;
-  width: $cellWidth;
-  font-size: 0.9rem;
-  text-align: center;
-}
-// 1時間ごとに区切り線を入れる
-.shift-list .sticky_table tbody .td-checkbox:nth-child(odd) {
-  border-right: 2px solid $coloumBackColor;
-}
-// 一行ごとに色を付ける
-.shift-list .sticky_table tbody tr:nth-child(odd) {
-  background: $tdOddColor;
-  border: none;
-}
-// 行の固定(縦スクロール時)
-.shift-list .sticky_table thead th {
-  position: sticky;
-  top: 0px;
-  z-index: 2;
-}
-// 行と列の交差部分
-.shift-list .sticky_table thead .th-corner {
-  position: sticky;
-  top: 0px;
-  left: 0px;
-  z-index: 5;
-  color: $headStrColor;
-}
-// 列の固定(横スクロール時)
-.shift-list .sticky_table tbody tr td:first-of-type {
-  display: inline-block;
-  background-color: $rowBackColor;
-  color: $headStrColor;
-  font-weight: bold;
-  position: sticky;
-  left: 0px;
-  width: $cellWidth;
-  font-size: 0.9rem;
-  text-align: left;
-  padding-left: 12px;
-  border-right: 1px solid white;
+
+  tbody {
+    .td-checkbox {
+      white-space: nowrap;
+      width: $cellWidth;
+      font-size: 0.9rem;
+      text-align: center;
+    }
+
+    // 1時間ごとに区切り線を入れる
+    .td-checkbox:nth-child(odd) {
+      border-right: 2px solid $coloumBackColor;
+    }
+
+    // 一行ごとに色を付ける
+    tr:nth-child(odd) {
+      background: $tdOddColor;
+      border: none;
+    }
+
+    tr {
+      // 列の固定(横スクロール時)
+      td:first-of-type {
+        display: inline-block;
+        background-color: $rowBackColor;
+        color: $headStrColor;
+        font-weight: bold;
+        position: sticky;
+        left: 0px;
+        width: $cellWidth + 1rem;
+        font-size: 0.9rem;
+        text-align: left;
+        padding-left: 12px;
+        border-right: 1px solid white;
+      }
+    
+      td:first-of-type.td-weekend {
+        color: $weekendColor;
+      }
+    }
+  }  
 }

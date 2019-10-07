@@ -1,63 +1,42 @@
 class ReservationsController < ApplicationController
+  include Concerns::ReservationSearchable
+
   before_action :set_reservation, only: [:show, :update, :destroy, :cancel_confirm]
   before_action :set_relation_models, only: [:new, :create, :show, :search, :update, :destroy]
 
   # GET /reservations
   # GET /reservations.json
   def index
-    @stores = Store.all
-    @reservations = Reservation.joins(:customer).paginate(params[:page], 20)
-
-    @order = params[:order] if params[:order].present?
-    @reservations = @reservations.order_reserved_at if @order === 'reserved_at'
-    @reservations = @reservations.order('id DESC')
-
-    @customer_name = params[:customer_name]
-    @reservations = @reservations.where_customer_name(@customer_name) if @customer_name.present?
-
-    @store_id = params[:store_id]
-    @reservations = @reservations.where(store_id: @store_id) if @store_id.present?
-
-    @from_date = Date.parse(params[:from_date]) if params.has_key?(:from_date)
-    @reservations = @reservations.where('reservation_date >= ?', @from_date) if @from_date.present?
-
-    @to_date = Date.parse(params[:to_date]) if params.has_key?(:to_date)
-    @reservations = @reservations.where('reservation_date <= ?', @to_date) if @to_date.present?
-
-    @staffs = Staff.all
-    @staff_id = params[:staff_id]
     @order = params[:order]
 
-    return if @staff_id.nil?
+    @states = Reservation.states
+    @state = params[:state] if params[:state].present?
 
-    @reservations = @reservations.where(staff_id: @staff_id) if @staff_id.to_i > 0
-    @reservations = @reservations.where(staff_id: nil) if @staff_id === 'none'
-    @reservations = @reservations.where.not(staff_id: nil) if @staff_id === 'any'
+    @stores = viewable_stores
+    @store_id = params[:store_id]
+
+    @staffs = viewable_staffs
+    @staff_id = params[:staff_id]
+
+    @customer_name = params[:customer_name]
+    @customer_tel = params[:customer_tel]
+    
+    @from_date = Date.parse(params[:from_date]) if params.has_key?(:from_date)
+    @to_date = Date.parse(params[:to_date]) if params.has_key?(:to_date)  
+
+    # concernに検索ロジックを切り出し
+    @reservations = search_reservations
   end
 
   def search
-    if params['from_date(1i)'].present? && params['from_date(2i)'].present? && params['from_date(3i)'].present?
-      from_date = Date.new(
-        params['from_date(1i)'].to_i,
-        params['from_date(2i)'].to_i,
-        params['from_date(3i)'].to_i
-      )
-    end
-
-    if params['to_date(1i)'].present? && params['to_date(2i)'].present? && params['to_date(3i)'].present?
-      to_date = Date.new(
-        params['to_date(1i)'].to_i,
-        params['to_date(2i)'].to_i,
-        params['to_date(3i)'].to_i
-      )
-    end
-
     redirect_to reservations_path({
       customer_name: params[:customer_name],
+      customer_tel: params[:customer_tel],
+      state: params[:state],
       staff_id: params[:staff_id],
       store_id: params[:store_id],
-      from_date: from_date,
-      to_date: to_date,
+      from_date: parse_date_params('from_date'),
+      to_date: parse_date_params('to_date'),
       order: params[:order]
     })
   end
@@ -111,7 +90,13 @@ class ReservationsController < ApplicationController
   # DELETE /reservations/1
   # DELETE /reservations/1.json
   def destroy
-    Reservation.find(params[:id]).cancel
+    reservation = Reservation.find(params[:id])
+    reservation.cancel
+
+    unless params[:do_send_cancel_mail?].nil?
+      ReservationMailer.cancel_reservation(reservation).deliver_now
+    end
+
     respond_to do |format|
       format.html { redirect_to reservations_url, notice: '予約をキャンセルいたしました。' }
       format.json { head :no_content }
@@ -127,8 +112,8 @@ class ReservationsController < ApplicationController
     def set_relation_models
       @coupons = Coupon.all
       @options = Option.all
-      @stores = Store.all
-      @staffs = Staff.all
+      @stores = viewable_stores
+      @staffs = viewable_staffs
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

@@ -3,26 +3,11 @@
   <% if @reservation.persisted? %>
     <%= f.input :id, label: 'id', readonly: true %>
   <% end %>
+  
   <%= f.input :customer_id, label: '顧客ID', readonly: true %>
+  <%= render 'reservations/fields/customer_inputs', form: f, customer: @reservation.customer  %> 
 
-  <div class="custom_row row">
-    <div class="custom_left col-sm-3">
-      <label>顧客名</label>
-    </div>
-    <div class="custom_right col-sm-9">
-      <% if @reservation.customer.present? %>
-        <%= f.input(
-          :customer_full_name,
-          label: false,
-          readonly: true,
-          input_html: { value: @reservation.customer.full_name },
-          hint: link_to('顧客情報の詳細はこちらへ', customer_path(@reservation.customer_id))
-        ) %>
-      <% end %>
-    </div>
-  </div>
-
-  <%= render 'assined_inputs', form: f, is_assigned: @reservation.assigned? %>
+  <%= render 'reservations/fields/assined_inputs', form: f, is_assigned: @reservation.assigned? %>
 
   <%= f.input :reservation_comment, label: "コメント" %>
   <div class="custom_row row">

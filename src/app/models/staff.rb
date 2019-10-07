@@ -3,7 +3,15 @@ class Staff < ApplicationRecord
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :database_authenticatable, :rememberable, authentication_keys: [:login]
+  devise(
+    :database_authenticatable,
+    :rememberable,
+    authentication_keys: [:login, :login_store_id]
+  )
+
+  # devise()を実行後に記述する
+  # moduleで、devise定義のメソッドをオーバーライドしているため
+  extend LoginStoreModule
 
   has_many :skill_staffs
   has_many :skills, through: :skill_staffs
@@ -20,6 +28,8 @@ class Staff < ApplicationRecord
 
   belongs_to :role
   has_many :shifts
+
+  attr_accessor :login_store_id
 
   scope :can_treats, -> (menu_ids, option_ids) {
     menus = Menu.where(id: menu_ids).select('skill_id').distinct
@@ -58,21 +68,21 @@ class Staff < ApplicationRecord
     select('staffs.*').join_role
   }
 
+  scope :like_name, -> (full_name) {
+    where("concat(last_name, first_name) like ?", "%#{full_name}%")
+  }
+
+  # nameもfull_nameも使われているため、削除時には要注意
+  def name
+    self.full_name
+  end
+
   def full_name
-    return (self.last_name + ' ' + self.first_name).strip
+    return "#{self.last_name} #{self.first_name}".strip
   end
 
   def employment_type_name
     return "" if self.employment_type.nil?
     return Settings.employment_type[self.employment_type]
-  end
-
-  def name
-    return "#{self.last_name} #{self.first_name}"
-  end
-
-  def self.find_for_authentication(tainted_conditions)
-    # TODO: ここで店舗の検索処理を実装する
-    super
   end
 end

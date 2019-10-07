@@ -2,9 +2,15 @@ class Role < ApplicationRecord
   has_many :staffs
 
   ADMIN = 1
-  HEAD = 2
+  HEAD = 2 # 本部権限
   MANAGER = 3
   STAFF = 4
+
+  scope :viewable?, -> (store) {
+    roles = where.not(id: ADMIN)
+    roles = roles.where.not(id: HEAD) if store.franchised?
+    return roles
+  }
 
   def admin?
     return self.id === ADMIN

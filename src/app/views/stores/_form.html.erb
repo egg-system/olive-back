@@ -8,7 +8,7 @@
       label: "店舗区分",
       collection: Settings.store_type,
       required: true,
-      default: "owned" 
+      default: "owned"
   ) %>
   <%= f.input(
     :name,
@@ -18,36 +18,37 @@
   <%= f.input(
     :zip_code,
     label: "郵便番号",
-    required: true 
+    required: true
   ) %>
-  <%= f.input( 
+  <%= f.input(
     :address,
     label: "店舗住所",
-    required: true 
+    required: true
   ) %>
-  <%= f.input( 
+  <%= f.input(
     :tel,
     label: "電話番号",
     required: true
   ) %>
-  <%= f.input( 
+  <%= f.input(
     :mail,
     label: "メールアドレス",
     required: true
   ) %>
-  <%= f.input :url, label: "url"%>
+  <%= f.input :url, label: "url" %>
+  <%= f.input :reserve_url, label: "予約url" %>
   <%= f.input(
     :open_at,
     label: "開店時間",
     required: true
   ) %>
-  <%= f.input( 
+  <%= f.input(
     :close_at,
     label: "閉店時間",
     required: true
   ) %>
-  <%= f.input :break_from, label: "休憩開始時間"%>
-  <%= f.input :break_to, label: "休憩終了時間"%>
+  <%= f.input :break_from, label: "休憩開始時間" %>
+  <%= f.input :break_to, label: "休憩終了時間" %>
   <%= f.input(
     :menu_ids,
     as: :check_boxes,
@@ -55,7 +56,7 @@
     collection: @menus.map{ |menu| [menu.name, menu.id] },
     label: 'メニュー',
     checked: @store_menus.present? ? @store_menus.map{ |item| item.menu_id } : [],
-    include_hidden: false 
+    include_hidden: false
   ) %>
   <%= f.input(
     :option_ids,
@@ -64,7 +65,7 @@
     collection: @options.map{ |option| [option.name, option.id] },
     label: 'オプション',
     checked: @store_options.present? ? @store_options.map{ |item| item.option_id } : [],
-    include_hidden: false 
+    include_hidden: false
   ) %>
   <%= f.button :submit, class: 'btn btn-primary'%>
   <% if request.path_info != new_store_path%>

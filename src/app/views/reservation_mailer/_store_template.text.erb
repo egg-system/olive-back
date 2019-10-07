@@ -1,0 +1,28 @@
+<%#
+  このファイルで店舗ごとのメール文を表示するよう切り分けている
+  
+  店舗を追加する際は、以下の作業が必要になる
+    1. store_name内のcase文に、新店舗用のwhen-thenを追加する
+    2. store_templatesフォルダ内に、店舗名フォルダを追加する
+    3. 店舗名フォルダに、'_confirm.text.erb'と'_remind.text.erb'を作る
+    4. '_confirm.text.erb'と'_remind.text.erb'に、メール文面を記載する
+      ※　'_confirm.text.erb'は予約確定メール用、'_remind.text.erb'は予約リマインドメール用
+%>
+<%=
+  store_name = case store.id
+    when 1 then :tamaplaza
+    when 2 then :simpleste
+    when 3 then :aobadai
+    when 4 then :maruyama
+    else nil
+    # when 店舗ID then :店舗名のローマ字
+  end
+
+  unless store_name.nil? 
+    render(
+      "reservation_mailer/store_templates/#{store_name}/#{action}",
+      store: store,
+      customer: customer
+    )
+  end
+%>

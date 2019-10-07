@@ -5,6 +5,8 @@ ruby '2.6.3'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.2'
+# 脆弱性対応 ※ railsの依存パッケージ
+gem "nokogiri", ">= 1.10.4"
 # Use mysql as the database for Active Record
 gem 'mysql2', '>= 0.4.4', '< 0.6.0'
 # Use Puma as the app server
@@ -75,7 +77,7 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # ログイン機能用
-gem 'devise'
+gem 'devise', ">= 4.7.1"
 gem 'devise-i18n'
 gem 'devise_token_auth'
 gem 'font-awesome-rails'
@@ -122,6 +124,10 @@ gem 'whenever', require: false
 
 # 変更履歴の取得用
 gem 'audited'
+
+# slackによるエラー通知用
+gem 'exception_notification', :github => 'smartinez87/exception_notification'
+gem 'slack-notifier'
 
 # reactの導入
 gem 'webpacker'
