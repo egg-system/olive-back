@@ -5,7 +5,7 @@ ENV WORKSPACE=/usr/local/src
 
 # install bundler. -v 1.16.6 は本番環境のバージョンに合わせている
 RUN apt-get update && \
-    apt-get install -y vim less && \
+    apt-get install -y vim less git && \
     apt-get install -y build-essential libpq-dev nodejs graphviz cron && \
     gem install bundler -v 1.16.6 && \
     apt-get clean && \
