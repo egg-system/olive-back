@@ -15,4 +15,10 @@
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
 
-console.log('Hello World from Webpacker')
+import ReactOnRails from 'react-on-rails';
+import HelloWorld from '../bundles/HelloWorld/components/HelloWorld';
+
+// This is how react_on_rails can see the HelloWorld in the browser.
+ReactOnRails.register({
+  HelloWorld,
+});
