@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'hello_world', to: 'hello_world#index' unless Rails.env.production?
+
   resources :dashboards, :masters, only: [:index]
   root to: 'dashboards#index'
 
