@@ -8,6 +8,7 @@ services:
     container_name: "olive-app"
     ports:
       - "8080:3000"
+      - "8035:3035"
     volumes:
       - ./src/:/usr/local/src
       - bundle-data:/usr/local/bundle
