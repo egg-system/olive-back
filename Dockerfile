@@ -11,15 +11,12 @@ RUN apt-get update && \
     apt-get clean && \
     rm -r /var/lib/apt/lists/*
 
-# yarn install
-RUN apt-get update && apt-get install -y curl apt-transport-https wget && \
-    curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
-    echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
-    apt-get update && apt-get install -y yarn
-
 # node update
 RUN curl -sL https://deb.nodesource.com/setup_10.x | bash - \
     && apt-get install -y nodejs
+
+# yarn install
+RUN npm isntall -g yarn
 
 # create user and group.
 RUN groupadd -r --gid 1000 rails && \
@@ -39,6 +36,8 @@ WORKDIR $WORKSPACE
 
 ADD --chown=rails:rails src $WORKSPACE
 RUN bundle _1.16.6_ install
+
+RUN yarn install
 
 EXPOSE 3000
 CMD ["/usr/local/start_up.sh"]
