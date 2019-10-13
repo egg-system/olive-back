@@ -2,11 +2,11 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-$coloumBackColor: #007bff;
-$rowBackColor: #007bff;
+$backColor: #54cc74;
 $headStrColor: rgba(255, 255, 255, 0.8);
-$tdOddColor: #e5f5fc;
-$weekendColor: #ffbe00;
+$tdOddColor: #def3e0;
+$weekendSaturdayColor: #0026ff;
+$weekendSundayColor: #ff0000;
 $cellWidth: 7rem;
 $borderRight: 2px solid white;
 
@@ -67,7 +67,7 @@ $borderRight: 2px solid white;
   thead {
     th {
       white-space: nowrap;
-      background-color: $coloumBackColor;
+      background-color: $backColor;
       color: $headStrColor;
       border-right: $borderRight;
       width: $cellWidth;
@@ -106,7 +106,7 @@ $borderRight: 2px solid white;
 
     // 1時間ごとに区切り線を入れる
     .td-checkbox:nth-child(odd) {
-      border-right: 2px solid $coloumBackColor;
+      border-right: 2px solid $backColor;
     }
 
     // 一行ごとに色を付ける
@@ -119,20 +119,24 @@ $borderRight: 2px solid white;
       // 列の固定(横スクロール時)
       td:first-of-type {
         display: inline-block;
-        background-color: $rowBackColor;
+        background-color: $backColor;
         color: $headStrColor;
         font-weight: bold;
         position: sticky;
         left: 0px;
-        width: $cellWidth + 1rem;
+        width: $cellWidth + 1.5rem;
         font-size: 0.9rem;
         text-align: left;
         padding-left: 12px;
         border-right: 1px solid white;
       }
     
-      td:first-of-type.td-weekend {
-        color: $weekendColor;
+      td:first-of-type.td-saturday {
+        color: $weekendSaturdayColor;
+      }
+
+      td:first-of-type.td-sunday {
+        color: $weekendSundayColor;
       }
     }
   }  

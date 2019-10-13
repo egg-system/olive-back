@@ -27,12 +27,18 @@ module ShiftsHelper
   def get_weekday_label(shift_date)
     week_day = get_weekday(shift_date)
     return I18n.t('date.abbr_day_names')[week_day]
-  end
+	end
 
-  def weekend?(shift_date)
-    # rubyのwdayでは、土曜日が6、日曜日が0になる
-    return [0,6].include? get_weekday(shift_date)
-  end
+	def weekend_color(shift_date)
+		case get_weekday(shift_date)
+		when 0 # rubyのwdayでは、日曜日が0になる
+			return 'td-sunday'
+		when 6 # rubyのwdayでは、土曜日が6になる
+			return 'td-saturday'
+		else
+			return ''
+		end
+	end
 
 	def resrvation_exist(shift_time)
 		date = extract_date(shift_time)

@@ -50,7 +50,7 @@
       <tbody>
         <% (@start_date..@end_date).each do |date| %>
           <tr>
-            <td class="<%= weekend?(date) ? 'td-weekend' : '' %>">
+            <td class="<%= weekend_color(date) %>">
               <%= "#{date}(#{get_weekday_label(date)})" %>
             </td>
             <% Shift.get_time_slots(date).each do |shift_time| %>
