@@ -32,9 +32,9 @@ module ShiftsHelper
 	def weekend_color(shift_date)
 		case get_weekday(shift_date)
 		when 0 # rubyのwdayでは、日曜日が0になる
-			return 'td-sunday'
+			return 'day-sunday'
 		when 6 # rubyのwdayでは、土曜日が6になる
-			return 'td-saturday'
+			return 'day-saturday'
 		else
 			return ''
 		end
