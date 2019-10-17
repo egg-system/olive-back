@@ -3,9 +3,9 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 $headerColor: #e9ecef;
-$tdOddColor: #d9dbdd;
-$weekendSaturdayColor: #0026ff;
-$weekendSundayColor: #ff0000;
+$tdOddColor: #e0e8f0;
+$weekendSaturdayColor: #d1d6ff;
+$weekendSundayColor: #fdd0d0;
 $cellWidth: 7rem;
 $borderColor: black;
 
@@ -126,13 +126,21 @@ $borderColor: black;
         padding-left: 12px;
         border-right: 1px solid $borderColor;
       }
-    
-      td:first-of-type.td-saturday {
-        color: $weekendSaturdayColor;
-      }
+    }
 
-      td:first-of-type.td-sunday {
-        color: $weekendSundayColor;
+    tr.day-saturday {
+      background-color: $weekendSaturdayColor;
+
+      td:first-of-type {
+        background-color: $weekendSaturdayColor;
+      }
+    }
+
+    tr.day-sunday {
+      background-color: $weekendSundayColor;
+
+      td:first-of-type {
+        background-color: $weekendSundayColor;
       }
     }
   }  
