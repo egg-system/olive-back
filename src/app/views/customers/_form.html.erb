@@ -5,6 +5,7 @@
     <div class="form-center">
       <% if @customer.persisted? %>
         <%= f.input :id, label: '顧客ID', readonly: true %>
+        <%= f.input :fmid, label: 'FMID', hint: 'ファイルメーカーで使用していたID' %>
       <%end%>
       <%= f.input :last_name, label: '姓', required: true %>
       <%= f.input :first_name, label: '名', required: true %>
@@ -107,10 +108,10 @@
         include_blank: true
       ) %>
       <%= f.input(
-        :provider, 
-        label: '会員/非会員', 
-        as: :select, 
-        hint: '会員にする場合、メールアドレスとパスワードの入力が必須になります', 
+        :provider,
+        label: '会員/非会員',
+        as: :select,
+        hint: '会員にする場合、メールアドレスとパスワードの入力が必須になります',
         collection: { '非会員' => :none, '会員' => :email }
       ) %>
       <% if @customer.provider === 'email' %>

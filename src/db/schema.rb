@@ -104,6 +104,7 @@ ActiveRecord::Schema.define(version: 2019_11_09_104415) do
     t.string "uid", default: "", null: false
     t.text "tokens"
     t.boolean "allow_password_change", default: false, comment: "パスワード変更に必要"
+    t.integer "fmid"
     t.index ["baby_age_id"], name: "index_customers_on_baby_age_id"
     t.index ["email"], name: "index_customers_on_email"
     t.index ["first_visit_store_id"], name: "index_customers_on_first_visit_store_id"
