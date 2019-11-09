@@ -15,7 +15,9 @@ class ShiftsController < ApplicationController
       ).where_months(@search_params[:month])
       .group_by { |shift| shift.date.strftime('%Y-%m-%d') }
 
-      @start_date, @end_date = Shift.get_month_range(@search_params[:month])
+    @start_date, @end_date = Shift.get_month_range(@search_params[:month])
+    @store = Store.find(@search_params[:store_id])
+    @staff = Staff.find(@search_params[:staff_id])
   end
 
   def new

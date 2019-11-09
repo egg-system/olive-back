@@ -40,15 +40,29 @@
   <%= f.input(
     :open_at,
     label: "開店時間",
-    required: true
+    collection: Settings.stores.time_options,
+    required: true,
+    hint: '開店時間〜閉店時間が予約可能な時刻になります。'
   ) %>
   <%= f.input(
     :close_at,
     label: "閉店時間",
-    required: true
+    collection: Settings.stores.time_options,
+    required: true,
+    hint: '開店時間〜閉店時間が予約可能な時刻になります。'
   ) %>
-  <%= f.input :break_from, label: "休憩開始時間" %>
-  <%= f.input :break_to, label: "休憩終了時間" %>
+  <%= f.input(
+    :break_from,
+    label: "休憩開始時間",
+    collection: Settings.stores.time_options,
+    hint: '休憩時間が入力されている場合、開店時間〜休憩開始時間、休憩終了時間〜閉店時間が予約可能な時刻になります。'
+  ) %>
+  <%= f.input(
+    :break_to,
+    label: "休憩終了時間",
+    collection: Settings.stores.time_options,
+    hint: '休憩時間が入力されている場合、開店時間〜休憩開始時間、休憩終了時間〜閉店時間が予約可能な時刻になります。'
+  ) %>
   <%= f.input(
     :menu_ids,
     as: :check_boxes,

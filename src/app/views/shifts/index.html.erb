@@ -16,7 +16,7 @@
           @stores,
           :id,
           :name,
-          @search_params[:store_id]
+          @store.id
         ) 
       ) %>
     </div>
@@ -27,7 +27,7 @@
           @staffs,
           :id,
           :full_name,
-          @search_params[:staff_id]
+          @staff.id
         )
       ) %>
     </div>
@@ -41,7 +41,7 @@
       <thead>
         <tr>
           <th class="th-corner">日付</th>
-          <% Shift.slot_time_labels.each do |key, value| %>
+          <% @store.slot_time_labels.each do |key, value| %>
             <th><%= key %></th>
           <% end %>
         </tr>
@@ -53,7 +53,7 @@
             <td>
               <%= "#{date}(#{get_weekday_label(date)})" %>
             </td>
-            <% Shift.get_time_slots(date).each do |shift_time| %>
+            <% @store.get_time_slots(date).each do |shift_time| %>
               <td class="td-checkbox">
                 <%= form.check_box(
                   get_shift_parameter(shift_time), {
@@ -71,8 +71,8 @@
       </tbody>
     </table>
     <% if current_staff.role.manager? %>
-      <%= hidden_field_tag('staff_id', @search_params[:staff_id]) %>
-      <%= hidden_field_tag('store_id', @search_params[:store_id]) %>
+      <%= hidden_field_tag('staff_id', @staff.id) %>
+      <%= hidden_field_tag('store_id', @store.id) %>
       <input type="submit" name="commit" value="登録" data-disable-with="登録">
     <% end %>
   <% end %>
