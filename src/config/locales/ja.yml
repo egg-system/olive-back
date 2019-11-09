@@ -18,6 +18,9 @@ ja:
         staff_id: '担当スタッフ'
       reservation_detail:
         mimitsubo_count: '粒数'
+      store:
+        break_from: '休憩開始時間'
+        break_to: '休憩終了時間'
     errors:
       models:
         reservation:

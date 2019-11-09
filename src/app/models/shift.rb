@@ -58,15 +58,8 @@ class Shift < ApplicationRecord
     }
   end
 
-  def self.get_time_slots(date)
-    SHIFT_TIMES.map { |label, time_slot|
-      day = Date.parse(date)
-      Tod::TimeOfDay.parse(time_slot).on(day)
-    }
-  end
-
-  def self.slot_time_labels
-    return SHIFT_TIMES.keys
+  def self.slot_times
+    return SHIFT_TIMES
   end
 
   def shift_at
@@ -95,6 +88,10 @@ class Shift < ApplicationRecord
     '12:30~13:00'  => '12:30:00',
     '13:00~13:30'  => '13:00:00',
     '13:30~14:00'  => '13:30:00',
+    '14:00~14:30'  => '14:00:00',
+    '14:30~15:00'  => '14:30:00',
+    '15:00~15:30'  => '15:00:00',
+    '15:30~16:00'  => '15:30:00',
     '16:00~16:30'  => '16:00:00',
     '16:30~17:00'  => '16:30:00',
     '17:00~17:30'  => '17:00:00',

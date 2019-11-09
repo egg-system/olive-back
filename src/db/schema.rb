@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_27_013724) do
+ActiveRecord::Schema.define(version: 2019_11_09_104415) do
 
   create_table "audits", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "auditable_id"
@@ -321,10 +321,10 @@ ActiveRecord::Schema.define(version: 2019_09_27_013724) do
     t.string "tel"
     t.string "mail"
     t.text "url"
-    t.integer "open_at"
-    t.integer "close_at"
-    t.integer "break_from", comment: "休憩の開始時間"
-    t.integer "break_to", comment: "休憩の終了時間"
+    t.time "open_at", comment: "開店時刻。予約可能な範囲に影響。開店時刻〜休憩開始時刻、休憩終了時刻〜閉店時刻で予約可能"
+    t.time "close_at", comment: "閉店時刻。予約可能な範囲に影響。開店時刻〜休憩開始時刻、休憩終了時刻〜閉店時刻で予約可能"
+    t.time "break_from", comment: "休憩開始時刻。予約可能な範囲に影響。開店時刻〜休憩開始時刻、休憩終了時刻〜閉店時刻で予約可能"
+    t.time "break_to", comment: "休憩終了時刻。予約可能な範囲に影響。開店時刻〜休憩開始時刻、休憩終了時刻〜閉店時刻で予約可能"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "zip_code"

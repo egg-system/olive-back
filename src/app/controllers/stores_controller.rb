@@ -53,7 +53,7 @@ class StoresController < ApplicationController
         format.html { redirect_to @store, notice: I18n.t("successes.messages.update") }
         format.json { render :show, status: :ok, location: @store }
       else
-        format.html { render :edit }
+        format.html { redirect_to @store, alert: @store.errors.to_a.join('<br>') }
         format.json { render json: @store.errors, status: :unprocessable_entity }
       end
     end
@@ -70,7 +70,7 @@ class StoresController < ApplicationController
       end
     rescue => exception
       respond_to do |format|
-        format.html { redirect_to store_url(@store.id), notice: 'すでに利用されているため、削除できません' }
+        format.html { redirect_to @store, alert: 'すでに利用されているため、削除できません' }
         format.json { render json: @store.errors, status: :unprocessable_entity }
       end
     end
