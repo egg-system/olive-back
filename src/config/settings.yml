@@ -14,6 +14,18 @@ store_type:
 stores:
   head_store_id: 1
   head_este_store_id: 2
+  time_options:
+    - '10:00:00'
+    - '11:00:00'
+    - '12:00:00'
+    - '13:00:00'
+    - '14:00:00'
+    - '15:00:00'
+    - '16:00:00'
+    - '17:00:00'
+    - '18:00:00'
+    - '19:00:00'
+    - '20:00:00'
 
 reservations:
   staff_options:
@@ -23,16 +35,6 @@ reservations:
   order_options:
     'ID': 'id'
     '予約日時': 'reserved_at'
-
-reservation_at_options:
-  - '10:00:00'
-  - '11:00:00'
-  - '12:00:00'
-  - '13:00:00'
-  - '16:00:00'
-  - '17:00:00'
-  - '18:00:00'
-  - '19:00:00'
 
 brand:
   name: '女性専門の治療院オリーヴボディケア'
