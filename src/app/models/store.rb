@@ -80,10 +80,11 @@ class Store < ApplicationRecord
 
   private
 
-  SHOP_KEYS = [ :id, :name, :open_at, :close_at, :break_from, :break_to ]
+  SHOP_KEYS = [:id, :name, :open_at, :close_at, :break_from, :break_to]
+
   def shop_attributes
     SHOP_KEYS.map { |json_key|
-      [json_key, attributes[json_key.to_s]]
+      [json_key, attributes[json_key.to_s].to_s]
     }.to_h.to_json
   end
 
