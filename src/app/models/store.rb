@@ -1,6 +1,15 @@
 class Store < ApplicationRecord
   enum store_type: { owned: 0, franchised: 1 }
 
+  # time型を扱いやすくするための実装
+  serialize :open_at, Tod::TimeOfDay
+  serialize :close_at, Tod::TimeOfDay
+  serialize :break_from, Tod::TimeOfDay
+  serialize :break_to, Tod::TimeOfDay
+
+  validates_presence_of :break_from, if: :input_break_time?
+  validates_presence_of :break_to, if: :input_break_time?
+  
   has_many :store_menu
   has_many :menus, through: :store_menu
 
@@ -45,6 +54,30 @@ class Store < ApplicationRecord
     return Settings.store_type.to_h.invert[store_type_key]
   end
 
+  def slot_times
+    return Shift.slot_times.select { |label, slot_time|
+      slotted_at = Tod::TimeOfDay(slot_time)
+      
+      # 開店時間内か
+      is_opening_store = self.open_at <= slotted_at && slotted_at < self.close_at
+      next is_opening_store unless input_break_time?
+
+      # 休憩時間外か
+      next slotted_at < self.break_from || self.break_to <= slotted_at
+    }
+  end
+
+  def slot_time_labels
+    return self.slot_times.keys
+  end
+
+  def get_time_slots(date)
+    return self.slot_times.map { |label, time_slot|
+      day = Date.parse(date)
+      Tod::TimeOfDay.parse(time_slot).on(day)
+    }
+  end
+
   private
 
   SHOP_KEYS = [ :id, :name, :open_at, :close_at, :break_from, :break_to ]
@@ -64,5 +97,9 @@ class Store < ApplicationRecord
       name: self.name,
       menus: self.menus.map { |menu| menu.to_sub_menu_attributes(self.options) }
     }
+  end
+
+  def input_break_time?
+    return self.break_from.present? || self.break_to.present?
   end
 end
