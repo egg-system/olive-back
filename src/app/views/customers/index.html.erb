@@ -47,8 +47,7 @@
       <table class="table">
         <thead class="thead-light">
           <tr>
-            <th scope="col">顧客ID</th>
-            <th scope="col">FMID</th>
+            <th scope="col">顧客ID<br>(FMID)</th>
             <th scope="col">氏名</th>
             <th class="address" scope="col">住所</th>
             <th scope="col">TEL</th>
@@ -64,8 +63,10 @@
         <tbody>
           <% @customers.each do |customer|%>
             <tr>
-              <td scope="row"><%= customer.id %></td>
-              <td scope="row"><%= customer.fmid %></td>
+              <td scope="row">
+                <%= customer.id %><br>
+                <%= "(#{customer.fmid})" if customer.fmid.present? %>
+              </td>
               <td><%= customer.last_name + customer.first_name %></td>
               <td class="address"><%= customer.address %></td>
               <td><%= customer.tel %></td>
