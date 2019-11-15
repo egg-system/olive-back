@@ -35,7 +35,8 @@
 
 <%= form.input(
   :start_time,
-  collection: Settings.reservation_at_options,
+  collection: Settings.stores.time_options,
+  as: :select,
   label: '開始時刻',
   hint: is_assigned ? '担当スタッフを空にすると、日時の変更が可能になります。' : '',
   disabled: is_assigned,
