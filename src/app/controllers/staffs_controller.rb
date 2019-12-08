@@ -65,12 +65,16 @@ class StaffsController < ApplicationController
       return self.destroy
     end
 
-    respond_to do |format|
-      begin
-        @staff.update!(staff_params)
-        format.html { redirect_to @staff, notice: '更新しました。' }
-        format.json { render :show, status: :ok, location: @staff }
-      rescue => exception
+    begin
+      @staff.update!(staff_params)
+      # TODO: DELETEメソッドでリクエストできない…
+      # redirect_to controller: 'staffs/sessions', action: :destroy
+      redirect_to staffs_sign_out_path, notice: '所属店舗が変更されました。お手数ですが、再度ログインしてください。' and return
+      
+      # format.html { redirect_to @staff, notice: '更新しました。' }
+      # format.json { render :show, status: :ok, location: @staff }zz
+    rescue => exception
+      respond_to do |format|
         flash[:alert] = '更新に失敗しました。'
         format.html { render :show }
         format.json { render json: @staff.errors, status: :unprocessable_entity }
