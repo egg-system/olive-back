@@ -12,9 +12,8 @@ class Staffs::SessionsController < Devise::SessionsController
   # end
 
   # DELETE /resource/sign_out
-  def destroy
-    logger.debug('-------DELETE--------')
-    super
-  end
+  # def destroy
+  #   super
+  # end
 
 end

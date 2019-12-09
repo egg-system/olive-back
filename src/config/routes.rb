@@ -5,9 +5,6 @@ Rails.application.routes.draw do
   devise_for :staffs, only: :sessions, controllers: {
     sessions: 'staffs/sessions',
   }
-  devise_scope :staffs do
-    get 'staffs/sign_out' => 'staffs/sessions#destroy'
-  end
 
   resources :shifts, only: [:index, :new, :create] do
     collection do

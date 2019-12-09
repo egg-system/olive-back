@@ -67,12 +67,9 @@ class StaffsController < ApplicationController
 
     begin
       @staff.update!(staff_params)
-      # TODO: DELETEメソッドでリクエストできない…
-      # redirect_to controller: 'staffs/sessions', action: :destroy
-      redirect_to staffs_sign_out_path, notice: '所属店舗が変更されました。お手数ですが、再度ログインしてください。' and return
-      
-      # format.html { redirect_to @staff, notice: '更新しました。' }
-      # format.json { render :show, status: :ok, location: @staff }zz
+      # ログアウトしてログイン画面にリダイレクト
+      sign_out @staff
+      redirect_to staff_session_url, notice: '所属店舗が変更されました。お手数ですが、再度ログインしてください。'
     rescue => exception
       respond_to do |format|
         flash[:alert] = '更新に失敗しました。'
