@@ -65,12 +65,13 @@ class StaffsController < ApplicationController
       return self.destroy
     end
 
-    respond_to do |format|
-      begin
-        @staff.update!(staff_params)
-        format.html { redirect_to @staff, notice: '更新しました。' }
-        format.json { render :show, status: :ok, location: @staff }
-      rescue => exception
+    begin
+      @staff.update!(staff_params)
+      # ログアウトしてログイン画面にリダイレクト
+      sign_out @staff
+      redirect_to staff_session_url, notice: '所属店舗が変更されました。お手数ですが、再度ログインしてください。'
+    rescue => exception
+      respond_to do |format|
         flash[:alert] = '更新に失敗しました。'
         format.html { render :show }
         format.json { render json: @staff.errors, status: :unprocessable_entity }

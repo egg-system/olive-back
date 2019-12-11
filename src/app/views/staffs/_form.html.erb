@@ -22,7 +22,7 @@
         label: '所属店舗<abbr>&nbsp;(必須)</abbr>'.html_safe,
         checked: @staff.stores.exists? ? @staff.stores.pluck(:id) : [],
         include_hidden: false,
-        hint: '１件以上、入力してください'
+        hint: '１件以上、入力してください。所属店舗の変更後はログアウトします。'
       ) %>
       <%= f.input :last_name, label: '姓', required: true %>
       <%= f.input :first_name, label: '名', required: true %>
