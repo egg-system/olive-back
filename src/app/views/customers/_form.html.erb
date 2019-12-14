@@ -18,7 +18,8 @@
         :email,
         label: 'メールアドレス',
         readonly: @customer.persisted? && !current_staff.role.admin?,
-        hint: current_staff.role.admin? ? '' : 'システム管理者のみ変更可能です'
+        hint: current_staff.role.admin? ? '' : 'システム管理者のみ変更可能です',
+        required: true
       ) %>
       <%= f.input(
         :can_receive_mail,
