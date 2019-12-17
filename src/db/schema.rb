@@ -95,7 +95,7 @@ ActiveRecord::Schema.define(version: 2019_12_14_132436) do
     t.bigint "size_id", comment: "サイズ"
     t.bigint "visit_reason_id", comment: "来店経緯"
     t.bigint "nearest_station_id", comment: "最寄り駅"
-    t.string "email", default: "test@test.com", null: false
+    t.string "email", default: "common.mail@olivebodycare.healthcare", null: false
     t.string "encrypted_password", comment: "非会員の場合、nullにする"
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
