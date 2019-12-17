@@ -33,7 +33,7 @@ class Customer < ApplicationRecord
 
   validates :tel, numericality: { allow_blank: true }
   validates :password, presence: true, on: :create, if: :member?
-  validates :email, presence: true
+  validates :email, presence: true, uniqueness: true
 
   #left join
   scope :join_size, ->{
