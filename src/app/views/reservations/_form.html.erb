@@ -41,8 +41,8 @@
 
   <% if @reservation.persisted? %>
     <%= f.input(
-      :created_at,
-      label: '登録日',
+      :created_at_string,
+      label: '登録実行日',
       as: :string,
       readonly: true
     ) %>

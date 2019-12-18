@@ -21,6 +21,10 @@ module ReservationAuditModule
     return audit_value(created_audit)
   end
 
+  def created_at_string
+    return self.created_at.strftime('%Y-%m-%d %H:%M')
+  end
+
   def canceled_by
     return audit_value(canceled_audit)
   end
