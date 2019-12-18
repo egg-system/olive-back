@@ -1,7 +1,7 @@
 <%= simple_form_for(@reservation) do |f| %>
 
   <% if @reservation.persisted? %>
-    <%= f.input :id, label: 'id', readonly: true %>
+    <%= f.input :id, label: 'ID', readonly: true %>
   <% end %>
   
   <%= f.input :customer_id, label: '顧客ID', readonly: true %>
@@ -37,7 +37,15 @@
     </div>
   </div>
 
+  <hr>
+
   <% if @reservation.persisted? %>
+    <%= f.input(
+      :created_at_string,
+      label: '登録実行日',
+      as: :string,
+      readonly: true
+    ) %>
     <%= f.input(
       :created_by,
       label: '登録実行者',
