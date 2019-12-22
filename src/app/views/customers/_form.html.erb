@@ -18,8 +18,9 @@
         :email,
         label: 'メールアドレス',
         readonly: @customer.persisted? && !current_staff.role.admin?,
-        hint: current_staff.role.admin? ? '' : 'システム管理者のみ変更可能です',
-        required: true
+        hint: current_staff.role.admin? ? "不要な場合は #{Settings.customer.common_email} を入力してください" : 'システム管理者のみ変更可能です',
+        required: true,
+        input_html: @customer.persisted? && @customer.email.nil? ? { value: Settings.customer.common_email } : {}
       ) %>
       <%= f.input(
         :can_receive_mail,

@@ -33,7 +33,9 @@ class Customer < ApplicationRecord
 
   validates :tel, numericality: { allow_blank: true }
   validates :password, presence: true, on: :create, if: :member?
-  validates :email, presence: true, uniqueness: true
+  validates :email, uniqueness: true, unless: :common_email?
+  
+  before_save :filter_email
 
   #left join
   scope :join_size, ->{
@@ -79,5 +81,13 @@ class Customer < ApplicationRecord
 
   def sync_none_uid
     self.uid = Time.now.to_s if is_none_provider?
+  end
+
+  def common_email?
+    self.email === Settings.customer.common_email
+  end
+
+  def filter_email
+    self.email = nil if common_email?
   end
 end
