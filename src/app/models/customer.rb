@@ -33,9 +33,7 @@ class Customer < ApplicationRecord
 
   validates :tel, numericality: { allow_blank: true }
   validates :password, presence: true, on: :create, if: :member?
-  validates :email, uniqueness: true, unless: :common_email?
-  
-  before_save :filter_email
+  validates :email, uniqueness: true
 
   #left join
   scope :join_size, ->{
@@ -58,7 +56,7 @@ class Customer < ApplicationRecord
     where('email LIKE ?', "%#{email}%") if email.present?
   }
 
-  attr_accessor :age
+  attr_accessor :age, :display_email
 
   def age
     return nil if self.birthday.nil?
@@ -67,6 +65,15 @@ class Customer < ApplicationRecord
 
   def full_name
     return self.last_name + ' ' + self.first_name
+  end
+
+  def display_email
+    return nil if self.new_record?
+    return self.email.nil? ? self.common_email : self.email
+  end
+
+  def display_email=(email)
+    self.email = email unless email === self.common_email
   end
 
   protected
@@ -80,14 +87,10 @@ class Customer < ApplicationRecord
   end
 
   def sync_none_uid
-    self.uid = Time.now.to_s if is_none_provider?
+    self.uid = Time.now.to_s unless is_none_provider?
   end
 
-  def common_email?
-    self.email === Settings.customer.common_email
-  end
-
-  def filter_email
-    self.email = nil if common_email?
+  def common_email
+    return Settings.customer.common_email
   end
 end

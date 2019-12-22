@@ -97,7 +97,7 @@ class CustomersController < ApplicationController
     def customer_params
       params.require(:customer).permit(
         :fmid, :first_name, :last_name, :first_kana, :last_kana,
-        :tel, :fixed_line_tel, :email, :can_receive_mail,
+        :tel, :fixed_line_tel, :display_email, :can_receive_mail,
         :first_visit_store_id, :first_visited_at, :last_visit_store_id, :comment,
         :zip_code, :address, :birthday, :card_number, :has_registration_card,
         :introducer, :children_count, :baby_age_id,
