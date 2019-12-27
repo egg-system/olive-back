@@ -57,6 +57,23 @@ class Customer < ApplicationRecord
 
   attr_accessor :age
 
+  def self.merge(merge_from_id, merge_to_id)
+    merge_from_customer = find(merge_from_id)
+    merge_from_customer.reservations.update(customer_id: merge_to_id)
+
+    merge_to_customer = find(merge_to_id)
+    unless merge_to_customer.member?
+      merge_to_customer.uid = merge_from_customer.uid
+      merge_to_customer.encrypted_password = merge_from_customer.encrypted_password
+      merge_to_customer.provider = 'email'
+    end
+
+    merge_from_customer.destroy!
+    merge_to_customer.save!
+
+    return merge_from_customer
+  end
+
   def age
     return nil if self.birthday.nil?
     return (Date.today.strftime('%Y%m%d').to_i - self.birthday.strftime('%Y%m%d').to_i) / 10000
