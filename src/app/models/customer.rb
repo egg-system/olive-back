@@ -66,11 +66,11 @@ class Customer < ApplicationRecord
     return self.last_name + ' ' + self.first_name
   end
 
-  protected
-
   def member?
     return self.provider != 'none'
   end
+
+  protected
 
   def is_none_provider?
     provider === 'none'
