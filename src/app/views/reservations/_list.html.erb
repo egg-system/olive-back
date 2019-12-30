@@ -10,7 +10,6 @@
           <th scope="col">ID</th>
           <th scope="col">予約状況</th>
           <th scope="col" class="reservation-date">予約日時</th>
-          <th scope="col" class="reservation-date">予約登録日時</th>
           <th scope="col" class="visited_store">来店店舗</th>
           <% if is_shown_customer_name %>
             <th scope="col">顧客名<br>(電話番号)</th>
@@ -24,6 +23,7 @@
           <%# <th scope="col">時間数</th> %>
           <th scope="col">メニュー</th>
           <th scope="col">オプション</th>
+          <th scope="col">予約の登録実施日時</th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -37,7 +37,6 @@
               <%= reservation.reservation_date %><br>
               <%= reservation.start_time.strftime("%H:%M") %>〜<%= reservation.end_time.strftime("%H:%M") %>
             </td>
-            <td rowspan="<%= row_span %>"><%= reservation.created_at.strftime('%Y-%m-%d %H:%M') %></td>
             <td rowspan="<%= row_span %>" class="visited_store"><%= reservation.store.name %></td>
             <% if is_shown_customer_name %>
               <td rowspan="<%= row_span %>">
@@ -69,6 +68,7 @@
               <td>
                 <%= detail.has_options ? safe_join(detail.option_names, tag(:br)) : '無' %></td>
               </td>
+              <td rowspan="<%= row_span %>"><%= reservation.created_at.strftime('%Y-%m-%d %H:%M') %></td>
               <% if index === 0 %>
                 <td rowspan="<%= row_span %>">
                   <%= link_to "詳細へ", reservation_path(reservation.id) %>
