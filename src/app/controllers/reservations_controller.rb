@@ -56,15 +56,26 @@ class ReservationsController < ApplicationController
     @reservation = Reservation.new(reservation_params)
     @reservation.build_shifts
 
+    @customer = Customer.find(@reservation.customer_id)
+    if @customer.first_visit_store_id.nil? && @customer.first_visited_at.nil?
+      @customer.first_visit_store_id = @reservation.store_id
+      @customer.first_visited_at = @reservation.reservation_date
+    end
+    @customer.last_visit_store_id = @reservation.store_id
+    @customer.last_visited_at = @reservation.reservation_date
+
     respond_to do |format|
-      if @reservation.save
+      ActiveRecord::Base.transaction do
+        @customer.save!
+        result = @reservation.save # 'save!'だとエラーになる
+        raise '予約登録に失敗しました' if !result
+      end
         format.html { redirect_to @reservation, notice: '予約登録に成功しました。' }
         format.json { render :show, status: :created, location: @reservation }
-      else
+      rescue => exception
         flash[:alert] = '入力された日時は予約できません。別の日時に変更してください。' unless @reservation.shifts.present?
         format.html { render :new }
         format.json { render json: @reservation.errors, status: :unprocessable_entity }
-      end
     end
   end
 
