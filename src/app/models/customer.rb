@@ -88,7 +88,7 @@ class Customer < ApplicationRecord
   end
 
   def display_email
-    return nil if self.new_record?
+    return self.email if self.new_record?
     return self.email.nil? ? self.common_email : self.email
   end
 

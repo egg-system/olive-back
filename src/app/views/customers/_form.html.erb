@@ -42,7 +42,7 @@
           </div>
         </div>
       <% end %>
-      <% if @customer.provider === 'email' %>
+      <% if @customer.persisted? && @customer.provider === 'email' %>
         <%= f.input(
           :uid,
           label: 'ログインID',
