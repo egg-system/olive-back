@@ -23,6 +23,7 @@
           <%# <th scope="col">時間数</th> %>
           <th scope="col">メニュー</th>
           <th scope="col">オプション</th>
+          <th scope="col">予約の登録実施日時</th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -67,6 +68,7 @@
               <td>
                 <%= detail.has_options ? safe_join(detail.option_names, tag(:br)) : '無' %></td>
               </td>
+              <td rowspan="<%= row_span %>"><%= reservation.created_at.strftime('%Y-%m-%d %H:%M') %></td>
               <% if index === 0 %>
                 <td rowspan="<%= row_span %>">
                   <%= link_to "詳細へ", reservation_path(reservation.id) %>

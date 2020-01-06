@@ -1,3 +1,4 @@
 /src/.env
 /src/vendor
 .history
+.DS_Store
