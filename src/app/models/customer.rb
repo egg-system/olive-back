@@ -101,8 +101,6 @@ class Customer < ApplicationRecord
     return self.display_email === self.common_email
   end
 
-  protected
-
   def member?
     return self.provider != 'none'
   end
