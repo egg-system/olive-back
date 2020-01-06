@@ -15,10 +15,13 @@
       <%= f.input :tel, label: '電話番号', required: @customer.new_record? %>
       <%= f.input :fixed_line_tel, label: '固定電話番号' %>
       <%= f.input(
-        :email,
+        :display_email,
         label: 'メールアドレス',
         readonly: @customer.persisted? && !current_staff.role.admin?,
-        hint: current_staff.role.admin? ? '' : 'システム管理者のみ変更可能です'
+        hint: current_staff.role.admin? ? 
+          "不明な場合は #{Settings.customer.common_email} を入力してください"
+          : 'システム管理者のみ変更可能です',
+        required: true
       ) %>
       <%= f.input(
         :can_receive_mail,
@@ -111,7 +114,10 @@
         :provider,
         label: '会員/非会員',
         as: :select,
-        hint: '会員にする場合、メールアドレスとパスワードの入力が必須になります',
+        hint: "
+          会員にする場合、パスワードの入力が必須になります。
+          ※ メールアドレスが#{Settings.customer.common_email}の方は会員にできません。
+        ",
         collection: { '非会員' => :none, '会員' => :email }
       ) %>
       <% if @customer.provider === 'email' %>

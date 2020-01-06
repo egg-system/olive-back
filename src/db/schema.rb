@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_09_104415) do
+ActiveRecord::Schema.define(version: 2019_12_21_111160) do
 
   create_table "audits", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "auditable_id"
@@ -95,7 +95,7 @@ ActiveRecord::Schema.define(version: 2019_11_09_104415) do
     t.bigint "size_id", comment: "サイズ"
     t.bigint "visit_reason_id", comment: "来店経緯"
     t.bigint "nearest_station_id", comment: "最寄り駅"
-    t.string "email", default: "", null: false
+    t.string "email"
     t.string "encrypted_password", comment: "非会員の場合、nullにする"
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
