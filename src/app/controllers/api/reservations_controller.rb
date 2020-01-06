@@ -8,19 +8,8 @@ class Api::ReservationsController < Api::ApiController
     @reservation = Reservation.new(reservation_params)
     @reservation.build_shifts
 
-    @customer = Customer.find(@reservation.customer_id)
-    if @customer.first_visit_store_id.nil? && @customer.first_visited_at.nil?
-      @customer.first_visit_store_id = @reservation.store_id
-      @customer.first_visited_at = @reservation.reservation_date
-    end
-    @customer.last_visit_store_id = @reservation.store_id
-    @customer.last_visited_at = @reservation.reservation_date
-
-    ActiveRecord::Base.transaction do
-      @customer.save!
-      @reservation.save!
-      ReservationMailer.confirm_reservation(@reservation).deliver_now
-    end
+    @reservation.update_customer_visited_info
+    ReservationMailer.confirm_reservation(@reservation).deliver_now
   end
 
   def index

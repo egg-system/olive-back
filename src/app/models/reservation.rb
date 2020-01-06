@@ -95,6 +95,21 @@ class Reservation < ApplicationRecord
     return self.persisted? && self.shifts.present? || self.canceled?
   end
 
+  def update_customer_visited_info
+    customer = Customer.find(self.customer_id)
+    if customer.first_visit_store_id.nil? && customer.first_visited_at.nil?
+      customer.first_visit_store_id = self.store_id
+      customer.first_visited_at = self.reservation_date
+    end
+    customer.last_visit_store_id = self.store_id
+    customer.last_visited_at = self.reservation_date
+
+    ActiveRecord::Base.transaction do
+      customer.save!
+      self.save!
+    end
+  end
+
   private
 
   def validate_reservation_date
