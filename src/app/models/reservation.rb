@@ -95,7 +95,7 @@ class Reservation < ApplicationRecord
     return self.persisted? && self.shifts.present? || self.canceled?
   end
 
-  def update_customer_visited_info
+  def update_with_customer_visited_info
     customer = Customer.find(self.customer_id)
     if customer.first_visit_store_id.nil? && customer.first_visited_at.nil?
       customer.first_visit_store_id = self.store_id

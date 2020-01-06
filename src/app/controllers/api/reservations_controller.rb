@@ -8,7 +8,7 @@ class Api::ReservationsController < Api::ApiController
     @reservation = Reservation.new(reservation_params)
     @reservation.build_shifts
 
-    @reservation.update_customer_visited_info
+    @reservation.update_with_customer_visited_info
     ReservationMailer.confirm_reservation(@reservation).deliver_now
   end
 

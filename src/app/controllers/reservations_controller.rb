@@ -58,7 +58,7 @@ class ReservationsController < ApplicationController
 
     respond_to do |format|
       begin
-        @reservation.update_customer_visited_info
+        @reservation.update_with_customer_visited_info
         format.html { redirect_to @reservation, notice: '予約登録に成功しました。' }
         format.json { render :show, status: :created, location: @reservation }
       rescue => exception
