@@ -13,6 +13,7 @@ class Customer < ApplicationRecord
     class_name: 'Store',
     foreign_key: 'first_visit_store_id'
   )
+
   belongs_to(
     :last_visit_store,
     optional: true,
@@ -33,7 +34,7 @@ class Customer < ApplicationRecord
 
   validates :tel, numericality: { allow_blank: true }
   validates :password, presence: true, on: :create, if: :member?
-  validates :email, uniqueness: true
+  validates :email, uniqueness: true, unless: :common_email?
 
   #left join
   scope :join_size, ->{
@@ -94,6 +95,10 @@ class Customer < ApplicationRecord
 
   def display_email=(email)
     self.email = email unless email === self.common_email
+  end
+
+  def common_email?
+    return self.display_email === self.common_email
   end
 
   protected
