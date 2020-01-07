@@ -66,6 +66,15 @@ class Customer < ApplicationRecord
     return self.last_name + ' ' + self.first_name
   end
 
+  def set_visit_info(store_id, reservation_date)
+    if self.first_visit_store_id.nil? && self.first_visited_at.nil?
+      self.first_visit_store_id = store_id
+      self.first_visited_at = reservation_date
+    end
+    self.last_visit_store_id = store_id
+    self.last_visited_at = reservation_date
+  end
+
   protected
 
   def member?
