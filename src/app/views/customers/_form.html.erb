@@ -15,11 +15,45 @@
       <%= f.input :tel, label: '電話番号', required: @customer.new_record? %>
       <%= f.input :fixed_line_tel, label: '固定電話番号' %>
       <%= f.input(
-        :email,
+        :display_email,
         label: 'メールアドレス',
         readonly: @customer.persisted? && !current_staff.role.admin?,
-        hint: current_staff.role.admin? ? '' : 'システム管理者のみ変更可能です'
+        hint: current_staff.role.admin? ? 
+          "不明な場合は #{Settings.customer.common_email} を入力してください"
+          : 'システム管理者のみ変更可能です',
+        required: true
       ) %>
+      <% if @customer.persisted? %>
+        <div class="custom_row row">
+          <div class="custom_left col-sm-3">
+            <label></label>
+          </div>
+          <div class="custom_right col-sm-9">
+            <%= f.input(
+              :member?,
+              label: 'ログイン可否',
+              as: :boolean,
+              hint: "
+                メールアドレスを元に補完されます。
+                 ※ メールアドレスが #{Settings.customer.common_email} のお客様はログインできません。
+              ",
+              disabled: true,
+            ) %>
+          </div>
+        </div>
+      <% end %>
+      <% if @customer.persisted? && @customer.provider === 'email' %>
+        <%= f.input(
+          :uid,
+          label: 'ログインID',
+          hint: '会員のお客様の場合、メールアドレスを元に補完されます。',
+          readonly: true
+        ) %>
+      <% end %>
+      <%= f.input :password,
+        label: 'パスワード',
+        hint: "パスワードは英字/数字を含む8文字以上にしてください。 ※ メールアドレスが #{Settings.customer.common_email} のお客様は設定不要です。"
+      %>
       <%= f.input(
         :can_receive_mail,
         as: :radio_buttons,
@@ -107,20 +141,6 @@
         default: @customer.size_id,
         include_blank: true
       ) %>
-      <%= f.input(
-        :provider,
-        label: '会員/非会員',
-        as: :select,
-        hint: '会員にする場合、メールアドレスとパスワードの入力が必須になります',
-        collection: { '非会員' => :none, '会員' => :email }
-      ) %>
-      <% if @customer.provider === 'email' %>
-        <%= f.input :uid, label: 'ログインID', hint: '会員の場合、メールアドレスを元に補完されます。', readonly: true %>
-      <% end %>
-      <%= f.input :password,
-        label: 'パスワード',
-        hint: 'パスワードは英字/数字を含む8文字以上にしてください'
-      %>
       <%= f.button :submit, class: 'btn btn-primary' %>
       <%= link_to '戻る', customers_path, class: 'btn btn-light' %>
     </div>

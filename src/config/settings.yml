@@ -48,3 +48,6 @@ audit:
 domain:
   production: 'dashboard.olivebodycare.healthcare'
   reserve: 'reserve.olivebodycare.healthcare'
+
+customer:
+  common_email: 'common.mail@olivebodycare.healthcare'
