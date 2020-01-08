@@ -33,6 +33,8 @@ class Reservation < ApplicationRecord
 
   validate :validate_reservation_date, on: :create
 
+  after_create :save_customer_visited_info
+
   scope :like_customer_name, -> (customer_name) {
     joins(:customer).where("concat(last_name, first_name) like ?", "%#{customer_name}%")
   }
@@ -95,13 +97,8 @@ class Reservation < ApplicationRecord
     return self.persisted? && self.shifts.present? || self.canceled?
   end
 
-  def after_create
-    self.customer.set_visit_info(self.store_id, self.reservation_date)
-
-    ActiveRecord::Base.transaction do
-      self.customer.save!
-      self.save!
-    end
+  def save_customer_visited_info
+    self.customer.save_visited_info(self.store_id, self.reservation_date)
   end
 
   private

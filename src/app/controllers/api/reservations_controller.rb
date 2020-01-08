@@ -8,8 +8,10 @@ class Api::ReservationsController < Api::ApiController
     @reservation = Reservation.new(reservation_params)
     @reservation.build_shifts
 
-    @reservation.after_create
-    ReservationMailer.confirm_reservation(@reservation).deliver_now
+    Reservation.transaction do
+      @reservation.save!
+      ReservationMailer.confirm_reservation(@reservation).deliver_now
+    end
   end
 
   def index
