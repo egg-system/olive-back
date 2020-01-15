@@ -53,7 +53,11 @@ class Customer < ApplicationRecord
   }
 
   scope :like_email, -> (email) {
-    where('email LIKE ?', "%#{email}%") if email.present?
+    if email === Settings.customer.common_email
+      where('email is ?', nil)
+    elsif email.present?
+      where('email LIKE ?', "%#{email}%")
+    end
   }
 
   attr_accessor :age, :display_email
