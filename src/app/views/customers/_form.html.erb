@@ -1,13 +1,14 @@
 <div class="form-wrapper">
   <%= simple_form_for(@customer, wrapper: :horizontal_form, html: { class: 'form-horizontal', autocomplete: 'off' }) do |f|%>
-    <%= f.error_notification %>
-    <% if f.object.errors.messages.present? %>
-      <% f.object.errors.messages.each do |attr, msgs| %>
-        <%= f.error_notification message: f.object.errors.full_messages_for(attr).first %>
-      <% end %>
-    <% elsif f.object.errors[:base].present? %>
-      <%= f.error_notification message: f.object.errors[:base].to_sentence %>
+    <% if @customer.errors.any? %>
+      <div class="alert alert-danger">
+        <h4 class="alert-heading"><%= I18n.t('simple_form.error_notification.default_message') %></h4>
+        <% @customer.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </div>
     <% end %>
+
     <div class="form-center">
       <% if @customer.persisted? %>
         <%= f.input :id, label: '顧客ID', readonly: true %>
