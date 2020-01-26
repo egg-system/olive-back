@@ -33,8 +33,6 @@ class Reservation < ApplicationRecord
 
   validate :validate_reservation_date, on: :create
 
-  after_create :set_customer_visited_info
-
   scope :like_customer_name, -> (customer_name) {
     joins(:customer).where("concat(last_name, first_name) like ?", "%#{customer_name}%")
   }
@@ -95,11 +93,6 @@ class Reservation < ApplicationRecord
   def assigned?
     # シフトへの紐付けが存在する or キャンセル済みかどうかで判定
     return self.persisted? && self.shifts.present? || self.canceled?
-  end
-
-  def set_customer_visited_info
-    self.customer.set_visited_info(self.store_id, self.reservation_date)
-    self.customer.save!
   end
 
   private
