@@ -1,7 +1,7 @@
 <div class="form-wrapper">
   <%= simple_form_for(@customer, wrapper: :horizontal_form, html: { class: 'form-horizontal', autocomplete: 'off' }) do |f|%>
-    <%= f.error_notification %>
-    <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+    <%= render 'application/form_error', errors: @customer.errors %>
+
     <div class="form-center">
       <% if @customer.persisted? %>
         <%= f.input :id, label: '顧客ID', readonly: true %>

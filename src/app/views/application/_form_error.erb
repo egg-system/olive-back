@@ -1,0 +1,8 @@
+<% if errors.any? %>
+  <div class="alert alert-danger">
+    <h4 class="alert-heading"><%= I18n.t('simple_form.error_notification.default_message') %></h4>
+    <% errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+  </div>
+<% end %>
