@@ -141,6 +141,19 @@
         default: @customer.size_id,
         include_blank: true
       ) %>
+      <div class="custom_row row">
+        <div class="custom_left col-sm-3">
+          <label></label>
+        </div>
+        <div class="custom_right col-sm-9">
+          <%= f.input(
+            :is_deleted?,
+            label: '削除済み',
+            as: :boolean,
+            disabled: true,
+          ) %>
+        </div>
+      </div>
       <%= f.button :submit, class: 'btn btn-primary' %>
       <%= link_to '戻る', customers_path, class: 'btn btn-light' %>
     </div>
