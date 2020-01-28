@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_21_111160) do
+ActiveRecord::Schema.define(version: 2020_01_28_144418) do
 
   create_table "audits", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "auditable_id"
@@ -105,6 +105,7 @@ ActiveRecord::Schema.define(version: 2019_12_21_111160) do
     t.text "tokens"
     t.boolean "allow_password_change", default: false, comment: "パスワード変更に必要"
     t.integer "fmid"
+    t.boolean "is_deleted", default: false, comment: "削除フラグ"
     t.index ["baby_age_id"], name: "index_customers_on_baby_age_id"
     t.index ["email"], name: "index_customers_on_email"
     t.index ["first_visit_store_id"], name: "index_customers_on_first_visit_store_id"
