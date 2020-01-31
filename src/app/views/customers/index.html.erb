@@ -1,6 +1,19 @@
 <% breadcrumb :root %>
 <div id="customer_index">
   <p class="common_title">顧客一覧</p>
+  
+  <% if @duplicate_alerts.present? %>
+    <div class="alert alert-danger">
+      <h4 class="alert-heading">重複しているユーザーが存在します</h4>
+      <% @duplicate_alerts.each do |alert| %>
+        <li>
+          <%# <a href="/customers?name=笹沼&tel=09011111111"> %>
+          <%= link_to "氏名: #{alert['name']}, TEL: #{alert['tel']}", "/customers?name=#{alert['name']}&tel=#{alert['tel']}" %>
+        </li>
+      <% end %>
+    </div>
+  <% end %>
+
   <div class="upper-frame">
     <h4>検索条件入力</h4>
     <div class="condition-section">

@@ -56,6 +56,10 @@ class Customer < ApplicationRecord
     where('email LIKE ?', "%#{email}%") if email.present?
   }
 
+  scope :group_duplicate, -> {
+    group(:first_name, :last_name, :first_kana, :first_kana, :tel).having('count(*) >= 2')
+  }
+
   attr_accessor :age, :display_email
 
   # 本メソッドは、メールアドレスの重複を前提としている
