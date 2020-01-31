@@ -25,6 +25,12 @@
               <%= f.text_field :email, { class: "form-control", value: @search_params["email"] } %>
             <td>
           </tr>
+          <tr>
+            <th>削除済み</th>
+            <td>
+              <%= f.check_box :is_deleted, { class: "form-control", value: @search_params["is_deleted"] } %>
+            <td>
+          </tr>
         </tbody>
       </table>
       <%end%>

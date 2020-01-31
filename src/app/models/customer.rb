@@ -56,6 +56,10 @@ class Customer < ApplicationRecord
     where('email LIKE ?', "%#{email}%") if email.present?
   }
 
+  scope :deleted, -> (is_deleted) {
+    where(is_deleted: is_deleted)
+  }
+
   attr_accessor :age, :display_email
 
   # 本メソッドは、メールアドレスの重複を前提としている
