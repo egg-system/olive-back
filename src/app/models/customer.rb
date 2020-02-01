@@ -57,7 +57,7 @@ class Customer < ApplicationRecord
   }
 
   scope :deleted, -> (is_deleted) {
-    where(is_deleted: is_deleted)
+    where(is_deleted: is_deleted) if is_deleted.present?
   }
 
   attr_accessor :age, :display_email

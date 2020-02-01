@@ -26,7 +26,7 @@
             <td>
           </tr>
           <tr>
-            <th>削除済み</th>
+            <th>未使用</th>
             <td>
               <%= f.check_box :is_deleted, { class: "form-control", value: @search_params["is_deleted"] } %>
             <td>
@@ -63,7 +63,7 @@
             <th scope="col">サイズ</th>
             <th scope="col">診察券</th>
             <th scope="col">初回ご来店日</th>
-            <th scope="col">削除状況</th>
+            <th scope="col">使用状況</th>
             <th scope="col"></th>
           </tr>
         </thead>
@@ -80,7 +80,7 @@
               <td><%= customer.size_name %></td>
               <td><%= customer.has_registration_card == true ? '有' : '無' %></td>
               <td><%= customer.first_visited_at %></td>
-              <td><%= customer.is_deleted == true ? '削除済' : '未削除'%></td>
+              <td><%= customer.is_deleted == true ? '未使用' : '使用中'%></td>
               <td>
                 <ul>
                   <li><%= link_to '詳細へ', customer_path(customer.id) %></li>
