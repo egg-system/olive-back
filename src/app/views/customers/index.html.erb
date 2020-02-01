@@ -26,9 +26,10 @@
             <td>
           </tr>
           <tr>
-            <th>未使用</th>
+            <th>使用状況</th>
             <td>
-              <%= f.check_box :is_deleted, { class: "form-control", value: @search_params["is_deleted"] } %>
+              <%= f.radio_button :is_deleted, 1, checked: @search_params["is_deleted"] == "1" %> <%= f.label :is_deleted, "未使用", { class: "radio_button", value: 1 } %>
+              <%= f.radio_button :is_deleted, 0, checked: @search_params["is_deleted"] == "0" %> <%= f.label :is_deleted, "使用中", { class: "radio_button", value: 0 } %>
             <td>
           </tr>
         </tbody>
