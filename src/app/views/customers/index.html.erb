@@ -26,10 +26,9 @@
             <td>
           </tr>
           <tr>
-            <th>使用状況</th>
+            <th></th>
             <td>
-              <%= f.radio_button :is_deleted, 1, checked: @search_params["is_deleted"] == "1" %> <%= f.label :is_deleted, "未使用", { class: "radio_button", value: 1 } %>
-              <%= f.radio_button :is_deleted, 0, checked: @search_params["is_deleted"] == "0" %> <%= f.label :is_deleted, "使用中", { class: "radio_button", value: 0 } %>
+              <%= f.check_box :include_deleted, { checked: @search_params["include_deleted"] == '1' } %> <%= f.label :include_deleted, "未使用の顧客を含めて検索する" %>
             <td>
           </tr>
         </tbody>

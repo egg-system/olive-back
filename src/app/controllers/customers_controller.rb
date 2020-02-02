@@ -13,7 +13,7 @@ class CustomersController < ApplicationController
     @customers = @customers.like_name(@search_params[:name])
     @customers = @customers.like_tel(@search_params[:tel])
     @customers = @customers.like_email(@search_params[:email])
-    @customers = @customers.deleted(@search_params[:is_deleted])
+    @customers = @customers.deleted(0) if @search_params[:include_deleted] != '1'
 
     @customers = @customers.paginate(@search_params[:page], 20)
   end
@@ -107,6 +107,6 @@ class CustomersController < ApplicationController
     end
 
     def search_params
-      params.permit(:name, :tel, :email, :is_deleted, :page)
+      params.permit(:name, :tel, :email, :include_deleted, :page)
     end
 end
