@@ -1,0 +1,2 @@
+module Customers::DuplicateHelper
+end

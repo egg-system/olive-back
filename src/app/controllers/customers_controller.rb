@@ -15,9 +15,6 @@ class CustomersController < ApplicationController
     @customers = @customers.like_email(@search_params[:email])
 
     @customers = @customers.paginate(@search_params[:page], 20)
-
-    # 重複ユーザー
-    @duplicate_alerts = @customers.group_duplicate.pluck(:first_name, :last_name, :tel).map { |item| { 'name' => item[1] + item[0], 'tel' => item[2] } }
   end
 
   def search

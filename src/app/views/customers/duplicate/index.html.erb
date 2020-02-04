@@ -1,0 +1,39 @@
+<% breadcrumb :root %>
+<div id="customer_duplicate_index">
+  <p class="common_title">重複顧客一覧</p>
+  
+  <div class="pl-2 mt-3">
+    <% if @duplicate_customers.present? %>
+      <h5>合計件数：<%= @duplicate_customers.size %>件</h5>
+    <% end %>
+  </div>
+  <div class="lower-frame">
+    <% if @duplicate_customers.blank? %>
+      <p>該当データがありません</p>
+    <% else %>
+      <table class="table">
+        <thead class="thead-light">
+          <tr>
+            <th scope="col">氏名</th>
+            <th scope="col">シメイ</th>
+            <th scope="col">TEL</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @duplicate_customers.each do |customer|%>
+            <tr>
+              <td><%= customer.last_name + customer.first_name %></td>
+              <td><%= customer.last_kana + customer.first_kana %></td>
+              <td><%= customer.tel %></td>
+              <td><%= link_to '詳細へ', customers_path(name: customer.last_name + customer.first_name, tel: customer.tel) %></td>
+            </tr>
+          <%end%>
+        </tbody>
+      </table>
+    <% end %>
+  </div>
+  <%= paginate @duplicate_customers %>
+  <br>
+  <br>
+</div>

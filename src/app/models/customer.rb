@@ -57,7 +57,9 @@ class Customer < ApplicationRecord
   }
 
   scope :group_duplicate, -> {
-    group(:first_name, :last_name, :first_kana, :first_kana, :tel).having('count(*) >= 2')
+    select('customers.first_name, customers.last_name, customers.first_kana, customers.last_kana, customers.tel')
+    .group(:first_name, :last_name, :first_kana, :last_kana, :tel)
+    .having('count(*) >= 2')
   }
 
   attr_accessor :age, :display_email
