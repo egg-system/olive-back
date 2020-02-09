@@ -1,6 +1,12 @@
 <% breadcrumb :root %>
 <div id="customer_index">
   <p class="common_title">顧客一覧</p>
+
+  <% if @exists_duplicate_customers %>
+    <div class="alert alert-danger">
+      <%= link_to '重複しているユーザーが存在します', customers_duplicate_index_path %>
+    </div>
+  <% end %>
   
   <div class="upper-frame">
     <h4>検索条件入力</h4>
