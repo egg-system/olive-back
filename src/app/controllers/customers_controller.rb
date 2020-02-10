@@ -13,7 +13,10 @@ class CustomersController < ApplicationController
     @customers = @customers.like_name(@search_params[:name])
     @customers = @customers.like_tel(@search_params[:tel])
     @customers = @customers.like_email(@search_params[:email])
-    @customers = @customers.deleted(0) if @search_params[:include_deleted] != '1'
+
+    # 基本的に、未使用フラグの立った顧客は検索に表示しない
+    ## include_deletedがtrueの場合のみ、未使用フラグの立った顧客を検索結果に含める
+    @customers = @customers.where_deleted(false) unless @search_params[:include_deleted] === '1'
 
     @customers = @customers.paginate(@search_params[:page], 20)
   end
@@ -102,7 +105,7 @@ class CustomersController < ApplicationController
         :first_visit_store_id, :first_visited_at, :last_visit_store_id, :comment,
         :zip_code, :address, :birthday, :card_number, :has_registration_card,
         :introducer, :children_count, :baby_age_id,
-        :occupation_id, :zoomancy_id, :size_id, :provider, :password,          
+        :occupation_id, :zoomancy_id, :size_id, :provider, :password, :is_deleted        
       )
     end
 
