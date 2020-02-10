@@ -20,7 +20,7 @@ class Customers::DuplicateController < ApplicationController
     # 重複している顧客ごとにグルーピングする
     @duplicated_customer_groups = duplicated_ids_groups.map{ |duplicated_ids| 
       duplicated_customers.select { |customer|
-        duplicated_ids.include?(customer.id.to_s)
+        duplicated_ids.split(',').include?(customer.id.to_s)
       }
     }
   end
