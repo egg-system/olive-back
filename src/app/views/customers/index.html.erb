@@ -2,7 +2,7 @@
 <div id="customer_index">
   <p class="common_title">顧客一覧</p>
 
-  <% if @exists_duplicate_customers %>
+  <% if duplicated_customer_exists? %>
     <div class="alert alert-danger">
       <%= link_to '重複しているユーザーが存在します', customers_duplicate_index_path %>
     </div>
@@ -37,8 +37,13 @@
       <%end%>
     </div>
     <div class="button-section">
-      <%=link_to "新規登録へ", new_customer_path, {class: "btn btn-primary btn-new"}%>
-      <%=submit_tag "検索実行", {class: "btn btn-info btn-search", form: "search"}%>
+      <%= link_to "新規登録へ", new_customer_path, {
+        class: "btn btn-primary btn-new"
+      } %>
+      <%= submit_tag "検索実行", {
+        class: "btn btn-info btn-search",
+        form: "search"
+      } %>
     </div>
     <div class="clear"></div>
   </div>
@@ -51,46 +56,8 @@
     <% if @customers.blank? %>
       <p>該当データがありません</p>
     <% else %>
-      <table class="table">
-        <thead class="thead-light">
-          <tr>
-            <th scope="col">顧客ID</th>
-            <th scope="col">FMID</th>
-            <th scope="col">氏名</th>
-            <th class="address" scope="col">住所</th>
-            <th scope="col">TEL</th>
-            <th scope="col">Email</th>
-            <th scope="col">個性</th>
-            <th scope="col">サイズ</th>
-            <th scope="col">診察券</th>
-            <th scope="col">初回ご来店日</th>
-            <th scope="col"></th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @customers.each do |customer|%>
-            <tr>
-              <td scope="row"><%= customer.id %></td>
-              <td scope="row"><%= customer.fmid %></td>
-              <td><%= customer.last_name + customer.first_name %></td>
-              <td class="address"><%= customer.address %></td>
-              <td><%= customer.tel %></td>
-              <td><%= customer.email %></td>
-              <td><%= customer.zoomancy.name if customer.zoomancy.present? %></td>
-              <td><%= customer.size_name %></td>
-              <td><%= customer.has_registration_card == true ? '有' : '無' %></td>
-              <td><%= customer.first_visited_at %></td>
-              <td>
-                <ul>
-                  <li><%= link_to '詳細へ', customer_path(customer.id) %></li>
-                  <li><%= link_to '予約登録へ', new_reservation_path(customer_id: customer.id) %></li>
-                </ul>
-              </td>
-            </tr>
-          <%end%>
-        </tbody>
-      </table>
-    <% end %>
+      <%= render 'table', { customer: @customers } %>
+     <% end %>
   </div>
   <%= paginate @customers %>
   <br>
