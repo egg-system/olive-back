@@ -147,8 +147,7 @@
         wrapper: :horizontal_collection_inline,
         collection: { "未使用" => true, "使用中" => false },
         label: '使用状況',
-        checked: @customer.is_deleted,
-        disabled: true
+        checked: @customer.is_deleted
       ) %>
       <%= f.button :submit, class: 'btn btn-primary' %>
       <%= link_to '戻る', customers_path, class: 'btn btn-light' %>
