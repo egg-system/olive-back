@@ -1,0 +1,29 @@
+<% breadcrumb :root %>
+<div id="customer_duplicate_index">
+  <p class="common_title">重複顧客一覧</p>
+  
+  <div class="pl-2 mt-3">
+    <% if @duplicated_customer_groups.present? %>
+      <h5>合計件数：<%= @duplicated_customer_page.total_count %>件</h5>
+    <% end %>
+  </div>
+  <div class="lower-frame">
+    <% if @duplicated_customer_groups.blank? %>
+      <p>該当データがありません</p>
+    <% else %>
+      <% @duplicated_customer_groups.each do |customer_group| %>
+        <% customer = customer_group.first %>
+        カナの<span class="text-danger">
+          <%= customer.full_kana %>
+        </span>と、電話番号の
+        <span class="text-danger">
+          <%= customer.tel %>
+        </span>が重複
+        <%= render 'customers/table', { customers: customer_group } %>
+      <% end %>
+    <% end %>
+  </div>
+  <%= paginate @duplicated_customer_page if @duplicated_customer_groups.present? %>
+  <br>
+  <br>
+</div>

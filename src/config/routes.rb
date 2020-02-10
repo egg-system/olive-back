@@ -12,6 +12,10 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :customers do
+    resources :duplicate
+  end
+
   resources :stores, :staffs, :customers, :reservations do
     collection do
       post :search
