@@ -15,9 +15,6 @@ class CustomersController < ApplicationController
     @customers = @customers.like_email(@search_params[:email])
 
     @customers = @customers.paginate(@search_params[:page], 20)
-
-    # 重複ユーザー
-    @exists_duplicate_customers = Customer.group_duplicate.length > 0
   end
 
   def search
