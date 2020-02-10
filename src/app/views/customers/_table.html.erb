@@ -22,7 +22,7 @@
         <td><%= customer.last_name + customer.first_name %></td>
         <td class="address"><%= customer.address %></td>
         <td><%= customer.tel %></td>
-        <td><%= customer.email %></td>
+        <td><%= customer.display_email %></td>
         <td><%= customer.zoomancy.name if customer.zoomancy.present? %></td>
         <td><%= customer.size.name if customer.size.present? %></td>
         <td><%= customer.has_registration_card == true ? '有' : '無' %></td>

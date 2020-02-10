@@ -56,7 +56,7 @@
     <% if @customers.blank? %>
       <p>該当データがありません</p>
     <% else %>
-      <%= render 'table', { customer: @customers } %>
+      <%= render 'table', { customers: @customers } %>
      <% end %>
   </div>
   <%= paginate @customers %>
