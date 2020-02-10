@@ -1,21 +1,28 @@
 class Customers::DuplicateController < ApplicationController
   def index
-    @search_params = search_params
-    
-    # 重複ユーザー
-    duplicate_customers_info = Customer.group_duplicate
-    @duplicate_customers = []
-    if duplicate_customers_info.present?
-      @duplicate_customers = duplicate_customers_info.map do |first_kana, last_kana, tel|
-        Customer.where_duplicate(first_kana, last_kana, tel)
-      end.reduce(&:or).join_tables
-      @duplicate_customers = @duplicate_customers.paginate(@search_params[:page], 20)
-      # 重複するkeyのindexの配列
-      @duplicate_index_list = duplicate_customers_info.map do |first_kana, last_kana, tel|
-        @duplicate_customers.index { |item| item.first_kana === first_kana && item.last_kana === last_kana && item.tel === tel }
-      end.compact
-      @duplicate_index_list.push(@duplicate_customers.size)
-    end
+    # 重複1件につき、4倍の高さのため、件数は1/4にする ※ 顧客一覧は20件ずつで表示
+    ## ペジネーション周りの情報を保持するため、変数名をpageにする
+    @duplicated_customer_page = Customer.group_duplicate
+      .select('group_concat(id) as duplicated_ids')
+      .paginate(search_params[:page], 5)
+
+    # TODO: 本行、以下の処理は、顧客モデル内にまとめる
+    duplicated_ids_groups = @duplicated_customer_page 
+      .map { |duplicated_group|
+        duplicated_group.duplicated_ids
+      }
+
+    # パフォーマンスの都合から、一括取得する
+    duplicated_customers = Customer.where(
+      id: duplicated_ids_groups.flat_map { |ids| ids.split(',') }
+    ).to_a
+
+    # 重複している顧客ごとにグルーピングする
+    @duplicated_customer_groups = duplicated_ids_groups.map{ |duplicated_ids| 
+      duplicated_customers.select { |customer|
+        duplicated_ids.include?(customer.id.to_s)
+      }
+    }
   end
 
   private
