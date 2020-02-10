@@ -36,6 +36,7 @@ class Customer < ApplicationRecord
   validates :password, presence: true, if: :should_validate_password?
   validates :email, uniqueness: true, unless: :common_email?
 
+  # TODO: デフォルトで、joinが走るようにする
   scope :join_size, ->{
     left_joins(:size).select("sizes.name as size_name")
   }
@@ -57,18 +58,7 @@ class Customer < ApplicationRecord
   }
 
   scope :group_duplicate, -> {
-    group(:first_kana, :last_kana, :tel)
-    .having('count(*) >= 2')
-    .pluck(:first_kana, :last_kana, :tel)
-  }
-
-  scope :where_duplicate, -> (first_kana, last_kana, tel) {
-    where(first_kana: first_kana)
-    .where(last_kana: last_kana)
-    .where(tel: tel)
-    .order(:first_kana)
-    .order(:last_kana)
-    .order(:tel)
+    group(:first_kana, :last_kana, :tel).having('count(*) >= 2')
   }
 
   attr_accessor :age, :display_email
@@ -100,6 +90,10 @@ class Customer < ApplicationRecord
 
   def full_name
     return self.last_name + ' ' + self.first_name
+  end
+
+  def full_kana
+    return self.last_kana + ' ' + self.first_kana
   end
 
   def display_email
