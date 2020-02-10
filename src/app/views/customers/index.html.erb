@@ -28,7 +28,10 @@
           <tr>
             <th></th>
             <td>
-              <%= f.check_box :include_deleted, { checked: @search_params["include_deleted"] == '1' } %> <%= f.label :include_deleted, "未使用の顧客を含めて検索する" %>
+              <%= f.check_box :include_deleted, {
+                checked: @search_params["include_deleted"] == '1'
+              } %>
+              <%= f.label :include_deleted, "未使用の顧客を含めて検索する" %>
             <td>
           </tr>
         </tbody>
