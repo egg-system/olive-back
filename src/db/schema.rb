@@ -105,7 +105,7 @@ ActiveRecord::Schema.define(version: 2020_01_28_144418) do
     t.text "tokens"
     t.boolean "allow_password_change", default: false, comment: "パスワード変更に必要"
     t.integer "fmid"
-    t.boolean "is_deleted", default: false, comment: "削除フラグ"
+    t.boolean "is_deleted", default: false, comment: "\n        使用していない顧客に対し、trueにする。\n        いわゆる論理削除とは異なり、ユーザー側で値を変更する。\n        バグなどの原因になりうるため、システム側で特殊な処理は実施しない。\n      "
     t.index ["baby_age_id"], name: "index_customers_on_baby_age_id"
     t.index ["email"], name: "index_customers_on_email"
     t.index ["first_visit_store_id"], name: "index_customers_on_first_visit_store_id"
