@@ -13,7 +13,12 @@
     <% else %>
       <% @duplicated_customer_groups.each do |customer_group| %>
         <% customer = customer_group.first %>
-        カナの'<%= customer.full_kana %>'と、電話番号の'<%= customer.tel %>'が重複
+        カナの<span class="text-danger">
+          <%= customer.full_kana %>
+        </span>と、電話番号の
+        <span class="text-danger">
+          <%= customer.tel %>
+        </span>が重複
         <%= render 'customers/table', { customers: customer_group } %>
       <% end %>
     <% end %>
