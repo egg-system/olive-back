@@ -57,6 +57,10 @@ class Customer < ApplicationRecord
     where('email LIKE ?', "%#{email}%") if email.present?
   }
 
+  scope :where_deleted, -> (is_deleted) {
+    where(is_deleted: is_deleted)
+  }
+
   scope :group_duplicate, -> {
     group(:first_kana, :last_kana, :tel).having('count(*) >= 2')
   }
