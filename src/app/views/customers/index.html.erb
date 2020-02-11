@@ -2,9 +2,12 @@
 <div id="customer_index">
   <p class="common_title">顧客一覧</p>
 
-  <% if duplicated_customer_exists? %>
+  <% if @duplicated_alerts.present? %>
     <div class="alert alert-danger">
-      <%= link_to '重複しているユーザーが存在します', customers_duplicate_index_path %>
+      <h4 class="alert-heading">重複しているユーザーが存在します</h4>
+      <% @duplicated_alerts.each do |alert| %>
+        <li><%= link_to alert[:message], customers_duplicate_index_path(columns: alert[:columns]) %></li>
+      <% end %>
     </div>
   <% end %>
   

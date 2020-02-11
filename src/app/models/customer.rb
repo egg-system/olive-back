@@ -61,8 +61,8 @@ class Customer < ApplicationRecord
     where(is_deleted: is_deleted)
   }
 
-  scope :group_duplicate, -> {
-    group(:first_kana, :last_kana, :tel).having('count(*) >= 2')
+  scope :group_duplicated, -> (columns) {
+    group(columns).having('count(*) >= 2')
   }
 
   attr_accessor :age, :display_email
