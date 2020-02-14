@@ -20,7 +20,7 @@ class CustomersController < ApplicationController
 
     @customers = @customers.paginate(@search_params[:page], 20)
 
-    # kana, tel, kana&telで重複チェック
+    # 重複チェック
     @duplicated_alerts = create_duplicated_alerts
   end
 

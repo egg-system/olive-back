@@ -1,5 +1,4 @@
 module CustomersHelper
-  # 重複ユーザーのグループから重複しているcolumnのkeyの配列を返す
   def duplicated_customer_views(customers)
     result = []
     if customers.first.first_kana === customers.second.first_kana && customers.first.last_kana === customers.second.last_kana
