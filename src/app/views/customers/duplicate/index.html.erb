@@ -12,13 +12,13 @@
       <p>該当データがありません</p>
     <% else %>
       <% @duplicated_customer_groups.each do |customer_group| %>
-        <% customer = customer_group.first %>
-        <% @view_info.each_with_index do |info, index| %>
-          <%= info[:name] %>の
+        <% duplicated_customer_views = duplicated_customer_views(customer_group) %>
+        <% duplicated_customer_views.each_with_index do |item, index| %>
+          <%= item[:name] %>の
           <span class="text-danger">
-            <%= customer.send(info[:key]) %>
+            <%= item[:value] %>
           </span>
-          <% if index + 1 != @view_info.length %>
+          <% if index + 1 != duplicated_customer_views.length %>
             と、
           <% end %>
         <% end %>

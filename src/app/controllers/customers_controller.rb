@@ -118,14 +118,10 @@ class CustomersController < ApplicationController
 
     def create_duplicated_alerts
       result = []
-      if Customer.group_duplicated([:first_kana, :last_kana]).exists?
-        result.push({ message: 'カナ', columns: 'kana' })
-      end
-      if Customer.group_duplicated([:tel]).exists?
-        result.push({ message: '電話番号', columns: 'tel' })
-      end
-      if Customer.group_duplicated([:first_kana, :last_kana, :tel]).exists?
-        result.push({ message: 'カナと電話番号', columns: 'kana,tel' })
+      Settings.duplicated_customer.to_h.values.each do |item|
+        if Customer.group_duplicated(item.columns.map(&:to_s)).exists?
+          result.push({ message: item.name, columns: item.columns.join(',') })
+        end
       end
       result
     end
