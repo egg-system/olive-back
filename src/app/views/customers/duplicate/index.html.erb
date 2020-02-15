@@ -12,17 +12,8 @@
       <p>該当データがありません</p>
     <% else %>
       <% @duplicated_customer_groups.each do |customer_group| %>
-        <% duplicated_customer_views = duplicated_customer_views(customer_group) %>
-        <% duplicated_customer_views.each_with_index do |item, index| %>
-          <%= item[:name] %>の
-          <span class="text-danger">
-            <%= item[:value] %>
-          </span>
-          <% if index + 1 != duplicated_customer_views.length %>
-            と、
-          <% end %>
-        <% end %>
-        が重複
+        <%= duplicated_customer_views(@search_param_columns, customer_group) %>
+
         <%= render 'customers/table', { customers: customer_group } %>
       <% end %>
     <% end %>

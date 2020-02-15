@@ -19,9 +19,6 @@ class CustomersController < ApplicationController
     @customers = @customers.where_deleted(false) unless @search_params[:include_deleted] === '1'
 
     @customers = @customers.paginate(@search_params[:page], 20)
-
-    # 重複チェック
-    @duplicated_alerts = create_duplicated_alerts
   end
 
   def search
@@ -114,15 +111,5 @@ class CustomersController < ApplicationController
 
     def search_params
       params.permit(:name, :tel, :email, :include_deleted, :page)
-    end
-
-    def create_duplicated_alerts
-      result = []
-      Settings.duplicated_customer.to_h.values.each do |item|
-        if Customer.group_duplicated(item.columns.map(&:to_s)).exists?
-          result.push({ message: item.name, columns: item.columns.join(',') })
-        end
-      end
-      result
     end
 end

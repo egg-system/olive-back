@@ -2,7 +2,7 @@ class Customers::DuplicateController < ApplicationController
   def index
     # 重複1件につき、4倍の高さのため、件数は1/4にする ※ 顧客一覧は20件ずつで表示
     ## ペジネーション周りの情報を保持するため、変数名をpageにする
-    @duplicated_customer_page = Customer.group_duplicated(create_group_duplicated_columns(search_params))
+    @duplicated_customer_page = Customer.group_duplicated(group_duplicated_columns(search_params))
       .select('group_concat(id) as duplicated_ids')
       .paginate(search_params[:page], 5)
 
@@ -23,6 +23,8 @@ class Customers::DuplicateController < ApplicationController
         duplicated_ids.split(',').include?(customer.id.to_s)
       }
     }
+
+    @search_param_columns = search_params[:columns]
   end
 
   private
@@ -30,8 +32,7 @@ class Customers::DuplicateController < ApplicationController
       params.permit(:page, :columns)
     end
 
-    def create_group_duplicated_columns(search_params)
-      result = search_params[:columns].present? ? search_params[:columns].split(',').map(&:to_s) : Settings.duplicated_customer.kana_tel.columns.map(&:to_s)
-      result
+    def group_duplicated_columns(search_params)
+      return search_params[:columns].present? ? search_params[:columns].split(',').map(&:to_s) : Settings.duplicated_customer.kana_tel.columns.map(&:to_s)
     end
 end
