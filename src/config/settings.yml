@@ -15,6 +15,7 @@ stores:
   head_store_id: 1
   head_este_store_id: 2
   time_options:
+    - '09:00:00'
     - '10:00:00'
     - '11:00:00'
     - '12:00:00'
