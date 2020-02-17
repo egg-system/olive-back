@@ -33,6 +33,6 @@ class Customers::DuplicateController < ApplicationController
     end
 
     def group_duplicated_columns(search_params)
-      return search_params[:columns].present? ? search_params[:columns].split(',').map(&:to_s) : Settings.duplicated_customer.kana_tel.columns.map(&:to_s)
+      search_params[:columns].split(',').map(&:to_s)
     end
 end

@@ -4,7 +4,7 @@ module CustomersHelper
       if Customer.group_duplicated(item.columns.map(&:to_s)).exists?
         { message: item.name, columns: item.columns.join(',') }
       end
-    end.select { |item| item.present? }
+    end.select(&:present?)
   end
 
   def duplicated_customer_views(columns, customers)
