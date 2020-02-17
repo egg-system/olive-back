@@ -6,7 +6,10 @@
     <div class="alert alert-danger">
       <h4 class="alert-heading">重複しているユーザーが存在します</h4>
       <% duplicated_customer_alerts.each do |alert| %>
-        <li><%= link_to alert[:message], customers_duplicate_index_path(columns: alert[:columns]) %></li>
+        <li><%= link_to(
+          "「#{alert[:message]}」が重複している顧客を確認する",
+          customers_duplicate_index_path(columns: alert[:columns])
+        ) %></li>
       <% end %>
     </div>
   <% end %>
