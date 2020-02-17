@@ -1,8 +1,11 @@
 class Customers::DuplicateController < ApplicationController
   def index
+    return if search_params[:columns].nil?
+
     # 重複1件につき、4倍の高さのため、件数は1/4にする ※ 顧客一覧は20件ずつで表示
     ## ペジネーション周りの情報を保持するため、変数名をpageにする
-    @duplicated_customer_page = Customer.group_duplicate
+    @duplicated_customer_page = Customer
+      .group_duplicated(search_params[:columns])
       .select('group_concat(id) as duplicated_ids')
       .paginate(search_params[:page], 5)
 
@@ -23,10 +26,12 @@ class Customers::DuplicateController < ApplicationController
         duplicated_ids.split(',').include?(customer.id.to_s)
       }
     }
+
+    @search_param_columns = search_params[:columns]
   end
 
   private
     def search_params
-      params.permit(:page)
+      params.permit(:page, columns: [])
     end
 end

@@ -52,3 +52,20 @@ domain:
 
 customer:
   common_email: 'common.mail@olivebodycare.healthcare'
+
+duplicated_customer:
+  kana: 
+    name: 'カナ'
+    columns:
+      - first_kana
+      - last_kana
+  tel:
+    name: '電話番号'
+    columns:
+      - tel
+  kana_tel:
+    name: 'カナと電話番号'
+    columns:
+      - first_kana
+      - last_kana
+      - tel
