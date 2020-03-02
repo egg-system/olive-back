@@ -9,9 +9,20 @@ module CustomersHelper
 
   def duplicated_customer_views(customers)
     # 重複していない場合、全てのfull_kana or telはバラバラになるため、count > 1になる
-    duplicated_kana = customers.map(&:full_kana).uniq.count === 1 ? customers.first.full_kana : nil
-    duplicated_tel = customers.map(&:tel).uniq.count === 1 ? customers.first.tel : nil
+    duplicated_kana = customers.map(&:full_kana).uniq.count === 1
+    duplicated_tel = customers.map(&:tel).uniq.count === 1
 
-    return render 'customers/duplicate/heading', { kana: duplicated_kana, tel: duplicated_tel }
+    if duplicated_kana && duplicated_tel
+      return "#{render 'customers/duplicate/heading', { name: 'カナ', value: customers.first.full_kana }}と、
+        #{render 'customers/duplicate/heading', { name: '電話番号', value: customers.first.tel }}が重複".html_safe
+    end
+
+    if duplicated_kana
+      return "#{render 'customers/duplicate/heading', { name: 'カナ', value: customers.first.full_kana }}が重複".html_safe
+    end
+
+    if duplicated_tel
+      return "#{render 'customers/duplicate/heading', { name: '電話番号', value: customers.first.tel }}が重複".html_safe
+    end
   end
 end

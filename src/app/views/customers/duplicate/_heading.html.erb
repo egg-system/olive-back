@@ -1,12 +1,1 @@
-<% if kana.present? && tel.present? %>
-  カナの<span class='text-danger'>
-    <%= kana %>
-  </span>と、電話番号の<span class='text-danger'>
-    <%= tel %>
-  </span>
-<% elsif kana.present? %>
-  カナの<span class='text-danger'><%= kana %></span>
-<% elsif tel.present? %>
-  電話番号の<span class='text-danger'><%= tel %></span>
-<% end %>
-が重複
+<%= name %>の<span class='text-danger'><%= value %></span>
