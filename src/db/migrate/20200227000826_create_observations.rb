@@ -1,6 +1,6 @@
-class CreateObseravations < ActiveRecord::Migration[5.2]
+class CreateObservations < ActiveRecord::Migration[5.2]
   def change
-    create_table :obseravations do |t|
+    create_table :observations do |t|
       t.references :store, foreign_key: { on_delete: :cascade }, comment: '店舗ID'
       t.datetime :visit_datetime, comment: '来院日時（開始時刻）'
       t.references :staff, foreign_key: { on_delete: :cascade }, comment: '対応したスタッフID'
