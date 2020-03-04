@@ -1,4 +1,6 @@
 class Customers::DuplicateController < ApplicationController
+  MAX_DISPLAYED_CUSTOMERS_COUNT = 10
+
   def index
     return if search_params[:columns].nil?
 

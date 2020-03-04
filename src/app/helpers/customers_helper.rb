@@ -17,15 +17,15 @@ module CustomersHelper
           #{customers.first.full_kana}
         </span>と、電話番号の<span class='text-danger'>
           #{customers.first.tel}
-        </span>が重複".html_safe
+        </span>が重複(#{number_with_delimiter(customers.count)}件)".html_safe
     end
 
     if duplicated_kana
-      return "カナの<span class='text-danger'>#{customers.first.full_kana}</span>が重複".html_safe
+      return "カナの<span class='text-danger'>#{customers.first.full_kana}</span>が重複(#{number_with_delimiter(customers.count)}件)".html_safe
     end
 
     if duplicated_tel
-      return "電話番号の<span class='text-danger'>#{customers.first.tel}</span>が重複".html_safe
+      return "電話番号の<span class='text-danger'>#{customers.first.tel}</span>が重複(#{number_with_delimiter(customers.count)}件)".html_safe
     end
   end
 end
