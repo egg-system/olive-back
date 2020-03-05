@@ -1,0 +1,22 @@
+  <div id="observation_index">
+    <p class="common_title">経過記録一覧</p>
+
+    <div class="upper-frame">
+      <div class="button-section">
+        <%= link_to "新規登録へ", new_observation_path, {
+          class: "btn btn-primary btn-new"
+        } %>
+      </div>
+    </div>
+
+    <div class="pl-2 mt-3">
+      <% if @observations.present? %>
+        <h5>合計件数：<%= @observations.total_count %>件</h5>
+      <% end %>
+    </div>
+    <div class="lower-frame">
+      <%= render 'list' %>
+    </div>
+
+    <%= paginate @observations %>
+  </div>

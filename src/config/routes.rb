@@ -31,7 +31,8 @@ Rails.application.routes.draw do
     :menus,
     :options,
     :coupons,
-    :coupon_histories
+    :coupon_histories,
+    :observations
   )
 
   namespace :api do
