@@ -16,6 +16,7 @@
           <th scope="col">回数券残</th>
           <th scope="col">OP回数券残</th>
           <th scope="col"></th>
+          <th scope="col"></th>
         </tr>
       </thead>
       <tbody>
@@ -32,6 +33,7 @@
             <td><%= observation.coupon_count %></td>
             <td><%= observation.op_coupon_count %></td>
             <td><%= link_to "詳細へ", observation_path(observation.id) %></td>
+            <td><%= link_to "削除", observation_path(observation.id), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'text-danger'  %></td>
           </tr>
         <% end %>
       </tbody>

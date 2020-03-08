@@ -49,6 +49,16 @@ class ObservationsController < ApplicationController
     end
   end
 
+  # DELETE /observations/1
+  # DELETE /observations/1.json
+  def destroy
+    @observation.destroy
+    respond_to do |format|
+      format.html { redirect_to @observation, notice: '削除しました。' }
+      format.json { head :no_content }
+    end
+  end
+
   private
     def search_params
       params.permit(:page)
