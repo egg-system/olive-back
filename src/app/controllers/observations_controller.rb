@@ -1,5 +1,5 @@
 class ObservationsController < ApplicationController
-  before_action :set_observation, only: [:show, :edit, :update, :destroy]
+  before_action :set_observation, only: [:show, :update, :destroy]
   before_action :set_relation_models, only: [:new, :show, :update, :create]
 
   # GET /observations
@@ -19,7 +19,6 @@ class ObservationsController < ApplicationController
   # POST /observations.json
   def create
     @observation = Observation.new(observation_params)
-    option_ids = params[:observation][:option_ids].reject(&:blank?).join(',') if params[:observation][:option_ids].present?
     @observation.option_ids = option_ids
 
     respond_to do |format|
@@ -28,6 +27,23 @@ class ObservationsController < ApplicationController
         format.json { render :show, status: :created, location: @observation }
       else
         format.html { render :new }
+        format.json { render json: @observation.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # PATCH/PUT /observations/1
+  # PATCH/PUT /observations/1.json
+  def update
+    @observation.assign_attributes(observation_params)
+    @observation.option_ids = option_ids
+
+    respond_to do |format|
+      if @observation.save
+        format.html { redirect_to @observation, notice: '更新しました。' }
+        format.json { render :show, status: :ok, location: @observation }
+      else
+        format.html { render :show }
         format.json { render json: @observation.errors, status: :unprocessable_entity }
       end
     end
@@ -47,6 +63,10 @@ class ObservationsController < ApplicationController
       @staffs = Staff.all
       @menus = Menu.all
       @options = Option.all
+    end
+
+    def option_ids
+      params[:observation][:option_ids].reject(&:blank?).join(',') if params[:observation][:option_ids].present?
     end
 
     def observation_params
