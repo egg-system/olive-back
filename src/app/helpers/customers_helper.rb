@@ -12,6 +12,6 @@ module CustomersHelper
     duplicated_kana = customers.map(&:full_kana).uniq.count === 1 ? customers.first.full_kana : nil
     duplicated_tel = customers.map(&:tel).uniq.count === 1 ? customers.first.tel : nil
 
-    return render 'customers/duplicate/heading', { kana: duplicated_kana, tel: duplicated_tel }
+    return render 'customers/duplicate/heading', { kana: duplicated_kana, tel: duplicated_tel, count: customers.count }
   end
 end
