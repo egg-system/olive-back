@@ -156,7 +156,7 @@ ActiveRecord::Schema.define(version: 2020_02_27_235701) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "observations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "observations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", comment: '経過記録（squareで保持できないデータを管理画面から入力する）', force: :cascade do |t|
     t.bigint "store_id", comment: "店舗ID"
     t.datetime "visit_datetime", comment: "来院日時（開始時刻）"
     t.bigint "staff_id", comment: "対応したスタッフID"
