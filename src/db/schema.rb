@@ -84,7 +84,7 @@ ActiveRecord::Schema.define(version: 2020_03_10_081713) do
     t.date "last_visited_at"
     t.string "card_number", comment: "カルテの番号。紙媒体で管理しているため、外部キーなし"
     t.string "introducer", comment: "紹介していただいた方の名前など"
-    t.string "searched_by", comment: "web検索単語など"
+    t.string "searched_by"
     t.boolean "has_registration_card", comment: "診察券を発行したかどうか"
     t.integer "children_count", comment: "お子様の数。その他やdefault値にあたるものはnullにする"
     t.datetime "created_at", null: false
@@ -156,7 +156,8 @@ ActiveRecord::Schema.define(version: 2020_03_10_081713) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "observations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", comment: '経過記録（squareで保持できないデータを管理画面から入力する）', force: :cascade do |t|
+  create_table "observations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", comment: "経過記録（squareで保持できないデータを管理画面から入力する）", force: :cascade do |t|
+    t.bigint "customer_id", comment: "顧客ID"
     t.bigint "store_id", comment: "店舗ID"
     t.datetime "visit_datetime", comment: "来院日時（開始時刻）"
     t.bigint "staff_id", comment: "対応したスタッフID"
@@ -168,6 +169,7 @@ ActiveRecord::Schema.define(version: 2020_03_10_081713) do
     t.integer "op_coupon_count", comment: "OP回数券残"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["customer_id"], name: "index_observations_on_customer_id"
     t.index ["menu_id"], name: "index_observations_on_menu_id"
     t.index ["staff_id"], name: "index_observations_on_staff_id"
     t.index ["store_id"], name: "index_observations_on_store_id"
@@ -381,6 +383,7 @@ ActiveRecord::Schema.define(version: 2020_03_10_081713) do
   add_foreign_key "menu_categories", "departments"
   add_foreign_key "menus", "menu_categories"
   add_foreign_key "menus", "skills"
+  add_foreign_key "observations", "customers", on_delete: :cascade
   add_foreign_key "observations", "menus", on_delete: :nullify
   add_foreign_key "observations", "staffs", on_delete: :cascade
   add_foreign_key "observations", "stores", on_delete: :cascade
