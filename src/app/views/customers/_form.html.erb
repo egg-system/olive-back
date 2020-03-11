@@ -108,6 +108,23 @@
         include_blank: true
       ) %>
       <%= f.input :introducer, label: '紹介者' %>
+      <%= f.input(
+        :visit_reason_id,
+        as: :select,
+        collection: @visit_reasons.map{ |item| [item.name, item.id] },
+        label: '来店経緯',
+        default: @customer.visit_reason_id,
+        include_blank: true
+      ) %>
+      <%= f.input(
+        :nearest_station_id,
+        as: :select,
+        collection: @nearest_stations.map{ |item| [item.name, item.id] },
+        label: '最寄駅',
+        default: @customer.nearest_station_id,
+        include_blank: true
+      ) %>
+      <%= f.input :searched_by, label: 'Web検索'%>
       <%= f.input :children_count, label: 'お子様の数'%>
       <%= f.input(
         :baby_age_id,
