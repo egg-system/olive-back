@@ -28,7 +28,7 @@ customer = 41.times do |n|
     baby_age_id: 1,
     visit_reason_id: 1,
     introducer: '山田',
-    searchd_by: 'オリーブ',
+    searched_by: 'オリーブ',
     nearest_station_id: 1,
     size_id: 1,
     has_registration_card: false
