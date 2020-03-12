@@ -12,7 +12,9 @@ class ObservationsController < ApplicationController
 
   # GET /observations/new
   def new
-    @observation = Observation.new
+    return redirect_to customers_path, flash: { alert: '顧客が選択されていません。' } unless params.has_key?(:customer_id)
+
+    @observation = Customer.find(params[:customer_id]).observations.new
   end
 
   # POST /observations
@@ -81,7 +83,7 @@ class ObservationsController < ApplicationController
 
     def observation_params
       params.require(:observation).permit(
-        :store_id, :visit_datetime, :staff_id, :menu_id, :merchandise, :observation_history, :coupon_count, :op_coupon_count
+        :customer_id, :store_id, :visit_datetime, :staff_id, :menu_id, :merchandise, :observation_history, :coupon_count, :op_coupon_count
       )
     end
 end
