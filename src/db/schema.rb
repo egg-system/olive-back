@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_10_081713) do
+ActiveRecord::Schema.define(version: 2020_03_12_072945) do
 
   create_table "audits", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "auditable_id"
@@ -40,6 +40,12 @@ ActiveRecord::Schema.define(version: 2020_03_10_081713) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "cigarettes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "coupon_histories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "customer_id"
     t.bigint "coupon_id"
@@ -57,6 +63,17 @@ ActiveRecord::Schema.define(version: 2020_03_10_081713) do
     t.date "start_at"
     t.date "end_at"
     t.date "expired_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "current_hospital_menus", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "current_hospitals", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -84,7 +101,7 @@ ActiveRecord::Schema.define(version: 2020_03_10_081713) do
     t.date "last_visited_at"
     t.string "card_number", comment: "カルテの番号。紙媒体で管理しているため、外部キーなし"
     t.string "introducer", comment: "紹介していただいた方の名前など"
-    t.string "searched_by", comment: "web検索単語など"
+    t.string "searched_by"
     t.boolean "has_registration_card", comment: "診察券を発行したかどうか"
     t.integer "children_count", comment: "お子様の数。その他やdefault値にあたるものはnullにする"
     t.datetime "created_at", null: false
@@ -121,6 +138,61 @@ ActiveRecord::Schema.define(version: 2020_03_10_081713) do
 
   create_table "departments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "drinkings", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "exercises", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "goal_therapies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "goal_therapy_menus", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "hope_therapies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "hope_therapy_menus", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "many_postures", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "massages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "medical_records", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.text "pain", comment: "おつらい症状"
+    t.text "current_sickness", comment: "現在煩われている病気"
+    t.text "past_sickness", comment: "過去の入院・ケガ・病気・症状・期間"
+    t.boolean "right_hand", comment: "利き手"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -173,6 +245,12 @@ ActiveRecord::Schema.define(version: 2020_03_10_081713) do
     t.datetime "updated_at", null: false
     t.index ["department_id"], name: "index_options_on_department_id"
     t.index ["skill_id"], name: "index_options_on_skill_id"
+  end
+
+  create_table "pregnancies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "reservation_coupons", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|

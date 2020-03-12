@@ -1,0 +1,2 @@
+class CurrentHospitalMenu < ApplicationRecord
+end

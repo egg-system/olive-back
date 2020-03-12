@@ -1,0 +1,2 @@
+class GoalTherapy < ApplicationRecord
+end

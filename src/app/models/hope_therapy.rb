@@ -1,0 +1,2 @@
+class HopeTherapy < ApplicationRecord
+end

@@ -1,0 +1,2 @@
+class GoalTherapyMenu < ApplicationRecord
+end
