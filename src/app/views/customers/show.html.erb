@@ -1,10 +1,22 @@
 <% breadcrumb :root  %>
 <p>基本情報</p>
-<%= link_to "予約登録へ", new_reservation_path(customer_id: @customer.id) %>
+<ul class="nav flex-column customer-show-heading">
+  <li class="nav-item">
+    <%= link_to "予約登録へ", new_reservation_path(customer_id: @customer.id) %>
+  </li>
+  <li class="nav-item">
+    <%= link_to "経過記録登録へ", new_observation_path(customer_id: @customer.id) %>
+  </li>
+</ul>
 <%= render "form" %>
 <br>
 <hr>
-<span class="lower-reservation-title">予約一覧</span>
-<div class="customer-reservations-details">
+<span class="lower-list-title">予約一覧</span>
+<div class="lower-list-details">
     <%= render 'reservations/list', is_shown_customer_name: false %>
+</div>
+
+<span class="lower-list-title">経過記録一覧</span>
+<div class="lower-list-details">
+    <%= render 'observations/list' %>
 </div>

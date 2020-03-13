@@ -88,7 +88,10 @@
       )%>
 
       <%= f.button :submit, class: 'btn btn-primary' %>
-      <%= link_to '顧客一覧へ', customers_path, class: 'btn btn-light' %>
+      <%= link_to '戻る', customer_path(@observation.customer_id), class: 'btn btn-light' %>
+      <% if method === 'show' %>
+        <%= link_to "削除", observation_path(@observation.id), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'btn btn-danger'  %>
+      <% end %>
     </div>
   <% end %>
 </div>

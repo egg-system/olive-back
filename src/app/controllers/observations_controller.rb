@@ -2,14 +2,6 @@ class ObservationsController < ApplicationController
   before_action :set_observation, only: [:show, :update, :destroy]
   before_action :set_relation_models, only: [:new, :show, :update, :create]
 
-  # GET /observations
-  # GET /observations.json
-  def index
-    @search_params = search_params
-    
-    @observations = Observation.all.paginate(@search_params[:page], 20)
-  end
-
   # GET /observations/new
   def new
     return redirect_to customers_path, flash: { alert: '顧客が選択されていません。' } unless params.has_key?(:customer_id)
@@ -56,16 +48,12 @@ class ObservationsController < ApplicationController
   def destroy
     @observation.destroy
     respond_to do |format|
-      format.html { redirect_to @observation, notice: '削除しました。' }
+      format.html { redirect_to customer_path(@observation.customer_id), notice: '削除しました。' }
       format.json { head :no_content }
     end
   end
 
   private
-    def search_params
-      params.permit(:page)
-    end
-
     def set_observation
       @observation = Observation.find(params[:id])
     end

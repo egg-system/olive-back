@@ -22,6 +22,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :observations, only: [:show, :new, :create, :update, :destroy]
+
   resources(
     :reservations,
     :departments,
@@ -31,8 +33,7 @@ Rails.application.routes.draw do
     :menus,
     :options,
     :coupons,
-    :coupon_histories,
-    :observations
+    :coupon_histories
   )
 
   namespace :api do
