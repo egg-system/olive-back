@@ -9,5 +9,12 @@
         margin-left: 30px;
       }
     }
+
+    // 横向きのiPad用
+    // ひとまずobservation用にしているが、他の画面で展開する場合は#observation_formのスコープから外す
+    @media (orientation: landscape) and (max-width: 1024px) {
+      font-size: 1.2rem;
+      line-height: 1rem;
+    }
   }
 }
