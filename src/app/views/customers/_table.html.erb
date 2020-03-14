@@ -34,8 +34,8 @@
         <td>
           <ul>
             <li><%= link_to '詳細へ', customer_path(customer.id) %></li>
-            <li><%= link_to '予約登録へ', new_reservation_path(customer_id: customer.id) %></li>
             <li><%= link_to '経過記録登録へ', new_observation_path(customer_id: customer.id) %></li>
+            <li><%= link_to '予約登録へ', new_reservation_path(customer_id: customer.id) %></li>
           </ul>
         </td>
       </tr>
