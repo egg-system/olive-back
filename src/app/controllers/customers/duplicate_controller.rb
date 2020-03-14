@@ -1,4 +1,6 @@
 class Customers::DuplicateController < ApplicationController
+  MAX_DISPLAYED_CUSTOMERS_COUNT = 20
+
   def index
     return if search_params[:columns].nil?
 
@@ -10,18 +12,18 @@ class Customers::DuplicateController < ApplicationController
       .paginate(search_params[:page], 5)
 
     # TODO: 本行、以下の処理は、顧客モデル内にまとめる
-    duplicated_ids_groups = @duplicated_customer_page 
+    duplicated_ids_groups = @duplicated_customer_page
       .map { |duplicated_group|
         duplicated_group.duplicated_ids
       }
 
     # パフォーマンスの都合から、一括取得する
     duplicated_customers = Customer.where(
-      id: duplicated_ids_groups.flat_map { |ids| ids.split(',') }
+      id: duplicated_ids_groups.flat_map { |ids| ids.split(',').first(MAX_DISPLAYED_CUSTOMERS_COUNT) }
     ).to_a
 
     # 重複している顧客ごとにグルーピングする
-    @duplicated_customer_groups = duplicated_ids_groups.map{ |duplicated_ids| 
+    @duplicated_customer_groups = duplicated_ids_groups.map{ |duplicated_ids|
       duplicated_customers.select { |customer|
         duplicated_ids.split(',').include?(customer.id.to_s)
       }

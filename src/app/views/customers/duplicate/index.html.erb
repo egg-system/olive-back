@@ -15,6 +15,10 @@
         <%= duplicated_customer_views(customer_group) %>
 
         <%= render 'customers/table', { customers: customer_group } %>
+        <% if Customers::DuplicateController::MAX_DISPLAYED_CUSTOMERS_COUNT <= customer_group.count %>
+          <p><%= "#{Customers::DuplicateController::MAX_DISPLAYED_CUSTOMERS_COUNT}人を超えた重複データは表示されません。" %></p>
+        <% end %>
+        <hr/>
       <% end %>
     <% end %>
   </div>
