@@ -84,7 +84,7 @@ ActiveRecord::Schema.define(version: 2020_03_10_081713) do
     t.date "last_visited_at"
     t.string "card_number", comment: "カルテの番号。紙媒体で管理しているため、外部キーなし"
     t.string "introducer", comment: "紹介していただいた方の名前など"
-    t.string "searched_by"
+    t.string "searched_by", comment: "web検索単語など"
     t.boolean "has_registration_card", comment: "診察券を発行したかどうか"
     t.integer "children_count", comment: "お子様の数。その他やdefault値にあたるものはnullにする"
     t.datetime "created_at", null: false
