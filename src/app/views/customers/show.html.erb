@@ -11,12 +11,12 @@
 <%= render "form" %>
 <br>
 <hr>
-<span class="lower-list-title">経過記録一覧</span>
+<span id="lower-list-observations" class="lower-list-title">経過記録一覧</span>
 <div class="lower-list-details">
     <%= render 'observations/list' %>
 </div>
 
-<span class="lower-list-title">予約一覧</span>
+<span id="lower-list-reservations" class="lower-list-title">予約一覧</span>
 <div class="lower-list-details">
     <%= render 'reservations/list', is_shown_customer_name: false %>
 </div>
