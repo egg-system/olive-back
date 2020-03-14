@@ -12,11 +12,11 @@
       <p>該当データがありません</p>
     <% else %>
       <% @duplicated_customer_groups.each do |customer_group| %>
-        <%= duplicated_customer_views(customer_group[:customers], customer_group[:count]) %>
+        <%= duplicated_customer_views(customer_group) %>
 
-        <%= render 'customers/table', {customers: customer_group[:customers]} %>
-        <% if Customers::DuplicateController::MAX_DISPLAYED_CUSTOMERS_COUNT < customer_group[:count] %>
-          <p>重複データが多いため表示し切れませんでした。</p>
+        <%= render 'customers/table', {customers: customer_group} %>
+        <% if Customers::DuplicateController::MAX_DISPLAYED_CUSTOMERS_COUNT <= customer_group.count %>
+          <p><%= "#{Customers::DuplicateController::MAX_DISPLAYED_CUSTOMERS_COUNT}人を超えた重複データは表示されません。" %></p>
         <% end %>
       <% end %>
     <% end %>
