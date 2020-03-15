@@ -27,7 +27,7 @@ class Customer < ApplicationRecord
   belongs_to :size, optional: true
   belongs_to :visit_reason, optional: true
   belongs_to :nearest_station, optional: true
-  belongs_to :medical_record
+  belongs_to :medical_record, optional: true
 
   has_many :reservations
 
