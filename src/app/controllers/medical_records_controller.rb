@@ -1,29 +1,27 @@
 class MedicalRecordsController < ApplicationController
+  before_action :set_relations , only: :index
+
   def index
-  end
-
-  # GET /medical_records/1
-  def show
-    @customer = Customer.find(params[:id])
-                      # MedicalRecord.find(customer_id: @customer.id)
-    @medical_record = @custmer.medical_records
-  end
-
-  def new
-    @customer = Customer.find(params[:id])
-                      # MedicalRecord.new(customer_id: @customer.id)
-    @medical_record = @customer.medical_records.build
-  end
-
-  def edit
+    @medical_record = MedicalRecord.find_or_initialize_by(
+      customer_id: params[:id]
+    )
   end
 
   def create
+    # To Do medical_recordがある場合は更新処理(update)
+    # 無い場合は登録処理（create）
+
+    # ToDo ストロングパラメーターズ
+
+    # indexにリダイレクト
   end
 
-  def update
-  end
-
-  def destroy
+  private
+  def set_relations
+    @many_postures = ManyPosture.all
+    @drinkings = Drinking.all
+    @cigarettes = Cigarette.all
+    @massages = Massage.all
+    @exercises = Exercise.all
   end
 end

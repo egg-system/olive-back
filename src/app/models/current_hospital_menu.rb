@@ -1,2 +1,0 @@
-class CurrentHospitalMenu < ApplicationRecord
-end

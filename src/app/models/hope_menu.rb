@@ -1,0 +1,2 @@
+class HopeMenu < ApplicationRecord
+end

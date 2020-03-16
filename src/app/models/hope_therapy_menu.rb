@@ -1,2 +1,0 @@
-class HopeTherapyMenu < ApplicationRecord
-end

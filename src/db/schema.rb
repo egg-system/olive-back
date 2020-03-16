@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_13_015844) do
+ActiveRecord::Schema.define(version: 2020_03_13_071600) do
 
   create_table "audits", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "auditable_id"
@@ -67,17 +67,10 @@ ActiveRecord::Schema.define(version: 2020_03_13_015844) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "current_hospital_menus", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "current_hospitals", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "current_hospitals", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "current_hospital_menu_id", comment: "現在通っている病院の選択メニュー"
-    t.index ["current_hospital_menu_id"], name: "index_current_hospitals_on_current_hospital_menu_id"
   end
 
   create_table "customers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -156,27 +149,7 @@ ActiveRecord::Schema.define(version: 2020_03_13_015844) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "goal_therapies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "goal_therapy_menu_id", comment: "治療の目的の選択メニュー"
-    t.index ["goal_therapy_menu_id"], name: "index_goal_therapies_on_goal_therapy_menu_id"
-  end
-
-  create_table "goal_therapy_menus", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "hope_therapies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "hope_therapy_menu_id", comment: "希望の治療の選択メニュー"
-    t.index ["hope_therapy_menu_id"], name: "index_hope_therapies_on_hope_therapy_menu_id"
-  end
-
-  create_table "hope_therapy_menus", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "hope_menus", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -199,28 +172,49 @@ ActiveRecord::Schema.define(version: 2020_03_13_015844) do
     t.text "current_sickness", comment: "現在煩われている病気"
     t.text "past_sickness", comment: "過去の入院・ケガ・病気・症状・期間"
     t.boolean "right_hand", comment: "利き手"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "hope_therapy_id", comment: "希望の治療"
-    t.bigint "goal_therapy_id", comment: "治療の目的"
-    t.bigint "current_hospital_id", comment: "現在通われている病院"
     t.bigint "many_posture_id", comment: "多い姿勢"
     t.bigint "pregnancy_id", comment: "妊娠"
     t.bigint "drinking_id", comment: "飲酒"
     t.bigint "cigarette_id", comment: "タバコ"
     t.bigint "massage_id", comment: "希望の治療"
     t.bigint "exercise_id", comment: "運動"
-    t.bigint "customer_id", comment: "顧客"
+    t.bigint "customer_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["cigarette_id"], name: "index_medical_records_on_cigarette_id"
-    t.index ["current_hospital_id"], name: "index_medical_records_on_current_hospital_id"
     t.index ["customer_id"], name: "index_medical_records_on_customer_id"
     t.index ["drinking_id"], name: "index_medical_records_on_drinking_id"
     t.index ["exercise_id"], name: "index_medical_records_on_exercise_id"
-    t.index ["goal_therapy_id"], name: "index_medical_records_on_goal_therapy_id"
-    t.index ["hope_therapy_id"], name: "index_medical_records_on_hope_therapy_id"
     t.index ["many_posture_id"], name: "index_medical_records_on_many_posture_id"
     t.index ["massage_id"], name: "index_medical_records_on_massage_id"
     t.index ["pregnancy_id"], name: "index_medical_records_on_pregnancy_id"
+  end
+
+  create_table "medical_records_current_hospitals", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "medical_record_id"
+    t.bigint "current_hospital_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["current_hospital_id"], name: "index_medical_records_current_hospitals_on_current_hospital_id"
+    t.index ["medical_record_id"], name: "index_medical_records_current_hospitals_on_medical_record_id"
+  end
+
+  create_table "medical_records_hope_menus", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "medical_record_id"
+    t.bigint "hope_menu_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["hope_menu_id"], name: "index_medical_records_hope_menus_on_hope_menu_id"
+    t.index ["medical_record_id"], name: "index_medical_records_hope_menus_on_medical_record_id"
+  end
+
+  create_table "medical_records_treat_goals", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "medical_record_id"
+    t.bigint "treat_goal_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["medical_record_id"], name: "index_medical_records_treat_goals_on_medical_record_id"
+    t.index ["treat_goal_id"], name: "index_medical_records_treat_goals_on_treat_goal_id"
   end
 
   create_table "menu_categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -442,6 +436,12 @@ ActiveRecord::Schema.define(version: 2020_03_13_015844) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "treat_goals", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "visit_reasons", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -456,7 +456,6 @@ ActiveRecord::Schema.define(version: 2020_03_13_015844) do
 
   add_foreign_key "coupon_histories", "coupons", on_delete: :cascade
   add_foreign_key "coupon_histories", "customers", on_delete: :cascade
-  add_foreign_key "current_hospitals", "current_hospital_menus"
   add_foreign_key "customers", "baby_ages"
   add_foreign_key "customers", "nearest_stations"
   add_foreign_key "customers", "occupations"
@@ -465,18 +464,19 @@ ActiveRecord::Schema.define(version: 2020_03_13_015844) do
   add_foreign_key "customers", "stores", column: "last_visit_store_id"
   add_foreign_key "customers", "visit_reasons"
   add_foreign_key "customers", "zoomancies"
-  add_foreign_key "goal_therapies", "goal_therapy_menus"
-  add_foreign_key "hope_therapies", "hope_therapy_menus"
   add_foreign_key "medical_records", "cigarettes"
-  add_foreign_key "medical_records", "current_hospitals"
   add_foreign_key "medical_records", "customers"
   add_foreign_key "medical_records", "drinkings"
   add_foreign_key "medical_records", "exercises"
-  add_foreign_key "medical_records", "goal_therapies"
-  add_foreign_key "medical_records", "hope_therapies"
   add_foreign_key "medical_records", "many_postures"
   add_foreign_key "medical_records", "massages"
   add_foreign_key "medical_records", "pregnancies"
+  add_foreign_key "medical_records_current_hospitals", "current_hospitals"
+  add_foreign_key "medical_records_current_hospitals", "medical_records"
+  add_foreign_key "medical_records_hope_menus", "hope_menus"
+  add_foreign_key "medical_records_hope_menus", "medical_records"
+  add_foreign_key "medical_records_treat_goals", "medical_records"
+  add_foreign_key "medical_records_treat_goals", "treat_goals"
   add_foreign_key "menu_categories", "departments"
   add_foreign_key "menus", "menu_categories"
   add_foreign_key "menus", "skills"

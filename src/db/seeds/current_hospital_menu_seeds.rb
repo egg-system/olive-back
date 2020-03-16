@@ -1,8 +1,0 @@
-CurrentHospitalMenu.where(id: 1).first_or_create!(name:'整骨・整体院')
-CurrentHospitalMenu.where(id: 2).first_or_create!(name:'整形外科')
-CurrentHospitalMenu.where(id: 3).first_or_create!(name:'内科')
-CurrentHospitalMenu.where(id: 4).first_or_create!(name:'産婦人科')
-CurrentHospitalMenu.where(id: 5).first_or_create!(name:'眼科')
-CurrentHospitalMenu.where(id: 6).first_or_create!(name:'心療内科')
-CurrentHospitalMenu.where(id: 7).first_or_create!(name:'皮膚科')
-CurrentHospitalMenu.where(id: 8).first_or_create!(name:'その他')

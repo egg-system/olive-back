@@ -1,0 +1,2 @@
+class TreatGoal < ApplicationRecord
+end
