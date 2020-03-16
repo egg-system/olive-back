@@ -29,7 +29,7 @@
         <td><%= customer.has_registration_card == true ? '有' : '無' %></td>
         <td><%= customer.first_visited_at %></td>
         <td><%= customer.is_deleted == true ? '未使用' : '使用中'%></td>
-        <td>
+        <td class="link">
           <ul>
             <li><%= link_to '詳細へ', customer_path(customer.id) %></li>
             <li><%= link_to '経過記録登録へ', new_observation_path(customer_id: customer.id) %></li>

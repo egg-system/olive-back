@@ -41,6 +41,11 @@ abbr {
   }
   .lower-frame {
     font-size: 15px;
+    .table {
+      .link {
+        min-width: 130px;
+      }
+    }
   }
   .lower-frame .table .thead-light .address {
     width: 240px;
