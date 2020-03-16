@@ -1,0 +1,8 @@
+HopeTherapyMenu.where(id: 1).first_or_create!(name:'整体')
+HopeTherapyMenu.where(id: 2).first_or_create!(name:'骨盤矯正')
+HopeTherapyMenu.where(id: 3).first_or_create!(name:'マッサージ')
+HopeTherapyMenu.where(id: 4).first_or_create!(name:'産後の骨盤矯正')
+HopeTherapyMenu.where(id: 5).first_or_create!(name:'不妊治療')
+HopeTherapyMenu.where(id: 6).first_or_create!(name:'鍼灸')
+HopeTherapyMenu.where(id: 7).first_or_create!(name:'交通事故治療')
+HopeTherapyMenu.where(id: 8).first_or_create!(name:'その他')
