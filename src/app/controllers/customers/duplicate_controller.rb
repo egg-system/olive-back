@@ -8,7 +8,7 @@ class Customers::DuplicateController < ApplicationController
     ## ペジネーション周りの情報を保持するため、変数名をpageにする
     @duplicated_customer_page = Customer
       .group_duplicated(search_params[:columns])
-      .select('group_concat(id) as duplicated_ids')
+      .select('group_concat(id) as duplicated_ids, count(id) as duplicated_count')
       .paginate(search_params[:page], 5)
 
     # TODO: 本行、以下の処理は、顧客モデル内にまとめる
