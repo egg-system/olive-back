@@ -1,0 +1,61 @@
+<div class="form-wrapper">
+  <%= simple_form_for(@medical_record, wrapper: :horizontal_form, html: { class: 'form-horizontal', autocomplete: 'off' }) do |f|%>
+    <div class="form-center">
+      <%= f.input :pain, label: 'おつらい症状・その他メモ' %>
+      <%= f.input :current_sickness, label: '現在煩われている病気' %>
+      <%= f.input :past_sickness, label: '過去の入院や大きなケガ・病気・症状・時期' %>
+
+
+      <%= f.input(
+        :right_hand,
+        as: :radio_buttons,
+        wrapper: :horizontal_collection_inline,
+        collection: { "右" => true, "左手" => false },
+        label: '利き手',
+        checked: @medical_record.right_hand
+        # include_blank: true
+      ) %>
+      <%= f.input(
+        :many_posture_id,
+        as: :select,
+        collection: @many_postures.map{ |item| [item.name, item.id] },
+        label: '多い姿勢',
+        default: @medical_record.many_posture_id,
+        include_blank: true
+      ) %>
+      <%= f.input(
+        :drinking_id,
+        as: :select,
+        collection: @drinkings.map{ |item| [item.name, item.id] },
+        label: '飲酒',
+        default: @medical_record.drinking_id,
+        include_blank: true
+      ) %>
+      <%= f.input(
+        :cigarette_id,
+        as: :select,
+        collection: @cigarettes.map{ |item| [item.name, item.id] },
+        label: 'タバコ',
+        default: @medical_record.cigarette_id,
+        include_blank: true
+      ) %>
+      <%= f.input(
+        :massage_id,
+        as: :select,
+        collection: @massages.map{ |item| [item.name, item.id] },
+        label: '整体・マッサージ',
+        default: @medical_record.massage_id,
+        include_blank: true
+      ) %><%= f.input(
+        :exercise_id,
+        as: :select,
+        collection: @exercises.map{ |item| [item.name, item.id] },
+        label: '運動',
+        default: @medical_record.exercise_id,
+        include_blank: true
+      ) %>
+
+      <%= f.button :submit, class: 'btn btn-primary' %>
+    </div>
+  <% end %>
+</div>
