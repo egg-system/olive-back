@@ -14,6 +14,7 @@ class ObservationsController < ApplicationController
   def create
     @observation = Observation.new(observation_params)
     @observation.option_ids = option_ids
+    @observation.visit_datetime = visit_datetime
 
     respond_to do |format|
       if @observation.save
@@ -31,6 +32,7 @@ class ObservationsController < ApplicationController
   def update
     @observation.assign_attributes(observation_params)
     @observation.option_ids = option_ids
+    @observation.visit_datetime = visit_datetime
 
     respond_to do |format|
       if @observation.save
@@ -69,9 +71,17 @@ class ObservationsController < ApplicationController
       params[:observation][:option_ids].reject(&:blank?).join(',') if params[:observation][:option_ids].present?
     end
 
+    def visit_datetime
+      year = params[:observation]["visit_date(1i)"] if params[:observation]["visit_date(1i)"].present?
+      month = params[:observation]["visit_date(2i)"] if params[:observation]["visit_date(2i)"].present?
+      day = params[:observation]["visit_date(3i)"] if params[:observation]["visit_date(3i)"].present?
+      time = params[:observation][:visit_time] if params[:observation][:visit_time].present?
+      "#{year}-#{month}-#{day} #{time}".in_time_zone if year.present? && month.present? && day.present? && time.present?
+    end
+
     def observation_params
       params.require(:observation).permit(
-        :customer_id, :store_id, :visit_datetime, :staff_id, :menu_id, :merchandise, :observation_history, :coupon_count, :op_coupon_count
+        :customer_id, :store_id, :visit_date, :visit_time, :staff_id, :menu_id, :merchandise, :observation_history, :coupon_count, :op_coupon_count
       )
     end
 end

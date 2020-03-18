@@ -28,15 +28,22 @@
         include_blank: true
       )%>
       <div class="row">
-        <label class="col-sm-3">来店日時</label>
+        <label class="col-sm-3">来店日</label>
         <div class="col-sm-9">
           <%= f.input(
-            :visit_datetime,
+            :visit_date,
+            as: :date,
             label: false,
             include_blank: true
           ) %>
         </div>
       </div>
+      <%= f.input(
+        :visit_time,
+        collection: Settings.stores.time_options,
+        as: :select,
+        label: '来店時刻'
+      ) %>
       <%= f.input(
         :staff_id,
         as: :select,
