@@ -74,11 +74,13 @@ class ObservationsController < ApplicationController
     end
 
     def visit_datetime
-      year = params[:observation]["visit_date(1i)"] if params[:observation]["visit_date(1i)"].present?
-      month = params[:observation]["visit_date(2i)"] if params[:observation]["visit_date(2i)"].present?
-      day = params[:observation]["visit_date(3i)"] if params[:observation]["visit_date(3i)"].present?
-      time = params[:observation][:visit_time] if params[:observation][:visit_time].present?
-      "#{year}-#{month}-#{day} #{time}".in_time_zone if year.present? && month.present? && day.present? && time.present?
+      observationParams = params[:observation]
+      return nil if observationParams["visit_date(1i)"].empty?
+      return nil if observationParams["visit_date(2i)"].empty?
+      return nil if observationParams["visit_date(3i)"].empty?
+      return nil if observationParams[:visit_time].empty?
+
+      return "#{observationParams["visit_date(1i)"]}-#{observationParams["visit_date(2i)"]}-#{observationParams["visit_date(3i)"]} #{observationParams[:visit_time]}".in_time_zone
     end
 
     def observation_params
