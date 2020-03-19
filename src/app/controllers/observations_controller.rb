@@ -1,12 +1,10 @@
 class ObservationsController < ApplicationController
-  before_action :set_observation, only: [:show, :update, :destroy]
+  before_action :set_observation, only: [:new, :show, :update, :destroy]
   before_action :set_relation_models, only: [:new, :show, :update, :create]
 
   # GET /observations/new
   def new
     return redirect_to customers_path, flash: { alert: '顧客が選択されていません。' } unless params.has_key?(:customer_id)
-
-    @observation = Customer.find(params[:customer_id]).observations.new
   end
 
   # POST /observations
@@ -57,7 +55,11 @@ class ObservationsController < ApplicationController
 
   private
     def set_observation
-      @observation = Observation.find(params[:id])
+      if params[:id]
+        @observation = Observation.find(params[:id])
+      elsif params[:customer_id]
+        @observation = Customer.find(params[:customer_id]).observations.new
+      end
     end
 
     def set_relation_models
