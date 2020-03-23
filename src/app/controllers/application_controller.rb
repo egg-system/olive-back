@@ -26,7 +26,7 @@ class ApplicationController < ActionController::Base
   # 店舗に応じたスタッフを選択可能にする
   def viewable_staffs
     store_ids = viewable_stores.pluck(:id)
-    return Staff.where_store_id(store_ids).uniq
+    return Staff.where_store_id(store_ids).distinct
   end
 
   # 管理者のみ管理者権限に変更できるようにする
