@@ -1,19 +1,11 @@
 <% breadcrumb :root  %>
 <p>基本情報</p>
-<ul class="nav flex-column customer-show-heading">
-  <li class="nav-item">
-    <%= link_to "経過記録一覧へ", { anchor: "lower-list-observations" } %>
-  </li>
-  <li class="nav-item">
-    <%= link_to "経過記録登録へ", new_observation_path(customer_id: @customer.id) %>
-  </li>
-  <li class="nav-item">
-    <%= link_to "予約一覧へ", { anchor: "lower-list-reservations" } %>
-  </li>
-  <li class="nav-item">
-    <%= link_to "予約登録へ", new_reservation_path(customer_id: @customer.id) %>
-  </li>
-</ul>
+<div class="customer-show-heading list-group list-group-horizontal">
+  <%= link_to "経過記録一覧", { anchor: "lower-list-observations" }, class: "list-group-item list-group-item-action" %>
+  <%= link_to "経過記録登録", new_observation_path(customer_id: @customer.id), class: "list-group-item list-group-item-action" %>
+  <%= link_to "予約一覧", { anchor: "lower-list-reservations" }, class: "list-group-item list-group-item-action" %>
+  <%= link_to "予約登録", new_reservation_path(customer_id: @customer.id), class: "list-group-item list-group-item-action" %>
+</div>
 <%= render "form" %>
 <br>
 <hr>
