@@ -228,7 +228,7 @@ GEM
     rack-cors (1.0.5)
       rack (>= 1.6.0)
     rack-test (1.1.0)
-      rack (>= 1.0, <
+      rack (>= 1.0, < 3)
     rails (5.2.4.2)
       actioncable (= 5.2.4.2)
       actionmailer (= 5.2.4.2)
@@ -414,4 +414,4 @@ RUBY VERSION
    ruby 2.6.3p62
 
 BUNDLED WITH
-   1.17.3
+   1.16.6
