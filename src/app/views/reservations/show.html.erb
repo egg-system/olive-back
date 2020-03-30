@@ -8,15 +8,15 @@
     simple_form_for(
       @reservation,
       method: :delete,
-      data: { confirm: "本当にキャンセルしますか？" +
-          (@reservation.email_present? ? "\nまた、キャンセルメールを送信有無を再度ご確認ください。" : "") },
-      class: 'mt-4'
+      data: { confirm: cancel_confirm_message(@reservation) },
+      class: 'mt-4',
     ) do |form| 
   %>
-    <%= form.button :submit, value: 'キャンセル', class: 'btn btn-outline-primary' %>
-    <% if @reservation.email_present? %>
-      <%= check_box_tag :do_send_cancel_mail?, true, checked: true %>
-      <%= label_tag :do_send_cancel_mail?, 'キャンセルメールを送信する' %>
+  <%= form.button :submit, value: 'キャンセル', class: 'btn btn-outline-primary' %>
+    <%= check_box_tag_send_cancel_mail :do_send_cancel_mail?, @reservation %>
+    <%= label_tag :do_send_cancel_mail?, 'キャンセルメールを送信する' %>
+    <% unless @reservation.email_present? %>
+      <small class="form-text text-muted cancel_mail_annotation">顧客のメールアドレスが登録されていないため、キャンセルメールは送信できません。</small>
     <% end %>
   <% end %>
 <% end %>
