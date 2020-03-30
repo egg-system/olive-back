@@ -8,4 +8,11 @@ class MedicalRecord < ApplicationRecord
   belongs_to :cigarette, optional: true
   belongs_to :massage, optional: true
   belongs_to :exercise, optional: true
+
+  has_many :medical_records_hope_menus
+  has_many :hope_menus, through: :medical_records_hope_menus
+  has_many :medical_records_treat_goals
+  has_many :treat_goals, through: :medical_records_treat_goals
+  has_many :medical_records_current_hospitals
+  has_many :current_hospitals, through: :medical_records_current_hospitals
 end

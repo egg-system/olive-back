@@ -23,5 +23,8 @@ class MedicalRecordsController < ApplicationController
     @cigarettes = Cigarette.all
     @massages = Massage.all
     @exercises = Exercise.all
+    @hope_menus = HopeMenu.all
+    @treat_goals = TreatGoal.all
+    @current_hospitals = CurrentHospital.all
   end
 end
