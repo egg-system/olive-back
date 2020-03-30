@@ -123,10 +123,9 @@ class Customer < ApplicationRecord
 
   # 会員かつ、メールアドレスが変更された場合、パスワードをチェックする
   def should_validate_password?
-    email_was = self.email_was
     # メールアドレスは大文字小文字の区別がないので比較しない。
     # 新しい入力値はrailsがdowncaseしてくれるので変換不要。
-    email_was = email_was.downcase if email_was.present?
+    email_was = self.email_was.present? ? self.email_was.downcase : self.email_was
     # nilからの変更は、changed? === trueとして認識されないため、下記の様に確認
     return self.member? && self.email != email_was
   end
