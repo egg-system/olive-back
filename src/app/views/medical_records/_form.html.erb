@@ -48,6 +48,14 @@
       # include_blank: true
     ) %>
     <%= f.input(
+      :pregnancy_id,
+      as: :select,
+      collection: @pregnancies.map{ |item| [item.name, item.id] },
+      label: '妊娠',
+      default: @medical_record.pregnancy_id,
+      include_blank: true
+    ) %>
+    <%= f.input(
       :many_posture_id,
       as: :select,
       collection: @many_postures.map{ |item| [item.name, item.id] },

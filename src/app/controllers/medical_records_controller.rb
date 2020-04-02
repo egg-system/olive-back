@@ -2,22 +2,30 @@ class MedicalRecordsController < ApplicationController
   before_action :set_relations , only: :index
 
   def index
+    # データがあれば返して、無ければ新規作成して保存はしない
     @medical_record = MedicalRecord.find_or_initialize_by(
       customer_id: params[:id]
     )
   end
 
   def create
-    # To Do medical_recordがある場合は更新処理(update)
-    # 無い場合は登録処理（create）
-
-    # ToDo ストロングパラメーターズ
-
+    @medical_record = MedicalRecord.find_or_initialize_by(
+      customer_id: params[:id]
+    )
+    @medical_record.assign_attributes(medical_record_params)
+    if # medical_recordがある場合は更新処理(update)
+      @medical_record.update(medical_record_params)
+    else # 無い場合は登録処理（create）
+      @medical_record.save
+    end
     # indexにリダイレクト
+    redirect_to controller: 'medical_records', action: 'index'
+    # ToDo ストロングパラメーターズ    
   end
 
   private
   def set_relations
+    @pregnancies = Pregnancy.all
     @many_postures = ManyPosture.all
     @drinkings = Drinking.all
     @cigarettes = Cigarette.all
@@ -27,4 +35,24 @@ class MedicalRecordsController < ApplicationController
     @treat_goals = TreatGoal.all
     @current_hospitals = CurrentHospital.all
   end
+
+  def medical_record_params
+    params.require(:medical_record).permit(
+      :id,
+      :pain,
+      :current_sickness,
+      :past_sickness,
+      :right_hand,
+      :pregnancy_id,
+      :many_posture_id,
+      :drinking_id,
+      :cigarette_id,
+      :massage_id,
+      :exercise_id,
+      hope_menu_ids: [],
+      treat_goal_ids: [],
+      current_hospital_ids: [],
+    )
+  end
 end
+
