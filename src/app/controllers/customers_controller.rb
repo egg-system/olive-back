@@ -30,7 +30,7 @@ class CustomersController < ApplicationController
   def show
     @customer = Customer.join_tables.find(params[:id])
     @reservations = @customer.reservations.order_reserved_at
-    @observations = @customer.observations.order(id: :desc)
+    @observations = @customer.observations.order(visit_datetime: :desc)
   end
 
   # GET /customers/new
