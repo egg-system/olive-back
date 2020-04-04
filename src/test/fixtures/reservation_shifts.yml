@@ -1,0 +1,6 @@
+tomorrow_one:
+  reservation: tomorrow_reservation
+  shift: one
+tomorrow_two:
+  reservation: tomorrow_reservation
+  shift: two

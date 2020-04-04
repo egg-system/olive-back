@@ -3,6 +3,7 @@ require_relative '../config/environment'
 require 'rails/test_help'
 
 # テストデータにはseedsを利用
+# fixturesのデータはテストごとにピンポイントで必要なものをsetupで読み込む用
 ActiveRecord::Base.transaction do
   Dir.glob(File.join(Rails.root, 'db', 'seeds', '*.rb')) do |file|
     load(file)
