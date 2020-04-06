@@ -1,0 +1,41 @@
+<div id="observation-list">
+  <% if @observations.blank?%>
+    <p>該当データがありません</p>
+  <% else %>
+    <table class="table">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">来店店舗</th>
+          <th scope="col">来店日時</th>
+          <th scope="col">担当者</th>
+          <th scope="col">メニュー</th>
+          <th scope="col">オプション</th>
+          <th scope="col">商品</th>
+          <th scope="col">経過履歴</th>
+          <th scope="col">回数券残</th>
+          <th scope="col">OP回数券残</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @observations.each do |observation| %>
+          <tr>
+            <td><%= observation.id %></td>
+            <td><%= observation.store.name %></td>
+            <td><%= observation.visit_datetime.strftime('%Y-%m-%d %H:%M') %></td>
+            <td><%= observation.staff.present? ? observation.staff.full_name : '' %></td>
+            <td><%= observation.menu.name %></td>
+            <td><%= observation.options.present? ? safe_join(observation.option_names, tag(:br)) : '無' %></td></td>
+            <td><%= observation.merchandise %></td>
+            <td><%= observation.observation_history %></td>
+            <td><%= observation.coupon_count %></td>
+            <td><%= observation.op_coupon_count %></td>
+            <td><%= link_to "詳細へ", observation_path(observation.id) %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+</div>
+<br>

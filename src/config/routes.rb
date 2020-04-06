@@ -22,6 +22,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :observations, only: [:show, :new, :create, :update, :destroy]
+
   resources(
     :reservations,
     :departments,

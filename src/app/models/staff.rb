@@ -28,6 +28,7 @@ class Staff < ApplicationRecord
 
   belongs_to :role
   has_many :shifts
+  has_many :observations
 
   attr_accessor :login_store_id
 

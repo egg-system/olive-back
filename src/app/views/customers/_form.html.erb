@@ -166,6 +166,7 @@
         label: '使用状況',
         checked: @customer.is_deleted
       ) %>
+      <%= f.input :fm_total_amount, label: '売上総額', hint: 'FMに登録されている売上の合計額を移行した項目' %>
       <%= f.button :submit, class: 'btn btn-primary' %>
       <%= link_to '戻る', customers_path, class: 'btn btn-light' %>
     </div>

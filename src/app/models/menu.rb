@@ -4,6 +4,7 @@ class Menu < ApplicationRecord
   
   has_many :store_menus, inverse_of: :store
   has_many :stores, through: :store_menus
+  has_many :observations
 
   def is_acupuncture
     self.menu_category_id === MenuCategory::ACUPUNTURE_CATEGORY_ID

@@ -29,6 +29,7 @@ class Customer < ApplicationRecord
   belongs_to :nearest_station, optional: true
 
   has_many :reservations
+  has_many :observations
 
   before_validation :sync_provider
 
