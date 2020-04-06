@@ -31,9 +31,9 @@ jobs:
           paths:
             - ~/caches/images.tar
       - run: 
-        command: bundle exec rails db:create db:migrate db:seed RAILS_ENV=test
-        name: db setup
+          command: bundle exec rails db:create db:migrate db:seed RAILS_ENV=test
+          name: db setup
       - run:
-        command: bundle exec rails test
-        name: rails test
+          command: bundle exec rails test
+          name: rails test
 version: 2
