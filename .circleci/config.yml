@@ -33,7 +33,7 @@ jobs:
       - run: 
         command: bundle exec rails db:create db:migrate db:seed RAILS_ENV=test
         name: db setup
-      - run
+      - run:
         command: bundle exec rails test
         name: rails test
 version: 2
