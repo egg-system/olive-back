@@ -1,22 +1,4 @@
 <h1>予約詳細</h1>
 <%= render "form" %>
-
 <br>
-
-<% unless @reservation.canceled? %>
-  <%=
-    simple_form_for(
-      @reservation,
-      method: :delete,
-      data: { confirm: cancel_confirm_message(@reservation) },
-      class: 'mt-4',
-    ) do |form| 
-  %>
-  <%= form.button :submit, value: 'キャンセル', class: 'btn btn-outline-primary' %>
-    <%= check_box_tag_send_cancel_mail :do_send_cancel_mail?, @reservation %>
-    <%= label_tag :do_send_cancel_mail?, 'キャンセルメールを送信する' %>
-    <% unless @reservation.email_present? %>
-      <small class="form-text text-muted cancel_mail_annotation">顧客のメールアドレスが登録されていないため、キャンセルメールは送信できません。</small>
-    <% end %>
-  <% end %>
-<% end %>
+<%= render "cancel" %>

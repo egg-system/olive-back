@@ -35,10 +35,6 @@ module ReservationsHelper
   def cancel_confirm_message(reservation)
     message = '本当にキャンセルしますか？'
     return message unless reservation.email_present?
-    return message + "\nまた、キャンセルメールを送信有無を再度ご確認ください。"
-  end
-
-  def check_box_tag_send_cancel_mail(name, reservation)
-    check_box_tag(name, true, reservation.email_present?, disabled: !reservation.email_present?)
+    return "#{message}\nまた、キャンセルメールを送信有無を再度ご確認ください。"
   end
 end

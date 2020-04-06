@@ -1,0 +1,19 @@
+<% unless @reservation.canceled? %>
+  <%=
+    simple_form_for(
+        @reservation,
+        method: :delete,
+        data: { confirm: cancel_confirm_message(@reservation) },
+        class: 'mt-4',
+        ) do |form|
+  %>
+    <%= form.button :submit, value: 'キャンセル', class: 'btn btn-outline-primary' %>
+    <%= check_box_tag(:do_send_cancel_mail?, true, @reservation.email_present?, disabled: !@reservation.email_present?) %>
+    <%= label_tag :do_send_cancel_mail?, 'キャンセルメールを送信する' %>
+    <% unless @reservation.email_present? %>
+      <small class="form-text text-muted cancel_mail_annotation">
+        <%= "※メールアドレスが#{Settings.customer[:common_email]}のお客様には、キャンセルメールは送信できません。" %>
+      </small>
+    <% end %>
+  <% end %>
+<% end %>
