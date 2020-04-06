@@ -1,19 +1,4 @@
 <h1>予約詳細</h1>
 <%= render "form" %>
-
 <br>
-
-<% unless @reservation.canceled? %>
-  <%=
-    simple_form_for(
-      @reservation,
-      method: :delete,
-      data: { confirm: "本当にキャンセルしますか？\nまた、キャンセルメールを送信有無を再度ご確認ください。" },
-      class: 'mt-4'
-    ) do |form| 
-  %>
-    <%= form.button :submit, value: 'キャンセル', class: 'btn btn-outline-primary' %>
-    <%= check_box_tag :do_send_cancel_mail?, true, checked: true %>
-    <%= label_tag 'キャンセルメールを送信する' %>
-  <% end %>
-<% end %>
+<%= render "cancel" %>

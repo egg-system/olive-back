@@ -3,7 +3,11 @@
   <% if @reservation.persisted? %>
     <%= f.input :id, label: 'ID', readonly: true %>
   <% end %>
-  
+
+  <% if @reservation.persisted? %>
+    <%= f.input :state, label: '予約状況', readonly: true %>
+  <% end %>
+
   <%= f.input :customer_id, label: '顧客ID', readonly: true %>
   <%= render 'reservations/fields/customer_inputs', form: f, customer: @reservation.customer  %> 
 
