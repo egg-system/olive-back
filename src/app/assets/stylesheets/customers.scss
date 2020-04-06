@@ -41,21 +41,26 @@ abbr {
   }
   .lower-frame {
     font-size: 15px;
+    .table {
+      .link {
+        min-width: 130px;
+      }
+    }
   }
   .lower-frame .table .thead-light .address {
     width: 240px;
   }
 }
 
-.lower-reservation-title {
+.lower-list-title {
   display: block;
   text-align: center;
   font-size: 30px;
   margin-bottom: 10px;
 }
 
-.customer-reservations-details {
-  #reservation-list {
+.lower-list-details {
+  #reservation-list, #observation-list {
     table {
       position: relative;
       height: calc(75vh);
@@ -72,6 +77,7 @@ abbr {
     }
   }
 }
+
 .form-wrapper {
   .form-center .collection_radio_buttons {
     margin: 0;
@@ -86,5 +92,13 @@ abbr {
   }
   .form-center .btn {
     width: 90px;
+  }
+}
+
+.customer-show-heading {
+  width: 90%;
+  text-align: center;
+  &.list-group {
+    margin: 0 auto 30px auto;
   }
 }
