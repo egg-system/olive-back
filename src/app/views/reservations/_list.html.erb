@@ -71,7 +71,9 @@
               <td rowspan="<%= row_span %>"><%= reservation.created_at.strftime('%Y-%m-%d %H:%M') %></td>
               <% if index === 0 %>
                 <td rowspan="<%= row_span %>">
-                  <%= link_to "詳細へ", reservation_path(reservation.id) %>
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><%= link_to "詳細へ", reservation_path(reservation.id) %></li>
+                  </ul>
                 </td>
               <% end %>
             </tr>
