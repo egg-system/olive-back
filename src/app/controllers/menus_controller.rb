@@ -12,12 +12,14 @@ class MenusController < ApplicationController
   def show
     @menu = Menu.find(params[:id])
     @menu_categories = MenuCategory.all
+    @skills = Skill.all
   end
 
   # GET /menus/new
   def new
     @menu = Menu.new
     @menu_categories = MenuCategory.all
+    @skills = Skill.all
   end
 
   # POST /menus
@@ -27,7 +29,7 @@ class MenusController < ApplicationController
 
     respond_to do |format|
       if @menu.save
-        format.html { redirect_to @menu, notice: 'Menu was successfully created.' }
+        format.html { redirect_to @menu, notice: I18n.t("successes.messages.create") }
         format.json { render :show, status: :created, location: @menu }
       else
         format.html { render :new }
@@ -41,7 +43,7 @@ class MenusController < ApplicationController
   def update
     respond_to do |format|
       if @menu.update(menu_params)
-        format.html { redirect_to @menu, notice: 'Menu was successfully updated.' }
+        format.html { redirect_to @menu, notice: I18n.t("successes.messages.update") }
         format.json { render :show, status: :ok, location: @menu }
       else
         format.html { render :edit }
@@ -56,7 +58,7 @@ class MenusController < ApplicationController
     begin
       @menu.destroy!
       respond_to do |format|
-        lormat.html { redirect_to menus_url, notice: 'Menu was successfully destroyed.' }
+        lormat.html { redirect_to menus_url, notice: I18n.t("successes.messages.destroy") }
         format.json { head :no_content }
       end
     rescue => exception
@@ -75,6 +77,6 @@ class MenusController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def menu_params
-      params.require(:menu).permit(:id, :name, :description, :fee, :service_minutes, :start_at, :end_at, :menu_category_id, :memo)
+      params.require(:menu).permit(:id, :name, :description, :fee, :service_minutes, :start_at, :end_at, :menu_category_id, :skill_id, :memo)
     end
 end
