@@ -30,6 +30,7 @@ class Customer < ApplicationRecord
   belongs_to :medical_record, optional: true
 
   has_many :reservations
+  has_many :observations
 
   before_validation :sync_provider
 

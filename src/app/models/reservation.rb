@@ -95,6 +95,10 @@ class Reservation < ApplicationRecord
     return self.persisted? && self.shifts.present? || self.canceled?
   end
 
+  def email_present?
+    self.customer.email.present?
+  end
+
   private
 
   def validate_reservation_date

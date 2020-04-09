@@ -118,6 +118,7 @@ ActiveRecord::Schema.define(version: 2020_03_13_071600) do
     t.boolean "allow_password_change", default: false, comment: "パスワード変更に必要"
     t.integer "fmid"
     t.boolean "is_deleted", default: false, comment: "\n        使用していない顧客に対し、trueにする。\n        いわゆる論理削除とは異なり、ユーザー側で値を変更する。\n        バグなどの原因になりうるため、システム側で特殊な処理は実施しない。\n      "
+    t.integer "fm_total_amount", default: 0, comment: "FMに登録されている売上の合計額を移行した項目。新規ユーザーは0になる見込み"
     t.index ["baby_age_id"], name: "index_customers_on_baby_age_id"
     t.index ["email"], name: "index_customers_on_email"
     t.index ["first_visit_store_id"], name: "index_customers_on_first_visit_store_id"
@@ -245,6 +246,25 @@ ActiveRecord::Schema.define(version: 2020_03_13_071600) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "observations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", comment: "経過記録（squareで保持できないデータを管理画面から入力する）", force: :cascade do |t|
+    t.bigint "customer_id", comment: "顧客ID"
+    t.bigint "store_id", comment: "店舗ID"
+    t.datetime "visit_datetime", comment: "来院日時（開始時刻）"
+    t.bigint "staff_id", comment: "対応したスタッフID"
+    t.bigint "menu_id", comment: "メニューID ※ square連携後に廃止"
+    t.string "option_ids", comment: "複数のオプションIDをカンマ区切りで文字列にしたもの ※ square連携後に廃止"
+    t.text "merchandise", comment: "商品 ※ square連携後に廃止"
+    t.text "observation_history", comment: "経過履歴"
+    t.integer "coupon_count", comment: "回数券残"
+    t.integer "op_coupon_count", comment: "OP回数券残"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["customer_id"], name: "index_observations_on_customer_id"
+    t.index ["menu_id"], name: "index_observations_on_menu_id"
+    t.index ["staff_id"], name: "index_observations_on_staff_id"
+    t.index ["store_id"], name: "index_observations_on_store_id"
   end
 
   create_table "occupations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -480,6 +500,10 @@ ActiveRecord::Schema.define(version: 2020_03_13_071600) do
   add_foreign_key "menu_categories", "departments"
   add_foreign_key "menus", "menu_categories"
   add_foreign_key "menus", "skills"
+  add_foreign_key "observations", "customers", on_delete: :cascade
+  add_foreign_key "observations", "menus", on_delete: :nullify
+  add_foreign_key "observations", "staffs", on_delete: :cascade
+  add_foreign_key "observations", "stores", on_delete: :cascade
   add_foreign_key "options", "departments"
   add_foreign_key "options", "skills"
   add_foreign_key "reservation_coupons", "coupons", on_delete: :cascade

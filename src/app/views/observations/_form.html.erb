@@ -1,0 +1,104 @@
+<div class="form-wrapper">
+  <%= simple_form_for(@observation, wrapper: :horizontal_form, html: { class: 'form-horizontal', autocomplete: 'off' }) do |f|%>
+    <%= render 'application/form_error', errors: @observation.errors %>
+
+    <div class="form-center">
+      <%= f.input :customer_id, label: '顧客ID', readonly: true %>
+      <% if @observation.customer.present? %>
+        <div class="row">
+          <label class="col-sm-3">顧客名</label>
+          <div class="col-sm-9">
+            <%= f.input(
+              :customer_full_name,
+              label: false,
+              readonly: true,
+              input_html: { value: @observation.customer.full_name },
+              hint: link_to('顧客情報の詳細はこちらへ', customer_path(@observation.customer.id))
+            ) %>
+          </div>
+        </div>
+      <% end %>
+ 
+      <%= f.input(
+        :store_id,
+        as: :select,
+        collection: @stores.map{|store| [store.name, store.id] },
+        label: '来店店舗',
+        default: @observation.store_id,
+        include_blank: true
+      )%>
+      <div class="row">
+        <label class="col-sm-3">来店日</label>
+        <div class="col-sm-9">
+          <%= f.input(
+            :visit_date,
+            as: :date,
+            label: false,
+            default: Date.today
+          ) %>
+        </div>
+      </div>
+      <%= f.input(
+        :visit_time,
+        collection: Settings.stores.time_options,
+        as: :select,
+        label: '来店時刻'
+      ) %>
+      <%= f.input(
+        :staff_id,
+        as: :select,
+        collection: @staffs.map{|staff| [staff.name, staff.id] },
+        label: '担当者',
+        default: @observation.staff_id,
+        include_blank: true
+      )%>
+      <%= f.input(
+        :menu_id,
+        as: :select,
+        collection: @menus.map{|menu| [menu.name, menu.id] },
+        label: 'メニュー',
+        default: @observation.menu_id,
+        include_blank: true
+      )%>
+      <div class="form-group row">
+        <label class="col-sm-3">オプション</label>
+        <div class="col-sm-9">
+          <%= f.collection_check_boxes(
+            :option_ids,
+            @options,
+            :id,
+            :name,
+            label: false,
+            checked: @observation.option_ids.present? ? @observation.option_ids.split(',') : [],
+            include_blank: true
+          ) do |option| %>
+            <%= option.check_box %>
+            <%= option.label %>
+          <% end %>
+        </div>
+      </div>
+      <%= f.input :merchandise, label: '商品' %>
+      <%= f.input :observation_history, label: '経過履歴' %>
+      <%= f.input(
+        :coupon_count,
+        as: :select,
+        collection: [*0..8],
+        label: '回数券残',
+        include_blank: false
+      )%>
+      <%= f.input(
+        :op_coupon_count,
+        as: :select,
+        collection: [*0..23],
+        label: 'OP回数券残',
+        include_blank: false
+      )%>
+
+      <%= f.button :submit, class: 'btn btn-primary' %>
+      <%= link_to '戻る', customer_path(@observation.customer_id), class: 'btn btn-light' %>
+      <% if method === 'show' %>
+        <%= link_to "削除", observation_path(@observation.id), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'btn btn-danger'  %>
+      <% end %>
+    </div>
+  <% end %>
+</div>
