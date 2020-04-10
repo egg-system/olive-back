@@ -1,0 +1,2 @@
+class Drinking < ApplicationRecord
+end

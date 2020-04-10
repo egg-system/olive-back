@@ -1,0 +1,2 @@
+class Cigarette < ApplicationRecord
+end

@@ -16,7 +16,18 @@ Rails.application.routes.draw do
     resources :duplicate
   end
 
-  resources :stores, :staffs, :customers, :reservations do
+  resources :customers do
+    collection do
+      post :search
+    end
+
+    member do
+      # customerとmedical_recordsは一対一なのでGETとPOSTだけにする
+      resources :medical_records, only: [:index, :create]
+    end
+  end
+
+  resources :stores, :staffs, :reservations do
     collection do
       post :search
     end
