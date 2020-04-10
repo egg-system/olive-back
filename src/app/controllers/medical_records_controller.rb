@@ -13,7 +13,7 @@ class MedicalRecordsController < ApplicationController
       customer_id: params[:id]
     )
     @medical_record.update_attributes(medical_record_params)
-    redirect_to medical_records_path
+    redirect_to medical_records_path, notice: '更新しました。'
   end
 
   private
