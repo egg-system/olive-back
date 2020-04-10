@@ -1,5 +1,9 @@
 <div class="form-wrapper">
-  <%= simple_form_for(@medical_record) do |f|%>
+  <%= simple_form_for(
+    @medical_record,
+    url: medical_records_path,
+    html: { method: 'post' }
+  ) do |f|%>
     <%= f.input :pain, label: 'おつらい症状・その他メモ' %>
     <%= f.input :current_sickness, label: '現在煩われている病気' %>
     <%= f.input :past_sickness, label: '過去の入院や大きなケガ・病気・症状・時期' %>
@@ -96,5 +100,6 @@
     ) %>
 
     <%= f.button :submit, class: 'btn btn-primary' %>
+    <%= link_to '戻る', customer_path(@medical_record.customer_id), class: 'btn btn-light' %>
   <% end %>
 </div>

@@ -12,15 +12,8 @@ class MedicalRecordsController < ApplicationController
     @medical_record = MedicalRecord.find_or_initialize_by(
       customer_id: params[:id]
     )
-    @medical_record.assign_attributes(medical_record_params)
-    if # medical_recordがある場合は更新処理(update)
-      @medical_record.update(medical_record_params)
-    else # 無い場合は登録処理（create）
-      @medical_record.save
-    end
-    # indexにリダイレクト
-    redirect_to controller: 'medical_records', action: 'index'
-    # ToDo ストロングパラメーターズ    
+    @medical_record.update_attributes(medical_record_params)
+    redirect_to medical_records_path
   end
 
   private
