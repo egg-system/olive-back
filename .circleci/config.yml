@@ -2,7 +2,13 @@ version: 2
 
 jobs:
   build:
-    machine: true
+    docker:
+      - image: circleci/ruby:2.5.1-node-browsers
+        environment:
+          RAILS_ENV: test
+          DATABASE_USER: root
+          DATABASE_HOST: 127.0.0.1
+      - image: circleci/mysql:5.7
     steps:
       - checkout
       - restore_cache:
@@ -34,7 +40,7 @@ jobs:
             - ~/caches/images.tar
       - run: cd ~/project
       - run: 
-          command: docker-compose run -u 1001:1001 rails bundle exec rake db:create db:migrate db:seed RAILS_ENV=test
+          command: docker-compose run -u 1001:1001 rails bundle exec rake db:create db:migrate db:seed
           name: db setup
       - run:
           command: docker-compose run -u 1001:1001 rails bundle exec rake test
