@@ -2,13 +2,11 @@ version: 2
 
 jobs:
   build:
-    docker:
-      - image: circleci/ruby:2.5.1-node-browsers
-        environment:
-          RAILS_ENV: test
-          DATABASE_USER: root
-          DATABASE_HOST: 127.0.0.1
-      - image: circleci/mysql:5.7
+    machine: true
+    environment:
+      RAILS_ENV: test
+      DATABASE_USER: root
+      DATABASE_HOST: 127.0.0.1
     steps:
       - checkout
       - restore_cache:
