@@ -35,6 +35,10 @@ jobs:
       - run:
           command: docker-compose run -u 1001:1001 rails dockerize -wait tcp://mysql:3306 -timeout 120s
           name: wait for db
+  test:
+    machine: true
+    steps:
+      - checkout
       - run: 
           command: docker-compose run -u 1001:1001 rails bundle exec rake db:create db:migrate db:seed RAILS_ENV=test
           name: db setup
