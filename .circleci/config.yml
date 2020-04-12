@@ -32,7 +32,9 @@ jobs:
           key: docker-cache-{{ checksum "Dockerfile" }}-{{ checksum "src/Gemfile.lock" }}
           paths:
             - ~/caches/images.tar
-      - run: cd ~/project
+      - run:
+          name: Wait for DB
+          command: docker-compose run -u 1001:1001 rails dockerize -wait tcp://127.0.0.1:3306 -timeout 120s
       - run: 
           command: docker-compose run -u 1001:1001 rails bundle exec rake db:create db:migrate db:seed RAILS_ENV=test
           name: db setup
