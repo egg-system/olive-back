@@ -13,14 +13,14 @@
               collection: @menu_categories.map { |category| [category.name, category.id] },
               label: "商品カテゴリー",
               default: 0,
-              required: true
+              include_blank: true
   %>
   <%= f.input :skill_id,
               as: :select,
               collection: @skills.map { |skill| [skill.name, skill.id] },
               label: "スキル",
               default: 0,
-              required: true
+              include_blank: true
   %>
   <%= f.input :memo, label: "備考" %>
   <%= f.button :submit, class: 'btn btn-primary' %>
