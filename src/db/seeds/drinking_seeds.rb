@@ -1,0 +1,5 @@
+Drinking.where(id: 1).first_or_create!(name:'飲まない')
+Drinking.where(id: 2).first_or_create!(name:'たまに飲む')
+Drinking.where(id: 3).first_or_create!(name:'ほぼ毎日飲む')
+Drinking.where(id: 4).first_or_create!(name:'非常によく飲む')
+Drinking.where(id: 5).first_or_create!(name:'その他')
