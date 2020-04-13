@@ -26,6 +26,33 @@ namespace :customer do
       }
   end
 
+  desc 'CSVを元に、顧客をマージする（SQUAREデータ移行用）'
+  task :merge_by_csv_square, [:csv_path] => :environment do |task, args|
+    csv_full_path = Rails.root.join args[:csv_path]
+
+    Customer.transaction do
+      deleted_customers = merge_by_csv_square(csv_full_path)
+      export_csv('deleted_customers.csv', deleted_customers)
+    end
+  end
+
+  def merge_by_csv_square(csv_file_path)
+    csv = CSV.table(csv_file_path, headers: :first_row, encoding: 'Shift_JIS:UTF-8')
+    headers = csv.headers
+    merge_to_col_index = headers.find_index(:merge_to)
+
+    return csv.flat_map do |row|
+      merge_to_id = row[merge_to_col_index]
+      (0...headers.length).each_with_object([]) do |i, result|
+        if headers[i] != :merge_from || row[i].blank?
+          next
+        end
+        merge_from_id = row[i]
+        result << Customer.merge(merge_from_id, merge_to_id)
+      end
+    end
+  end
+
   desc '非会員登録した顧客を一括で会員に変更する'
   task :migrate_to_member, [:password] => :environment do |task, args|
     Customer.transaction do
