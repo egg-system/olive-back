@@ -8,20 +8,21 @@
   <%= f.input :service_minutes, label: "施術時間", required: true %>
   <%= f.input :start_at, label: "販売開始日" %>
   <%= f.input :end_at, label: "販売終了日" %>
-  <%= f.input :menu_category_id,
-              as: :select,
-              collection: @menu_categories.map { |category| [category.name, category.id] },
-              label: "商品カテゴリー",
-              default: 0,
-              include_blank: true
-  %>
-  <%= f.input :skill_id,
-              as: :select,
-              collection: @skills.map { |skill| [skill.name, skill.id] },
-              label: "スキル",
-              default: 0,
-              include_blank: true
-  %>
+  <%= f.input(
+    :menu_category_id,
+    as: :select,
+    collection: @menu_categories.map { |category| [category.name, category.id] },
+    label: "商品カテゴリー",
+    default: 0,
+    include_blank: true
+  ) %>
+  <%= f.input(
+    :skill_id,
+    as: :select,
+    collection: @skills.map { |skill| [skill.name, skill.id] },
+    label: "スキル",
+    required: true
+  ) %>
   <%= f.input :memo, label: "備考" %>
   <%= f.button :submit, class: 'btn btn-primary' %>
   <% if request.path_info != new_menu_path %>

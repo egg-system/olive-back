@@ -1,10 +1,13 @@
 class Menu < ApplicationRecord
   belongs_to :menu_category, optional: true
-  belongs_to :skill, optional: true
+  belongs_to :skill
   
   has_many :store_menus, inverse_of: :store
   has_many :stores, through: :store_menus
   has_many :observations
+
+  # DBのdefault値を無視するために追加
+  attribute :skill_id, :integer, default: nil
 
   def is_acupuncture
     self.menu_category_id === MenuCategory::ACUPUNTURE_CATEGORY_ID
