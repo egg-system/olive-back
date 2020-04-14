@@ -49,6 +49,55 @@ class ReservationsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to reservation_url(Reservation.last)
   end
 
+  test "should not create reservation because no shift" do
+    assert_no_difference('Reservation.count') do
+      post reservations_url, params: {
+        reservation: {
+          children_count: 1,
+          reservation_comment: 'コメント',
+          store_id: 1,
+          staff_id: 9,
+          customer_id: 1,
+          reservation_date: Date.tomorrow,
+          start_time: '13:00:00',
+          end_time: '14:00:00',
+          is_first: 0,
+          is_confirmed: 0,
+          coupon_ids: [],
+          reservation_details_attributes: [{
+            menu_id: 1,
+            option_ids: []
+          }]
+        }
+      }
+    end
+  end
+
+  # menuのskillに紐づくstaffのshiftがない場合
+  test "should not create reservation because staff doesn't have enough skill" do
+    assert_no_difference('Reservation.count') do
+      post reservations_url, params: {
+        reservation: {
+          children_count: 1,
+          reservation_comment: 'コメント',
+          store_id: 1,
+          staff_id: 3, # 鍼灸師のskillなし
+          customer_id: 1,
+          reservation_date: Date.tomorrow,
+          start_time: '11:00:00',
+          end_time: '12:00:00',
+          is_first: 0,
+          is_confirmed: 0,
+          coupon_ids: [],
+          reservation_details_attributes: [{
+            menu_id: 6, # 鍼灸師のskillが必要
+            option_ids: []
+          }]
+        }
+      }
+    end
+  end
+
   test "should show reservation" do
     get reservation_url(@reservation)
     assert_response :success
