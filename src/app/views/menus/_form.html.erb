@@ -21,6 +21,7 @@
     as: :select,
     collection: @skills.map { |skill| [skill.name, skill.id] },
     label: "スキル",
+    default: 0,
     required: true
   ) %>
   <%= f.input :memo, label: "備考" %>
