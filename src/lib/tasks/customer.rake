@@ -16,15 +16,15 @@ namespace :customer do
     headers = csv.headers
     merge_to_col_index = headers.find_index(:merge_to)
 
-    return csv.flat_map do |row|
+    csv.flat_map { |row|
       merge_to_id = row[merge_to_col_index]
-      (0...headers.length).filter do |i|
+      (0...headers.length).filter { |i|
         headers[i] == :merge_from && row[i].present?
-      end.map do |i|
+      }.map { |i|
         merge_from_id = row[i]
         Customer.merge(merge_from_id, merge_to_id)
-      end
-    end
+      }
+    }
   end
 
   desc '非会員登録した顧客を一括で会員に変更する'
