@@ -129,7 +129,7 @@ class Customer < ApplicationRecord
 
   def sync_provider
     self.provider = self.common_email? ? 'none' : 'email'
-    self.uid = self.common_email? ? Time.now.to_s : self.email
+    self.uid = self.common_email? ? SecureRandom.uuid : self.email
 
     # パスワードの再設定を必要にするため
     self.encrypted_password = nil if self.common_email?
