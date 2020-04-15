@@ -19,4 +19,9 @@ module ApplicationHelper
     return nil unless staff_signed_in?
     return Store.find current_staff.login_store_id
   end
+
+  def params_debug
+    return unless Rails.env.development?
+    return debug(params) if ENV['PARAMS_DEBUG_ENABLED'] == 'true'
+  end
 end
