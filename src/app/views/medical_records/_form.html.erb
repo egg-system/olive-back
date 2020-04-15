@@ -4,6 +4,21 @@
     url: medical_records_path,
     html: { method: 'post' }
   ) do |f|%>
+
+    <%= f.input :customer_id, label: '顧客ID', readonly: true %>
+    <div class="row">
+      <label class="col-sm-3">顧客名</label>
+      <div class="col-sm-9 text-left">
+        <%= f.input(
+                :customer_full_name,
+                label: false,
+                readonly: true,
+                input_html: { value: @medical_record.customer.full_name },
+                hint: link_to('顧客情報の詳細はこちらへ', customer_path(@medical_record.customer.id))
+            ) %>
+      </div>
+    </div>
+
     <%= f.input :pain, label: 'おつらい症状・その他メモ' %>
     <%= f.input :current_sickness, label: '現在煩われている病気' %>
     <%= f.input :past_sickness, label: '過去の入院や大きなケガ・病気・症状・時期' %>
