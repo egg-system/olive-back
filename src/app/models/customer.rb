@@ -69,8 +69,6 @@ class Customer < ApplicationRecord
 
   attr_accessor :age, :display_email
 
-  # 本メソッドは、メールアドレスの重複を前提としている
-  # 電話番号などによるマージの場合、処理を修正する必要がある
   def self.merge(merge_from_id, merge_to_id)
     merge_from_customer = find(merge_from_id)
     merge_from_customer.reservations.update(customer_id: merge_to_id)
@@ -83,7 +81,7 @@ class Customer < ApplicationRecord
       merge_to_customer.provider = 'email'
     end
 
-    merge_from_customer.destroy!
+    merge_from_customer.update!(is_deleted: true)
     merge_to_customer.save!
 
     return merge_from_customer
