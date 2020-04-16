@@ -21,6 +21,10 @@ ja:
       store:
         break_from: '休憩開始時間'
         break_to: '休憩終了時間'
+      observation:
+        store: '来店店舗'
+        staff: '担当者'
+        menu: 'メニュー'
     errors:
       models:
         reservation:
