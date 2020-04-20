@@ -115,10 +115,16 @@ class ReservationsControllerTest < ActionDispatch::IntegrationTest
       }
     }
     assert_redirected_to reservation_url(@reservation)
+
+    reservation = Reservation.find(@reservation.id)
+    assert_equal 'コメントを更新', reservation.reservation_comment
   end
 
   test "should destroy reservation" do
     delete reservation_url(@reservation)
     assert_redirected_to reservations_url
+
+    reservation = Reservation.find(@reservation.id)
+    assert reservation.canceled_at.present?
   end
 end

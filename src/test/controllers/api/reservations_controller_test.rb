@@ -4,6 +4,7 @@ require_relative '../../helpers/controllers/api/authorization_helper'
 class ApiReservationsControllerTest < ActionDispatch::IntegrationTest
   include AuthorizationHelper
   fixtures :reservations
+  fixtures :reservation_details
   fixtures :shifts
 
   setup do
@@ -74,6 +75,10 @@ class ApiReservationsControllerTest < ActionDispatch::IntegrationTest
 
   test "should destroy reservation" do
     delete "/api/reservations/#{@reservation.id}", headers: @auth_tokens
+
     assert_response :success
+
+    reservation = Reservation.find(@reservation.id)
+    assert reservation.canceled_at.present?
   end
 end
