@@ -1,0 +1,11 @@
+tomorrow_one:
+  children_count: 0
+  reservation_comment: 'コメント'
+  store_id: 1
+  staff_id: 9
+  customer_id: 1
+  reservation_date: <%= Date.tomorrow %>
+  start_time: '10:00:00'
+  end_time: '11:00:00'
+  is_first: 1
+  is_confirmed: 1
