@@ -7,7 +7,7 @@ module ShiftsHelper
 		return @date_shifts[date].find { |shift|
 			shift.shift_at.strftime('%Y%m%d%H%M') === shift_time.strftime('%Y%m%d%H%M')
 		} 
-  end
+	end
 
 	def get_shift_parameter(shift_time)
 		return "new_shifts[#{shift_time}]" unless shift_exist(shift_time)
@@ -15,7 +15,7 @@ module ShiftsHelper
 		date = extract_date(shift_time)
 		shift = extract_shift(date, shift_time)
 		return "remain_shift_ids[#{shift.id}]"
-  end
+	end
   
   def get_weekday(shift_date)
     date = shift_date
@@ -24,7 +24,7 @@ module ShiftsHelper
     return date.wday
   end
 
-  def get_weekday_label(shift_date)
+	def get_weekday_label(shift_date)
     week_day = get_weekday(shift_date)
     return I18n.t('date.abbr_day_names')[week_day]
 	end
