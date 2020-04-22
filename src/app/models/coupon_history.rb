@@ -11,6 +11,6 @@ class CouponHistory < ApplicationRecord
   }
 
   scope :join_tables, ->{
-  select('coupon_histories.*').join_coupon.join_customer
+    select('coupon_histories.*').join_coupon.join_customer
   }
 end
