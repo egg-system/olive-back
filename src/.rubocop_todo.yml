@@ -6,15 +6,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 48
-# Cop supports --auto-correct.
-# Configuration parameters: IndentationWidth, EnforcedStyle.
-# SupportedStyles: spaces, tabs
-Layout/IndentationStyle:
-  Exclude:
-    - 'app/controllers/api/api_controller.rb'
-    - 'app/helpers/shifts_helper.rb'
-
 # Offense count: 62
 # Cop supports --auto-correct.
 # Configuration parameters: Width, IgnoredPatterns.
