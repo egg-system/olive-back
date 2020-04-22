@@ -395,6 +395,7 @@ DEPENDENCIES
   rails (~> 5.2.2)
   rails-erd
   rails-i18n
+  rubocop
   sass-rails (~> 5.0)
   selenium-webdriver
   simple_form
@@ -414,4 +415,4 @@ RUBY VERSION
    ruby 2.6.3p62
 
 BUNDLED WITH
-   1.16.6
+   1.17.2
