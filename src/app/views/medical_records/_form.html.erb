@@ -4,6 +4,9 @@
     url: medical_records_path,
     html: { method: 'post' }
   ) do |f|%>
+
+    <%= render 'customers/snippet', { customer: @medical_record.customer, form: f } %>
+
     <%= f.input :pain, label: 'おつらい症状・その他メモ' %>
     <%= f.input :current_sickness, label: '現在煩われている病気' %>
     <%= f.input :past_sickness, label: '過去の入院や大きなケガ・病気・症状・時期' %>
