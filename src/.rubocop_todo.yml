@@ -26,24 +26,6 @@ Layout/EmptyLines:
 
 
 
-# Offense count: 12
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: native, lf, crlf
-Layout/EndOfLine:
-  Exclude:
-    - 'app/controllers/api/api_controller.rb'
-    - 'app/controllers/api/customers/passwords_controller.rb'
-    - 'app/controllers/api/customers/registrations_controller.rb'
-    - 'app/controllers/api/customers/sessions_controller.rb'
-    - 'app/controllers/api/customers/token_validations_controller.rb'
-    - 'app/controllers/concerns/token_authenticable.rb'
-    - 'app/mailers/customer_mailer.rb'
-    - 'app/models/concerns/date_module.rb'
-    - 'app/models/concerns/pagination_module.rb'
-    - 'app/models/option.rb'
-    - 'app/models/reservation_shift.rb'
-    - 'db/seeds/test/20190603_shift_import.rb'
-
 # Offense count: 2
 # Cop supports --auto-correct.
 # Configuration parameters: IndentationWidth.
