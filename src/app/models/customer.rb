@@ -89,6 +89,7 @@ class Customer < ApplicationRecord
 
   def age
     return nil if self.birthday.nil?
+
     return (Date.today.strftime('%Y%m%d').to_i - self.birthday.strftime('%Y%m%d').to_i) / 10000
   end
 
@@ -102,6 +103,7 @@ class Customer < ApplicationRecord
 
   def display_email
     return self.email if self.new_record?
+
     return self.email.nil? ? self.common_email : self.email
   end
 
@@ -112,6 +114,7 @@ class Customer < ApplicationRecord
 
   def common_email?
     return self.email.nil? if self.new_record?
+
     return self.display_email === self.common_email
   end
 

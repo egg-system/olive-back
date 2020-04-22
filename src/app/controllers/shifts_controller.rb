@@ -89,6 +89,7 @@ class ShiftsController < ApplicationController
 
   def delete_shift_ids
     return nil unless updates_params.has_key? :remain_shift_ids
+
     return updates_params[:remain_shift_ids].select { |id, checked| checked === '0' }.keys
   end
 

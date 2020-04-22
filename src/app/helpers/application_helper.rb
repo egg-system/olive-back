@@ -17,6 +17,7 @@ module ApplicationHelper
 
   def current_store
     return nil unless staff_signed_in?
+
     return Store.find current_staff.login_store_id
   end
 

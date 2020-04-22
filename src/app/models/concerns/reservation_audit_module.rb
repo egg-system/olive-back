@@ -34,6 +34,7 @@ module ReservationAuditModule
 
     # 画面から変更した履歴の実行者は文字列(username)になる
     return audit.username if can_update_audit(audit)
+
     return audit.user_type
   end
 
@@ -64,6 +65,7 @@ module ReservationAuditModule
   def can_update_audit(audit)
     return false if self.new_record?
     return true if audit.nil?
+
     return audit.user.is_a?(String)
   end
 

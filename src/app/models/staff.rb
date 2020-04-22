@@ -84,6 +84,7 @@ class Staff < ApplicationRecord
 
   def employment_type_name
     return "" if self.employment_type.nil?
+
     return Settings.employment_type[self.employment_type]
   end
 end

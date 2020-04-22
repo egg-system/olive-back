@@ -14,19 +14,6 @@ Layout/DefEndAlignment:
   Exclude:
     - 'app/helpers/shifts_helper.rb'
 
-# Offense count: 12
-# Cop supports --auto-correct.
-Layout/EmptyLineAfterGuardClause:
-  Exclude:
-    - 'app/controllers/application_controller.rb'
-    - 'app/controllers/shifts_controller.rb'
-    - 'app/helpers/application_helper.rb'
-    - 'app/helpers/reservations_helper.rb'
-    - 'app/models/concerns/reservation_audit_module.rb'
-    - 'app/models/concerns/shift_build_module.rb'
-    - 'app/models/customer.rb'
-    - 'app/models/staff.rb'
-
 # Offense count: 1
 # Cop supports --auto-correct.
 Layout/EmptyLineAfterMagicComment:

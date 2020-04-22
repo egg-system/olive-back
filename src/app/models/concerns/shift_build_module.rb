@@ -27,6 +27,7 @@ module ShiftBuildModule
       .min_by { |shifts| shifts.first.staff.skill_staffs.length }
 
     return if shifts.nil?
+
     self.shifts = shifts
     self.staff = shifts.first.staff if self.staff_id.nil?
   end

@@ -35,6 +35,7 @@ module ReservationsHelper
   def cancel_confirm_message(reservation)
     message = '本当にキャンセルしますか？'
     return message unless reservation.email_present?
+
     return "#{message}\nまた、キャンセルメールを送信有無を再度ご確認ください。"
   end
 end
