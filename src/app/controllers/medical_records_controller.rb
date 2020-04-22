@@ -17,6 +17,7 @@ class MedicalRecordsController < ApplicationController
   end
 
   private
+
   def set_relations
     @pregnancies = Pregnancy.all
     @many_postures = ManyPosture.all

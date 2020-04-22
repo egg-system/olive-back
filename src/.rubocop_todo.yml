@@ -14,8 +14,6 @@ Layout/DefEndAlignment:
   Exclude:
     - 'app/helpers/shifts_helper.rb'
 
-
-
 # Offense count: 12
 # Cop supports --auto-correct.
 Layout/EmptyLines:
@@ -26,12 +24,8 @@ Layout/EmptyLines:
     - 'db/migrate/20190313124119_add_devise_to_customers.rb'
     - 'test/controllers/reservations_controller_test.rb'
 
-# Offense count: 19
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: around, only_before
-Layout/EmptyLinesAroundAccessModifier:
-  Enabled: false
+
+
 
 # Offense count: 1
 # Cop supports --auto-correct.

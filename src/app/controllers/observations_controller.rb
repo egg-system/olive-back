@@ -54,6 +54,7 @@ class ObservationsController < ApplicationController
   end
 
   private
+
     def set_observation
       if params[:id]
         @observation = Observation.find(params[:id])

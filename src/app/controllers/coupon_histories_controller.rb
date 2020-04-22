@@ -60,6 +60,7 @@ class CouponHistoriesController < ApplicationController
   end
 
   private
+
     # Use callbacks to share common setup or constraints between actions.
     def set_coupon_history
       @coupon_history = CouponHistory.find(params[:id])

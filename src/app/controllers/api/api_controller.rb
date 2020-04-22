@@ -2,6 +2,7 @@ class Api::ApiController < ApplicationController
 	skip_before_action :authenticate_staff!
 
 	 protected
+
 	def render_response_ok
 		render json: { "result": "ok" }
 	end
