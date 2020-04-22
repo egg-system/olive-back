@@ -1,7 +1,8 @@
-<%= form.input :customer_id,
+<%= form.input(:customer_id,
                label: '顧客ID',
                input_html: {value: customer.present? ? customer.id : ''},
-               readonly: true %>
+               readonly: true
+    ) %>
 <div class="row">
   <label class="col-sm-3">顧客名</label>
   <div class="col-sm-9 text-left">
