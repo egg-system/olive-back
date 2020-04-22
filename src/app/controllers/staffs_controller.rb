@@ -92,36 +92,36 @@ class StaffsController < ApplicationController
 
   protected
 
-    def set_relation_models
-      @stores = viewable_stores
-      @roles = viewable_roles
-      @skills = Skill.all
-    end
+  def set_relation_models
+    @stores = viewable_stores
+    @roles = viewable_roles
+    @skills = Skill.all
+  end
 
   private
 
     # Use callbacks to share common setup or constraints between actions.
-    def set_staff
-      @staff = Staff.find(params[:id])
-    end
+  def set_staff
+    @staff = Staff.find(params[:id])
+  end
 
     # Never trust parameters from the scary internet, only allow the white list through.
-    def staff_params
-      staff_params = params
-        .require(:staff)
-        .permit(
-          :first_name,
-          :last_name,
-          :first_kana,
-          :last_kana,
-          :employment_type,
-          :role_id,
-          :login,
-          :password,
-          { skill_ids: [] },
-          { store_ids: [] }
-        )
-        staff_params.delete(:password) if staff_params[:password].empty?
-        return staff_params
-    end
+  def staff_params
+    staff_params = params
+      .require(:staff)
+      .permit(
+        :first_name,
+        :last_name,
+        :first_kana,
+        :last_kana,
+        :employment_type,
+        :role_id,
+        :login,
+        :password,
+        { skill_ids: [] },
+        { store_ids: [] }
+      )
+    staff_params.delete(:password) if staff_params[:password].empty?
+    return staff_params
+  end
 end

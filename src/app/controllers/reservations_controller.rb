@@ -106,40 +106,40 @@ class ReservationsController < ApplicationController
   private
 
     # Use callbacks to share common setup or constraints between actions.
-    def set_reservation
-      @reservation = Reservation.find(params[:id])
-    end
+  def set_reservation
+    @reservation = Reservation.find(params[:id])
+  end
 
-    def set_relation_models
-      @coupons = Coupon.all
-      @options = Option.all
-      @stores = viewable_stores
-      @staffs = viewable_staffs
-    end
+  def set_relation_models
+    @coupons = Coupon.all
+    @options = Option.all
+    @stores = viewable_stores
+    @staffs = viewable_staffs
+  end
 
     # Never trust parameters from the scary internet, only allow the white list through.
-    def reservation_params
-      params.require(:reservation).permit(
+  def reservation_params
+    params.require(:reservation).permit(
+      :id,
+      :customer_id,
+      :store_id,
+      :staff_id,
+      :reservation_date,
+      :start_time,
+      :end_time,
+      :reservation_comment,
+      :children_count,
+      :is_first,
+      :is_confirmed,
+      :created_by,
+      :canceled_by,
+      coupon_ids: [],
+      reservation_details_attributes: [
         :id,
-        :customer_id,
-        :store_id,
-        :staff_id,
-        :reservation_date,
-        :start_time,
-        :end_time,
-        :reservation_comment,
-        :children_count,
-        :is_first,
-        :is_confirmed,
-        :created_by,
-        :canceled_by,
-        coupon_ids: [],
-        reservation_details_attributes: [
-          :id,
-          :menu_id,
-          :mimitsubo_count,
-          option_ids: [],
-        ]
-      )
-    end
+        :menu_id,
+        :mimitsubo_count,
+        option_ids: [],
+      ]
+    )
+  end
 end

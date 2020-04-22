@@ -17,12 +17,12 @@ module ShiftsHelper
 		return "remain_shift_ids[#{shift.id}]"
 	end
   
-  def get_weekday(shift_date)
-    date = shift_date
-    date = Date.parse(shift_date) if shift_date.is_a?(String)
+ def get_weekday(shift_date)
+   date = shift_date
+   date = Date.parse(shift_date) if shift_date.is_a?(String)
 
-    return date.wday
-  end
+   return date.wday
+ end
 
 	def get_weekday_label(shift_date)
     week_day = get_weekday(shift_date)

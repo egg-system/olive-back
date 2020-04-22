@@ -34,7 +34,7 @@ class Customers::DuplicateController < ApplicationController
 
   private
 
-    def search_params
-      params.permit(:page, columns: [])
-    end
+  def search_params
+    params.permit(:page, columns: [])
+  end
 end

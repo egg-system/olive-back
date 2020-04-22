@@ -6,28 +6,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 40
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: normal, indented_internal_methods
-Layout/IndentationConsistency:
-  Exclude:
-    - 'app/controllers/coupon_histories_controller.rb'
-    - 'app/controllers/coupons_controller.rb'
-    - 'app/controllers/customers/duplicate_controller.rb'
-    - 'app/controllers/customers_controller.rb'
-    - 'app/controllers/departments_controller.rb'
-    - 'app/controllers/menu_categories_controller.rb'
-    - 'app/controllers/menus_controller.rb'
-    - 'app/controllers/observations_controller.rb'
-    - 'app/controllers/options_controller.rb'
-    - 'app/controllers/reservations_controller.rb'
-    - 'app/controllers/roles_controller.rb'
-    - 'app/controllers/skills_controller.rb'
-    - 'app/controllers/staffs_controller.rb'
-    - 'app/controllers/stores_controller.rb'
-    - 'app/helpers/shifts_helper.rb'
-
 # Offense count: 48
 # Cop supports --auto-correct.
 # Configuration parameters: IndentationWidth, EnforcedStyle.

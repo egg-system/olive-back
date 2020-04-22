@@ -53,12 +53,12 @@ class SkillsController < ApplicationController
   private
 
     # Use callbacks to share common setup or constraints between actions.
-    def set_skill
-      @skill = Skill.find(params[:id])
-    end
+  def set_skill
+    @skill = Skill.find(params[:id])
+  end
 
     # Never trust parameters from the scary internet, only allow the white list through.
-    def skill_params
-      params.require(:skill).permit(:id, :name)
-    end
+  def skill_params
+    params.require(:skill).permit(:id, :name)
+  end
 end

@@ -79,32 +79,32 @@ class StoresController < ApplicationController
   private
 
     # Use callbacks to share common setup or constraints between actions.
-    def set_store
-      @store = Store.find(params[:id])
-    end
+  def set_store
+    @store = Store.find(params[:id])
+  end
 
-    def set_relations
-      @menus = Menu.all
-      @options = Option.all
-    end
+  def set_relations
+    @menus = Menu.all
+    @options = Option.all
+  end
 
     # Never trust parameters from the scary internet, only allow the white list through.
-    def store_params
-      params.require(:store).permit(
-        :store_type,
-        :name,
-        :zip_code,
-        :address,
-        :tel,
-        :mail,
-        :url,
-        :reservation_url,
-        :open_at,
-        :close_at,
-        :break_from,
-        :break_to,
-        menu_ids: [],
-        option_ids: []
-      )
-    end
+  def store_params
+    params.require(:store).permit(
+      :store_type,
+      :name,
+      :zip_code,
+      :address,
+      :tel,
+      :mail,
+      :url,
+      :reservation_url,
+      :open_at,
+      :close_at,
+      :break_from,
+      :break_to,
+      menu_ids: [],
+      option_ids: []
+    )
+  end
 end
