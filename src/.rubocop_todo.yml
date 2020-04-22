@@ -26,12 +26,6 @@ Layout/EmptyLines:
 
 
 
-# Offense count: 1
-# Cop supports --auto-correct.
-Layout/EmptyLinesAroundExceptionHandlingKeywords:
-  Exclude:
-    - 'app/controllers/shifts_controller.rb'
-
 # Offense count: 12
 # Configuration parameters: EnforcedStyle.
 # SupportedStyles: native, lf, crlf
