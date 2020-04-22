@@ -6,21 +6,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 56
-# Cop supports --auto-correct.
-# Configuration parameters: AllowMultipleStyles, EnforcedHashRocketStyle, EnforcedColonStyle, EnforcedLastArgumentHashStyle.
-# SupportedHashRocketStyles: key, separator, table
-# SupportedColonStyles: key, separator, table
-# SupportedLastArgumentHashStyles: always_inspect, always_ignore, ignore_implicit, ignore_explicit
-Layout/HashAlignment:
-  Exclude:
-    - 'app/models/shift.rb'
-    - 'config/application.rb'
-    - 'config/initializers/simple_form.rb'
-    - 'config/initializers/simple_form_bootstrap.rb'
-    - 'db/seeds/store_menu_seeds.rb'
-    - 'db/seeds/test/20190426_store_customer_staff_seeds.rb'
-
 # Offense count: 40
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle.

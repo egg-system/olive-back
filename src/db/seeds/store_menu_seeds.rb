@@ -59,12 +59,12 @@ Store.where(id: 1).first_or_create!(
 
 Store.where(id: 2).first_or_create!(
   store_type: 0,
-  name:'Simpleste たまプラーザのエステ',
-  address:'横浜市青葉区新石川3-15-16　メディカルモールたまプラーザ301',
-  tel:'045-530-3966',
-  mail:'simpleste.olivejapan@gmail.com',
-  url:'https://simpleste.jp',
-  open_at:'10:00',
+  name: 'Simpleste たまプラーザのエステ',
+  address: '横浜市青葉区新石川3-15-16　メディカルモールたまプラーザ301',
+  tel: '045-530-3966',
+  mail: 'simpleste.olivejapan@gmail.com',
+  url: 'https://simpleste.jp',
+  open_at: '10:00',
   close_at: '20:00'
 )
 
