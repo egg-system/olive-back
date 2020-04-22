@@ -26,5 +26,4 @@ class ReservationMailer < ApplicationMailer
       format.text
     end
   end
-
 end

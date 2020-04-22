@@ -124,5 +124,4 @@ class StaffsController < ApplicationController
         staff_params.delete(:password) if staff_params[:password].empty?
         return staff_params
     end
-
 end
