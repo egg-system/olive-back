@@ -103,7 +103,6 @@ class ReservationsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-
   test "should update reservation" do
     patch reservation_url(@reservation), params: {
       reservation: {
