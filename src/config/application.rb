@@ -22,9 +22,9 @@ module Src
         origins ENV.fetch('RESERVATION_CLIENT_DOMAIN', '')
     
         resource "*",
-          headers: :any,
-          methods: [:get, :post, :put, :patch, :delete, :options, :head],
-          expose: ['uid', 'access-token', 'client']
+                 headers: :any,
+                 methods: [:get, :post, :put, :patch, :delete, :options, :head],
+                 expose: ['uid', 'access-token', 'client']
       end
     end
     

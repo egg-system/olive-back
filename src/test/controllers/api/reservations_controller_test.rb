@@ -22,22 +22,22 @@ class ApiReservationsControllerTest < ActionDispatch::IntegrationTest
   test "should create reservation" do
     assert_difference('Reservation.count') do
       post '/api/reservations/', 
-        params: {
-          children_count: 1,
-          reservation_comment: 'コメント',
-          store_id: 1,
-          customer_id: 1,
-          reservation_date: Date.tomorrow,
-          start_time: '11:00:00',
-          end_time: '12:00:00',
-          is_first: 0,
-          coupon_ids: [],
-          reservation_details_attributes: [{
-            menu_id: 1,
-            option_ids: []
-          }]
-        },
-        headers: @auth_tokens
+           params: {
+             children_count: 1,
+             reservation_comment: 'コメント',
+             store_id: 1,
+             customer_id: 1,
+             reservation_date: Date.tomorrow,
+             start_time: '11:00:00',
+             end_time: '12:00:00',
+             is_first: 0,
+             coupon_ids: [],
+             reservation_details_attributes: [{
+               menu_id: 1,
+               option_ids: []
+             }]
+           },
+           headers: @auth_tokens
     end
 
     assert_response :success
@@ -47,22 +47,22 @@ class ApiReservationsControllerTest < ActionDispatch::IntegrationTest
     assert_no_difference('Reservation.count') do
       begin
         post '/api/reservations/', 
-          params: {
-            children_count: 1,
-            reservation_comment: 'コメント',
-            store_id: 1,
-            customer_id: 1,
-            reservation_date: Date.tomorrow,
-            start_time: '13:00:00',
-            end_time: '14:00:00',
-            is_first: 0,
-            coupon_ids: [],
-            reservation_details_attributes: [{
-              menu_id: 1,
-              option_ids: []
-            }]
-          },
-          headers: @auth_tokens
+             params: {
+               children_count: 1,
+               reservation_comment: 'コメント',
+               store_id: 1,
+               customer_id: 1,
+               reservation_date: Date.tomorrow,
+               start_time: '13:00:00',
+               end_time: '14:00:00',
+               is_first: 0,
+               coupon_ids: [],
+               reservation_details_attributes: [{
+                 menu_id: 1,
+                 option_ids: []
+               }]
+             },
+             headers: @auth_tokens
       rescue => e
       end
     end
