@@ -1,5 +1,5 @@
 class MedicalRecordsController < ApplicationController
-  before_action :set_relations , only: :index
+  before_action :set_relations, only: :index
 
   def index
     # データがあれば返して、無ければ新規作成して保存はしない
