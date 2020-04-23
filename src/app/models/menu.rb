@@ -15,7 +15,7 @@ class Menu < ApplicationRecord
   
   def to_sub_menu_attributes(options)
     if self.is_acupuncture
-      options = options.reject{ |option| 
+      options = options.reject { |option| 
         option.is_acupuncture 
       }
     end

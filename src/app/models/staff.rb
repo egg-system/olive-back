@@ -38,7 +38,7 @@ class Staff < ApplicationRecord
 
     unless option_ids.blank?
       options = Option.where(id: option_ids).select('skill_id').distinct
-      option_must_skill_ids = options.map{ |option| option.skill_id }
+      option_must_skill_ids = options.map { |option| option.skill_id }
       must_skill_ids = must_skill_ids.concat(option_must_skill_ids).uniq
     end
 

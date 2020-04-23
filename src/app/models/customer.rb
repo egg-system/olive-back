@@ -39,15 +39,15 @@ class Customer < ApplicationRecord
   validates :email, uniqueness: true, unless: :common_email?
 
   # TODO: デフォルトで、joinが走るようにする
-  scope :join_size, ->{
+  scope :join_size, -> {
     left_joins(:size).select("sizes.name as size_name")
   }
 
-  scope :join_tables, ->{
+  scope :join_tables, -> {
     select('customers.*').join_size
   }
 
-  scope :like_name, ->(name){
+  scope :like_name, ->(name) {
     where("concat(last_name, first_name) like ?", "%#{name}%") if name.present?
   }
 

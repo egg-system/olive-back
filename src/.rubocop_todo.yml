@@ -6,20 +6,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 11
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, EnforcedStyleForEmptyBraces.
-# SupportedStyles: space, no_space
-# SupportedStylesForEmptyBraces: space, no_space
-Layout/SpaceBeforeBlockBraces:
-  Exclude:
-    - 'app/controllers/customers/duplicate_controller.rb'
-    - 'app/models/coupon_history.rb'
-    - 'app/models/customer.rb'
-    - 'app/models/menu.rb'
-    - 'app/models/menu_category.rb'
-    - 'app/models/staff.rb'
-
 # Offense count: 1
 # Cop supports --auto-correct.
 Layout/SpaceBeforeComma:
