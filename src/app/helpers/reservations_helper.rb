@@ -9,9 +9,9 @@ module ReservationsHelper
 
   def cancel_audit(reservation = @reservation)
     return reservation.audits
-      .where(action: 'update')
-      .where('audited_changes like ?', 'canceled_at')
-      .first
+        .where(action: 'update')
+        .where('audited_changes like ?', 'canceled_at')
+        .first
   end
 
   def cancel_audit_log(reservation = @reservation)

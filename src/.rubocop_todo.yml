@@ -6,23 +6,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 36
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, IndentationWidth.
-# SupportedStyles: aligned, indented, indented_relative_to_receiver
-Layout/MultilineMethodCallIndentation:
-  Exclude:
-    - 'app/controllers/api/reservations_controller.rb'
-    - 'app/controllers/api/stores_controller.rb'
-    - 'app/controllers/customers/duplicate_controller.rb'
-    - 'app/controllers/dashboards_controller.rb'
-    - 'app/controllers/shifts_controller.rb'
-    - 'app/controllers/staffs_controller.rb'
-    - 'app/helpers/reservations_helper.rb'
-    - 'app/models/concerns/reservation_audit_module.rb'
-    - 'app/models/concerns/shift_build_module.rb'
-    - 'app/models/staff.rb'
-
 # Offense count: 269
 # Cop supports --auto-correct.
 Layout/SpaceAfterColon:
