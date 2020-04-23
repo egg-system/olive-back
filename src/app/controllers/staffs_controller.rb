@@ -25,14 +25,14 @@ class StaffsController < ApplicationController
   end
 
   def search
-    redirect_to staffs_path({store_id: params[:store_id], staff_name: params[:staff_name]})
+    redirect_to staffs_path({ store_id: params[:store_id], staff_name: params[:staff_name] })
   end
 
   # GET /staffs/1
   # GET /staffs/1.json
   def show
     @staff = Staff.join_tables.find(params[:id])
-    @staff_skills = SkillStaff.where({staff_id: params[:id]})
+    @staff_skills = SkillStaff.where({ staff_id: params[:id] })
   end
 
   # GET /staffs/new
