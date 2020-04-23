@@ -49,4 +49,3 @@ class MedicalRecordsController < ApplicationController
     )
   end
 end
-
