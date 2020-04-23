@@ -35,7 +35,7 @@ class Store < ApplicationRecord
   end
 
   def to_shop_menus
-    shop_menus = [ sub_shop_attributes ]
+    shop_menus = [sub_shop_attributes]
 
     if is_head
       este_store = Store.find(Settings.stores.head_este_store_id)
