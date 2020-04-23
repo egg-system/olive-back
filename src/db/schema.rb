@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_13_071600) do
+ActiveRecord::Schema.define(version: 2020_04_22_015826) do
 
   create_table "audits", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "auditable_id"
@@ -502,8 +502,8 @@ ActiveRecord::Schema.define(version: 2020_03_13_071600) do
   add_foreign_key "menus", "skills"
   add_foreign_key "observations", "customers", on_delete: :cascade
   add_foreign_key "observations", "menus", on_delete: :nullify
-  add_foreign_key "observations", "staffs", on_delete: :cascade
-  add_foreign_key "observations", "stores", on_delete: :cascade
+  add_foreign_key "observations", "staffs", on_delete: :nullify
+  add_foreign_key "observations", "stores", on_delete: :nullify
   add_foreign_key "options", "departments"
   add_foreign_key "options", "skills"
   add_foreign_key "reservation_coupons", "coupons", on_delete: :cascade
