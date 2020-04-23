@@ -29,8 +29,8 @@ class Shift < ApplicationRecord
         shift.shift_at
       }
       time_slots = time_shift_groups.map { |shift_at, shift_group|
-        { 
-          start_time: shift_at, 
+        {
+          start_time: shift_at,
           staff_ids: shift_group.map { |shift| shift.staff_id },
         }
       }

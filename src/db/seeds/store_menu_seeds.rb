@@ -70,7 +70,7 @@ Store.where(id: 2).first_or_create!(
 
 Menu.all.each do |menu|
   store_id = menu.id < 11 ? 1 : 2
-  StoreMenu.where(store_id: store_id, menu_id: menu.id).first_or_create!  
+  StoreMenu.where(store_id: store_id, menu_id: menu.id).first_or_create!
 end
 
 Option.all.each do |option|

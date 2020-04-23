@@ -20,9 +20,9 @@ class ReservationsController < ApplicationController
 
     @customer_name = params[:customer_name]
     @customer_tel = params[:customer_tel]
-    
+
     @from_date = Date.parse(params[:from_date]) if params.has_key?(:from_date)
-    @to_date = Date.parse(params[:to_date]) if params.has_key?(:to_date)  
+    @to_date = Date.parse(params[:to_date]) if params.has_key?(:to_date)
 
     # concernに検索ロジックを切り出し
     @reservations = search_reservations

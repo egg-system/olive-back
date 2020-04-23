@@ -9,7 +9,7 @@ class Store < ApplicationRecord
 
   validates_presence_of :break_from, if: :input_break_time?
   validates_presence_of :break_to, if: :input_break_time?
-  
+
   has_many :store_menu
   has_many :menus, through: :store_menu
 
@@ -57,7 +57,7 @@ class Store < ApplicationRecord
   def slot_times
     return Shift.slot_times.select { |label, slot_time|
       slotted_at = Tod::TimeOfDay(slot_time)
-      
+
       # 開店時間内か
       is_opening_store = self.open_at <= slotted_at && slotted_at < self.close_at
       next is_opening_store unless input_break_time?

@@ -60,7 +60,7 @@ class CouponsController < ApplicationController
       respond_to do |format|
         format.html { redirect_to coupon_url(@coupon.id), notice: 'すでに利用されているため、削除できません' }
         format.json { render json: @coupon.errors, status: :unprocessable_entity }
-      end 
+      end
     end
   end
 

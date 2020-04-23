@@ -15,13 +15,13 @@ class ApiReservationsControllerTest < ActionDispatch::IntegrationTest
 
   test "should get index" do
     get '/api/reservations/', headers: @auth_tokens
-    
+
     assert_response :success
   end
 
   test "should create reservation" do
     assert_difference('Reservation.count') do
-      post '/api/reservations/', 
+      post '/api/reservations/',
            params: {
              children_count: 1,
              reservation_comment: 'コメント',
@@ -46,7 +46,7 @@ class ApiReservationsControllerTest < ActionDispatch::IntegrationTest
   test "should not create reservation because no shift" do
     assert_no_difference('Reservation.count') do
       begin
-        post '/api/reservations/', 
+        post '/api/reservations/',
              params: {
                children_count: 1,
                reservation_comment: 'コメント',

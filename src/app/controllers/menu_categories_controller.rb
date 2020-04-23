@@ -62,7 +62,7 @@ class MenuCategoriesController < ApplicationController
       respond_to do |format|
         format.html { redirect_to menu_category_url(@menu_category.id), notice: 'すでに利用されているため、削除できません' }
         format.json { render json: @menu_category.errors, status: :unprocessable_entity }
-      end 
+      end
     end
   end
 

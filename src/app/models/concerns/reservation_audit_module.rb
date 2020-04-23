@@ -42,13 +42,13 @@ module ReservationAuditModule
     return unless can_update_created_by?
 
     @created_audit = created_audit
-    @created_audit = self.build_created_audit if @created_audit.nil?    
+    @created_audit = self.build_created_audit if @created_audit.nil?
     @created_audit.user = created_by
   end
 
   def canceled_by=canceled_by
     return unless can_update_canceled_by?
-    
+
     @canceled_audit = canceled_audit
     @canceled_audit = self.build_canceled_audit if @canceled_audit.nil?
     @canceled_audit.user = canceled_by
