@@ -13,7 +13,7 @@ class Shift < ApplicationRecord
   belongs_to :store
   belongs_to :staff
 
-  scope :where_months, -> (start_month, end_month = nil) {
+  scope :where_months, ->(start_month, end_month = nil) {
     start_date, end_date = get_month_range(start_month, end_month)
     where(date: (start_date)..(end_date))
   }

@@ -6,7 +6,7 @@ class Role < ApplicationRecord
   MANAGER = 3
   STAFF = 4
 
-  scope :viewable?, -> (store) {
+  scope :viewable?, ->(store) {
     roles = where.not(id: ADMIN)
     roles = roles.where.not(id: HEAD) if store.franchised?
     return roles

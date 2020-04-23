@@ -33,21 +33,21 @@ class Reservation < ApplicationRecord
 
   validate :validate_reservation_date, on: :create
 
-  scope :like_customer_name, -> (customer_name) {
+  scope :like_customer_name, ->(customer_name) {
     joins(:customer).where("concat(last_name, first_name) like ?", "%#{customer_name}%")
   }
 
-  scope :like_customer_tel, -> (customer_tel) {
+  scope :like_customer_tel, ->(customer_tel) {
     joins(:customer).where("tel like ?", "%#{customer_tel}%")
   }
 
-  scope :order_reserved_at, -> (order = :desc) {
+  scope :order_reserved_at, ->(order = :desc) {
     order(reservation_date: :desc)
       .order(start_time: :desc)
       .order(created_at: :desc)
   }
 
-  scope :where_reserved_date, -> (date) {
+  scope :where_reserved_date, ->(date) {
     where(reservation_date: date, canceled_at: nil)
   }
 

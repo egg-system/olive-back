@@ -51,19 +51,19 @@ class Customer < ApplicationRecord
     where("concat(last_name, first_name) like ?", "%#{name}%") if name.present?
   }
 
-  scope :like_tel, -> (tel) {
+  scope :like_tel, ->(tel) {
     where('tel LIKE ?', "%#{tel}%") if tel.present?
   }
 
-  scope :like_email, -> (email) {
+  scope :like_email, ->(email) {
     where('email LIKE ?', "%#{email}%") if email.present?
   }
 
-  scope :where_deleted, -> (is_deleted) {
+  scope :where_deleted, ->(is_deleted) {
     where(is_deleted: is_deleted)
   }
 
-  scope :group_duplicated, -> (columns) {
+  scope :group_duplicated, ->(columns) {
     group(columns).having('count(*) >= 2')
   }
 

@@ -32,7 +32,7 @@ class Staff < ApplicationRecord
 
   attr_accessor :login_store_id
 
-  scope :can_treats, -> (menu_ids, option_ids) {
+  scope :can_treats, ->(menu_ids, option_ids) {
     menus = Menu.where(id: menu_ids).select('skill_id').distinct
     must_skill_ids = menus.map { |menu| menu.skill_id }
 
@@ -46,7 +46,7 @@ class Staff < ApplicationRecord
   }
 
   # 全部のスキルを持っているスタッフで絞りこむ
-  scope :has_must_skills, -> (skill_ids) {
+  scope :has_must_skills, ->(skill_ids) {
     staffIds = SkillStaff
       .where(skill_id: skill_ids)
       .group(:staff_id)
@@ -57,7 +57,7 @@ class Staff < ApplicationRecord
   }
 
   # 店舗idによる絞り込み
-  scope :where_store_id, -> (store_id) {
+  scope :where_store_id, ->(store_id) {
     joins(:stores).merge(Store.where(id: store_id))
   }
 
@@ -69,7 +69,7 @@ class Staff < ApplicationRecord
     select('staffs.*').join_role
   }
 
-  scope :like_name, -> (full_name) {
+  scope :like_name, ->(full_name) {
     where("concat(last_name, first_name) like ?", "%#{full_name}%")
   }
 

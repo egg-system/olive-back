@@ -6,21 +6,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 17
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: require_no_space, require_space
-Layout/SpaceInLambdaLiteral:
-  Exclude:
-    - 'app/models/concerns/pagination_module.rb'
-    - 'app/models/concerns/reservation_state_module.rb'
-    - 'app/models/customer.rb'
-    - 'app/models/reservation.rb'
-    - 'app/models/role.rb'
-    - 'app/models/shift.rb'
-    - 'app/models/staff.rb'
-    - 'app/models/store.rb'
-
 # Offense count: 24
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, EnforcedStyleForEmptyBrackets.
