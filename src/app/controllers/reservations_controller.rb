@@ -105,7 +105,7 @@ class ReservationsController < ApplicationController
 
   private
 
-    # Use callbacks to share common setup or constraints between actions.
+  # Use callbacks to share common setup or constraints between actions.
   def set_reservation
     @reservation = Reservation.find(params[:id])
   end
@@ -117,7 +117,7 @@ class ReservationsController < ApplicationController
     @staffs = viewable_staffs
   end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
+  # Never trust parameters from the scary internet, only allow the white list through.
   def reservation_params
     params.require(:reservation).permit(
       :id,

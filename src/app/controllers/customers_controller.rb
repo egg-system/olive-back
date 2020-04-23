@@ -84,7 +84,7 @@ class CustomersController < ApplicationController
 
   private
 
-    # Use callbacks to share common setup or constraints between actions.
+  # Use callbacks to share common setup or constraints between actions.
   def set_customer
     @customer = Customer.find(params[:id])
   end
@@ -99,7 +99,7 @@ class CustomersController < ApplicationController
     @stores = Store.all
   end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
+  # Never trust parameters from the scary internet, only allow the white list through.
   def customer_params
     params.require(:customer).permit(
       :fmid, :first_name, :last_name, :first_kana, :last_kana,

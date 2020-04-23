@@ -68,12 +68,12 @@ class MenuCategoriesController < ApplicationController
 
   private
 
-    # Use callbacks to share common setup or constraints between actions.
+  # Use callbacks to share common setup or constraints between actions.
   def set_menu_category
     @menu_category = MenuCategory.find(params[:id])
   end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
+  # Never trust parameters from the scary internet, only allow the white list through.
   def menu_category_params
     params.require(:menu_category).permit(:name, :department_id)
   end
