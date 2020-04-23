@@ -9,7 +9,7 @@ class ApiReservationsControllerTest < ActionDispatch::IntegrationTest
 
   setup do
     customer = Customer.find(1)
-    @auth_tokens = auth_tokens_for_user({ email: customer.email, password: 'test1234' })
+    @auth_tokens = auth_tokens_for_user(email: customer.email, password: 'test1234')
     @reservation = reservations(:tomorrow_one)
   end
 
