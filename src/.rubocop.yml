@@ -6,6 +6,9 @@ AllCops:
 
 #################### Layout ###########################
 
+Layout/AlignArguments:
+  Enabled: false
+
 Layout/EndOfLine:
   Enabled: false
 
@@ -15,5 +18,13 @@ Layout/FirstArrayElementIndentation:
 Layout/FirstHashElementIndentation:
   EnforcedStyle: consistent
 
+Layout/IndentFirstArrayElement:
+  Enabled: false
+
 Layout/MultilineMethodCallIndentation:
   EnforcedStyle: indented
+
+#################### Lint ###########################
+
+Lint/HandleExceptions:
+  Enabled: false

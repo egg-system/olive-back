@@ -45,6 +45,16 @@ jobs:
       - run:
           command: docker-compose run -u 1001:1001 rails bundle exec rake test
           name: rails test
+  rubocop:
+    machine: true
+    steps:
+      - checkout
+      - run: 
+          command: cd ./src
+          name: cd src
+      - run: 
+          command: bundle exec rubocop
+          name: rubocop
 
 workflows:
   version: 2

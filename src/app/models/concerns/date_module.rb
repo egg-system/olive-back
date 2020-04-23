@@ -14,10 +14,10 @@ module DateModule
     return start_date_string, end_date_string
   end
 
-  def is_same_day(standardDay, compareDay)
-    on_year = standardDay.year === compareDay.year
-    on_month = standardDay.month === compareDay.month
-    on_day = standardDay.day === compareDay.day
+  def is_same_day(standard_day, compare_day)
+    on_year = standard_day.year === compare_day.year
+    on_month = standard_day.month === compare_day.month
+    on_day = standard_day.day === compare_day.day
 
     return on_year && on_month && on_day
   end
