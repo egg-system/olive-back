@@ -56,7 +56,7 @@ class Staff < ApplicationRecord
     return where(id: staffIds)
   }
 
-  #店舗idによる絞り込み
+  # 店舗idによる絞り込み
   scope :where_store_id, -> (store_id) {
     joins(:stores).merge(Store.where(id: store_id))
   }
