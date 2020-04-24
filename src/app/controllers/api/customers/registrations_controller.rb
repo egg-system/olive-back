@@ -8,10 +8,10 @@ class Api::Customers::RegistrationsController < DeviseTokenAuth::RegistrationsCo
   def create
     return super if should_sign_up?
 
-    new_customer = Customer.find_or_initialize_by(
+    new_customer = Customer.find_or_initialize_by({
       email: sign_up_params[:email],
-      provider: sign_up_params[:provider]
-    )
+      provider: sign_up_params[:provider],
+    })
     new_customer.update_attributes!(sign_up_params)
 
     # superの返り値に合わせる

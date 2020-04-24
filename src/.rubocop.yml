@@ -21,10 +21,18 @@ Layout/FirstHashElementIndentation:
 Layout/IndentFirstArrayElement:
   Enabled: false
 
+Layout/IndentFirstHashElement:
+  Enabled: false
+
 Layout/MultilineMethodCallIndentation:
   EnforcedStyle: indented
 
 #################### Lint ###########################
 
 Lint/HandleExceptions:
+  Enabled: false
+
+#################### Style ###########################
+
+Style/BracesAroundHashParameters:
   Enabled: false

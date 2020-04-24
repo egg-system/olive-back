@@ -29,7 +29,7 @@ class ReservationsController < ApplicationController
   end
 
   def search
-    redirect_to reservations_path(
+    redirect_to reservations_path({
       customer_name: params[:customer_name],
       customer_tel: params[:customer_tel],
       state: params[:state],
@@ -38,7 +38,7 @@ class ReservationsController < ApplicationController
       from_date: parse_date_params('from_date'),
       to_date: parse_date_params('to_date'),
       order: params[:order]
-    )
+    })
   end
 
   # GET /reservations/new
