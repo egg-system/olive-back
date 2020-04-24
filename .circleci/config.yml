@@ -55,7 +55,7 @@ jobs:
           paths:
             - ~/caches/images.tar
       - run: 
-          command: cd ./src
+          command: cd ~/project/src/
           name: cd src
       - run: 
           command: bundle exec rubocop
