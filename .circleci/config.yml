@@ -49,6 +49,11 @@ jobs:
     machine: true
     steps:
       - checkout
+      - restore_cache:
+          keys:
+            - docker-cache-{{ checksum "Dockerfile" }}-{{ checksum "src/Gemfile.lock" }}
+          paths:
+            - ~/caches/images.tar
       - run: 
           command: cd ./src
           name: cd src
@@ -64,4 +69,6 @@ workflows:
       - test:
           requires:
             - build
-      - rubocop
+      - rubocop:
+          requires:
+            - build
