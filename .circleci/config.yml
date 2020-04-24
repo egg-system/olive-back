@@ -64,3 +64,4 @@ workflows:
       - test:
           requires:
             - build
+      - rubocop
