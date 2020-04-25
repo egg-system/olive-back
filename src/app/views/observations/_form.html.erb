@@ -3,21 +3,7 @@
     <%= render 'application/form_error', errors: @observation.errors %>
 
     <div class="form-center">
-      <%= f.input :customer_id, label: '顧客ID', readonly: true %>
-      <% if @observation.customer.present? %>
-        <div class="row">
-          <label class="col-sm-3">顧客名</label>
-          <div class="col-sm-9">
-            <%= f.input(
-              :customer_full_name,
-              label: false,
-              readonly: true,
-              input_html: { value: @observation.customer.full_name },
-              hint: link_to('顧客情報の詳細はこちらへ', customer_path(@observation.customer.id))
-            ) %>
-          </div>
-        </div>
-      <% end %>
+      <%= render 'customers/snippet', { customer: @observation.customer, form: f } %>
  
       <%= f.input(
         :store_id,
