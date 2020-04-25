@@ -49,16 +49,8 @@ jobs:
     machine: true
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - docker-cache-{{ checksum "Dockerfile" }}-{{ checksum "src/Gemfile.lock" }}
-          paths:
-            - ~/caches/images.tar
       - run: 
-          command: cd ~/project/src/
-          name: cd src
-      - run: 
-          command: bundle exec rubocop
+          command: docker-compose run -u 1001:1001 rails bundle exec rubocop
           name: rubocop
 
 workflows:
