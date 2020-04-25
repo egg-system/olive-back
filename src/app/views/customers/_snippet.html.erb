@@ -1,0 +1,19 @@
+<%= form.input(:customer_id,
+               label: '顧客ID',
+               input_html: {value: customer.present? ? customer.id : ''},
+               readonly: true
+    ) %>
+<div class="row">
+  <label class="col-sm-3">顧客名</label>
+  <div class="col-sm-9 text-left">
+    <% if customer.present? %>
+      <%= form.input(
+              :customer_full_name,
+              label: false,
+              readonly: true,
+              input_html: {value: customer.full_name},
+              hint: link_to('顧客情報の詳細はこちらへ', customer_path(customer.id))
+          ) %>
+    <% end %>
+  </div>
+</div>

@@ -3,6 +3,7 @@ require 'test_helper'
 class ReservationsControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
   fixtures :reservations
+  fixtures :reservation_details
   fixtures :shifts
   fixtures :reservation_shifts
 
