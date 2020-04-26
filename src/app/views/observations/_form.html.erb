@@ -11,16 +11,21 @@
         collection: @stores.map{|store| [store.name, store.id] },
         label: '来店店舗',
         default: @observation.store_id,
-        include_blank: true
+        include_blank: true,
+        required: true
       )%>
       <div class="row">
-        <label class="col-sm-3">来店日</label>
+        <label class="col-sm-3">
+          来店日
+          <abbr class="req">&nbsp;(必須)</abbr>
+        </label>
         <div class="col-sm-9">
           <%= f.input(
             :visit_date,
             as: :date,
             label: false,
-            default: Date.today
+            default: Date.today,
+            required: true
           ) %>
         </div>
       </div>
@@ -29,7 +34,8 @@
         collection: Settings.stores.time_options,
         as: :select,
         label: '来店時刻',
-        include_blank: false
+        include_blank: true,
+        required: true
       ) %>
       <%= f.input(
         :staff_id,
@@ -37,7 +43,8 @@
         collection: @staffs.map{|staff| [staff.name, staff.id] },
         label: '担当者',
         default: @observation.staff_id,
-        include_blank: true
+        include_blank: true,
+        required: true
       )%>
       <%= f.input(
         :menu_id,
@@ -45,7 +52,8 @@
         collection: @menus.map{|menu| [menu.name, menu.id] },
         label: 'メニュー',
         default: @observation.menu_id,
-        include_blank: true
+        include_blank: true,
+        required: true
       )%>
       <div class="form-group row">
         <label class="col-sm-3">オプション</label>
