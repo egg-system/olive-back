@@ -74,6 +74,11 @@ class Shift < ApplicationRecord
     return SLOT_INCREMENT_MITUNES.minute
   end
 
+  def self.shift_of_staff_at_datetime(staff, datetime)
+    result = staff.shifts.where(date: datetime).where(start_at: datetime)
+    return 0 < result.count ? result.first : nil
+  end
+
   private
 
   # 30分刻みでシフトを設定する
@@ -103,9 +108,4 @@ class Shift < ApplicationRecord
     '19:00~19:30' => '19:00:00',
     '19:30~20:00' => '19:30:00',
   }
-
-  def self.shift_of_staff_at_datetime(staff, datetime)
-    result = staff.shifts.where(date: datetime).where(start_at: datetime)
-    return 0 < result.count ? result.first : nil
-  end
 end
