@@ -67,8 +67,6 @@ class Customer < ApplicationRecord
     group(columns).having('count(*) >= 2')
   }
 
-  attr_accessor :age, :display_email
-
   def self.merge(merge_from_id, merge_to_id)
     merge_from_customer = find(merge_from_id)
     merge_from_customer.reservations.update(customer_id: merge_to_id)

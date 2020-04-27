@@ -9,7 +9,8 @@ class Option < ApplicationRecord
   has_many :store_options, inverse_of: :store
   has_many :store, through: :store_options
 
-  attr_accessor :is_option, :is_mimitsubo_jewelry
+  attr_accessor :is_option
+  attr_writer :is_mimitsubo_jewelry
 
   def is_acupuncture
     self.id === ACUPUNCTURE_OPTION_ID
