@@ -33,6 +33,7 @@ class ShiftsController < ApplicationController
       end
       redirect_to action: :index
     rescue Encoding::UndefinedConversionError => e
+      # do nothing
     rescue Encoding::InvalidByteSequenceError => e
       flash[:alert] = "文字コードがShift-JISのファイルをアップロードしてください。"
       return redirect_to action: :new
