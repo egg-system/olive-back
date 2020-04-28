@@ -7,11 +7,6 @@
 # versions of RuboCop, may require this file to be generated again.
 
 # Offense count: 2
-Lint/ShadowingOuterLocalVariable:
-  Exclude:
-    - 'app/models/concerns/shift_build_module.rb'
-
-# Offense count: 2
 # Configuration parameters: AllowComments.
 Lint/SuppressedException:
   Exclude:
