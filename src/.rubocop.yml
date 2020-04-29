@@ -33,6 +33,11 @@ Layout/MultilineMethodCallIndentation:
 Lint/HandleExceptions:
   Enabled: false
 
+#################### Metrics ###########################
+
+Metrics/AbcSize:
+  Enabled: false
+
 #################### Style ###########################
 
 Style/BracesAroundHashParameters:
