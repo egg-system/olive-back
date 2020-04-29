@@ -44,6 +44,9 @@ Metrics/BlockLength:
 Metrics/ClassLength:
   Enabled: false
 
+Metrics/CyclomaticComplexity:
+  Enabled: false
+
 #################### Style ###########################
 
 Style/BracesAroundHashParameters:
