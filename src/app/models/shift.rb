@@ -46,7 +46,7 @@ class Shift < ApplicationRecord
 
     csv_row.select { |key, value|
       SHIFT_TIMES.has_key?(key) && value === '1'
-    }.each { |key, value|
+    }.each { |key, _value|
       shift_time = Tod::TimeOfDay.parse(SHIFT_TIMES[key])
       shift = Shift.where(
         store_id: store_id,

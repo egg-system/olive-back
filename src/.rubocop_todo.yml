@@ -6,21 +6,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 12
-# Cop supports --auto-correct.
-# Configuration parameters: IgnoreEmptyBlocks, AllowUnusedKeywordArguments.
-Lint/UnusedBlockArgument:
-  Exclude:
-    - 'app/controllers/shifts_controller.rb'
-    - 'app/models/concerns/shift_build_module.rb'
-    - 'app/models/reservation.rb'
-    - 'app/models/shift.rb'
-    - 'app/models/store.rb'
-    - 'config/initializers/simple_form.rb'
-    - 'config/initializers/simple_form_bootstrap.rb'
-    - 'db/seeds/test/20190608_customer_faker.rb'
-    - 'lib/tasks/customer.rake'
-
 # Offense count: 1
 # Cop supports --auto-correct.
 # Configuration parameters: AllowUnusedKeywordArguments, IgnoreEmptyMethods, IgnoreNotImplementedMethods.

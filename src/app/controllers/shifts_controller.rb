@@ -66,7 +66,7 @@ class ShiftsController < ApplicationController
 
   def create_shifts
     updates_params[:new_shifts]
-      .select { |shift_at, checked| checked === '1' }
+      .select { |_shift_at, checked| checked === '1' }
       .keys
       .each { |shift_at|
         Shift.create!(
@@ -90,7 +90,7 @@ class ShiftsController < ApplicationController
   def delete_shift_ids
     return nil unless updates_params.has_key? :remain_shift_ids
 
-    return updates_params[:remain_shift_ids].select { |id, checked| checked === '0' }.keys
+    return updates_params[:remain_shift_ids].select { |_id, checked| checked === '0' }.keys
   end
 
   private
