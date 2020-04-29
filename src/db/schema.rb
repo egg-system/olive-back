@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_13_071600) do
+ActiveRecord::Schema.define(version: 2020_04_26_032722) do
 
   create_table "audits", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "auditable_id"
@@ -485,25 +485,25 @@ ActiveRecord::Schema.define(version: 2020_03_13_071600) do
   add_foreign_key "customers", "visit_reasons"
   add_foreign_key "customers", "zoomancies"
   add_foreign_key "medical_records", "cigarettes"
-  add_foreign_key "medical_records", "customers"
+  add_foreign_key "medical_records", "customers", on_delete: :cascade
   add_foreign_key "medical_records", "drinkings"
   add_foreign_key "medical_records", "exercises"
   add_foreign_key "medical_records", "many_postures"
   add_foreign_key "medical_records", "massages"
   add_foreign_key "medical_records", "pregnancies"
   add_foreign_key "medical_records_current_hospitals", "current_hospitals"
-  add_foreign_key "medical_records_current_hospitals", "medical_records"
+  add_foreign_key "medical_records_current_hospitals", "medical_records", on_delete: :cascade
   add_foreign_key "medical_records_hope_menus", "hope_menus"
-  add_foreign_key "medical_records_hope_menus", "medical_records"
-  add_foreign_key "medical_records_treat_goals", "medical_records"
+  add_foreign_key "medical_records_hope_menus", "medical_records", on_delete: :cascade
+  add_foreign_key "medical_records_treat_goals", "medical_records", on_delete: :cascade
   add_foreign_key "medical_records_treat_goals", "treat_goals"
   add_foreign_key "menu_categories", "departments"
   add_foreign_key "menus", "menu_categories"
   add_foreign_key "menus", "skills"
   add_foreign_key "observations", "customers", on_delete: :cascade
   add_foreign_key "observations", "menus", on_delete: :nullify
-  add_foreign_key "observations", "staffs", on_delete: :cascade
-  add_foreign_key "observations", "stores", on_delete: :cascade
+  add_foreign_key "observations", "staffs", on_delete: :nullify
+  add_foreign_key "observations", "stores", on_delete: :nullify
   add_foreign_key "options", "departments"
   add_foreign_key "options", "skills"
   add_foreign_key "reservation_coupons", "coupons", on_delete: :cascade

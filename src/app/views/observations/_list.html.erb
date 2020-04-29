@@ -22,10 +22,10 @@
         <% @observations.each do |observation| %>
           <tr>
             <td><%= observation.id %></td>
-            <td><%= observation.store.name %></td>
-            <td><%= observation.visit_datetime.present? ? observation.visit_datetime.strftime('%Y-%m-%d %H:%M') : '' %></td>
+            <td><%= observation.store.present? ? observation.store.name : '' %></td>
+            <td><%= observation.visit_datetime.strftime('%Y-%m-%d %H:%M') %></td>
             <td><%= observation.staff.present? ? observation.staff.full_name : '' %></td>
-            <td><%= observation.menu.name %></td>
+            <td><%= observation.menu.present? ? observation.menu.name : '' %></td>
             <td><%= observation.options.present? ? safe_join(observation.option_names, tag(:br)) : '無' %></td></td>
             <td><%= observation.merchandise %></td>
             <td><%= observation.observation_history %></td>
