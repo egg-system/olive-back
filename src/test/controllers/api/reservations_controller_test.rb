@@ -63,7 +63,7 @@ class ApiReservationsControllerTest < ActionDispatch::IntegrationTest
                }]
              },
              headers: @auth_tokens
-      rescue => e
+      rescue
         # do nothing
       end
     end

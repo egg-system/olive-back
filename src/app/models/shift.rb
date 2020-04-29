@@ -48,7 +48,7 @@ class Shift < ApplicationRecord
       SHIFT_TIMES.has_key?(key) && value === '1'
     }.each { |key, _value|
       shift_time = Tod::TimeOfDay.parse(SHIFT_TIMES[key])
-      shift = Shift.where(
+      Shift.where(
         store_id: store_id,
         staff_id: staff_id,
         date: shift_date,

@@ -58,7 +58,7 @@ class MenuCategoriesController < ApplicationController
         format.html { redirect_to menu_category_url, notice: 'Skill was successfully destroyed.' }
         format.json { head :no_content }
       end
-    rescue => exception
+    rescue
       respond_to do |format|
         format.html { redirect_to menu_category_url(@menu_category.id), notice: 'すでに利用されているため、削除できません' }
         format.json { render json: @menu_category.errors, status: :unprocessable_entity }

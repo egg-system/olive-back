@@ -6,24 +6,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 17
-Lint/UselessAssignment:
-  Exclude:
-    - 'app/controllers/coupons_controller.rb'
-    - 'app/controllers/customers_controller.rb'
-    - 'app/controllers/departments_controller.rb'
-    - 'app/controllers/menu_categories_controller.rb'
-    - 'app/controllers/menus_controller.rb'
-    - 'app/controllers/roles_controller.rb'
-    - 'app/controllers/shifts_controller.rb'
-    - 'app/controllers/skills_controller.rb'
-    - 'app/controllers/staffs_controller.rb'
-    - 'app/controllers/stores_controller.rb'
-    - 'app/models/shift.rb'
-    - 'db/seeds/test/20190426_store_customer_staff_seeds.rb'
-    - 'db/seeds/test/20190608_customer_faker.rb'
-    - 'test/controllers/api/reservations_controller_test.rb'
-
 # Offense count: 28
 # Configuration parameters: IgnoredMethods.
 Metrics/AbcSize:

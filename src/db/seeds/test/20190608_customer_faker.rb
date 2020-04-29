@@ -1,7 +1,7 @@
 # 本番にはfakerを入れていないため、開発環境のみ実行
 return unless Rails.env.development?
 
-customer = 41.times do |_n|
+41.times do |_n|
   Customer.create!(
     first_name: Faker::Name.first_name,
     last_name: Faker::Name.last_name,

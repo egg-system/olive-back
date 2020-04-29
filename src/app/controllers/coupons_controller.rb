@@ -56,7 +56,7 @@ class CouponsController < ApplicationController
         format.html { redirect_to coupons_url, notice: 'Skill was successfully destroyed.' }
         format.json { head :no_content }
       end
-    rescue => exception
+    rescue
       respond_to do |format|
         format.html { redirect_to coupon_url(@coupon.id), notice: 'すでに利用されているため、削除できません' }
         format.json { render json: @coupon.errors, status: :unprocessable_entity }
