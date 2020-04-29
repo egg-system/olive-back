@@ -70,7 +70,7 @@ class Shift < ApplicationRecord
     return self.reservation.present? && self.reservation.canceled_at.nil?
   end
 
-  def self.get_shift_increment
+  def self.shift_increment
     return SLOT_INCREMENT_MITUNES.minute
   end
 

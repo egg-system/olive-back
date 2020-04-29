@@ -74,7 +74,7 @@ class ShiftsController < ApplicationController
           staff_id: updates_params[:staff_id],
           date: shift_at.to_date,
           start_at: shift_at.to_time,
-          end_at: shift_at.to_time + Shift.get_shift_increment
+          end_at: shift_at.to_time + Shift.shift_increment
         )
       }
   end
