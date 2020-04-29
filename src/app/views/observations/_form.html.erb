@@ -1,5 +1,9 @@
 <div class="form-wrapper">
-  <%= simple_form_for(@observation, wrapper: :horizontal_form, html: { class: 'form-horizontal', autocomplete: 'off' }) do |f|%>
+  <%= simple_form_for(
+    @observation,
+    wrapper: :horizontal_form,
+    html: { class: 'form-horizontal', autocomplete: 'off' }
+  ) do |f|%>
     <%= render 'application/form_error', errors: @observation.errors %>
 
     <div class="form-center">
@@ -12,7 +16,7 @@
         label: '来店店舗',
         default: @observation.store_id,
         include_blank: true,
-        required: true
+        required: @observation.new_record?
       )%>
       <div class="row">
         <label class="col-sm-3">
@@ -44,7 +48,7 @@
         label: '担当者',
         default: @observation.staff_id,
         include_blank: true,
-        required: true
+        required: @observation.new_record?
       )%>
       <%= f.input(
         :menu_id,
@@ -53,7 +57,7 @@
         label: 'メニュー',
         default: @observation.menu_id,
         include_blank: true,
-        required: true
+        required: @observation.new_record?
       )%>
       <div class="form-group row">
         <label class="col-sm-3">オプション</label>
