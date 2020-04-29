@@ -30,8 +30,6 @@ class Option < ApplicationRecord
     }
   end
 
-  private
-
   ACUPUNCTURE_OPTION_ID = 5
   MIMITSUBO_JWELRY_OPTION_ID = 7
 end

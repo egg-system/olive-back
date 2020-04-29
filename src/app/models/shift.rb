@@ -79,8 +79,6 @@ class Shift < ApplicationRecord
     return 0 < result.count ? result.first : nil
   end
 
-  private
-
   # 30分刻みでシフトを設定する
   SLOT_INCREMENT_MITUNES = 30
 
