@@ -74,3 +74,6 @@ Style/Documentation:
 
 Style/EmptyMethod:
   EnforcedStyle: expanded
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
