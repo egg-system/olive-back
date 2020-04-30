@@ -60,5 +60,8 @@ Naming/PredicateName:
 
 #################### Style ###########################
 
+Style/AsciiComments:
+  Enabled: false
+
 Style/BracesAroundHashParameters:
   Enabled: false
