@@ -65,3 +65,6 @@ Style/AsciiComments:
 
 Style/CaseEquality:
   Enabled: false
+
+Style/ClassAndModuleChildren:
+  Enabled: false
