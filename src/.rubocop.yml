@@ -80,3 +80,6 @@ Style/FrozenStringLiteralComment:
 
 Style/GuardClause:
   Enabled: false
+
+Style/Lambda:
+  EnforcedStyle: literal
