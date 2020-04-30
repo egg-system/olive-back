@@ -13,9 +13,9 @@ class Customers::DuplicateController < ApplicationController
 
     # TODO: 本行、以下の処理は、顧客モデル内にまとめる
     duplicated_ids_groups = @duplicated_customer_page
-      .map { |duplicated_group|
+      .map do |duplicated_group|
         duplicated_group.duplicated_ids
-      }
+      end
 
     # パフォーマンスの都合から、一括取得する
     duplicated_customers = Customer.where(
@@ -23,11 +23,11 @@ class Customers::DuplicateController < ApplicationController
     ).to_a
 
     # 重複している顧客ごとにグルーピングする
-    @duplicated_customer_groups = duplicated_ids_groups.map { |duplicated_ids|
-      duplicated_customers.select { |customer|
+    @duplicated_customer_groups = duplicated_ids_groups.map do |duplicated_ids|
+      duplicated_customers.select do |customer|
         duplicated_ids.split(',').include?(customer.id.to_s)
-      }
-    }
+      end
+    end
 
     @search_param_columns = search_params[:columns]
   end

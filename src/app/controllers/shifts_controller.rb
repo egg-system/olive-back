@@ -59,16 +59,16 @@ class ShiftsController < ApplicationController
   def imports
     CSV
       .read(csv_params[:shift_csv].path, headers: true, encoding: "Shift_JIS:UTF-8")
-      .map { |row|
+      .map do |row|
         Shift.import(row)
-      }
+      end
   end
 
   def create_shifts
     updates_params[:new_shifts]
       .select { |_shift_at, checked| checked === '1' }
       .keys
-      .each { |shift_at|
+      .each do |shift_at|
         Shift.create!(
           store_id: updates_params[:store_id],
           staff_id: updates_params[:staff_id],
@@ -76,7 +76,7 @@ class ShiftsController < ApplicationController
           start_at: shift_at.to_time,
           end_at: shift_at.to_time + Shift.shift_increment
         )
-      }
+      end
   end
 
   def delete_shifts

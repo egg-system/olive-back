@@ -55,7 +55,7 @@ class Store < ApplicationRecord
   end
 
   def slot_times
-    return Shift.slot_times.select { |_label, slot_time|
+    return Shift.slot_times.select do |_label, slot_time|
       slotted_at = Tod::TimeOfDay(slot_time)
 
       # 開店時間内か
@@ -64,7 +64,7 @@ class Store < ApplicationRecord
 
       # 休憩時間外か
       next slotted_at < self.break_from || self.break_to <= slotted_at
-    }
+    end
   end
 
   def slot_time_labels
@@ -72,10 +72,10 @@ class Store < ApplicationRecord
   end
 
   def get_time_slots(date)
-    return self.slot_times.map { |_label, time_slot|
+    return self.slot_times.map do |_label, time_slot|
       day = Date.parse(date)
       Tod::TimeOfDay.parse(time_slot).on(day)
-    }
+    end
   end
 
   private
@@ -83,9 +83,9 @@ class Store < ApplicationRecord
   SHOP_KEYS = [:id, :name, :open_at, :close_at, :break_from, :break_to]
 
   def shop_attributes
-    SHOP_KEYS.map { |json_key|
+    SHOP_KEYS.map do |json_key|
       [json_key, attributes[json_key.to_s].to_s]
-    }.to_h.to_json
+    end.to_h.to_json
   end
 
   def is_head

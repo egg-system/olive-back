@@ -45,9 +45,9 @@ module ShiftBuildModule
 
   def extract_can_treat_staff_ids
     menu_ids = self.reservation_details.map { |detail| detail.menu.id }
-    option_ids = self.reservation_details.flat_map { |detail|
+    option_ids = self.reservation_details.flat_map do |detail|
       detail.options.map { |option| option.id }
-    }
+    end
     return Staff.can_treats(menu_ids, option_ids).map { |staff| staff.id }
   end
 

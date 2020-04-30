@@ -6,30 +6,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 27
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, ProceduralMethods, FunctionalMethods, IgnoredMethods, AllowBracesOnProceduralOneLiners, BracesRequiredMethods.
-# SupportedStyles: line_count_based, semantic, braces_for_chaining, always_braces
-# ProceduralMethods: benchmark, bm, bmbm, create, each_with_object, measure, new, realtime, tap, with_object
-# FunctionalMethods: let, let!, subject, watch
-# IgnoredMethods: lambda, proc, it
-Style/BlockDelimiters:
-  Exclude:
-    - 'app/controllers/customers/duplicate_controller.rb'
-    - 'app/controllers/shifts_controller.rb'
-    - 'app/helpers/customers_helper.rb'
-    - 'app/helpers/shifts_helper.rb'
-    - 'app/models/concerns/shift_build_module.rb'
-    - 'app/models/menu.rb'
-    - 'app/models/reservation_detail.rb'
-    - 'app/models/shift.rb'
-    - 'app/models/store.rb'
-    - 'db/migrate/20191109104415_change_stores_columns.rb'
-    - 'db/migrate/20191221111160_change_customers_columns.rb'
-    - 'db/seeds/test/20190603_shift_import.rb'
-    - 'lib/tasks/customer.rake'
-    - 'lib/tasks/reservation.rake'
-
 # Offense count: 34
 # Configuration parameters: AllowOnConstant.
 Style/CaseEquality:

@@ -16,15 +16,15 @@ namespace :customer do
     headers = csv.headers
     merge_to_col_index = headers.find_index(:merge_to)
 
-    csv.flat_map { |row|
+    csv.flat_map do |row|
       merge_to_id = row[merge_to_col_index]
-      (0...headers.length).filter { |i|
+      (0...headers.length).filter do |i|
         headers[i] == :merge_from && row[i].present?
-      }.map { |i|
+      end.map do |i|
         merge_from_id = row[i]
         Customer.merge(merge_from_id, merge_to_id)
-      }
-    }
+      end
+    end
   end
 
   desc '非会員登録した顧客を一括で会員に変更する'
@@ -33,10 +33,10 @@ namespace :customer do
       none_member_custoers = Customer.where(provider: 'none').where.not(email: nil)
 
       # update_allなどでは、passwordを更新できない
-      none_member_custoers.each { |customer|
+      none_member_custoers.each do |customer|
         customer.password = args[:password]
         customer.update!(provider: 'email')
-      }
+      end
 
       export_csv('update_member.csv', none_member_custoers)
     end

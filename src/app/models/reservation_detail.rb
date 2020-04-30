@@ -10,7 +10,7 @@ class ReservationDetail < ApplicationRecord
   validate :validate_mimitsubo_option
 
   def total_fee
-    total_option_fee = self.options.sum { |option|
+    total_option_fee = self.options.sum do |option|
       total_fee = option.fee
 
       # 耳つぼジュエリの場合、個数とかけた金額にする
@@ -19,7 +19,7 @@ class ReservationDetail < ApplicationRecord
       end
 
       total_fee
-    }
+    end
 
     return self.menu.fee + total_option_fee
   end
@@ -29,7 +29,7 @@ class ReservationDetail < ApplicationRecord
   end
 
   def option_names
-    return self.options.map { |option|
+    return self.options.map do |option|
       option_name = option.name
 
       # 耳つぼジュエリの個数を表記するための実装
@@ -38,7 +38,7 @@ class ReservationDetail < ApplicationRecord
       end
 
       option_name
-    }
+    end
   end
 
   def to_resource

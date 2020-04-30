@@ -4,9 +4,9 @@ module ShiftsHelper
   end
 
   def extract_shift(date, shift_time)
-    return @date_shifts[date].find { |shift|
+    return @date_shifts[date].find do |shift|
       shift.shift_at.strftime('%Y%m%d%H%M') === shift_time.strftime('%Y%m%d%H%M')
-    }
+    end
   end
 
   def get_shift_parameter(shift_time)

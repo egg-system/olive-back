@@ -24,19 +24,19 @@ class Shift < ApplicationRecord
 
   def self.to_time_slots
     date_shift_groups = all.group_by { |shift| shift.date }
-    return date_shift_groups.map { |date, shifts|
-      time_shift_groups = shifts.group_by { |shift|
+    return date_shift_groups.map do |date, shifts|
+      time_shift_groups = shifts.group_by do |shift|
         shift.shift_at
-      }
-      time_slots = time_shift_groups.map { |shift_at, shift_group|
+      end
+      time_slots = time_shift_groups.map do |shift_at, shift_group|
         {
           start_time: shift_at,
           staff_ids: shift_group.map { |shift| shift.staff_id },
         }
-      }
+      end
 
       [date.strftime('%Y%m%d'), time_slots]
-    }.to_h
+    end.to_h
   end
 
   def self.import(csv_row)
@@ -44,9 +44,9 @@ class Shift < ApplicationRecord
     store_id = csv_row['店舗ID']
     staff_id = csv_row['スタッフID']
 
-    csv_row.select { |key, value|
+    csv_row.select do |key, value|
       SHIFT_TIMES.has_key?(key) && value === '1'
-    }.each { |key, _value|
+    end.each do |key, _value|
       shift_time = Tod::TimeOfDay.parse(SHIFT_TIMES[key])
       Shift.where(
         store_id: store_id,
@@ -55,7 +55,7 @@ class Shift < ApplicationRecord
         start_at: shift_time,
         end_at: shift_time + SLOT_INCREMENT_MITUNES.minutes,
       ).first_or_create()
-    }
+    end
   end
 
   def self.slot_times
