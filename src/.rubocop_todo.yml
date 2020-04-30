@@ -6,16 +6,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 21
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: snake_case, camelCase
-Naming/VariableName:
-  Exclude:
-    - 'app/controllers/observations_controller.rb'
-    - 'app/models/concerns/date_module.rb'
-    - 'app/models/staff.rb'
-    - 'db/seeds.rb'
-
 # Offense count: 108
 # Configuration parameters: AllowedChars.
 Style/AsciiComments:
