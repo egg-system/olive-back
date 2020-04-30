@@ -53,6 +53,11 @@ Metrics/MethodLength:
 Metrics/PerceivedComplexity:
   Enabled: false
 
+#################### Naming ###########################
+
+Naming/PredicateName:
+  Enabled: false
+
 #################### Style ###########################
 
 Style/BracesAroundHashParameters:
