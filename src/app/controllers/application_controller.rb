@@ -40,8 +40,8 @@ class ApplicationController < ActionController::Base
   def render_500(exception)
     ExceptionNotifier.notify_exception(
       exception,
-      :env => request.env,
-      :data => { :message => 'error' }
+      env: request.env,
+      data: { message: 'error' }
     )
 
     render(

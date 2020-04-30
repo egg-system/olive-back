@@ -38,6 +38,6 @@ ExceptionNotification.configure do |config|
 
   # Webhook notifier sends notifications over HTTP protocol. Requires 'httparty' gem.
   config.add_notifier :slack, 
-    :webhook_url => ENV['ERROR_SLACK_WEBHOOK'],
-    :channel => ENV['ERROR_SLACK_CHANNEL']
+    webhook_url: ENV['ERROR_SLACK_WEBHOOK'],
+    channel: ENV['ERROR_SLACK_CHANNEL']
 end

@@ -6,18 +6,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 16
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, UseHashRocketsWithSymbolValues, PreferHashRocketsForNonAlnumEndingSymbols.
-# SupportedStyles: ruby19, hash_rockets, no_mixed_keys, ruby19_no_mixed_keys
-Style/HashSyntax:
-  Exclude:
-    - 'Gemfile'
-    - 'app/controllers/application_controller.rb'
-    - 'config/initializers/devise_token_auth.rb'
-    - 'config/initializers/exception_notification.rb'
-    - 'db/migrate/20190704122358_install_audited.rb'
-
 # Offense count: 14
 # Cop supports --auto-correct.
 Style/IfUnlessModifier:
