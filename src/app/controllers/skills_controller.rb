@@ -45,19 +45,20 @@ class SkillsController < ApplicationController
     begin
       @skill.destroy!
       redirect_to skills_url, notice: I18n.t("successes.messages.destroy")
-    rescue => exception
+    rescue
       redirect_to skill_url(@skill.id), notice: 'すでに利用されているため、削除できません'
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_skill
-      @skill = Skill.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def skill_params
-      params.require(:skill).permit(:id, :name)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_skill
+    @skill = Skill.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def skill_params
+    params.require(:skill).permit(:id, :name)
+  end
 end

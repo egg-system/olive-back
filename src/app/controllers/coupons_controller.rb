@@ -56,22 +56,23 @@ class CouponsController < ApplicationController
         format.html { redirect_to coupons_url, notice: 'Skill was successfully destroyed.' }
         format.json { head :no_content }
       end
-    rescue => exception
+    rescue
       respond_to do |format|
         format.html { redirect_to coupon_url(@coupon.id), notice: 'すでに利用されているため、削除できません' }
         format.json { render json: @coupon.errors, status: :unprocessable_entity }
-      end 
+      end
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_coupon
-      @coupon = Coupon.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def coupon_params
-      params.require(:coupon).permit(:name, :fee, :count, :start_at, :end_at, :expired_at)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_coupon
+    @coupon = Coupon.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def coupon_params
+    params.require(:coupon).permit(:name, :fee, :count, :start_at, :end_at, :expired_at)
+  end
 end

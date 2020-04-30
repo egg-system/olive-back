@@ -5,7 +5,7 @@ class CreateShifts < ActiveRecord::Migration[5.1]
 
       t.time :start_at, comment: 'シフトの開始時間'
       t.time :end_at, comment: 'シフトの終了時間。30分単位になる'
-      
+
       t.references :store, foreign_key: { on_delete: :cascade }
       t.references :staff, foreign_key: { on_delete: :cascade }
 

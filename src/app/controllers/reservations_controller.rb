@@ -20,9 +20,9 @@ class ReservationsController < ApplicationController
 
     @customer_name = params[:customer_name]
     @customer_tel = params[:customer_tel]
-    
+
     @from_date = Date.parse(params[:from_date]) if params.has_key?(:from_date)
-    @to_date = Date.parse(params[:to_date]) if params.has_key?(:to_date)  
+    @to_date = Date.parse(params[:to_date]) if params.has_key?(:to_date)
 
     # concernに検索ロジックを切り出し
     @reservations = search_reservations
@@ -104,41 +104,42 @@ class ReservationsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_reservation
-      @reservation = Reservation.find(params[:id])
-    end
 
-    def set_relation_models
-      @coupons = Coupon.all
-      @options = Option.all
-      @stores = viewable_stores
-      @staffs = viewable_staffs
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_reservation
+    @reservation = Reservation.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def reservation_params
-      params.require(:reservation).permit(
+  def set_relation_models
+    @coupons = Coupon.all
+    @options = Option.all
+    @stores = viewable_stores
+    @staffs = viewable_staffs
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def reservation_params
+    params.require(:reservation).permit(
+      :id,
+      :customer_id,
+      :store_id,
+      :staff_id,
+      :reservation_date,
+      :start_time,
+      :end_time,
+      :reservation_comment,
+      :children_count,
+      :is_first,
+      :is_confirmed,
+      :created_by,
+      :canceled_by,
+      coupon_ids: [],
+      reservation_details_attributes: [
         :id,
-        :customer_id,
-        :store_id,
-        :staff_id,
-        :reservation_date,
-        :start_time,
-        :end_time,
-        :reservation_comment,
-        :children_count,
-        :is_first,
-        :is_confirmed,
-        :created_by,
-        :canceled_by,
-        coupon_ids: [],
-        reservation_details_attributes: [
-          :id,
-          :menu_id,
-          :mimitsubo_count,
-          option_ids: [],
-        ]
-      )
-    end
+        :menu_id,
+        :mimitsubo_count,
+        option_ids: [],
+      ]
+    )
+  end
 end

@@ -34,6 +34,7 @@ module ReservationAuditModule
 
     # 画面から変更した履歴の実行者は文字列(username)になる
     return audit.username if can_update_audit(audit)
+
     return audit.user_type
   end
 
@@ -41,13 +42,13 @@ module ReservationAuditModule
     return unless can_update_created_by?
 
     @created_audit = created_audit
-    @created_audit = self.build_created_audit if @created_audit.nil?    
+    @created_audit = self.build_created_audit if @created_audit.nil?
     @created_audit.user = created_by
   end
 
   def canceled_by=canceled_by
     return unless can_update_canceled_by?
-    
+
     @canceled_audit = canceled_audit
     @canceled_audit = self.build_canceled_audit if @canceled_audit.nil?
     @canceled_audit.user = canceled_by
@@ -64,6 +65,7 @@ module ReservationAuditModule
   def can_update_audit(audit)
     return false if self.new_record?
     return true if audit.nil?
+
     return audit.user.is_a?(String)
   end
 

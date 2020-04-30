@@ -34,7 +34,7 @@ class ReservationDetail < ApplicationRecord
 
       # 耳つぼジュエリの個数を表記するための実装
       if option.is_mimitsubo_jewelry
-        option_name = "#{option.name} × #{self.mimitsubo_count.to_s}個"
+        option_name = "#{option.name} × #{self.mimitsubo_count}個"
       end
 
       option_name

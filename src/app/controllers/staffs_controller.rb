@@ -25,14 +25,14 @@ class StaffsController < ApplicationController
   end
 
   def search
-    redirect_to staffs_path({store_id: params[:store_id], staff_name: params[:staff_name]})
+    redirect_to staffs_path({ store_id: params[:store_id], staff_name: params[:staff_name] })
   end
 
   # GET /staffs/1
   # GET /staffs/1.json
   def show
     @staff = Staff.join_tables.find(params[:id])
-    @staff_skills = SkillStaff.where({staff_id: params[:id]})
+    @staff_skills = SkillStaff.where({ staff_id: params[:id] })
   end
 
   # GET /staffs/new
@@ -50,7 +50,7 @@ class StaffsController < ApplicationController
         @staff.save!
         format.html { redirect_to @staff, notice: 'スタッフが登録されました。' }
         format.json { render :show, status: :created, location: @staff }
-      rescue => exception
+      rescue
         flash[:alert] = 'スタッフを登録できませんでした。'
         format.html { render :new }
         format.json { render json: @staff.errors, status: :unprocessable_entity }
@@ -70,7 +70,7 @@ class StaffsController < ApplicationController
       # ログアウトしてログイン画面にリダイレクト
       sign_out @staff
       redirect_to staff_session_url, notice: '所属店舗が変更されました。お手数ですが、再度ログインしてください。'
-    rescue => exception
+    rescue
       respond_to do |format|
         flash[:alert] = '更新に失敗しました。'
         format.html { render :show }
@@ -91,36 +91,37 @@ class StaffsController < ApplicationController
   end
 
   protected
-    def set_relation_models
-      @stores = viewable_stores
-      @roles = viewable_roles
-      @skills = Skill.all
-    end
+
+  def set_relation_models
+    @stores = viewable_stores
+    @roles = viewable_roles
+    @skills = Skill.all
+  end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_staff
-      @staff = Staff.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def staff_params
-      staff_params = params
-        .require(:staff)
-        .permit(
-          :first_name,
-          :last_name,
-          :first_kana,
-          :last_kana,
-          :employment_type,
-          :role_id,
-          :login,
-          :password,
-          { skill_ids: [] },
-          { store_ids: [] }
-        )
-        staff_params.delete(:password) if staff_params[:password].empty?
-        return staff_params
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_staff
+    @staff = Staff.find(params[:id])
+  end
 
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def staff_params
+    staff_params = params
+      .require(:staff)
+      .permit(
+        :first_name,
+        :last_name,
+        :first_kana,
+        :last_kana,
+        :employment_type,
+        :role_id,
+        :login,
+        :password,
+        { skill_ids: [] },
+        { store_ids: [] }
+      )
+    staff_params.delete(:password) if staff_params[:password].empty?
+    return staff_params
+  end
 end

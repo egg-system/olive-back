@@ -5,11 +5,12 @@ class Option < ApplicationRecord
   has_many :reservation_detail_options
   has_many :reservation_details, through: :reservation_detail_options
   has_many :reservations, through: :reservation_details
-  
+
   has_many :store_options, inverse_of: :store
   has_many :store, through: :store_options
 
-  attr_accessor :is_option, :is_mimitsubo_jewelry
+  attr_accessor :is_option
+  attr_writer :is_mimitsubo_jewelry
 
   def is_acupuncture
     self.id === ACUPUNCTURE_OPTION_ID
@@ -28,8 +29,6 @@ class Option < ApplicationRecord
       is_mimitsubo_jewelry: self.is_mimitsubo_jewelry,
     }
   end
-
-  private
 
   ACUPUNCTURE_OPTION_ID = 5
   MIMITSUBO_JWELRY_OPTION_ID = 7

@@ -1,0 +1,64 @@
+inherit_from: .rubocop_todo.yml
+
+AllCops:
+  Exclude:
+    - db/schema.rb
+    - bin/*
+
+#################### Layout ###########################
+
+Layout/AlignArguments:
+  Enabled: false
+
+Layout/EndOfLine:
+  Enabled: false
+
+Layout/FirstArrayElementIndentation:
+  EnforcedStyle: consistent
+
+Layout/FirstHashElementIndentation:
+  EnforcedStyle: consistent
+
+Layout/IndentFirstArrayElement:
+  Enabled: false
+
+Layout/IndentFirstHashElement:
+  Enabled: false
+
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented
+
+#################### Lint ###########################
+
+Lint/HandleExceptions:
+  Enabled: false
+
+#################### Metrics ###########################
+
+Metrics/AbcSize:
+  Enabled: false
+
+Metrics/BlockLength:
+  Enabled: false
+
+Metrics/ClassLength:
+  Enabled: false
+
+Metrics/CyclomaticComplexity:
+  Enabled: false
+
+Metrics/MethodLength:
+  Enabled: false
+
+Metrics/PerceivedComplexity:
+  Enabled: false
+
+#################### Naming ###########################
+
+Naming/PredicateName:
+  Enabled: false
+
+#################### Style ###########################
+
+Style/BracesAroundHashParameters:
+  Enabled: false

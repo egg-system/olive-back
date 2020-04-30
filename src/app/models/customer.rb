@@ -39,35 +39,33 @@ class Customer < ApplicationRecord
   validates :email, uniqueness: true, unless: :common_email?
 
   # TODO: デフォルトで、joinが走るようにする
-  scope :join_size, ->{
+  scope :join_size, -> {
     left_joins(:size).select("sizes.name as size_name")
   }
 
-  scope :join_tables, ->{
+  scope :join_tables, -> {
     select('customers.*').join_size
   }
 
-  scope :like_name, ->(name){
+  scope :like_name, ->(name) {
     where("concat(last_name, first_name) like ?", "%#{name}%") if name.present?
   }
 
-  scope :like_tel, -> (tel) {
+  scope :like_tel, ->(tel) {
     where('tel LIKE ?', "%#{tel}%") if tel.present?
   }
 
-  scope :like_email, -> (email) {
+  scope :like_email, ->(email) {
     where('email LIKE ?', "%#{email}%") if email.present?
   }
 
-  scope :where_deleted, -> (is_deleted) {
+  scope :where_deleted, ->(is_deleted) {
     where(is_deleted: is_deleted)
   }
 
-  scope :group_duplicated, -> (columns) {
+  scope :group_duplicated, ->(columns) {
     group(columns).having('count(*) >= 2')
   }
-
-  attr_accessor :age, :display_email
 
   def self.merge(merge_from_id, merge_to_id)
     merge_from_customer = find(merge_from_id)
@@ -89,6 +87,7 @@ class Customer < ApplicationRecord
 
   def age
     return nil if self.birthday.nil?
+
     return (Date.today.strftime('%Y%m%d').to_i - self.birthday.strftime('%Y%m%d').to_i) / 10000
   end
 
@@ -102,6 +101,7 @@ class Customer < ApplicationRecord
 
   def display_email
     return self.email if self.new_record?
+
     return self.email.nil? ? self.common_email : self.email
   end
 
@@ -112,6 +112,7 @@ class Customer < ApplicationRecord
 
   def common_email?
     return self.email.nil? if self.new_record?
+
     return self.display_email === self.common_email
   end
 

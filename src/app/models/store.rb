@@ -9,14 +9,14 @@ class Store < ApplicationRecord
 
   validates_presence_of :break_from, if: :input_break_time?
   validates_presence_of :break_to, if: :input_break_time?
-  
+
   has_many :store_menu
   has_many :menus, through: :store_menu
 
   has_many :store_option
   has_many :options, through: :store_option
 
-  scope :viewable?, -> (current_store) {
+  scope :viewable?, ->(current_store) {
     # 直営店は全直営店を閲覧可能
     return where(store_type: 0) if current_store.owned?
     return where(id: current_store.id) if current_store.franchised?
@@ -35,7 +35,7 @@ class Store < ApplicationRecord
   end
 
   def to_shop_menus
-    shop_menus = [ sub_shop_attributes ]
+    shop_menus = [sub_shop_attributes]
 
     if is_head
       este_store = Store.find(Settings.stores.head_este_store_id)
@@ -55,9 +55,9 @@ class Store < ApplicationRecord
   end
 
   def slot_times
-    return Shift.slot_times.select { |label, slot_time|
+    return Shift.slot_times.select { |_label, slot_time|
       slotted_at = Tod::TimeOfDay(slot_time)
-      
+
       # 開店時間内か
       is_opening_store = self.open_at <= slotted_at && slotted_at < self.close_at
       next is_opening_store unless input_break_time?
@@ -72,7 +72,7 @@ class Store < ApplicationRecord
   end
 
   def get_time_slots(date)
-    return self.slot_times.map { |label, time_slot|
+    return self.slot_times.map { |_label, time_slot|
       day = Date.parse(date)
       Tod::TimeOfDay.parse(time_slot).on(day)
     }

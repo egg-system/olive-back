@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   rescue_from Exception, with: :render_500 if Rails.env.production?
 
-  def after_sign_out_path_for(resource)
+  def after_sign_out_path_for(_resource)
     new_staff_session_path
   end
 
@@ -20,6 +20,7 @@ class ApplicationController < ActionController::Base
   # 権限に応じて、閲覧可能な店舗を取得する
   def viewable_stores
     return Store.all if current_staff.role.admin?
+
     return Store.viewable?(view_context.current_store)
   end
 
@@ -32,6 +33,7 @@ class ApplicationController < ActionController::Base
   # 管理者のみ管理者権限に変更できるようにする
   def viewable_roles
     return Role.all if current_staff.role.admin?
+
     return Role.viewable?(view_context.current_store)
   end
 

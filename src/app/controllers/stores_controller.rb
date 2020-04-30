@@ -68,7 +68,7 @@ class StoresController < ApplicationController
         format.html { redirect_to stores_url, notice: I18n.t("successes.messages.destroy") }
         format.json { head :no_content }
       end
-    rescue => exception
+    rescue
       respond_to do |format|
         format.html { redirect_to @store, alert: 'すでに利用されているため、削除できません' }
         format.json { render json: @store.errors, status: :unprocessable_entity }
@@ -77,33 +77,34 @@ class StoresController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_store
-      @store = Store.find(params[:id])
-    end
 
-    def set_relations
-      @menus = Menu.all
-      @options = Option.all
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_store
+    @store = Store.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def store_params
-      params.require(:store).permit(
-        :store_type,
-        :name,
-        :zip_code,
-        :address,
-        :tel,
-        :mail,
-        :url,
-        :reservation_url,
-        :open_at,
-        :close_at,
-        :break_from,
-        :break_to,
-        menu_ids: [],
-        option_ids: []
-      )
-    end
+  def set_relations
+    @menus = Menu.all
+    @options = Option.all
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def store_params
+    params.require(:store).permit(
+      :store_type,
+      :name,
+      :zip_code,
+      :address,
+      :tel,
+      :mail,
+      :url,
+      :reservation_url,
+      :open_at,
+      :close_at,
+      :break_from,
+      :break_to,
+      menu_ids: [],
+      option_ids: []
+    )
+  end
 end
