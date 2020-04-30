@@ -7,12 +7,6 @@
 # versions of RuboCop, may require this file to be generated again.
 
 # Offense count: 2
-Style/MixinUsage:
-  Exclude:
-    - 'bin/setup'
-    - 'bin/update'
-
-# Offense count: 2
 Style/MultilineBlockChain:
   Exclude:
     - 'app/models/shift.rb'
