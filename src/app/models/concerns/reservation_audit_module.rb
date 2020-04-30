@@ -38,7 +38,7 @@ module ReservationAuditModule
     return audit.user_type
   end
 
-  def created_by=created_by
+  def created_by=(created_by)
     return unless can_update_created_by?
 
     @created_audit = created_audit
@@ -46,7 +46,7 @@ module ReservationAuditModule
     @created_audit.user = created_by
   end
 
-  def canceled_by=canceled_by
+  def canceled_by=(canceled_by)
     return unless can_update_canceled_by?
 
     @canceled_audit = canceled_audit
