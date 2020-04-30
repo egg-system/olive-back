@@ -54,7 +54,7 @@ class Shift < ApplicationRecord
         date: shift_date,
         start_at: shift_time,
         end_at: shift_time + SLOT_INCREMENT_MITUNES.minutes,
-      ).first_or_create()
+      ).first_or_create
     end
   end
 
