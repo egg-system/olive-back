@@ -3,9 +3,7 @@ module DateModule
     start_date = Date.parse("#{start_month}-01")
     end_date = Date.parse("#{start_month}-01").end_of_month
 
-    unless end_month.nil?
-      end_date = Date.parse("#{end_month}-01").end_of_month
-    end
+    end_date = Date.parse("#{end_month}-01").end_of_month unless end_month.nil?
 
     # 書式をそろえるため、一度Date型に変換している
     start_date_string = start_date.strftime('%Y-%m-%d')

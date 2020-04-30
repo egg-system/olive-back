@@ -93,9 +93,7 @@ class ReservationsController < ApplicationController
     reservation = Reservation.find(params[:id])
     reservation.cancel
 
-    unless params[:do_send_cancel_mail?].nil?
-      ReservationMailer.cancel_reservation(reservation).deliver_now
-    end
+    ReservationMailer.cancel_reservation(reservation).deliver_now unless params[:do_send_cancel_mail?].nil?
 
     respond_to do |format|
       format.html { redirect_to reservations_url, notice: '予約をキャンセルいたしました。' }

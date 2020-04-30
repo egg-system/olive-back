@@ -61,9 +61,7 @@ class StaffsController < ApplicationController
   # PATCH/PUT /staffs/1
   # PATCH/PUT /staffs/1.json
   def update
-    if params[:is_delete]
-      return self.destroy
-    end
+    return self.destroy if params[:is_delete]
 
     begin
       @staff.update!(staff_params)

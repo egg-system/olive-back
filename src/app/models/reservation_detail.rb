@@ -14,9 +14,7 @@ class ReservationDetail < ApplicationRecord
       total_fee = option.fee
 
       # 耳つぼジュエリの場合、個数とかけた金額にする
-      if self.mimitsubo_count.present? && option.is_mimitsubo_jewelry
-        total_fee = option.fee * self.mimitsubo_count
-      end
+      total_fee = option.fee * self.mimitsubo_count if self.mimitsubo_count.present? && option.is_mimitsubo_jewelry
 
       total_fee
     end
@@ -33,9 +31,7 @@ class ReservationDetail < ApplicationRecord
       option_name = option.name
 
       # 耳つぼジュエリの個数を表記するための実装
-      if option.is_mimitsubo_jewelry
-        option_name = "#{option.name} × #{self.mimitsubo_count}個"
-      end
+      option_name = "#{option.name} × #{self.mimitsubo_count}個" if option.is_mimitsubo_jewelry
 
       option_name
     end
@@ -55,8 +51,6 @@ class ReservationDetail < ApplicationRecord
     selected_mimitsubo_option = self.option_ids.include?(Option::MIMITSUBO_JWELRY_OPTION_ID)
     selected_mimitsubo_count = self.mimitsubo_count.present? && self.mimitsubo_count > 0
 
-    unless selected_mimitsubo_option === selected_mimitsubo_count
-      errors.add(:mimitsubo_count, "は、耳つぼジュエリーのオプションが選択されている場合、入力必須になります。")
-    end
+    errors.add(:mimitsubo_count, "は、耳つぼジュエリーのオプションが選択されている場合、入力必須になります。") unless selected_mimitsubo_option === selected_mimitsubo_count
   end
 end

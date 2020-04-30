@@ -57,12 +57,8 @@ module ShiftBuildModule
   end
 
   def validate_staff_shift
-    if self.shifts.empty?
-      errors.add(:staff_id, 'は対応できません。日時、または担当者を変更してください。')
-    end
+    errors.add(:staff_id, 'は対応できません。日時、または担当者を変更してください。') if self.shifts.empty?
 
-    if self.shifts.any? { |shift| shift.staff_id != self.staff_id }
-      errors.add(:staff_id, '異常データが検知されました。')
-    end
+    errors.add(:staff_id, '異常データが検知されました。') if self.shifts.any? { |shift| shift.staff_id != self.staff_id }
   end
 end

@@ -6,22 +6,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 14
-# Cop supports --auto-correct.
-Style/IfUnlessModifier:
-  Exclude:
-    - 'app/controllers/reservations_controller.rb'
-    - 'app/controllers/shifts_controller.rb'
-    - 'app/controllers/staffs_controller.rb'
-    - 'app/helpers/application_helper.rb'
-    - 'app/helpers/customers_helper.rb'
-    - 'app/models/concerns/date_module.rb'
-    - 'app/models/concerns/pagination_module.rb'
-    - 'app/models/concerns/shift_build_module.rb'
-    - 'app/models/reservation_detail.rb'
-    - 'app/validators/full_width_kana_validator.rb'
-    - 'config/schedule.rb'
-
 # Offense count: 30
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle.

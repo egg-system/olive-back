@@ -15,9 +15,7 @@ logfile_name = "#{Rails.root}/log/cron-#{Date.today.strftime('%Y-%m-%d')}.log" i
 set :output, logfile_name
 
 # dockerの場合、cron実行時にenv値が反映されないため、追加
-if is_developement
-  ENV.each { |k, v| env(k, v) }
-end
+ENV.each { |k, v| env(k, v) } if is_developement
 
 every :day, at: '07:00am' do
   rake 'reservation:send_remind_mail'

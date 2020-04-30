@@ -97,9 +97,7 @@ class ShiftsController < ApplicationController
 
   def search_params
     search_month = Date.today.beginning_of_month
-    if params.has_key?("month(1i)") && params.has_key?("month(2i)")
-      search_month = Date.new(params["month(1i)"].to_i, params["month(2i)"].to_i)
-    end
+    search_month = Date.new(params["month(1i)"].to_i, params["month(2i)"].to_i) if params.has_key?("month(1i)") && params.has_key?("month(2i)")
 
     return {
       staff_id: params[:staff_id] || current_staff.id,
