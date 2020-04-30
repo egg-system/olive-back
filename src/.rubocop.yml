@@ -62,3 +62,6 @@ Naming/PredicateName:
 
 Style/AsciiComments:
   Enabled: false
+
+Style/CaseEquality:
+  Enabled: false
