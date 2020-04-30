@@ -52,7 +52,7 @@ class OptionsController < ApplicationController
   # DELETE /options/1.json
   def destroy
     @option.reservation_details
-    if 0 < @option.reservations.count then
+    if 0 < @option.reservations.count
       redirect_to option_url(@option.id), notice: 'すでに利用されているため、削除できません'
     else
       @option.destroy
