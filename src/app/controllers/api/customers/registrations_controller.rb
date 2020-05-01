@@ -4,7 +4,7 @@ class Api::Customers::RegistrationsController < DeviseTokenAuth::RegistrationsCo
   skip_before_action :authenticate_staff!
   skip_before_action :authenticate_api_customer!, only: :create
   after_action :send_registration_mail, only: :create
-  
+
   def create
     return super if should_sign_up?
 
@@ -13,7 +13,7 @@ class Api::Customers::RegistrationsController < DeviseTokenAuth::RegistrationsCo
       provider: sign_up_params[:provider],
     })
     new_customer.update_attributes!(sign_up_params)
-      
+
     # superの返り値に合わせる
     render json: { status: 'success', data: new_customer }
   end
@@ -46,7 +46,7 @@ class Api::Customers::RegistrationsController < DeviseTokenAuth::RegistrationsCo
   def account_update_params
     params.permit(CUSTMER_PARAMETES)
   end
-  
+
   def should_sign_up?
     sign_up_params[:provider] === 'email'
   end

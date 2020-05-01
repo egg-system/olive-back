@@ -5,7 +5,7 @@ class Option < ApplicationRecord
   has_many :reservation_detail_options
   has_many :reservation_details, through: :reservation_detail_options
   has_many :reservations, through: :reservation_details
-  
+
   has_many :store_options, inverse_of: :store
   has_many :store, through: :store_options
 

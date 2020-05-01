@@ -34,4 +34,3 @@ customer = 41.times do |n|
     has_registration_card: false
   )
 end
-  

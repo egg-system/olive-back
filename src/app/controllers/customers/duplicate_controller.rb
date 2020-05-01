@@ -23,7 +23,7 @@ class Customers::DuplicateController < ApplicationController
     ).to_a
 
     # 重複している顧客ごとにグルーピングする
-    @duplicated_customer_groups = duplicated_ids_groups.map{ |duplicated_ids|
+    @duplicated_customer_groups = duplicated_ids_groups.map { |duplicated_ids|
       duplicated_customers.select { |customer|
         duplicated_ids.split(',').include?(customer.id.to_s)
       }
@@ -33,7 +33,8 @@ class Customers::DuplicateController < ApplicationController
   end
 
   private
-    def search_params
-      params.permit(:page, columns: [])
-    end
+
+  def search_params
+    params.permit(:page, columns: [])
+  end
 end
