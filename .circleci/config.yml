@@ -32,9 +32,6 @@ jobs:
           key: docker-cache-{{ checksum "Dockerfile" }}-{{ checksum "src/Gemfile.lock" }}
           paths:
             - ~/caches/images.tar
-      - run:
-          command: docker-compose run -u 1001:1001 rails dockerize -wait tcp://mysql:3306 -timeout 120s
-          name: wait for db
   test:
     machine: true
     steps:
@@ -50,6 +47,9 @@ jobs:
               docker load -i ~/caches/images.tar
             fi
           name: docker load
+      - run:
+          command: docker-compose run -u 1001:1001 rails dockerize -wait tcp://mysql:3306 -timeout 120s
+          name: wait for db
       - run: 
           command: docker-compose run -u 1001:1001 rails bundle exec rake db:create db:migrate db:seed RAILS_ENV=test
           name: db setup
@@ -65,6 +65,12 @@ jobs:
             - docker-cache-{{ checksum "Dockerfile" }}-{{ checksum "src/Gemfile.lock" }}
           paths:
             - ~/caches/images.tar
+      - run:
+          command: docker-compose up -d --build
+          name: docker up
+      - run:
+          command: mkdir -p ~/caches
+          name: mkdir -p ~/caches
       - run:
           command: |
             if [[ -e ~/caches/images.tar ]]; then
