@@ -50,9 +50,6 @@ jobs:
               docker load -i ~/caches/images.tar
             fi
           name: docker load
-      - run:
-          command: docker-compose up -d --build
-          name: docker up
       - run: 
           command: docker-compose run -u 1001:1001 rails bundle exec rake db:create db:migrate db:seed RAILS_ENV=test
           name: db setup
@@ -74,9 +71,6 @@ jobs:
               docker load -i ~/caches/images.tar
             fi
           name: docker load
-      - run:
-          command: docker-compose up -d --build
-          name: docker up
       - run: 
           command: docker-compose run -u 1001:1001 rails bundle exec rubocop
           name: rubocop
