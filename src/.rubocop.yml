@@ -3,6 +3,7 @@ inherit_from: .rubocop_todo.yml
 AllCops:
   Exclude:
     - db/schema.rb
+    - bin/*
 
 #################### Layout ###########################
 
@@ -30,6 +31,31 @@ Layout/MultilineMethodCallIndentation:
 #################### Lint ###########################
 
 Lint/HandleExceptions:
+  Enabled: false
+
+#################### Metrics ###########################
+
+Metrics/AbcSize:
+  Enabled: false
+
+Metrics/BlockLength:
+  Enabled: false
+
+Metrics/ClassLength:
+  Enabled: false
+
+Metrics/CyclomaticComplexity:
+  Enabled: false
+
+Metrics/MethodLength:
+  Enabled: false
+
+Metrics/PerceivedComplexity:
+  Enabled: false
+
+#################### Naming ###########################
+
+Naming/PredicateName:
   Enabled: false
 
 #################### Style ###########################

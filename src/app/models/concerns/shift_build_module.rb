@@ -22,9 +22,9 @@ module ShiftBuildModule
 
     treatable_shifts = treatable_shifts.where(staff_id: self.staff_id) if self.staff_id.present?
     shifts = treatable_shifts.group_by { |shift| shift.staff.id }
-      .select { |staff_id, shifts| shifts.length === necessary_shift_count }
+      .select { |_staff_id, shifts_tmp| shifts_tmp.length === necessary_shift_count }
       .values
-      .min_by { |shifts| shifts.first.staff.skill_staffs.length }
+      .min_by { |shifts_tmp| shifts_tmp.first.staff.skill_staffs.length }
 
     return if shifts.nil?
 

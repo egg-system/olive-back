@@ -21,7 +21,7 @@ Store.where(id: 4).first_or_create!(
   close_at: '20:00'
 )
 
-customer = Customer.where(id: 1).first_or_create!(
+Customer.where(id: 1).first_or_create!(
   first_name: '顧客',
   last_name: '高橋',
   first_kana: 'コキャク',

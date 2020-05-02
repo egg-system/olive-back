@@ -50,7 +50,7 @@ class StaffsController < ApplicationController
         @staff.save!
         format.html { redirect_to @staff, notice: 'スタッフが登録されました。' }
         format.json { render :show, status: :created, location: @staff }
-      rescue => exception
+      rescue
         flash[:alert] = 'スタッフを登録できませんでした。'
         format.html { render :new }
         format.json { render json: @staff.errors, status: :unprocessable_entity }
@@ -70,7 +70,7 @@ class StaffsController < ApplicationController
       # ログアウトしてログイン画面にリダイレクト
       sign_out @staff
       redirect_to staff_session_url, notice: '所属店舗が変更されました。お手数ですが、再度ログインしてください。'
-    rescue => exception
+    rescue
       respond_to do |format|
         flash[:alert] = '更新に失敗しました。'
         format.html { render :show }

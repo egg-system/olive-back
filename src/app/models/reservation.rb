@@ -41,7 +41,7 @@ class Reservation < ApplicationRecord
     joins(:customer).where("tel like ?", "%#{customer_tel}%")
   }
 
-  scope :order_reserved_at, ->(order = :desc) {
+  scope :order_reserved_at, ->(_order = :desc) {
     order(reservation_date: :desc)
       .order(start_time: :desc)
       .order(created_at: :desc)

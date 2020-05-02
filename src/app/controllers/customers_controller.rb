@@ -49,7 +49,7 @@ class CustomersController < ApplicationController
         @customer.save!
         format.html { redirect_to @customer, notice: '新規作成しました。' }
         format.json { render :show, status: :created, location: @customer }
-      rescue => exception
+      rescue
         format.html { render :new }
         format.json { render json: @customer.errors, status: :unprocessable_entity }
       end
@@ -64,7 +64,7 @@ class CustomersController < ApplicationController
         @customer.update!(customer_params)
         format.html { redirect_to @customer, notice: '更新しました。' }
         format.json { render :show, status: :ok, location: @customer }
-      rescue => exception
+      rescue
         @reservations = @customer.reservations.order_reserved_at
         format.html { render :show }
         format.json { render json: @customer.errors, status: :unprocessable_entity }

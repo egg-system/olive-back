@@ -32,8 +32,9 @@ class ShiftsController < ApplicationController
         imports
       end
       redirect_to action: :index
-    rescue Encoding::UndefinedConversionError => e
-    rescue Encoding::InvalidByteSequenceError => e
+    rescue Encoding::UndefinedConversionError
+      # do nothing
+    rescue Encoding::InvalidByteSequenceError
       flash[:alert] = "文字コードがShift-JISのファイルをアップロードしてください。"
       return redirect_to action: :new
     end
@@ -65,7 +66,7 @@ class ShiftsController < ApplicationController
 
   def create_shifts
     updates_params[:new_shifts]
-      .select { |shift_at, checked| checked === '1' }
+      .select { |_shift_at, checked| checked === '1' }
       .keys
       .each { |shift_at|
         Shift.create!(
@@ -73,7 +74,7 @@ class ShiftsController < ApplicationController
           staff_id: updates_params[:staff_id],
           date: shift_at.to_date,
           start_at: shift_at.to_time,
-          end_at: shift_at.to_time + Shift.get_shift_increment
+          end_at: shift_at.to_time + Shift.shift_increment
         )
       }
   end
@@ -89,7 +90,7 @@ class ShiftsController < ApplicationController
   def delete_shift_ids
     return nil unless updates_params.has_key? :remain_shift_ids
 
-    return updates_params[:remain_shift_ids].select { |id, checked| checked === '0' }.keys
+    return updates_params[:remain_shift_ids].select { |_id, checked| checked === '0' }.keys
   end
 
   private

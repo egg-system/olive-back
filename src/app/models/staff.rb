@@ -47,13 +47,13 @@ class Staff < ApplicationRecord
 
   # 全部のスキルを持っているスタッフで絞りこむ
   scope :has_must_skills, ->(skill_ids) {
-    staffIds = SkillStaff
+    staff_ids = SkillStaff
       .where(skill_id: skill_ids)
       .group(:staff_id)
       .having('count(skill_id) >= ?', skill_ids.count)
       .select(:staff_id)
 
-    return where(id: staffIds)
+    return where(id: staff_ids)
   }
 
   # 店舗idによる絞り込み
