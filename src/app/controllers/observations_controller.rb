@@ -4,7 +4,7 @@ class ObservationsController < ApplicationController
 
   # GET /observations/new
   def new
-    return redirect_to customers_path, flash: { alert: '顧客が選択されていません。' } unless params.has_key?(:customer_id)
+    return redirect_to customers_path, flash: { alert: '顧客が選択されていません。' } unless params.key?(:customer_id)
   end
 
   # POST /observations

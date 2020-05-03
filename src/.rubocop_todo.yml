@@ -6,18 +6,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 10
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: short, verbose
-Style/PreferredHashMethods:
-  Exclude:
-    - 'app/controllers/observations_controller.rb'
-    - 'app/controllers/reservations_controller.rb'
-    - 'app/controllers/shifts_controller.rb'
-    - 'app/helpers/shifts_helper.rb'
-    - 'app/models/shift.rb'
-
 # Offense count: 13
 # Cop supports --auto-correct.
 Style/RedundantBegin:

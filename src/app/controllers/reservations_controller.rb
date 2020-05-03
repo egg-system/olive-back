@@ -21,8 +21,8 @@ class ReservationsController < ApplicationController
     @customer_name = params[:customer_name]
     @customer_tel = params[:customer_tel]
 
-    @from_date = Date.parse(params[:from_date]) if params.has_key?(:from_date)
-    @to_date = Date.parse(params[:to_date]) if params.has_key?(:to_date)
+    @from_date = Date.parse(params[:from_date]) if params.key?(:from_date)
+    @to_date = Date.parse(params[:to_date]) if params.key?(:to_date)
 
     # concernに検索ロジックを切り出し
     @reservations = search_reservations
@@ -43,10 +43,10 @@ class ReservationsController < ApplicationController
 
   # GET /reservations/new
   def new
-    return redirect_to customers_path, flash: { alert: '顧客が選択されていません。' } unless params.has_key?(:customer_id)
+    return redirect_to customers_path, flash: { alert: '顧客が選択されていません。' } unless params.key?(:customer_id)
 
     @reservation = Customer.find(params[:customer_id]).reservations.new
-    @reservation_details_count = params.has_key?(:count) ? params[:count].to_i : 1
+    @reservation_details_count = params.key?(:count) ? params[:count].to_i : 1
     @reservation.reservation_details.build(Array.new(@reservation_details_count))
   end
 

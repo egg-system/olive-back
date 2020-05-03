@@ -49,7 +49,7 @@ module ShiftsHelper
 
   def shift_exist(shift_time)
     date = extract_date(shift_time)
-    return false unless @date_shifts.has_key?(date)
+    return false unless @date_shifts.key?(date)
 
     return extract_shift(date, shift_time).present?
   end
