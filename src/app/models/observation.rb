@@ -1,8 +1,8 @@
 class Observation < ApplicationRecord
   belongs_to :customer
-  belongs_to :store
-  belongs_to :staff
-  belongs_to :menu
+  belongs_to :store, optional: true
+  belongs_to :staff, optional: true
+  belongs_to :menu, optional: true
 
   attr_accessor :visit_date, :visit_time
 
