@@ -86,3 +86,6 @@ Style/Lambda:
 
 Style/MultilineBlockChain:
   Enabled: false
+
+Style/RedundantBegin:
+  Enabled: false
