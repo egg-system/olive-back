@@ -80,7 +80,7 @@ class Store < ApplicationRecord
 
   private
 
-  SHOP_KEYS = [:id, :name, :open_at, :close_at, :break_from, :break_to]
+  SHOP_KEYS = [:id, :name, :open_at, :close_at, :break_from, :break_to].freeze
 
   def shop_attributes
     SHOP_KEYS.map do |json_key|

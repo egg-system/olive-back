@@ -45,7 +45,7 @@ class ReservationDetail < ApplicationRecord
     }
   end
 
-  MIMITSUBO_JEWELRY_OPTIONS = [2, 4, 6, 8, 10]
+  MIMITSUBO_JEWELRY_OPTIONS = [2, 4, 6, 8, 10].freeze
 
   def validate_mimitsubo_option
     selected_mimitsubo_option = self.option_ids.include?(Option::MIMITSUBO_JWELRY_OPTION_ID)

@@ -32,7 +32,7 @@ class Api::Customers::RegistrationsController < DeviseTokenAuth::RegistrationsCo
     :first_visit_store_id,
     :last_visit_store_id,
     :can_receive_mail,
-  ]
+  ].freeze
 
   def sign_up_params
     # email, password, 認証方式は更新不可

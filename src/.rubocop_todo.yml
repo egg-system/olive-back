@@ -6,18 +6,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 5
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: literals, strict
-Style/MutableConstant:
-  Exclude:
-    - 'app/controllers/api/customers/registrations_controller.rb'
-    - 'app/models/concerns/reservation_state_module.rb'
-    - 'app/models/reservation_detail.rb'
-    - 'app/models/shift.rb'
-    - 'app/models/store.rb'
-
 # Offense count: 7
 # Cop supports --auto-correct.
 # Configuration parameters: Strict.
