@@ -8,13 +8,6 @@
 
 # Offense count: 2
 # Cop supports --auto-correct.
-# Configuration parameters: AllowAsExpressionSeparator.
-Style/Semicolon:
-  Exclude:
-    - 'app/controllers/stores_controller.rb'
-
-# Offense count: 2
-# Cop supports --auto-correct.
 Style/StderrPuts:
   Exclude:
     - 'bin/yarn'

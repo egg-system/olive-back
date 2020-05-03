@@ -19,8 +19,8 @@ class StoresController < ApplicationController
   # GET /stores/1
   # GET /stores/1.json
   def show
-    @store = Store.find(params[:id]);
-    @store_menus = StoreMenu.where(store_id: params[:id]);
+    @store = Store.find(params[:id])
+    @store_menus = StoreMenu.where(store_id: params[:id])
     @store_options = StoreOption.where(store_id: params[:id])
   end
 
