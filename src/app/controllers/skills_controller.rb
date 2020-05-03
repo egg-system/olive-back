@@ -45,7 +45,7 @@ class SkillsController < ApplicationController
     begin
       @skill.destroy!
       redirect_to skills_url, notice: I18n.t("successes.messages.destroy")
-    rescue
+    rescue StandardError
       redirect_to skill_url(@skill.id), notice: 'すでに利用されているため、削除できません'
     end
   end

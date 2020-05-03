@@ -56,7 +56,7 @@ class RolesController < ApplicationController
         format.html { redirect_to roles_url, notice: 'Role was successfully destroyed.' }
         format.json { head :no_content }
       end
-    rescue
+    rescue StandardError
       respond_to do |format|
         format.html { redirect_to role_url(@role.id), notice: 'すでに利用されているため、削除できません' }
         format.json { render json: @role.errors, status: :unprocessable_entity }

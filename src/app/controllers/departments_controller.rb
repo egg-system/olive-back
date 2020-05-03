@@ -60,7 +60,7 @@ class DepartmentsController < ApplicationController
         format.html { redirect_to departments_url, notice: 'Department was successfully destroyed.' }
         format.json { head :no_content }
       end
-    rescue
+    rescue StandardError
       respond_to do |format|
         format.html { redirect_to department_url(@department.id), notice: 'すでに利用されているため、削除できません' }
         format.json { render json: @department.errors, status: :unprocessable_entity }
