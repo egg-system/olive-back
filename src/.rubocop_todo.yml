@@ -6,15 +6,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 3
-# Cop supports --auto-correct.
-# Configuration parameters: ConvertCodeThatCanStartToReturnNil, AllowedMethods.
-# AllowedMethods: present?, blank?, presence, try, try!
-Style/SafeNavigation:
-  Exclude:
-    - 'app/models/concerns/login_store_module.rb'
-    - 'app/models/concerns/reservation_audit_module.rb'
-
 # Offense count: 1
 # Cop supports --auto-correct.
 Style/SelfAssignment:

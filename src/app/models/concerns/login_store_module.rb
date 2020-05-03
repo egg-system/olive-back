@@ -33,6 +33,6 @@ module LoginStoreModule
 
     staff = to_adapter.get(id)
     staff.login_store_id = login_store_id
-    staff if staff && staff.remember_me?(token, generated_at)
+    staff if staff&.remember_me?(token, generated_at)
   end
 end

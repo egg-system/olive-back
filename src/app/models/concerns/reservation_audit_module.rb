@@ -70,8 +70,8 @@ module ReservationAuditModule
   end
 
   def update_audtis
-    @created_audit.save unless @created_audit.nil?
-    @canceled_audit.save unless @canceled_audit.nil?
+    @created_audit&.save
+    @canceled_audit&.save
   end
 
   def build_created_audit
