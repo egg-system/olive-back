@@ -6,25 +6,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 152
-# Cop supports --auto-correct.
-Style/RedundantSelf:
-  Exclude:
-    - 'app/controllers/staffs_controller.rb'
-    - 'app/models/concerns/reservation_audit_module.rb'
-    - 'app/models/concerns/reservation_state_module.rb'
-    - 'app/models/concerns/shift_build_module.rb'
-    - 'app/models/customer.rb'
-    - 'app/models/menu.rb'
-    - 'app/models/observation.rb'
-    - 'app/models/option.rb'
-    - 'app/models/reservation.rb'
-    - 'app/models/reservation_detail.rb'
-    - 'app/models/role.rb'
-    - 'app/models/shift.rb'
-    - 'app/models/staff.rb'
-    - 'app/models/store.rb'
-
 # Offense count: 12
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle.

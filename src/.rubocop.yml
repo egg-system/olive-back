@@ -92,3 +92,6 @@ Style/RedundantBegin:
 
 Style/RedundantReturn:
   Enabled: false
+
+Style/RedundantSelf:
+  Enabled: false
