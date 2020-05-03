@@ -6,22 +6,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 12
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyleForMultiline.
-# SupportedStylesForMultiline: comma, consistent_comma, no_comma
-Style/TrailingCommaInHashLiteral:
-  Exclude:
-    - 'app/controllers/api/customers/registrations_controller.rb'
-    - 'app/controllers/api/reservations_controller.rb'
-    - 'app/models/concerns/reservation_state_module.rb'
-    - 'app/models/menu.rb'
-    - 'app/models/option.rb'
-    - 'app/models/reservation.rb'
-    - 'app/models/shift.rb'
-    - 'config/application.rb'
-    - 'config/routes.rb'
-
 # Offense count: 5
 # Cop supports --auto-correct.
 # Configuration parameters: WordRegex.

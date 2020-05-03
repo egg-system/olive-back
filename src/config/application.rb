@@ -36,7 +36,7 @@ module Src
       address: ENV.fetch('MAIL_HOST', ''),
       user_name: ENV.fetch('MAIL_USER', ''),
       password: ENV.fetch('MAIL_PASSWORD', ''),
-      authentication: ENV.fetch('MAIL_AUTH', 'login').to_sym,
+      authentication: ENV.fetch('MAIL_AUTH', 'login').to_sym
     }
 
     # Settings in config/environments/* take precedence over those specified here.

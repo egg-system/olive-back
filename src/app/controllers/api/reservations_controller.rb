@@ -23,13 +23,13 @@ class Api::ReservationsController < Api::ApiController
     # total_pages > data の順にキーを配置しなければ、エラーになる可能性あり
     render json: {
       total_pages: reservations.total_pages,
-      data: reservations.to_resources,
+      data: reservations.to_resources
     }
   end
 
   def show
     render json: {
-      data: Reservation.find(params[:id]).to_resource,
+      data: Reservation.find(params[:id]).to_resource
     }
   end
 

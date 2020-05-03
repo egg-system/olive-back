@@ -27,7 +27,7 @@ class Menu < ApplicationRecord
       minutes: self.service_minutes,
       description: self.description,
       department_id: self.menu_category.department_id,
-      options: options.map { |option| option.to_api_json },
+      options: options.map { |option| option.to_api_json }
     }
   end
 end

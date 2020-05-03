@@ -26,7 +26,7 @@ class Option < ApplicationRecord
       name: self.name,
       description: self.description,
       price: self.fee,
-      is_mimitsubo_jewelry: self.is_mimitsubo_jewelry,
+      is_mimitsubo_jewelry: self.is_mimitsubo_jewelry
     }
   end
 

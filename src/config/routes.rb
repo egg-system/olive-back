@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   root to: 'dashboards#index'
 
   devise_for :staffs, only: :sessions, controllers: {
-    sessions: 'staffs/sessions',
+    sessions: 'staffs/sessions'
   }
 
   resources :shifts, only: [:index, :new, :create] do
@@ -53,7 +53,7 @@ Rails.application.routes.draw do
       sessions: 'api/customers/sessions',
       registrations: 'api/customers/registrations',
       passwords: 'api/customers/passwords',
-      token_validations: 'api/customers/token_validations',
+      token_validations: 'api/customers/token_validations'
     }
     get 'shops(/:id)', to: 'stores#shop'
     get 'shops(/:id)/menus', to: 'stores#menus'

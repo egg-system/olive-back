@@ -31,7 +31,7 @@ class Shift < ApplicationRecord
       time_slots = time_shift_groups.map do |shift_at, shift_group|
         {
           start_time: shift_at,
-          staff_ids: shift_group.map { |shift| shift.staff_id },
+          staff_ids: shift_group.map { |shift| shift.staff_id }
         }
       end
 
@@ -104,6 +104,6 @@ class Shift < ApplicationRecord
     '18:00~18:30' => '18:00:00',
     '18:30~19:00' => '18:30:00',
     '19:00~19:30' => '19:00:00',
-    '19:30~20:00' => '19:30:00',
+    '19:30~20:00' => '19:30:00'
   }.freeze
 end
