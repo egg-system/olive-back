@@ -55,7 +55,7 @@ class Store < ApplicationRecord
   end
 
   def slot_times
-    return Shift.slot_times.select { |label, slot_time|
+    return Shift.slot_times.select { |_label, slot_time|
       slotted_at = Tod::TimeOfDay(slot_time)
 
       # 開店時間内か
@@ -72,7 +72,7 @@ class Store < ApplicationRecord
   end
 
   def get_time_slots(date)
-    return self.slot_times.map { |label, time_slot|
+    return self.slot_times.map { |_label, time_slot|
       day = Date.parse(date)
       Tod::TimeOfDay.parse(time_slot).on(day)
     }

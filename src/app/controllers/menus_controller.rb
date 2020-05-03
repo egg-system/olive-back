@@ -61,7 +61,7 @@ class MenusController < ApplicationController
         format.html { redirect_to menus_url, notice: I18n.t("successes.messages.destroy") }
         format.json { head :no_content }
       end
-    rescue => exception
+    rescue
       respond_to do |format|
         format.html { redirect_to menu_url(@menu.id), notice: 'すでに利用されているため、削除できません' }
         format.json { render json: @role.errors, status: :unprocessable_entity }

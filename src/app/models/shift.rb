@@ -46,9 +46,9 @@ class Shift < ApplicationRecord
 
     csv_row.select { |key, value|
       SHIFT_TIMES.has_key?(key) && value === '1'
-    }.each { |key, value|
+    }.each { |key, _value|
       shift_time = Tod::TimeOfDay.parse(SHIFT_TIMES[key])
-      shift = Shift.where(
+      Shift.where(
         store_id: store_id,
         staff_id: staff_id,
         date: shift_date,
@@ -74,7 +74,10 @@ class Shift < ApplicationRecord
     return SLOT_INCREMENT_MITUNES.minute
   end
 
-  private
+  def self.shift_of_staff_at_datetime(staff, datetime)
+    result = staff.shifts.where(date: datetime).where(start_at: datetime)
+    return 0 < result.count ? result.first : nil
+  end
 
   # 30分刻みでシフトを設定する
   SLOT_INCREMENT_MITUNES = 30
@@ -103,9 +106,4 @@ class Shift < ApplicationRecord
     '19:00~19:30' => '19:00:00',
     '19:30~20:00' => '19:30:00',
   }
-
-  def self.shift_of_staff_at_datetime(staff, datetime)
-    result = staff.shifts.where(date: datetime).where(start_at: datetime)
-    return 0 < result.count ? result.first : nil
-  end
 end

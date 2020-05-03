@@ -68,7 +68,7 @@ class StoresController < ApplicationController
         format.html { redirect_to stores_url, notice: I18n.t("successes.messages.destroy") }
         format.json { head :no_content }
       end
-    rescue => exception
+    rescue
       respond_to do |format|
         format.html { redirect_to @store, alert: 'すでに利用されているため、削除できません' }
         format.json { render json: @store.errors, status: :unprocessable_entity }

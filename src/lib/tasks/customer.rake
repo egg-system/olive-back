@@ -2,7 +2,7 @@ require('csv')
 
 namespace :customer do
   desc 'CSVを元に、顧客をマージする'
-  task :merge_by_csv, [:csv_path] => :environment do |task, args|
+  task :merge_by_csv, [:csv_path] => :environment do |_task, args|
     csv_full_path = Rails.root.join args[:csv_path]
 
     Customer.transaction do
@@ -28,7 +28,7 @@ namespace :customer do
   end
 
   desc '非会員登録した顧客を一括で会員に変更する'
-  task :migrate_to_member, [:password] => :environment do |task, args|
+  task :migrate_to_member, [:password] => :environment do |_task, args|
     Customer.transaction do
       none_member_custoers = Customer.where(provider: 'none').where.not(email: nil)
 
