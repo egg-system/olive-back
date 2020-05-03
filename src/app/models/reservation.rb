@@ -74,7 +74,7 @@ class Reservation < ApplicationRecord
 
   def total_fee
     total_fee = self.reservation_details.sum { |detail| detail.total_fee }
-    total_fee = total_fee - self.coupons.length * 6000 if self.coupons.present?
+    total_fee -= self.coupons.length * 6000 if self.coupons.present?
     return total_fee
   end
 
