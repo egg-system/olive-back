@@ -76,7 +76,7 @@ class Shift < ApplicationRecord
 
   def self.shift_of_staff_at_datetime(staff, datetime)
     result = staff.shifts.where(date: datetime).where(start_at: datetime)
-    return 0 < result.count ? result.first : nil
+    return result.count.positive? ? result.first : nil
   end
 
   # 30分刻みでシフトを設定する

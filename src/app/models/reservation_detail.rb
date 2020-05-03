@@ -49,7 +49,7 @@ class ReservationDetail < ApplicationRecord
 
   def validate_mimitsubo_option
     selected_mimitsubo_option = self.option_ids.include?(Option::MIMITSUBO_JWELRY_OPTION_ID)
-    selected_mimitsubo_count = self.mimitsubo_count.present? && self.mimitsubo_count > 0
+    selected_mimitsubo_count = self.mimitsubo_count.present? && self.mimitsubo_count.positive?
 
     errors.add(:mimitsubo_count, "は、耳つぼジュエリーのオプションが選択されている場合、入力必須になります。") unless selected_mimitsubo_option === selected_mimitsubo_count
   end

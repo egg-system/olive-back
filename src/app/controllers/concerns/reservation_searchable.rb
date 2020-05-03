@@ -22,7 +22,7 @@ module Concerns::ReservationSearchable
     reservations = reservations.where_state(@state) if @state.present?
 
     unless @staff_id.nil?
-      reservations = reservations.where(staff_id: @staff_id) if @staff_id.to_i > 0
+      reservations = reservations.where(staff_id: @staff_id) if @staff_id.to_i.positive?
       reservations = reservations.where(staff_id: nil) if @staff_id === 'none'
       reservations = reservations.where.not(staff_id: nil) if @staff_id === 'any'
     end
