@@ -136,7 +136,7 @@ class ReservationsController < ApplicationController
         :id,
         :menu_id,
         :mimitsubo_count,
-        option_ids: [],
+        option_ids: []
       ]
     )
   end

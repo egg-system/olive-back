@@ -14,11 +14,11 @@ Staff.where(id: 1).first_or_create!(
   employment_type: 0,
   skill_staffs: [
     SkillStaff.where(id: 1).first_or_initialize(staff_id: 1, skill_id: 1),
-    SkillStaff.where(id: 2).first_or_initialize(staff_id: 1, skill_id: 2),
+    SkillStaff.where(id: 2).first_or_initialize(staff_id: 1, skill_id: 2)
   ],
   store_staffs: [
     StoreStaff.where(id: 1).first_or_initialize(staff_id: 1, store_id: 1),
-    StoreStaff.where(id: 2).first_or_initialize(staff_id: 1, store_id: 2),
+    StoreStaff.where(id: 2).first_or_initialize(staff_id: 1, store_id: 2)
   ]
 )
 
@@ -34,11 +34,11 @@ Staff.where(id: 2).first_or_create!(
   employment_type: 0,
   skill_staffs: [
     SkillStaff.where(id: 3).first_or_initialize(staff_id: 2, skill_id: 1),
-    SkillStaff.where(id: 4).first_or_initialize(staff_id: 2, skill_id: 2),
+    SkillStaff.where(id: 4).first_or_initialize(staff_id: 2, skill_id: 2)
   ],
   store_staffs: [
     StoreStaff.where(id: 3).first_or_initialize(staff_id: 2, store_id: 1),
-    StoreStaff.where(id: 4).first_or_initialize(staff_id: 2, store_id: 2),
+    StoreStaff.where(id: 4).first_or_initialize(staff_id: 2, store_id: 2)
   ]
 )
 
@@ -148,7 +148,7 @@ Staff.where(id: 9).first_or_create!(
   ],
   store_staffs: [
     StoreStaff.where(id: 11).first_or_initialize(staff_id: 9, store_id: 1),
-    StoreStaff.where(id: 12).first_or_initialize(staff_id: 9, store_id: 2),
+    StoreStaff.where(id: 12).first_or_initialize(staff_id: 9, store_id: 2)
   ]
 )
 
@@ -168,6 +168,6 @@ Staff.where(id: 10).first_or_create!(
   ],
   store_staffs: [
     StoreStaff.where(id: 13).first_or_initialize(staff_id: 10, store_id: 1),
-    StoreStaff.where(id: 14).first_or_initialize(staff_id: 10, store_id: 2),
+    StoreStaff.where(id: 14).first_or_initialize(staff_id: 10, store_id: 2)
   ]
 )

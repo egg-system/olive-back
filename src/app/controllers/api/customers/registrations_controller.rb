@@ -31,7 +31,7 @@ class Api::Customers::RegistrationsController < DeviseTokenAuth::RegistrationsCo
     :city,
     :first_visit_store_id,
     :last_visit_store_id,
-    :can_receive_mail,
+    :can_receive_mail
   ].freeze
 
   def sign_up_params
@@ -39,7 +39,7 @@ class Api::Customers::RegistrationsController < DeviseTokenAuth::RegistrationsCo
     params.permit(CUSTMER_PARAMETES.concat([
       :email,
       :password,
-      :provider,
+      :provider
     ]))
   end
 
