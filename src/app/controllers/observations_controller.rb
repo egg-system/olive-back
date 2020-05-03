@@ -81,7 +81,7 @@ class ObservationsController < ApplicationController
     return nil if observation_params["visit_date(3i)"].empty?
     return nil if observation_params[:visit_time].empty?
 
-    return "#{observation_params["visit_date(1i)"]}-#{observation_params["visit_date(2i)"]}-#{observation_params["visit_date(3i)"]} #{observation_params[:visit_time]}".in_time_zone
+    return "#{observation_params['visit_date(1i)']}-#{observation_params['visit_date(2i)']}-#{observation_params['visit_date(3i)']} #{observation_params[:visit_time]}".in_time_zone
   end
 
   def observation_params

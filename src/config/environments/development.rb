@@ -2,7 +2,7 @@ Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
   # 環境によっては上手く動作しないので、log名を変更してローテートする
-  config.logger = Logger.new("log/dev-#{Date.today.strftime("%Y-%m-%d")}.log")
+  config.logger = Logger.new("log/dev-#{Date.today.strftime('%Y-%m-%d')}.log")
 
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development
