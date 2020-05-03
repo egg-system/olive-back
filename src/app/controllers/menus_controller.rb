@@ -58,7 +58,7 @@ class MenusController < ApplicationController
     begin
       @menu.destroy!
       respond_to do |format|
-        lormat.html { redirect_to menus_url, notice: I18n.t("successes.messages.destroy") }
+        format.html { redirect_to menus_url, notice: I18n.t("successes.messages.destroy") }
         format.json { head :no_content }
       end
     rescue
