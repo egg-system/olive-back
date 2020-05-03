@@ -98,3 +98,6 @@ Style/RedundantSelf:
 
 Style/StringLiterals:
   Enabled: false
+
+Style/SymbolArray:
+  EnforcedStyle: brackets
