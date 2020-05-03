@@ -6,21 +6,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 17
-# Cop supports --auto-correct.
-# Configuration parameters: IgnoredMethods.
-# IgnoredMethods: respond_to, define_method
-Style/SymbolProc:
-  Exclude:
-    - 'app/controllers/customers/duplicate_controller.rb'
-    - 'app/mailers/customer_mailer.rb'
-    - 'app/mailers/reservation_mailer.rb'
-    - 'app/models/concerns/shift_build_module.rb'
-    - 'app/models/menu.rb'
-    - 'app/models/reservation.rb'
-    - 'app/models/shift.rb'
-    - 'app/models/staff.rb'
-
 # Offense count: 12
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyleForMultiline.

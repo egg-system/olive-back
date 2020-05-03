@@ -101,3 +101,6 @@ Style/StringLiterals:
 
 Style/SymbolArray:
   EnforcedStyle: brackets
+
+Style/SymbolProc:
+  Enabled: false
