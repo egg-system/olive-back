@@ -15,7 +15,7 @@ class Shift < ApplicationRecord
 
   scope :where_months, ->(start_month, end_month = nil) {
     start_date, end_date = get_month_range(start_month, end_month)
-    where(date: (start_date)..(end_date))
+    where(date: start_date..end_date)
   }
 
   scope :where_not_reserved, -> {
