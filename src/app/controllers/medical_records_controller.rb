@@ -45,7 +45,7 @@ class MedicalRecordsController < ApplicationController
       :exercise_id,
       hope_menu_ids: [],
       treat_goal_ids: [],
-      current_hospital_ids: [],
+      current_hospital_ids: []
     )
   end
 end

@@ -53,7 +53,7 @@ class Shift < ApplicationRecord
         staff_id: staff_id,
         date: shift_date,
         start_at: shift_time,
-        end_at: shift_time + SLOT_INCREMENT_MITUNES.minutes,
+        end_at: shift_time + SLOT_INCREMENT_MITUNES.minutes
       ).first_or_create
     end
   end
