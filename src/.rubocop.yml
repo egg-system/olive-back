@@ -104,3 +104,6 @@ Style/SymbolArray:
 
 Style/SymbolProc:
   Enabled: false
+
+Style/WordArray:
+  EnforcedStyle: brackets
