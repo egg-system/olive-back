@@ -88,7 +88,7 @@ class Customer < ApplicationRecord
   def age
     return nil if self.birthday.nil?
 
-    return (Date.today.strftime('%Y%m%d').to_i - self.birthday.strftime('%Y%m%d').to_i) / 10000
+    return (Date.today.strftime('%Y%m%d').to_i - self.birthday.strftime('%Y%m%d').to_i) / 10_000
   end
 
   def full_name
