@@ -72,6 +72,7 @@ class Customer < ApplicationRecord
   def self.merge(merge_from_id, merge_to_id)
     merge_from_customer = find(merge_from_id)
     merge_from_customer.reservations.update(customer_id: merge_to_id)
+    merge_from_customer.observations.update(customer_id: merge_to_id)
 
     merge_to_customer = find(merge_to_id)
 
