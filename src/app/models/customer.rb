@@ -1,11 +1,10 @@
 class Customer < ApplicationRecord
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable, :recoverable, :rememberable
   audited except: :tokens
 
   include DeviseTokenAuth::Concerns::User
   include PaginationModule
+  include SquareCustomerModule
 
   belongs_to(
     :first_visit_store,
