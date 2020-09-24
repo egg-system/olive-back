@@ -96,8 +96,8 @@
         include_blank: true
       ) %>
       <% if @customer.persisted? %>
-          <%= f.input :age, label: '年齢', readonly: true %>
-      <%end%>
+        <%= f.input :age, label: '年齢', readonly: true %>
+      <% end %>
       <%= f.input :card_number, label: 'カルテNo'%>
       <%= f.input(
         :has_registration_card,
@@ -166,7 +166,23 @@
         label: '使用状況',
         checked: @customer.is_deleted
       ) %>
-      <%= f.input :fm_total_amount, label: '売上総額', hint: 'FMに登録されている売上の合計額を移行した項目' %>
+      <%= f.input(
+        :fm_total_amount,
+        label: '売上総額',
+        hint: 'FMに登録されている売上の合計額を移行した項目'
+      ) %>
+      <% if @customer.persisted? %>
+        <%= f.input(
+          :has_square_customer?,
+          as: :radio_buttons,
+          label: 'square連携',
+          wrapper: :horizontal_collection_inline,
+          collection: { "連携済み" => true, "未連携" => false },
+          checked: @customer.has_square_customer?,
+          disabled: true,
+          hint: synced_square_customer_message(@customer)
+        ) %>
+      <% end %>
       <%= f.button :submit, class: 'btn btn-primary' %>
       <%= link_to '戻る', customers_path, class: 'btn btn-light' %>
     </div>

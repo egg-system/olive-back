@@ -14,4 +14,11 @@ module CustomersHelper
 
     return render 'customers/duplicate/heading', { kana: duplicated_kana, tel: duplicated_tel }
   end
+
+  def synced_square_customer_message(customer)
+    return '' unless customer.has_square_customer?
+    return '' if @customer.is_synced_square_customer
+
+    return 'squareのデータと管理画面のデータに差分があります。詳細をご確認ください。'
+  end
 end
