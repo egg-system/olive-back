@@ -47,7 +47,13 @@ class CustomersController < ApplicationController
     respond_to do |format|
       begin
         @customer.save!
-        format.html { redirect_to @customer, notice: '新規作成しました。' }
+        if @customer.has_square_customer?
+          result = '新規作成しました。'
+        else
+          result = 'square連携に失敗しました。お手数ですが、手入力でsquareに顧客登録してください。'
+        end
+
+        format.html { redirect_to @customer, notice: result }
         format.json { render :show, status: :created, location: @customer }
       rescue => exception
         format.html { render :new }
