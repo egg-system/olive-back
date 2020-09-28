@@ -50,7 +50,7 @@ class CustomersController < ApplicationController
         if @customer.has_square_customer?
           result = '新規作成しました。'
         else
-          result = 'square連携に失敗しました。お手数ですが、手入力でsquareに顧客登録してください。'
+          result = 'square連携に失敗しました。お手数ですが、squareの顧客は手入力で登録してください。'
         end
 
         format.html { redirect_to @customer, notice: result }

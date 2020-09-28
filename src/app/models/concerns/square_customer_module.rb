@@ -2,7 +2,7 @@ module SquareCustomerModule
   extend ActiveSupport::Concern
 
   included do
-    after_save :sync_square_customer
+    after_create :create_square_customer
   end
 
   def customer_api
@@ -52,14 +52,10 @@ module SquareCustomerModule
     }
   end
 
-  def sync_square_customer
-    square_customer = get_square_customer
-
-    if square_customer.present?
-      result = update_square_customer(square_customer[:id])
-    else
-      result = create_square_customer
-    end
+  def create_square_customer
+    result = customer_api.create_customer(
+      body: self.square_customer_attributes
+    )
 
     if result.error?
       ExceptionNotifier.notify_exception(
@@ -75,19 +71,6 @@ module SquareCustomerModule
   end
 
   protected
-
-  def create_square_customer
-    return customer_api.create_customer(
-      body: self.square_customer_attributes
-    )
-  end
-
-  def update_square_customer(square_customer_id)
-    return customer_api.update_customer(
-      customer_id: square_customer_id,
-      body: self.square_customer_attributes,
-    )
-  end
 
   def square_customer_attributes
     return {
