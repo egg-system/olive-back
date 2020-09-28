@@ -1,8 +1,8 @@
 crumb :root do
-  link "Home", root_path 
+  link "Home", root_path
 end
 
-crumb :login do 
+crumb :login do
   link "Home", new_user_session_path
 end
 

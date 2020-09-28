@@ -1,5 +1,5 @@
 class MedicalRecordsController < ApplicationController
-  before_action :set_relations , only: :index
+  before_action :set_relations, only: :index
 
   def index
     # データがあれば返して、無ければ新規作成して保存はしない
@@ -17,6 +17,7 @@ class MedicalRecordsController < ApplicationController
   end
 
   private
+
   def set_relations
     @pregnancies = Pregnancy.all
     @many_postures = ManyPosture.all
@@ -48,4 +49,3 @@ class MedicalRecordsController < ApplicationController
     )
   end
 end
-

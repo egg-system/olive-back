@@ -9,9 +9,9 @@ module ReservationsHelper
 
   def cancel_audit(reservation = @reservation)
     return reservation.audits
-      .where(action: 'update')
-      .where('audited_changes like ?', 'canceled_at')
-      .first
+        .where(action: 'update')
+        .where('audited_changes like ?', 'canceled_at')
+        .first
   end
 
   def cancel_audit_log(reservation = @reservation)
@@ -35,6 +35,7 @@ module ReservationsHelper
   def cancel_confirm_message(reservation)
     message = '本当にキャンセルしますか？'
     return message unless reservation.email_present?
+
     return "#{message}\nまた、キャンセルメールを送信有無を再度ご確認ください。"
   end
 end

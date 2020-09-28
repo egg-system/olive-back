@@ -65,18 +65,19 @@ class MenusController < ApplicationController
       respond_to do |format|
         format.html { redirect_to menu_url(@menu.id), notice: 'すでに利用されているため、削除できません' }
         format.json { render json: @role.errors, status: :unprocessable_entity }
-      end 
+      end
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_menu
-      @menu = Menu.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def menu_params
-      params.require(:menu).permit(:id, :name, :description, :fee, :service_minutes, :start_at, :end_at, :menu_category_id, :skill_id, :memo)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_menu
+    @menu = Menu.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def menu_params
+    params.require(:menu).permit(:id, :name, :description, :fee, :service_minutes, :start_at, :end_at, :menu_category_id, :skill_id, :memo)
+  end
 end

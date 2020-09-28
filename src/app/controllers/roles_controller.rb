@@ -60,18 +60,19 @@ class RolesController < ApplicationController
       respond_to do |format|
         format.html { redirect_to role_url(@role.id), notice: 'すでに利用されているため、削除できません' }
         format.json { render json: @role.errors, status: :unprocessable_entity }
-      end 
+      end
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_role
-      @role = Role.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def role_params
-      params.require(:role).permit(:id, :name)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_role
+    @role = Role.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def role_params
+    params.require(:role).permit(:id, :name)
+  end
 end

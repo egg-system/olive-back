@@ -1,6 +1,6 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
-  
+
   # 環境によっては上手く動作しないので、log名を変更してローテートする
   config.logger = Logger.new("log/dev-#{Date.today.strftime("%Y-%m-%d")}.log")
 
@@ -62,8 +62,8 @@ Rails.application.configure do
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
-  config.action_mailer.default_url_options = { 
-    host: 'localhost', 
-    port: 8080 
+  config.action_mailer.default_url_options = {
+    host: 'localhost',
+    port: 8080
   }
 end

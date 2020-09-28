@@ -64,18 +64,19 @@ class DepartmentsController < ApplicationController
       respond_to do |format|
         format.html { redirect_to department_url(@department.id), notice: 'すでに利用されているため、削除できません' }
         format.json { render json: @department.errors, status: :unprocessable_entity }
-      end 
+      end
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_department
-      @department = Department.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def department_params
-      params.require(:department).permit(:name)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_department
+    @department = Department.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def department_params
+    params.require(:department).permit(:name)
+  end
 end

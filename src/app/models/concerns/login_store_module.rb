@@ -5,11 +5,11 @@ module LoginStoreModule
     login = tainted_conditions[:login]
     staff = find_first_by_auth_conditions(login: login)
     return nil if staff.nil?
-    
+
     store_id = tainted_conditions[:login_store_id]
     stores = staff.stores.where(id: store_id)
     return nil if stores.empty?
-    
+
     staff.login_store_id = store_id
     return staff
   end

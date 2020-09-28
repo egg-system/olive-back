@@ -89,34 +89,35 @@ class CustomersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_customer
-      @customer = Customer.find(params[:id])
-    end
 
-    def set_relation_models
-      @occupations = Occupation.all
-      @zoomancies = Zoomancy.all
-      @baby_ages = BabyAge.all
-      @sizes = Size.all
-      @visit_reasons = VisitReason.all
-      @nearest_stations = NearestStation.all
-      @stores = Store.all
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_customer
+    @customer = Customer.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def customer_params
-      params.require(:customer).permit(
-        :fmid, :first_name, :last_name, :first_kana, :last_kana,
-        :tel, :fixed_line_tel, :display_email, :can_receive_mail,
-        :first_visit_store_id, :first_visited_at, :last_visit_store_id, :comment,
-        :zip_code, :address, :birthday, :card_number, :has_registration_card,
-        :introducer, :visit_reason_id, :nearest_station_id, :searched_by, :children_count, :baby_age_id,
-        :occupation_id, :zoomancy_id, :size_id, :provider, :password, :is_deleted, :fm_total_amount
-      )
-    end
+  def set_relation_models
+    @occupations = Occupation.all
+    @zoomancies = Zoomancy.all
+    @baby_ages = BabyAge.all
+    @sizes = Size.all
+    @visit_reasons = VisitReason.all
+    @nearest_stations = NearestStation.all
+    @stores = Store.all
+  end
 
-    def search_params
-      params.permit(:name, :tel, :email, :include_deleted, :page)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def customer_params
+    params.require(:customer).permit(
+      :fmid, :first_name, :last_name, :first_kana, :last_kana,
+      :tel, :fixed_line_tel, :display_email, :can_receive_mail,
+      :first_visit_store_id, :first_visited_at, :last_visit_store_id, :comment,
+      :zip_code, :address, :birthday, :card_number, :has_registration_card,
+      :introducer, :visit_reason_id, :nearest_station_id, :searched_by, :children_count, :baby_age_id,
+      :occupation_id, :zoomancy_id, :size_id, :provider, :password, :is_deleted, :fm_total_amount
+    )
+  end
+
+  def search_params
+    params.permit(:name, :tel, :email, :include_deleted, :page)
+  end
 end

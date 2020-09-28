@@ -64,18 +64,19 @@ class OptionsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_option
-      @option = Option.find(params[:id])
-    end
 
-    def set_master
-      @departments = Department.all
-      @skills = Skill.all
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_option
+    @option = Option.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def option_params
-      params.require(:option).permit(:name, :description, :fee, :start_at, :end_at, :department_id, :skill_id)
-    end
+  def set_master
+    @departments = Department.all
+    @skills = Skill.all
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def option_params
+    params.require(:option).permit(:name, :description, :fee, :start_at, :end_at, :department_id, :skill_id)
+  end
 end

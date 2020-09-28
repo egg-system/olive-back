@@ -10,7 +10,7 @@ module ReservationStateModule
   included do
     extend ReservationStateModule::ClassMethods
 
-    scope :where_state, -> (state) {
+    scope :where_state, ->(state) {
       case state.to_sym
       when :canceled
         return where.not(canceled_at: nil)

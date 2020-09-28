@@ -52,8 +52,8 @@ Staff.where(id: 3).first_or_create!(
   last_kana: 'スズキ',
   role_id: 4,
   employment_type: 0,
-  skill_staffs: [ SkillStaff.where(id: 5).first_or_initialize(staff_id: 3, skill_id: 1) ],
-  store_staffs: [ StoreStaff.where(id: 5).first_or_initialize(staff_id: 3, store_id: 1) ],
+  skill_staffs: [SkillStaff.where(id: 5).first_or_initialize(staff_id: 3, skill_id: 1)],
+  store_staffs: [StoreStaff.where(id: 5).first_or_initialize(staff_id: 3, store_id: 1)],
 )
 
 # 4：國分（オリーヴ所属、柔道整復師、バイト）
@@ -66,8 +66,8 @@ Staff.where(id: 4).first_or_create!(
   last_kana: 'コクブン',
   role_id: 4,
   employment_type: 0,
-  skill_staffs: [ SkillStaff.where(id: 6).first_or_initialize(staff_id: 4, skill_id: 1) ],
-  store_staffs: [ StoreStaff.where(id: 6).first_or_initialize(staff_id: 4, store_id: 1) ],
+  skill_staffs: [SkillStaff.where(id: 6).first_or_initialize(staff_id: 4, skill_id: 1)],
+  store_staffs: [StoreStaff.where(id: 6).first_or_initialize(staff_id: 4, store_id: 1)],
 )
 
 # 5：金森（オリーヴ所属、柔道整復師＆鍼灸師、バイト）
@@ -84,7 +84,7 @@ Staff.where(id: 5).first_or_create!(
     SkillStaff.where(id: 7).first_or_initialize(staff_id: 5, skill_id: 1),
     SkillStaff.where(id: 8).first_or_initialize(staff_id: 5, skill_id: 2)
   ],
-  store_staffs: [ StoreStaff.where(id: 7).first_or_initialize(staff_id: 5, store_id: 1) ],
+  store_staffs: [StoreStaff.where(id: 7).first_or_initialize(staff_id: 5, store_id: 1)],
 )
 
 # 6：牧野（オリーヴ所属、柔道整復師、正社員）
@@ -97,8 +97,8 @@ Staff.where(id: 6).first_or_create!(
   last_kana: 'マキノ',
   role_id: 4,
   employment_type: 0,
-  skill_staffs: [ SkillStaff.where(id: 9).first_or_initialize(staff_id: 6, skill_id: 1) ],
-  store_staffs: [ StoreStaff.where(id: 8).first_or_initialize(staff_id: 6, store_id: 1) ],
+  skill_staffs: [SkillStaff.where(id: 9).first_or_initialize(staff_id: 6, skill_id: 1)],
+  store_staffs: [StoreStaff.where(id: 8).first_or_initialize(staff_id: 6, store_id: 1)],
 )
 
 # 7：水谷（オリーヴ所属、柔道整復師＆鍼灸師、正社員）
@@ -115,7 +115,7 @@ Staff.where(id: 7).first_or_create!(
     SkillStaff.where(id: 10).first_or_initialize(staff_id: 7, skill_id: 1),
     SkillStaff.where(id: 11).first_or_initialize(staff_id: 7, skill_id: 2)
   ],
-  store_staffs: [ StoreStaff.where(id: 9).first_or_initialize(staff_id: 7, store_id: 1) ],
+  store_staffs: [StoreStaff.where(id: 9).first_or_initialize(staff_id: 7, store_id: 1)],
 )
 
 # 8：鎌田（オリーヴ所属、柔道整復師、バイト）
@@ -128,8 +128,8 @@ Staff.where(id: 8).first_or_create!(
   last_kana: 'カマタ',
   role_id: 4,
   employment_type: 2,
-  skill_staffs: [ SkillStaff.where(id: 12).first_or_initialize(staff_id: 8, skill_id: 1) ],
-  store_staffs: [ StoreStaff.where(id: 10).first_or_initialize(staff_id: 8, store_id: 1) ],
+  skill_staffs: [SkillStaff.where(id: 12).first_or_initialize(staff_id: 8, skill_id: 1)],
+  store_staffs: [StoreStaff.where(id: 10).first_or_initialize(staff_id: 8, store_id: 1)],
 )
 
 # 9：テストスタッフ（管理者権限、2店舗所属、柔道整復師＆鍼灸師、契約社員）
