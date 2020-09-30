@@ -33,7 +33,7 @@ class Customer < ApplicationRecord
 
   before_validation :sync_provider
 
-  validates :tel, numericality: { allow_blank: true }
+  validates :tel, numericality: { allow_blank: true }, length: { in: 9..15 }
   validates :password, presence: true, if: :should_validate_password?
   validates :email, uniqueness: true, unless: :common_email?
 
