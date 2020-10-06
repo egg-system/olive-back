@@ -173,12 +173,12 @@
       ) %>
       <% if @customer.persisted? %>
         <%= f.input(
-          :has_square_customer?,
+          :square_customer_exists?,
           as: :radio_buttons,
           label: 'square連携',
           wrapper: :horizontal_collection_inline,
           collection: { "連携済み" => true, "未連携" => false },
-          checked: @customer.has_square_customer?,
+          checked: @customer.square_customer_exists?,
           disabled: true,
           hint: synced_square_customer_message(@customer)
         ) %>
