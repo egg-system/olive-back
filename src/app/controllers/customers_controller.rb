@@ -47,11 +47,14 @@ class CustomersController < ApplicationController
     respond_to do |format|
       begin
         @customer.save!
-        if @customer.has_square_customer?
-          result = '新規作成しました。'
+        # rubocopに従うとネストが深くなりすぎるため、無効化
+        # rubocop:disable Layout/IndentationWidth, Layout/ElseAlignment, Layout/EndAlignment
+        result = if @customer.square_customer_exists?
+          '新規作成しました。'
         else
-          result = 'square連携に失敗しました。お手数ですが、squareの顧客は手入力で登録してください。'
+          'square連携に失敗しました。お手数ですが、squareの顧客は手入力で登録してください。'
         end
+        # rubocop:enable Layout/IndentationWidth, Layout/ElseAlignment, Layout/EndAlignment
 
         format.html { redirect_to @customer, notice: result }
         format.json { render :show, status: :created, location: @customer }

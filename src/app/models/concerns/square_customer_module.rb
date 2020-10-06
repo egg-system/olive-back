@@ -9,21 +9,19 @@ module SquareCustomerModule
     return square_client.customers
   end
 
-  def has_square_customer?
-    return get_square_customer.present?
+  def square_customer_exists?
+    return fetch_square_customer.present?
   end
 
-  def get_square_customer
+  def fetch_square_customer
     # 複数回、APIを叩かないように、インスタンス変数にキャッシュする
-    unless @square_customer.nil?
-      return @square_customer
-    end
+    return @square_customer unless @square_customer.nil?
 
     result = customer_api.search_customers(
       body: {
         query: {
           filter: {
-            reference_id: { exact: self.id.to_s }
+            reference_id: { exact: id.to_s }
           }
         },
 
@@ -38,23 +36,23 @@ module SquareCustomerModule
 
     # 成功した場合のみ、結果をキャッシュする
     if result.data.present?
-      @square_customer = result.data.customers.first 
+      @square_customer = result.data.customers.first
       return @square_customer
     end
 
     return nil
   end
 
-  def is_synced_square_customer
-    square_customer = get_square_customer
-    square_customer_attributes.all? { |key, value|
+  def synced_square_customer?
+    square_customer = fetch_square_customer
+    square_customer_attributes.all? do |key, value|
       square_customer[key] === value
-    }
+    end
   end
 
   def create_square_customer
     result = customer_api.create_customer(
-      body: self.square_customer_attributes
+      body: square_customer_attributes
     )
 
     if result.error?
@@ -74,12 +72,12 @@ module SquareCustomerModule
 
   def square_customer_attributes
     return {
-      family_name: self.last_name,
-      given_name: self.first_name,
-      company_name: self.full_kana,
-      email_address: self.email,
-      phone_number: self.tel,
-      reference_id: self.id.to_s,
+      family_name: last_name,
+      given_name: first_name,
+      company_name: full_kana,
+      email_address: email,
+      phone_number: tel,
+      reference_id: id.to_s
     }
   end
 end
