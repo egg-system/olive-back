@@ -72,10 +72,37 @@
     max-width: 160px;
     word-wrap: break-word;
   }
-  table th,
-  table td {
-    padding-left: 3px;
-    padding-right: 3px;
+
+  table {
+    th {
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    td {
+      text-align: center;
+    }
+  }
+
+  .first-visit {
+    color: blue;
+    font-weight: bold;
+  }
+
+  .reservation_state {
+    font-weight: bold;
+  }
+
+  .reservation_state_reserved {
+    color: #000;
+  }
+
+  .reservation_state_canceled {
+    color: red;
+  }
+
+  .reservation_state_visited {
+    color: gray;
   }
 }
 #new_reservation_form {

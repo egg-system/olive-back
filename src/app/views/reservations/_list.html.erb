@@ -17,13 +17,13 @@
           <th scope="col">担当者</th>
           <th scope="col" class="gross-profit">売上金</th>
           <th scope="col" class="gross-profit">初診</th>
-          <th scope="col" class="gross-profit">確認有無</th>
           <th scope="col" class="comment">コメント</th>
           <%# TODO: 二時間予約を機能解放する際に、コメントアウトを解く %>
           <%# <th scope="col">時間数</th> %>
           <th scope="col">メニュー</th>
           <th scope="col">オプション</th>
-          <th scope="col">予約の登録実施日時</th>
+          <th scope="col" class="gross-profit">登録実行者</th>
+          <th scope="col">登録実行日時</th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -32,7 +32,12 @@
           <% row_span = reservation.reservation_details.count %>
           <tr>
             <td rowspan="<%= row_span %>"><%= reservation.id %></td>
-            <td rowspan="<%= row_span %>"><%= reservation.state %></td>
+            <td
+              class="reservation_state reservation_state_<%= reservation.state_symbol.to_s %>"
+              rowspan="<%= row_span %>"
+            >
+              <%= reservation.state %>
+            </td>
             <td rowspan="<%= row_span %>" class="reservation-date">
               <%= reservation.reservation_date %><br>
               <%= reservation.start_time.strftime("%H:%M") %>〜<%= reservation.end_time.strftime("%H:%M") %>
@@ -49,11 +54,11 @@
             <td rowspan="<%= row_span %>" class="gross-profit">
               <%= number_with_delimiter(reservation.total_fee) %>円
             </td>
-            <td rowspan="<%= row_span %>">
+            <td
+              class="<%= reservation.is_first ? 'first-visit' : '' %>"
+              rowspan="<%= row_span %>"
+            >
               <%= reservation.is_first ? '初診' : '二回目以降' %>
-            </td>
-            <td rowspan="<%= row_span %>">
-              <%= reservation.is_confirmed ? '確認済み' : '未確認' %>
             </td>
             <td rowspan="<%= row_span %>" class="comment">
               <%= simple_format(reservation.reservation_comment, {}, wrapper_tag: "div") %>
@@ -66,9 +71,15 @@
               <%# <td>¥<%= "#{index + 1}時間目" %¥></td> %>
               <td><%= detail.menu.name %></td>
               <td>
-                <%= detail.has_options ? safe_join(detail.option_names, tag(:br)) : '無' %></td>
+                <%= detail.has_options ? safe_join(detail.option_names, tag(:br)) : '無' %>
               </td>
-              <td rowspan="<%= row_span %>"><%= reservation.created_at.strftime('%Y-%m-%d %H:%M') %></td>
+              </td>
+              <td rowspan="<%= row_span %>">
+                <%= Settings.audit.changed_by.to_h.key(reservation.created_by) %>
+              </td>
+              <td rowspan="<%= row_span %>">
+                <%= reservation.created_at.strftime('%Y-%m-%d %H:%M') %>
+              </td>
               <% if index === 0 %>
                 <td rowspan="<%= row_span %>">
                   <ul class="list-group list-group-flush">
