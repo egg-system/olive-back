@@ -45,16 +45,16 @@ module SquareCustomerModule
     return nil
   end
 
-  def is_synced_square_customer
+  def synced_square_customer?
     square_customer = get_square_customer
-    square_customer_attributes.all? { |key, value|
+    square_customer_attributes.all? do |key, value|
       square_customer[key] === value
-    }
+    end
   end
 
   def create_square_customer
     result = customer_api.create_customer(
-      body: self.square_customer_attributes
+      body: square_customer_attributes
     )
 
     if result.error?
@@ -74,12 +74,12 @@ module SquareCustomerModule
 
   def square_customer_attributes
     return {
-      family_name: self.last_name,
-      given_name: self.first_name,
-      company_name: self.full_kana,
-      email_address: self.email,
-      phone_number: self.tel,
-      reference_id: self.id.to_s,
+      family_name: last_name,
+      given_name: first_name,
+      company_name: full_kana,
+      email_address: email,
+      phone_number: tel,
+      reference_id: id.to_s
     }
   end
 end
