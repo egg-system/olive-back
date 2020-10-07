@@ -16,7 +16,7 @@
         label: '来店店舗',
         default: @observation.store_id,
         include_blank: true,
-        required: @observation.new_record?
+        required: true
       )%>
       <div class="row">
         <label class="col-sm-3">
@@ -48,7 +48,7 @@
         label: '担当者',
         default: @observation.staff_id,
         include_blank: true,
-        required: @observation.new_record?
+        required: true
       )%>
       <%= f.input(
         :menu_id,
@@ -57,7 +57,7 @@
         label: 'メニュー',
         default: @observation.menu_id,
         include_blank: true,
-        required: @observation.new_record?
+        required: true
       )%>
       <div class="form-group row">
         <label class="col-sm-3">オプション</label>
