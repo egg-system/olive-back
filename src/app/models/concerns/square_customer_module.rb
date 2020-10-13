@@ -2,7 +2,7 @@ module SquareCustomerModule
   extend ActiveSupport::Concern
 
   included do
-    after_create :create_square_customer
+    after_save :sync_square_customer
   end
 
   def customer_api
@@ -50,10 +50,16 @@ module SquareCustomerModule
     end
   end
 
-  def create_square_customer
-    result = customer_api.create_customer(
-      body: square_customer_attributes
-    )
+  def sync_square_customer
+    @square_customer = fetch_square_customer
+
+    # rubocop:disable Layout/IndentationWidth, Layout/ElseAlignment, Layout/EndAlignment
+    result = if @square_customer.nil?
+      create_square_customer
+    else
+      update_square_customer(@square_customer[:id])
+    end
+    # rubocop:enable Layout/IndentationWidth, Layout/ElseAlignment, Layout/EndAlignment
 
     if result.error?
       ExceptionNotifier.notify_exception(
@@ -66,6 +72,19 @@ module SquareCustomerModule
     @square_customer = result.data.customer if result.success?
 
     return true
+  end
+
+  def create_square_customer
+    return customer_api.create_customer(
+      body: square_customer_attributes
+    )
+  end
+
+  def update_square_customer(customer_id)
+    return customer_api.update_customer(
+      customer_id: customer_id,
+      body: square_customer_attributes
+    )
   end
 
   protected
