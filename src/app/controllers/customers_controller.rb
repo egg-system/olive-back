@@ -59,7 +59,7 @@ class CustomersController < ApplicationController
 
         format.html { redirect_to @customer, notice: result }
         format.json { render :show, status: :created, location: @customer }
-      rescue Exception => exception
+      rescue StandardError => exception
         # square連携のエラーをログに表示するため
         logger.debug(exception)
         format.html { render :new }
@@ -76,7 +76,7 @@ class CustomersController < ApplicationController
         @customer.update!(customer_params)
         format.html { redirect_to @customer, notice: '更新および、Square連携に成功しました。' }
         format.json { render :show, status: :ok, location: @customer }
-      rescue Exception => exception
+      rescue StandardError => exception
         # square連携のエラーをログに表示するため
         logger.debug(exception)
         @reservations = @customer.reservations.order_reserved_at
