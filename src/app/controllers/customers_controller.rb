@@ -47,10 +47,11 @@ class CustomersController < ApplicationController
     respond_to do |format|
       begin
         @customer.save!
+
         # rubocopに従うとネストが深くなりすぎるため、無効化
         # rubocop:disable Layout/IndentationWidth, Layout/ElseAlignment, Layout/EndAlignment
         result = if @customer.square_customer_exists?
-          '新規作成しました。'
+          '新規作成、Square連携に成功しました。'
         else
           'square連携に失敗しました。お手数ですが、squareの顧客は手入力で登録してください。'
         end
@@ -58,7 +59,9 @@ class CustomersController < ApplicationController
 
         format.html { redirect_to @customer, notice: result }
         format.json { render :show, status: :created, location: @customer }
-      rescue => exception
+      rescue Exception => exception
+        # square連携のエラーをログに表示するため
+        logger.debug(exception)
         format.html { render :new }
         format.json { render json: @customer.errors, status: :unprocessable_entity }
       end
@@ -71,9 +74,11 @@ class CustomersController < ApplicationController
     respond_to do |format|
       begin
         @customer.update!(customer_params)
-        format.html { redirect_to @customer, notice: '更新しました。' }
+        format.html { redirect_to @customer, notice: '更新および、Square連携に成功しました。' }
         format.json { render :show, status: :ok, location: @customer }
-      rescue => exception
+      rescue Exception => exception
+        # square連携のエラーをログに表示するため
+        logger.debug(exception)
         @reservations = @customer.reservations.order_reserved_at
         format.html { render :show }
         format.json { render json: @customer.errors, status: :unprocessable_entity }
