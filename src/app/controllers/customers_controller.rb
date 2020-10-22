@@ -75,11 +75,14 @@ class CustomersController < ApplicationController
       begin
         @customer.update!(customer_params)
 
+        # rubocopに従うとネストが深くなりすぎるため、無効化
+        # rubocop:disable Layout/IndentationWidth, Layout/ElseAlignment, Layout/EndAlignment
         result = if @customer.synced_square_customer?
           '新規作成、Square連携に成功しました。'
         else
           'square連携に失敗しました。入力内容が誤っている可能性があります。お手数ですが、修正後にもう一度、更新してください。'
         end
+        # rubocop:enable Layout/IndentationWidth, Layout/ElseAlignment, Layout/EndAlignment
 
         format.html { redirect_to @customer, notice: result }
         format.json { render :show, status: :ok, location: @customer }
