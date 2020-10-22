@@ -53,7 +53,7 @@ class CustomersController < ApplicationController
         result = if @customer.square_customer_exists?
           '新規作成、Square連携に成功しました。'
         else
-          'square連携に失敗しました。お手数ですが、squareの顧客は手入力で登録してください。'
+          'square連携に失敗しました。入力内容が誤っている可能性があります。お手数ですが、修正後にもう一度、更新してください。'
         end
         # rubocop:enable Layout/IndentationWidth, Layout/ElseAlignment, Layout/EndAlignment
 
@@ -74,7 +74,14 @@ class CustomersController < ApplicationController
     respond_to do |format|
       begin
         @customer.update!(customer_params)
-        format.html { redirect_to @customer, notice: '更新および、Square連携に成功しました。' }
+
+        result = if @customer.synced_square_customer?
+          '新規作成、Square連携に成功しました。'
+        else
+          'square連携に失敗しました。入力内容が誤っている可能性があります。お手数ですが、修正後にもう一度、更新してください。'
+        end
+
+        format.html { redirect_to @customer, notice: result }
         format.json { render :show, status: :ok, location: @customer }
       rescue StandardError => exception
         # square連携のエラーをログに表示するため
