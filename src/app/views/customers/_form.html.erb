@@ -19,7 +19,10 @@
         label: 'メールアドレス',
         readonly: @customer.persisted? && !current_staff.role.admin?,
         hint: current_staff.role.admin? ? 
-          "不明な場合は #{Settings.customer.common_email} を入力してください"
+          "
+            不明な場合は #{Settings.customer.common_email} を入力してください。<br />
+             ※ メールアドレスを変更した際は、パスワードの変更も必要になります
+          ".html_safe
           : 'システム管理者のみ変更可能です',
         required: true
       ) %>
@@ -34,9 +37,9 @@
               label: 'ログイン可否',
               as: :boolean,
               hint: "
-                メールアドレスを元に補完されます。
-                 ※ メールアドレスが #{Settings.customer.common_email} のお客様はログインできません。
-              ",
+                メールアドレスを元に補完されます。<br />
+                 ※ メールアドレスが #{Settings.customer.common_email} のお客様はログインできません
+              ".html_safe,
               disabled: true,
             ) %>
           </div>
@@ -52,7 +55,10 @@
       <% end %>
       <%= f.input :password,
         label: 'パスワード',
-        hint: "パスワードは英字/数字を含む8文字以上にしてください。 ※ メールアドレスが #{Settings.customer.common_email} のお客様は設定不要です。"
+        hint: "パスワードは英字/数字を含む8文字以上にしてください。<br />
+          ※ メールアドレスを変更した際は、パスワードの変更も必要になります<br />
+          ※ メールアドレスが #{Settings.customer.common_email} のお客様は設定不要です
+        ".html_safe
       %>
       <%= f.input(
         :can_receive_mail,

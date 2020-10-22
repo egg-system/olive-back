@@ -45,6 +45,8 @@ module SquareCustomerModule
 
   def synced_square_customer?
     square_customer = fetch_square_customer
+    return false if fetch_square_customer.nil?
+
     square_customer_attributes.all? do |key, value|
       square_customer[key] === value
     end
