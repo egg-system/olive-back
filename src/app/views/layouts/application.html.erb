@@ -5,7 +5,7 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
@@ -17,4 +17,9 @@
       <%= params_debug %>
     </div>
   </body>
+  <%=
+    # webpackのビルド結果の読み込み
+    ## DOMのレンダリング後に実施しなければ、エラーになるため、末尾に配置している
+    bundle_js_path
+  %>
 </html>

@@ -25,4 +25,14 @@ module ApplicationHelper
     return unless Rails.env.development?
     return debug(params) if ENV['PARAMS_DEBUG_ENABLED'] == 'true'
   end
+
+  def bundle_js_path
+    webpack_path = '/assets/javascripts/webpack'
+    File.open("#{Rails.public_path}#{webpack_path}/manifest.json") do |json_file|
+      json = JSON.load(json_file)
+      source_file = json['main.js']
+
+      return content_tag(:script, nil, src: "#{webpack_path}/#{source_file}")
+    end
+  end
 end
