@@ -64,8 +64,8 @@ jobs:
           command: npm run prod
           name: build node_modules
       - run:
-        command: mkdir -p ~/caches
-        name: mkdir -p ~/caches
+          command: mkdir -p ~/caches
+          name: mkdir -p ~/caches
       - save_cache:
           key: assets-{{ .Branch }}-{{ .Revision }}
           paths:
