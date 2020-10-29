@@ -1,7 +1,26 @@
 version: 2
 
+commands:
+  restore_build_cache:
+    steps:
+      - restore_cache:
+          keys:
+            - docker-cache-{{ checksum "Dockerfile" }}-{{ checksum "src/Gemfile.lock" }}
+          paths:
+            - ~/caches/images.tar
+      - run:
+          command: |
+            if [[ -e ~/caches/images.tar ]]; then
+              docker load -i ~/caches/images.tar
+            fi
+          name: docker load
+      - restore_cache:
+          keys:
+            - assets-{{ .Branch }}-{{ .Revision }}
+          name: assets restore cache
+
 jobs:
-  build:
+  build-rails:
     machine: true
     steps:
       - checkout
@@ -32,21 +51,32 @@ jobs:
           key: docker-cache-{{ checksum "Dockerfile" }}-{{ checksum "src/Gemfile.lock" }}
           paths:
             - ~/caches/images.tar
-  test:
+
+  build-assets:
+    docker:
+      - image: circleci/node:lts
+    steps:
+      - checkout
+      - run:
+          command: npm install
+          name: node_modules install
+      - run:
+          command: npm run prod
+          name: build node_modules
+      - run:
+        command: mkdir -p ~/caches
+        name: mkdir -p ~/caches
+      - save_cache:
+          key: assets-{{ .Branch }}-{{ .Revision }}
+          paths:
+            - src/public/assets/javascripts/webpack
+          name: webpack save cache
+
+  test-rails:
     machine: true
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - docker-cache-{{ checksum "Dockerfile" }}-{{ checksum "src/Gemfile.lock" }}
-          paths:
-            - ~/caches/images.tar
-      - run:
-          command: |
-            if [[ -e ~/caches/images.tar ]]; then
-              docker load -i ~/caches/images.tar
-            fi
-          name: docker load
+      - restore_build_cache
       - run:
           command: docker-compose run -u 1001:1001 rails dockerize -wait tcp://mysql:3306 -timeout 120s
           name: wait for db
@@ -56,21 +86,12 @@ jobs:
       - run:
           command: docker-compose run -u 1001:1001 rails bundle exec rake test
           name: rails test
+
   rubocop:
     machine: true
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - docker-cache-{{ checksum "Dockerfile" }}-{{ checksum "src/Gemfile.lock" }}
-          paths:
-            - ~/caches/images.tar
-      - run:
-          command: |
-            if [[ -e ~/caches/images.tar ]]; then
-              docker load -i ~/caches/images.tar
-            fi
-          name: docker load
+      - restore_build_cache
       - run: 
           command: docker-compose run -u 1001:1001 rails bundle exec rubocop
           name: rubocop
@@ -79,10 +100,13 @@ workflows:
   version: 2
   build-and-test:
     jobs:
-      - build
-      - test:
+      - build-rails
+      - build-assets
+      - test-rails:
           requires:
-            - build
+            - build-rails
+            - build-assets
       - rubocop:
           requires:
-            - build
+            - build-rails
+            - build-assets
