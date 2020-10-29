@@ -3,17 +3,12 @@ const glob = require('glob');
 const webpack = require('webpack');
 const ManifestPlugin = require('webpack-manifest-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-let entries = {};
-glob.sync('./frontend/**/*.{js,jsx,ts,tsx,css,scss,sass}').map((file) => {
-  let name = file.split('/')[3].split('.')[0];
-  entries[name] = file;
-})
+
 module.exports = {
-  entry: entries,
+  entry: './frontend/app.tsx',
   output: {
     filename: "[name]-[hash].js",
-    path: path.join(__dirname, 'public', 'assets'),
-    publicPath: "/"
+    path: path.join(__dirname, 'src', 'public', 'assets', 'javascripts', 'webpack')
   },
   module: {
     rules: [
