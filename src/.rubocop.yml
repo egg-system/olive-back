@@ -31,3 +31,6 @@ Layout/MultilineMethodCallIndentation:
 
 Lint/SuppressedException:
   Enabled: false
+
+Metrics/AbcSize:
+  Enabled: false
