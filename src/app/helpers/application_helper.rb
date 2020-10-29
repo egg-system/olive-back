@@ -29,7 +29,7 @@ module ApplicationHelper
   def bundle_js_path
     webpack_path = '/assets/javascripts/webpack'
     File.open("#{Rails.public_path}#{webpack_path}/manifest.json") do |json_file|
-      json = JSON.parse(json_file)
+      json = JSON.parse(json_file.read)
       source_file = json['main.js']
 
       return content_tag(:script, nil, src: "#{webpack_path}/#{source_file}")
