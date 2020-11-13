@@ -76,12 +76,22 @@
         default: @customer.first_visit_store_id,
         include_blank: true
       )%>
-      <%= f.input(
-        :first_visited_at,
-        wrapper: :horizontal_multi_select,
-        label: '初回ご来店日',
-        include_blank: true
-      ) %>
+      <div class="form-group row date optional">
+        <label class="col-sm-3 control-label date optional" for="first_visited_at">
+          初回ご来店日
+        </label>
+        <div class="col-sm-9">
+          <%= render(
+            'react/calender/input',
+            id: 'first_visited_at',
+            name: 'customer[first_visited_at]',
+            value: @customer.first_visited_at,
+            error_message: get_model_error_message(@customer, :first_visited_at),
+            disable_future: true,
+            clearable: true
+          ) %>
+        </div>
+      </div>
       <%= f.input(
         :last_visit_store_id,
         as: :select,
@@ -93,14 +103,25 @@
       <%= f.input :comment, label: 'コメント' %>
       <%= f.input :zip_code, label: '郵便番号' %>
       <%= f.input :address, label: '住所' %>
-      <%= f.input(
-        :birthday,
-        label: '生年月日',
-        wrapper: :horizontal_multi_select,
-        start_year: 1940,
-        end_year: Date.today.year,
-        include_blank: true
-      ) %>
+
+      <div class="form-group row date optional">
+        <label class="col-sm-3 control-label date optional" for="customer_first_visited_at_1i">
+          生年月日
+        </label>
+        <div class="col-sm-9">
+          <%= render(
+            'react/calender/input',
+            id: 'birthday',
+            name: 'customer[birthday]',
+            value: @customer.birthday,
+            error_message: get_model_error_message(@customer, :birthday),
+            disable_future: true,
+            doSelectBirthDay: true,
+            clearable: true
+          ) %>
+        </div>
+      </div>
+
       <% if @customer.persisted? %>
         <%= f.input :age, label: '年齢', readonly: true %>
       <% end %>
