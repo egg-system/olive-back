@@ -43,7 +43,7 @@ module ApplicationHelper
     return nil if error.nil?
 
     model_name = model.class.name.downcase
-    attribute_name = I18n.t "activerecord.attributes.#{model_name}.#{attribute.to_s}"
+    attribute_name = I18n.t "activerecord.attributes.#{model_name}.#{attribute}"
     return "#{attribute_name}#{error[:error]}"
   end
 end
