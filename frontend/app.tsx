@@ -1,8 +1,4 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import TestComponent from './test/TestComponent'
+import { renderCalendar } from './render/calendar'
 
-ReactDOM.render(
-  <TestComponent test="test" />,
-  document.getElementById('test-component')
-)
+// カレンダーの描画処理
+renderCalendar()

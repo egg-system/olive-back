@@ -35,4 +35,15 @@ module ApplicationHelper
       return content_tag(:script, nil, src: "#{webpack_path}/#{source_file}")
     end
   end
+
+  def get_model_error_message(model, attribute)
+    return nil if model.errors.details[attribute].nil?
+
+    error = model.errors.details[attribute].first
+    return nil if error.nil?
+
+    model_name = model.class.name.downcase
+    attribute_name = I18n.t "activerecord.attributes.#{model_name}.#{attribute}"
+    return "#{attribute_name}#{error[:error]}"
+  end
 end

@@ -76,17 +76,24 @@ class ObservationsController < ApplicationController
 
   def visit_datetime
     observationParams = params[:observation]
-    return nil if observationParams["visit_date(1i)"].empty?
-    return nil if observationParams["visit_date(2i)"].empty?
-    return nil if observationParams["visit_date(3i)"].empty?
+    return nil if observationParams[:visit_date].empty?
     return nil if observationParams[:visit_time].empty?
 
-    return "#{observationParams["visit_date(1i)"]}-#{observationParams["visit_date(2i)"]}-#{observationParams["visit_date(3i)"]} #{observationParams[:visit_time]}".in_time_zone
+    return "#{observationParams[:visit_date]} #{observationParams[:visit_time]}".in_time_zone
   end
 
   def observation_params
     params.require(:observation).permit(
-      :customer_id, :store_id, :visit_date, :visit_time, :staff_id, :menu_id, :merchandise, :observation_history, :coupon_count, :op_coupon_count
+      :customer_id,
+      :store_id,
+      :visit_date,
+      :visit_time,
+      :staff_id,
+      :menu_id,
+      :merchandise,
+      :observation_history,
+      :coupon_count,
+      :op_coupon_count
     )
   end
 end

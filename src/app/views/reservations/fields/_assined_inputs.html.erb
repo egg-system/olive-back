@@ -21,15 +21,15 @@
     <abbr>&nbsp;(必須)</abbr>
   </div>
   <div class="custom_right col-sm-9">
-    <%= form.input(
-        :reservation_date,
-        label: false,
-        required: true,
-        disabled: is_assigned,
-        hint: is_assigned ? '担当スタッフを空にすると、日時の変更が可能になります。' : '',
-        default: Date.today,
-        input_html: { class: 'rsv_day' }
-      ) %>
+    <%= render(
+      'react/calender/input',
+      id: 'reservation_date',
+      name: 'reservation[reservation_date]',
+      value: @reservation.reservation_date,
+      error_message: get_model_error_message(@reservation, :reservation_date),
+      disable_past: true,
+      disabled: is_assigned
+    ) %>
   </div>
 </div>
 

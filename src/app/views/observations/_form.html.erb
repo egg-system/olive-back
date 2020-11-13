@@ -24,12 +24,13 @@
           <abbr class="req">&nbsp;(必須)</abbr>
         </label>
         <div class="col-sm-9">
-          <%= f.input(
-            :visit_date,
-            as: :date,
-            label: false,
-            default: Date.today,
-            required: true
+          <%= render(
+            'react/calender/input',
+            id: 'visit_date',
+            name: 'observation[visit_date]',
+            value: @observation.visit_date,
+            error_message: get_model_error_message(@observation, :visit_date),
+            disable_future: true
           ) %>
         </div>
       </div>
