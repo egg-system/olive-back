@@ -2,3 +2,4 @@
 /src/vendor
 .history
 .DS_Store
+node_modules

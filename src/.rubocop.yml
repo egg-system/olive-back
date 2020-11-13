@@ -6,7 +6,7 @@ AllCops:
 
 #################### Layout ###########################
 
-Layout/AlignArguments:
+Layout/ArgumentAlignment:
   Enabled: false
 
 Layout/EndOfLine:
@@ -18,10 +18,10 @@ Layout/FirstArrayElementIndentation:
 Layout/FirstHashElementIndentation:
   EnforcedStyle: consistent
 
-Layout/IndentFirstArrayElement:
+Layout/FirstArrayElementIndentation:
   Enabled: false
 
-Layout/IndentFirstHashElement:
+Layout/FirstHashElementIndentation:
   Enabled: false
 
 Layout/MultilineMethodCallIndentation:
@@ -29,10 +29,8 @@ Layout/MultilineMethodCallIndentation:
 
 #################### Lint ###########################
 
-Lint/HandleExceptions:
+Lint/SuppressedException:
   Enabled: false
 
-#################### Style ###########################
-
-Style/BracesAroundHashParameters:
+Metrics/AbcSize:
   Enabled: false
