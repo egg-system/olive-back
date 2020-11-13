@@ -1,0 +1,48 @@
+.calendarInputGroup {
+  div {
+    width: 100%;
+
+    div {
+      height: calc(1.5em + 0.75rem + 2px);
+    }
+
+    input {
+      color: #495057;
+    }
+
+    :global(div.Mui-disabled) {
+      background-color: #e9ecef;
+    }
+
+    :global(.MuiOutlinedInput-input) {
+      padding: 18.5px 17px;
+    }
+  }
+
+  margin-bottom: 1rem;
+}
+
+.hasError {
+  :global(.MuiOutlinedInput-notchedOutline) {
+    border-color: #dc3545;
+  }
+
+  .errorMessage {
+    color: #dc3545;
+    font-size: 80%;
+    margin-top: 0.25rem;
+  }
+}
+
+.isValid {
+  // disabledでも結果に問題ない場合は、外枠を変更する
+  :global(.MuiOutlinedInput-root.Mui-disabled) {
+    :global(fieldset.MuiOutlinedInput-notchedOutline) {
+      border-color: #28a745;
+    }
+  }
+
+  :global(fieldset.MuiOutlinedInput-notchedOutline) {
+    border-color: #28a745;
+  }
+}
