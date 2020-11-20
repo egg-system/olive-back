@@ -32,6 +32,10 @@ const renderDateSearchInput = () => {
   const endDateElementId = 'react_reservation_search_end_date'
   const endDateElement = document.getElementById(endDateElementId) as HTMLInputElement
 
+  if (!startDateElement || !endDateElement) {
+    return
+  }
+
   ReactDOM.render(
     <CalendarSearchInput
       startDateElement={ startDateElement }
