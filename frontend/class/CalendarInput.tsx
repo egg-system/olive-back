@@ -7,7 +7,7 @@ import moment from 'moment'
 import { MaterialUiPickersDate } from "@material-ui/pickers/typings/date"
 
 import momentJaUtils from '../utils/momentJaUtils'
-import calendarStyle from '../styles/calendar.scss'
+import calendarInputStyle from '../styles/CalendarInput.scss'
 
 interface CalendarProp {
   dateValueElement: HTMLInputElement
@@ -35,14 +35,14 @@ export default class CalendarInput extends React.Component<CalendarProp, Calenda
   }
 
   protected getStyle = (errorMessage: string | null): string => {
-    const styles = [calendarStyle.calendarInputGroup]
+    const styles = [calendarInputStyle.calendarInputGroup]
 
     if (errorMessage) {
-      styles.push(calendarStyle.hasError)
+      styles.push(calendarInputStyle.hasError)
     }
 
     if (this.state.isValid && !errorMessage) {
-      styles.push(calendarStyle.isValid)
+      styles.push(calendarInputStyle.isValid)
     }
 
     return styles.join(' ')
@@ -87,7 +87,7 @@ export default class CalendarInput extends React.Component<CalendarProp, Calenda
           }
           {
             errorMessage &&
-            <div className={ calendarStyle.errorMessage }>
+            <div className={ calendarInputStyle.errorMessage }>
               { errorMessage }
             </div>
           }
