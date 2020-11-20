@@ -1,11 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import moment from 'moment'
-import CalenderInput from '../class/CalendarInput'
+import CalendarInput from '../class/CalendarInput'
+import CalendarSearchInput from '../class/CalendarSearcInput'
 
 const renderDateInput = (elementId: string) => {
-  const dateValueElement: HTMLInputElement
-    = document.getElementById(`${elementId}_value`) as HTMLInputElement
+  const valueElementId = `${elementId}_value`
+  const dateValueElement = document.getElementById(valueElementId) as HTMLInputElement
   
   // 関係のないページでは描画処理を実行しない
   if (!dateValueElement) {
@@ -19,8 +20,24 @@ const renderDateInput = (elementId: string) => {
   }
 
   ReactDOM.render(
-    <CalenderInput dateValueElement={ dateValueElement } isValid={ isValid } />,
+    <CalendarInput dateValueElement={ dateValueElement } isValid={ isValid } />,
     document.getElementById(elementId)
+  )
+}
+
+const renderDateSearchInput = () => {
+  const startDateElementId = 'react_reservation_search_start_date'
+  const startDateElement = document.getElementById(startDateElementId) as HTMLInputElement
+
+  const endDateElementId = 'react_reservation_search_end_date'
+  const endDateElement = document.getElementById(endDateElementId) as HTMLInputElement
+
+  ReactDOM.render(
+    <CalendarSearchInput
+      startDateElement={ startDateElement }
+      endDateElement={ endDateElement }
+    />,
+    document.getElementById('react_reservation_date_search')
   )
 }
 
@@ -29,4 +46,5 @@ export const renderCalendar = () => {
   renderDateInput('react_first_visited_at')
   renderDateInput('react_visit_date')
   renderDateInput('react_birthday')
+  renderDateSearchInput()
 }
