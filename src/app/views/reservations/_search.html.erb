@@ -1,5 +1,5 @@
 <div class="condition-section">
-  <%= form_with url: search_reservations_path, id:"search", method: :post, local: true do |form| %>
+  <%= form_with url: search_reservations_path, id: "search", method: :post, local: true do |form| %>
     <table>
       <tbody>
         <tr>
@@ -52,23 +52,19 @@
         <tr>
           <th>予約日</th>
           <td>
-            <%= form.date_select(
-              :from_date,
-              class: "form-control",
-              selected: @from_date,
-              use_month_numbers: true,
-              include_blank: true,
-              date_separator: '/',
-            ) %>
-            〜
-            <%= form.date_select(
-              :to_date,
-              class: "form-control",
-              selected: @to_date,
-              include_blank: true,
-              use_month_numbers: true,
-              date_separator: '/'
-            ) %>
+            <div id="react_reservation_date_search"></div>
+            <input
+              id="react_reservation_search_start_date"
+              type="hidden"
+              name="from_date"
+              value="<%= @from_date %>"
+            >
+            <input
+              id="react_reservation_search_end_date"
+              type="hidden"
+              name="to_date"
+              value="<%= @to_date %>"
+            >
           </td>
         </tr>
         <tr>
