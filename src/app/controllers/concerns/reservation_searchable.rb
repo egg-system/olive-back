@@ -33,6 +33,7 @@ module Concerns::ReservationSearchable
   # 必要であれば、使い回し可能にする
   def parse_date_params(param_name)
     return nil if params[param_name].empty?
+
     return Date.parse(params[param_name])
   end
 end
