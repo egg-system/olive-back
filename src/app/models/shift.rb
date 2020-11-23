@@ -62,6 +62,10 @@ class Shift < ApplicationRecord
     return SHIFT_TIMES
   end
 
+  def self.display_slot_times
+    return DISPLAY_SHIFT_TIMES
+  end
+
   def shift_at
     self.start_at.on(self.date)
   end
@@ -102,6 +106,20 @@ class Shift < ApplicationRecord
     '18:30~19:00' => '18:30:00',
     '19:00~19:30' => '19:00:00',
     '19:30~20:00' => '19:30:00',
+  }
+
+  DISPLAY_SHIFT_TIMES = {
+    '09:00~10:00' => '09:00:00',
+    '10:00〜11:00' => '10:00:00',
+    '11:00〜12:00' => '11:00:00',
+    '12:00〜13:00' => '12:00:00',
+    '13:00〜14:00' => '13:00:00',
+    '14:00〜15:00' => '14:00:00',
+    '15:00〜16:00' => '15:00:00',
+    '16:00〜17:00' => '16:00:00',
+    '17:00〜18:00' => '17:00:00',
+    '18:00〜19:00' => '18:00:00',
+    '19:00〜20:00' => '19:00:00'
   }
 
   def self.shift_of_staff_at_datetime(staff, datetime)

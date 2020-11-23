@@ -54,8 +54,21 @@ class Store < ApplicationRecord
     return Settings.store_type.to_h.invert[store_type_key]
   end
 
-  def slot_times
-    return Shift.slot_times.select { |label, slot_time|
+  def slot_time_labels
+    return self.select_slot_times(Shift.display_slot_times).keys
+  end
+
+  def get_time_slots(date)
+    return self.select_slot_times(Shift.slot_times).map { |label, time_slot|
+      day = Date.parse(date)
+      Tod::TimeOfDay.parse(time_slot).on(day)
+    }
+  end
+
+  protected
+
+  def select_slot_times(slot_times)
+    return slot_times.select { |label, slot_time|
       slotted_at = Tod::TimeOfDay(slot_time)
 
       # 開店時間内か
@@ -64,17 +77,6 @@ class Store < ApplicationRecord
 
       # 休憩時間外か
       next slotted_at < self.break_from || self.break_to <= slotted_at
-    }
-  end
-
-  def slot_time_labels
-    return self.slot_times.keys
-  end
-
-  def get_time_slots(date)
-    return self.slot_times.map { |label, time_slot|
-      day = Date.parse(date)
-      Tod::TimeOfDay.parse(time_slot).on(day)
     }
   end
 

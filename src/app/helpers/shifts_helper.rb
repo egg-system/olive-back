@@ -9,7 +9,11 @@ module ShiftsHelper
     }
   end
 
-  def get_shift_parameter(shift_time)
+  def extract_shift_input_names(shift_times)
+    return shift_times.map { |shift_time| extract_shift_input_name(shift_time) }
+  end
+
+  def extract_shift_input_name(shift_time)
     return "new_shifts[#{shift_time}]" unless shift_exist(shift_time)
 
     date = extract_date(shift_time)

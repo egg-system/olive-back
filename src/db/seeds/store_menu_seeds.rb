@@ -54,7 +54,9 @@ Store.where(id: 1).first_or_create!(
   mail: 'info@olivebodycare.jp',
   url: 'https://olivebodycare.healthcare/salon/tamaplaza',
   open_at: '10:00',
-  close_at: '20:00'
+  close_at: '20:00',
+  break_from: '13:00',
+  break_to: '15:00'
 )
 
 Store.where(id: 2).first_or_create!(
@@ -65,7 +67,9 @@ Store.where(id: 2).first_or_create!(
   mail: 'simpleste.olivejapan@gmail.com',
   url: 'https://simpleste.jp',
   open_at: '10:00',
-  close_at: '20:00'
+  close_at: '20:00',
+  break_from: '13:00',
+  break_to: '15:00'
 )
 
 Menu.all.each do |menu|

@@ -63,6 +63,8 @@ $borderColor: black;
   border: 1px solid $borderColor;
 }
 .shift-list .sticky_table {
+  width: fit-content;
+
   thead {
     th {
       white-space: nowrap;
@@ -99,10 +101,6 @@ $borderColor: black;
       width: $cellWidth;
       font-size: 0.9rem;
       text-align: center;
-    }
-
-    // 1時間ごとに区切り線を入れる
-    .td-checkbox:nth-child(odd) {
       border-right: 2px solid $borderColor;
     }
 
