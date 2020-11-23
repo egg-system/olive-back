@@ -7,9 +7,9 @@ Store.where(id: 3).first_or_create!(
   mail: 'tt.wing001@gmail.com',
   url: 'https://eggsystem.co.jp/',
   open_at: '09:00',
+  close_at: '19:00',
   break_from: '13:00',
-  break_to: '15:00',
-  close_at: '19:00'
+  break_to: '15:00'
 )
 
 Store.where(id: 4).first_or_create!(
@@ -20,9 +20,9 @@ Store.where(id: 4).first_or_create!(
   mail: 'tt.wing002@gmail.com',
   url: 'https://eggsystem.co.jp/',
   open_at: '09:00',
+  close_at: '19:00',
   break_from: '13:00',
-  break_to: '15:00',
-  close_at: '19:00'
+  break_to: '15:00'
 )
 
 customer = Customer.where(id: 1).first_or_create!(
