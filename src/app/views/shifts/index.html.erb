@@ -47,23 +47,29 @@
         </tr>
       </thead>
 
-      <tbody>
+      <tbody id="shifts_table">
         <% (@start_date..@end_date).each do |date| %>
           <tr class="<%= weekend_color(date) %>">
             <td>
               <%= "#{date}(#{get_weekday_label(date)})" %>
             </td>
-            <% @store.get_time_slots(date).each do |shift_time| %>
+            <%
+              shift_groups = @store.get_time_slots(date).in_groups_of(2)
+              shift_groups.each_with_index do |shift_times, index|
+            %>
               <td class="td-checkbox">
-                <%= form.check_box(
-                  get_shift_parameter(shift_time), {
-                    checked: shift_exist(shift_time),
-                    disabled: resrvation_exist(shift_time)
-                  }
-                ) %>
-                <% if resrvation_exist(shift_time) %>
-                  <span>予約済み</span>
-                <% end %>
+                <div
+                  id="react_shift_checkbox_<%= date %>_<%= index %>"
+                  data-reservation-exsists="<%=
+                    resrvation_exist(shift_times.first) ? 'true' : 'false'
+                  %>"
+                  data-shift-input-names="<%=
+                    extract_shift_input_names(shift_times).to_json
+                  %>"
+                  data-checked="<%=
+                    shift_exist(shift_times.first()) ? 'true' : 'false'
+                  %>"
+                ></div>
               </td>
             <% end %>
           </tr>
