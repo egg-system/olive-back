@@ -130,6 +130,10 @@ export default class AssignableStaffSelect extends React.Component<
   }
 
   public componentDidMount = async () => {
+    if (this.state.selectedStaffOption) {
+      return
+    }
+
     this.state.assignedElements.forEach((elementData) => {
       elementData.value.on('change', this.fetchStaffOptions)
     })
