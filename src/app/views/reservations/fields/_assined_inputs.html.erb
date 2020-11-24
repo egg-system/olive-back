@@ -1,11 +1,20 @@
-<%= form.input(
-  :staff_id,
-  collection: is_assigned ? [@reservation.staff] : @staffs,
-  label: '担当スタッフ',
-  include_blank: true,
-  disabled: @reservation.new_record? || @reservation.canceled?,
-  hint: @reservation.new_record? ? '日時、メニューを元に自動で割当てられます。' : ''
-) %>
+<div class="form-group row select">
+  <label class="col-sm-3 col-form-label select" for="reservation_staff_id">
+    担当スタッフ
+  </label>
+  <div class="col-sm-9">
+    <div
+      id="react_reservation_assignable_staff_select"
+      data-disabled="<%= @reservation.new_record? || @reservation.canceled? %>"
+      data-hint="<%=
+        @reservation.new_record? ? '日時、メニューを元に自動で割当てられます。' : ''
+      %>"
+      data-selected-staff="<%=
+        is_assigned ? @reservation.staff.to_json : ''
+      %>"
+    ></div>
+  </div>
+</div>
 
 <%= form.input(
   :store_id,
