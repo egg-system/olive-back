@@ -31,6 +31,11 @@ export default class CalendarInput extends React.Component<CalendarProp, Calenda
 
   public handleDateValue = (value: MaterialUiPickersDate) => {
     this.state.dateValueElement.value = value ? value?.format('YYYY-MM-DD') : ''
+
+    // 他のコンポーネントと連携しやすくするため、イベントを発生させる
+    const changeEvent = new Event('change', { bubbles: true })
+    this.state.dateValueElement.dispatchEvent(changeEvent)
+
     this.setState({ dateValueElement: this.state.dateValueElement })
   }
 
