@@ -9,11 +9,17 @@ import Dialog from '@material-ui/core/Dialog'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogActions from '@material-ui/core/DialogActions'
-import Grid from '@material-ui/core/Grid';
+import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 
 // 日本語化のため使用
-import ja from 'date-fns/locale/ja';
+import ja from 'date-fns/locale/ja'
+
+// カレンダーを日曜日から表示するようにする
+ja.options = {
+  ...ja.options,
+  weekStartsOn: 0
+}
 
 import moment, { Moment } from 'moment'
 
