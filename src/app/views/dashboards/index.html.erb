@@ -1,7 +1,18 @@
 <% breadcrumb :root %>
-<div class="upper-frame">
-  <h1>本日の予約一覧</h1>
+<div>
+  <div class="upper-frame">
+    <h2>予約カレンダー</h2>
+  </div>
+  <div
+    id="react_reservation_calendar"
+    data-store-staffs="<%= store_staff_options(@viewable_stores) %>"
+  ></div>
 </div>
-<div class="lower-frame">
-  <%= render "reservations/list", is_shown_customer_name: true %>
+<div>
+  <div class="upper-frame">
+    <h2>本日の予約一覧</h2>
+  </div>
+  <div class="lower-frame">
+    <%= render "reservations/list", is_shown_customer_name: true %>
+  </div>
 </div>
