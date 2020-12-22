@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import moment, { Moment } from 'moment'
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 import SearchSelectInput, { Option, StoreOption } from './SearchSelectInput'
-import Calendar, { ReservationDateRange, Reservation } from './Calendar'
+import CalendarView, { ReservationDateRange, Reservation, Shift } from './CalendarView'
 
 interface ReservationCalendarProps {
   stores: StoreOption[]
@@ -14,6 +15,8 @@ interface ReservationCalendarState {
   selectedStore: StoreOption
   selectedStaff: Option | null
   reservations: Reservation[]
+  shifts: Shift[]
+  loading: Boolean
 }
 
 export default class ReservationCalendar extends Component<
@@ -35,7 +38,9 @@ export default class ReservationCalendar extends Component<
         startDate: rangeStartDate,
         endDate: rangeEndDate
       },
-      reservations: []
+      loading: false,
+      reservations: [],
+      shifts: []
     }
   }
 
@@ -47,6 +52,7 @@ export default class ReservationCalendar extends Component<
       selectedStore: selectedStore as StoreOption,
       selectedStaff: null
     })
+    this.fetchReservationShifts()
   }
 
   private handleSelectedStaff = (selectedId: string) => {
@@ -65,6 +71,57 @@ export default class ReservationCalendar extends Component<
     }
 
     this.setState({ reservationDateRange })
+    this.fetchReservationShifts()
+  }
+
+  private fetchReservationShifts = async () => {
+    const storeId = this.state.selectedStore.id
+    const startDate = this.state.reservationDateRange.startDate.format('YYYY-MM-DD')
+    const endDate = this.state.reservationDateRange.endDate.format('YYYY-MM-DD')
+
+    const params = `store_id=${storeId}&start_date=${startDate}&end_date=${endDate}`
+
+    try {
+      this.setState({ loading: true })
+      const response = await Promise.all([
+        fetch(`/api/admin/shifts?${params}`),
+        fetch(`/api/admin/reservations?${params}`),
+      ])
+      const shifts = await response[0].json()
+      const reservations = await response[1].json()
+
+      this.setState({ reservations, shifts })
+    } catch (error) {
+      console.log('予約の検索に失敗しました。')
+      console.log(error)
+    } finally {
+      this.setState({ loading: false })
+    }
+  }
+
+  private renderCalendarView = () => {
+    if (this.state.loading) {
+      return <CircularProgress />
+    }
+
+    const staffId = this.state.selectedStaff ? this.state.selectedStaff.id : null
+    const filteredReservations = this.state.reservations.filter((reservation) => {
+      return !staffId || reservation.staff.id === Number(staffId)
+    })
+    const filteredShifts = this.state.shifts.filter((shift) => {
+      return !staffId || shift.staff.id === Number(staffId)
+    })
+
+    return <CalendarView
+      reservationDateRange={ this.state.reservationDateRange }
+      handleReservationStandardDate={ this.handleReservationStandardDate }
+      reservations={ filteredReservations }
+      shifts={ filteredShifts }
+    />
+  }
+
+  public componentDidMount = async () => {
+    await this.fetchReservationShifts()
   }
 
   render() {
@@ -76,10 +133,9 @@ export default class ReservationCalendar extends Component<
         selectedStaff={ this.state.selectedStaff }
         handleSelectedStaff={ this.handleSelectedStaff }
       />
-      <Calendar
-        reservationDateRange={ this.state.reservationDateRange }
-        handleReservationStandardDate={ this.handleReservationStandardDate }
-      />
+      <div>
+        { this.renderCalendarView() }
+      </div>
     </div>
   }
 }
