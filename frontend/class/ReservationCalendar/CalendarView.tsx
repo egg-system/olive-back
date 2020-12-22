@@ -8,14 +8,33 @@ export interface ReservationDateRange {
   endDate: Moment
 }
 
-export interface Reservation {}
-
-interface CalendarProps {
-  handleReservationStandardDate: (standardDate: Moment) => void
-  reservationDateRange: ReservationDateRange
+export interface Reservation {
+  id: Number
+  date: Moment
+  startTime: String
+  endTime: String
+  customer: { id: Number, name: String }
+  staff: { id: Number, name: String }
+  shiftIds: Number[]
 }
 
-export default class Calendar extends Component<CalendarProps> {
+export interface Shift {
+  id: Number
+  date: Moment
+  startTime: String
+  endTime: String
+  reservationId: Number
+  staff: { id: Number, name: String }
+}
+
+interface CalendarViewProps {
+  handleReservationStandardDate: (standardDate: Moment) => void
+  reservationDateRange: ReservationDateRange
+  reservations: Reservation[]
+  shifts: Shift[]
+}
+
+export default class CalendarView extends Component<CalendarViewProps> {
   private getStandardDate() {
     return this.props.reservationDateRange.standardDate.clone()
   } 
