@@ -20,17 +20,17 @@ module Api
             endTime: reservation.end_time.to_s,
             customer: {
               id: reservation.customer.id,
-              name: reservation.customer.full_name,
+              name: reservation.customer.full_name
             },
             staff: {
               id: reservation.staff.id,
-              name: reservation.staff.full_name,
+              name: reservation.staff.full_name
             },
             shiftIds: reservation.shifts.pluck(:id)
           }
         end
 
-        render json: reservations_json   
+        render json: reservations_json
       end
 
       protected

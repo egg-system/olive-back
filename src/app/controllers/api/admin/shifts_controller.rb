@@ -21,21 +21,15 @@ module Api
             reservationId: reservation_id,
             staff: {
               id: shift.staff.id,
-              name: shift.staff.full_name,
+              name: shift.staff.full_name
             }
           }
         end
 
-        render json: shifts_json   
+        render json: shifts_json
       end
 
       protected
-
-      def convert_shift_reservation(shift)
-        unless shift.reservation.nil?
-          
-        end
-      end
 
       def search_params
         return params.permit(:store_id, :start_date, :end_date)
