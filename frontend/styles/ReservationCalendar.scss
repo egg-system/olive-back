@@ -1,0 +1,98 @@
+.searchSelects {
+  margin: 1rem 0;
+
+  .searchHeader {
+    font-size: 1.2rem;
+  }
+
+  .selectInput {
+    margin: 1rem;
+
+    :global(.MuiInputBase-root) {
+      min-width: 30rem;  
+    }
+  }
+}
+
+.calendarView {
+  margin: 2rem 0 6rem;
+
+  .calendarHeader {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 4rem;
+    background-color: #e9ecef;
+    border-bottom: 1px solid #dee2e6;
+    font-size: 1.2rem;
+
+    .calendarHeaderLink {
+      cursor: pointer;
+    }
+  }
+
+  .calendarDateHeader {
+    height: 2rem;
+    align-items: center;
+  }
+
+  .clandarLoadingWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 10rem;
+  }
+}
+
+.calendarRow {
+  display: flex;
+  justify-content: space-around;
+  border-bottom: 1px solid #dee2e6;
+
+  > div {
+    width: 14%;
+    text-align: center;
+  }
+}
+
+.calendarCell {
+  min-height: 4rem;
+  margin: 0.5rem 0 1rem;
+
+  .calendarCellDate {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 0.5rem;
+  }
+
+  .calendarTimeRows {
+    padding-left: 1rem;
+    text-align: left;
+  }
+}
+
+.calendarTimeRow {
+  margin-bottom: 0.5rem;
+
+  .calendarTimeHeader {
+    display: flex;
+    justify-content: space-around;
+
+    .NotReservedShiftCount {
+      cursor: pointer;
+    }
+  }
+
+  .reservationRows {
+    padding-left: 1rem;
+
+    .reservationRow {
+      margin-bottom: 0.5rem;
+      border-bottom: 1px solid #dee2e6;
+
+      a {
+        color: #212529;
+      }
+    }
+  }
+}
