@@ -4,6 +4,8 @@ import InputLabel from '@material-ui/core/InputLabel'
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
 
+import styles from '../../styles/ReservationCalendar.scss'
+
 export interface Option {
   id: string
   name: string
@@ -76,14 +78,17 @@ export default class SearchSelectInput extends Component<SearchSelectProps> {
   }
 
   render() {
-   return <div>
+   return <div className={ styles.searchSelects }>
+      <div className={ styles.searchHeader }>検索</div>
       <div>
-        <InputLabel>店舗</InputLabel>
-        { this.getStoreSelectInput() }
-      </div>
-      <div>
-        <InputLabel>スタッフ</InputLabel>
-        { this.getStaffSelectInput() }
+        <div className={ styles.selectInput }>
+          <InputLabel>店舗</InputLabel>
+          { this.getStoreSelectInput() }
+        </div>
+        <div className={ styles.selectInput }>
+          <InputLabel>スタッフ</InputLabel>
+          { this.getStaffSelectInput() }
+        </div>
       </div>
     </div>
   }
