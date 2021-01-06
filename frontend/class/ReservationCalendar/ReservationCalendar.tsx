@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import moment, { Moment } from 'moment'
-import CircularProgress from '@material-ui/core/CircularProgress'
 
 import SearchSelectInput, { Option, StoreOption } from './SearchSelectInput'
-import CalendarView, { ReservationDateRange, Reservation, Shift } from './CalendarView'
+import CalendarView, { ReservationDateRange, Reservation, Shift } from './Calendar/CalendarView'
 
 interface ReservationCalendarProps {
   stores: StoreOption[]
@@ -34,7 +33,7 @@ export default class ReservationCalendar extends Component<
       selectedStore: props.stores[0],
       selectedStaff: null,
       reservationDateRange: {
-        standardDate: moment(),
+        standardDate: moment().startOf('month'),
         startDate: rangeStartDate,
         endDate: rangeEndDate
       },
@@ -51,8 +50,7 @@ export default class ReservationCalendar extends Component<
     this.setState({
       selectedStore: selectedStore as StoreOption,
       selectedStaff: null
-    })
-    this.fetchReservationShifts()
+    }, this.fetchReservationShifts)
   }
 
   private handleSelectedStaff = (selectedId: string) => {
@@ -70,8 +68,7 @@ export default class ReservationCalendar extends Component<
       endDate: standardDate.clone().endOf('month').endOf('week')
     }
 
-    this.setState({ reservationDateRange })
-    this.fetchReservationShifts()
+    this.setState({ reservationDateRange }, this.fetchReservationShifts)
   }
 
   private fetchReservationShifts = async () => {
@@ -100,10 +97,6 @@ export default class ReservationCalendar extends Component<
   }
 
   private renderCalendarView = () => {
-    if (this.state.loading) {
-      return <CircularProgress />
-    }
-
     const staffId = this.state.selectedStaff ? this.state.selectedStaff.id : null
     const filteredReservations = this.state.reservations.filter((reservation) => {
       return !staffId || reservation.staff.id === Number(staffId)
@@ -113,6 +106,7 @@ export default class ReservationCalendar extends Component<
     })
 
     return <CalendarView
+      loading={ this.state.loading }
       reservationDateRange={ this.state.reservationDateRange }
       handleReservationStandardDate={ this.handleReservationStandardDate }
       reservations={ filteredReservations }
