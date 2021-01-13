@@ -8,11 +8,11 @@
     data-store-staffs="<%= store_staff_options(@viewable_stores) %>"
   ></div>
 </div>
-<div>
+<div style="display: none;">
   <div class="upper-frame">
     <h2>本日の予約一覧</h2>
   </div>
   <div class="lower-frame">
-    <%= render "reservations/list", is_shown_customer_name: true %>
+    <%# render "reservations/list", is_shown_customer_name: true %>
   </div>
 </div>
