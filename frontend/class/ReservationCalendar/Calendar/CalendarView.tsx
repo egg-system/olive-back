@@ -18,12 +18,6 @@ interface CalendarViewProps {
 }
 
 export default class CalendarView extends Component<CalendarViewProps> {
-  protected rendarCalendarHeader() {
-    return ['日', '月', '火', '水', '木', '金', '土'].map(value => {
-      return <div key={ value }>{ value }</div>
-    })
-  }
-
   protected renderCalendarRows() {
     if (this.props.loading) {
       return <div className={ styles.clandarLoadingWrapper }>
@@ -76,9 +70,6 @@ export default class CalendarView extends Component<CalendarViewProps> {
         handleReservationStandardDate={ this.props.handleReservationStandardDate }
       />
       <div>
-        <div className={ `${styles.calendarDateHeader} ${styles.calendarRow}` }>
-          { this.rendarCalendarHeader() }
-        </div>
         { this.renderCalendarRows() }
       </div>
     </div>

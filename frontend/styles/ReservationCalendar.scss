@@ -65,27 +65,36 @@
     margin-bottom: 0.5rem;
   }
 
+  .isSunday {
+    color: red;
+  }
+
+  .isSaturday {
+    color: blue;
+  }
+
   .calendarTimeRows {
-    padding-left: 1rem;
     text-align: left;
   }
 }
 
 .calendarTimeRow {
-  margin-bottom: 0.5rem;
-
   .calendarTimeHeader {
     display: flex;
     justify-content: space-around;
+    flex-wrap: wrap;
+
+    .shiftLabel {
+      font-weight: bold;
+    }
 
     .NotReservedShiftCount {
       cursor: pointer;
+      color: red;
     }
   }
 
   .reservationRows {
-    padding-left: 1rem;
-
     .reservationRow {
       margin-bottom: 0.5rem;
       border-bottom: 1px solid #dee2e6;

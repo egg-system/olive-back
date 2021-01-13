@@ -58,8 +58,8 @@ export default class CalenderTime extends Component<Props, State> {
           className={ styles.reservationRow }
         >
           <a href={ `/reservations/${reservation.id}` }>
-            <div>顧客：{ reservation.customer.name }</div>
-            <div>担当：{ reservation.staff.name }</div>
+            <div>患:{ reservation.customer.name }</div>
+            <div>担:{ reservation.staff.name }</div>
           </a>
         </div>
       })
@@ -91,9 +91,9 @@ export default class CalenderTime extends Component<Props, State> {
 
     return <div className={ styles.calendarTimeRow }>
       <div className={ styles.calendarTimeHeader }>
-        <div>{ shiftLabel }</div>
+        <div className={ styles.shiftLabel }>{ shiftLabel }</div>
         <div>
-          （空枠：<Tooltip
+          (空：<Tooltip
             title={ notResevedStaffsElemant }
             open={ this.state.isOpen }
             PopperProps={{
@@ -102,12 +102,13 @@ export default class CalenderTime extends Component<Props, State> {
             disableFocusListener
             disableHoverListener
             disableTouchListener
+            arrow
           >
             <span
               className={ styles.NotReservedShiftCount }
               onClick={ this.handleIsOpen }
             >{ notResevedShiftCount }</span>
-          </Tooltip>）
+          </Tooltip>)
         </div>
       </div>
       <div className={ styles.reservationRows }>

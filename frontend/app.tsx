@@ -1,3 +1,6 @@
+import moment from 'moment'
+moment.locale('ja')
+
 import { renderCalendar } from './render/calendar'
 import { renderShiftCheckboxes } from './render/shifts-checkboxes'
 import { renderAssignableStaffSelect } from './render/assignable-staff-select'

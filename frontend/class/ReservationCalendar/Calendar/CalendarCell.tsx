@@ -16,7 +16,7 @@ interface Props {
 
 export default class CalendarCell extends Component<Props> {
   protected formatedDate() {
-    const format = this.props.inStandardMonth ? 'D' : 'M/D'
+    const format = this.props.inStandardMonth ? 'D（ddd）' : 'M/D（ddd）'
     return this.props.date.format(format)
   }
 
@@ -45,8 +45,18 @@ export default class CalendarCell extends Component<Props> {
   }
 
   render() {
+    const timeRowStyles = [styles.calendarCellDate]
+
+    if (this.props.date.day() === 0) {
+      timeRowStyles.push(styles.isSunday)
+    }
+
+    if (this.props.date.day() === 6) {
+      timeRowStyles.push(styles.isSaturday)
+    }
+
     return <div className={ styles.calendarCell }>
-      <div className={ styles.calendarCellDate }>
+      <div className={ timeRowStyles.join(' ') }>
         { this.formatedDate() }
       </div>
       <div className={ styles.calendarTimeRows }>
