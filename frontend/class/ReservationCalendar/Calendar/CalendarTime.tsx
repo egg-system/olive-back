@@ -79,7 +79,7 @@ export default class CalenderTime extends Component<Props, State> {
   }
 
   render() {
-    const shiftLabel = `${this.props.shiftTime}:00〜`
+    const shiftLabel = `${this.props.shiftTime}:00`
     // 1つの空枠につき、2つのシフトがあるため、2で割る
     const notResevedShift = this.notReservedShifts()
     const notResevedShiftCount = notResevedShift.length / 2
