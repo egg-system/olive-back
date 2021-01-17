@@ -50,6 +50,10 @@ class Customer < ApplicationRecord
     where("concat(last_name, first_name) like ?", "%#{name}%") if name.present?
   }
 
+  scope :like_kana_name, ->(kana_name) {
+    where("concat(last_kana, first_kana) like ?", "%#{kana_name}%") if kana_name.present?
+  }
+
   scope :like_tel, ->(tel) {
     where('tel LIKE ?', "%#{tel}%") if tel.present?
   }

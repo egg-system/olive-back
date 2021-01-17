@@ -11,6 +11,7 @@ class CustomersController < ApplicationController
 
     # like検索ではパラメータチェックは不要
     @customers = @customers.like_name(@search_params[:name])
+    @customers = @customers.like_kana_name(@search_params[:kana_name])
     @customers = @customers.like_tel(@search_params[:tel])
     @customers = @customers.like_email(@search_params[:email])
 
@@ -136,6 +137,6 @@ class CustomersController < ApplicationController
   end
 
   def search_params
-    params.permit(:name, :tel, :email, :include_deleted, :page)
+    params.permit(:name, :kana_name, :tel, :email, :include_deleted, :page)
   end
 end
