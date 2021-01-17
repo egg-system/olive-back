@@ -1,5 +1,6 @@
-<table class="table">
-  <thead class="thead-light">
+<div class="table-responsive text-nowrap">
+  <table class="table">
+    <thead class="thead-light">
     <tr>
       <th scope="col">顧客ID</th>
       <th scope="col">FMID</th>
@@ -15,8 +16,8 @@
       <th scope="col">使用状況</th>
       <th scope="col"></th>
     </tr>
-  </thead>
-  <tbody>
+    </thead>
+    <tbody>
     <% customers.each do |customer| %>
       <tr>
         <td scope="row"><%= customer.id %></td>
@@ -40,5 +41,6 @@
         </td>
       </tr>
     <% end %>
-  </tbody>
-</table>
+    </tbody>
+  </table>
+</div>
