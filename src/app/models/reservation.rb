@@ -37,6 +37,10 @@ class Reservation < ApplicationRecord
     joins(:customer).where("concat(last_name, first_name) like ?", "%#{customer_name}%")
   }
 
+  scope :like_customer_kana_name, ->(customer_kana_name) {
+    joins(:customer).merge(Customer.like_kana_name(customer_kana_name))
+  }
+
   scope :like_customer_tel, ->(customer_tel) {
     joins(:customer).where("tel like ?", "%#{customer_tel}%")
   }

@@ -7,6 +7,7 @@ module Concerns::ReservationSearchable
     reservations = reservations.order('id DESC')
 
     reservations = reservations.like_customer_name(@customer_name) if @customer_name.present?
+    reservations = reservations.like_customer_kana_name(@customer_kana_name) if @customer_kana_name.present?
     reservations = reservations.like_customer_tel(@customer_tel) if @customer_tel.present?
 
     reservations = reservations.where('reservation_date >= ?', @from_date) if @from_date.present?
