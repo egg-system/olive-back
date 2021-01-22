@@ -57,7 +57,7 @@ export default class CalenderTime extends Component<Props, State> {
           key={ `${reservation.id}` }
           className={ styles.reservationRow }
         >
-          <a href={ `/reservations/${reservation.id}` }>
+          <a href={ reservation.id ? `/reservations/${reservation.id}` : '' }>
             <div>患:{ reservation.customer.name }</div>
             <div>担:{ reservation.staff.name }</div>
           </a>

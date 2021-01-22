@@ -13,6 +13,7 @@ module Api
           .eager_load(:shifts)
 
         reservations_json = reservations.map do |reservation|
+          staff = reservation.staff
           {
             id: reservation.id,
             date: reservation.reservation_date,
@@ -23,8 +24,8 @@ module Api
               name: reservation.customer.full_name
             },
             staff: {
-              id: reservation.staff.id,
-              name: reservation.staff.full_name
+              id: staff.nil? ? nil : staff.id,
+              name: staff.nil? ? '未割当' : staff.full_name
             },
             shiftIds: reservation.shifts.pluck(:id)
           }
