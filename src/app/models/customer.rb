@@ -51,7 +51,7 @@ class Customer < ApplicationRecord
   }
 
   scope :like_kana_name, ->(kana_name) {
-    where("concat(last_kana, first_kana) like ?", "%#{kana_name}%") if kana_name.present?
+    where("concat(last_kana, first_kana) collate utf8_unicode_ci like ?", "%#{kana_name}%") if kana_name.present?
   }
 
   scope :like_tel, ->(tel) {
