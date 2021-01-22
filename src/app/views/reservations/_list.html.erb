@@ -13,6 +13,7 @@
           <th scope="col" class="visited_store">来店店舗</th>
           <% if is_shown_customer_name %>
             <th scope="col">顧客名<br>(電話番号)</th>
+            <th scope="col">顧客カナ名</th>
           <% end %>
           <th scope="col">担当者</th>
           <th scope="col" class="gross-profit">売上金</th>
@@ -46,6 +47,9 @@
             <% if is_shown_customer_name %>
               <td rowspan="<%= row_span %>">
                 <%= reservation.customer.full_name %><br>(<%= reservation.customer.tel %>)
+              </td>
+              <td rowspan="<%= row_span %>">
+                <%= reservation.customer.full_kana %>
               </td>
             <% end %>
             <td rowspan="<%= row_span %>">
