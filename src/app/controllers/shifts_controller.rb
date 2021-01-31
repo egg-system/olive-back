@@ -1,5 +1,5 @@
 class ShiftsController < ApplicationController
-  before_action :set_relations, only: [:index, :new, :create]
+  before_action :set_relations, only: [:index, :new, :confirm, :create]
 
   require 'csv'
   require 'time'
@@ -22,6 +22,11 @@ class ShiftsController < ApplicationController
 
   def new
     @shift = Shift.new
+  end
+  
+  def confirm
+    @shifts = parse
+    render json: {'shifts' => @shifts, 'stores' => @stores, 'staffs' => @staffs}
   end
 
   # POST /shifts
@@ -55,9 +60,20 @@ class ShiftsController < ApplicationController
     @staffs = viewable_staffs
   end
 
+  def csv_reader
+    return CSV.read(csv_params[:shift_csv].path, headers: true, encoding: "Shift_JIS:UTF-8")
+  end
+
+  def parse
+    shifts = []
+    csv_reader.map { |row|
+      shifts.push(Shift.parse(row))
+    }
+    return shifts
+  end
+
   def imports
-    CSV
-      .read(csv_params[:shift_csv].path, headers: true, encoding: "Shift_JIS:UTF-8")
+    csv_reader
       .map { |row|
         Shift.import(row)
       }
