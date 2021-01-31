@@ -37,6 +37,7 @@
     "url-loader": "^3.0.0",
     "webpack": "^4.44.2",
     "webpack-cli": "^3.3.12",
-    "webpack-manifest-plugin": "^2.2.0"
+    "webpack-manifest-plugin": "^2.2.0",
+    "axios": "^0.21.1"
   }
 }
