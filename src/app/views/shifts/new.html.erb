@@ -5,6 +5,7 @@
     <%= form.file_field :shift_csv, required: true %>
   </div>
   <div class="actions">
+    <button class="shif-confirm" data-url="<%= confirm_shifts_path %>" id="shift-confirm-btn" type="button">確認</button>
     <%= form.submit "登録" %>
   </div>
 <% end %>
