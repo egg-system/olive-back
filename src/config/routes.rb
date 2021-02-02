@@ -63,6 +63,8 @@ Rails.application.routes.draw do
 
     namespace :admin do
       resources :staffs, only: [:index]
+      resources :reservations, only: [:index]
+      resources :shifts, only: [:index]
     end
   end
 end
