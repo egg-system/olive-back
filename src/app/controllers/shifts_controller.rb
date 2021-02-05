@@ -40,7 +40,7 @@ class ShiftsController < ApplicationController
   end
 
   def confirm
-
+    @file_name = confirm_params[:name]
   end
 
   # POST /shifts
@@ -128,6 +128,10 @@ class ShiftsController < ApplicationController
 
   def csv_params
     params.require(:shift).permit(:shift_csv)
+  end
+
+  def confirm_params
+    params.permit(:name)
   end
 
   def updates_params
