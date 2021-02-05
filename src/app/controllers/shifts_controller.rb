@@ -33,7 +33,7 @@ class ShiftsController < ApplicationController
       return redirect_to action: :new
     end
 
-    file_name = uploaded_file.original_filename;
+    file_name = uploaded_file.original_filename
     save_path = Rails.root.join('public', 'csv', file_name)
     FileUtils.mv(uploaded_file.path, save_path)
     return redirect_to confirm_shifts_path(name: file_name)
