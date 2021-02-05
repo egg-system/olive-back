@@ -1,6 +1,6 @@
 <h1>シフト登録</h1>
 
-<%= form_for @shift do |form| %>
+<%= form_for @shift, url: save_shifts_path do |form| %>
   <div class="field">
     <%= form.file_field :shift_csv, required: true %>
   </div>
