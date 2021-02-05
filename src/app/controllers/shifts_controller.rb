@@ -28,7 +28,7 @@ class ShiftsController < ApplicationController
   def save
     uploaded_file = csv_params[:shift_csv]
     # validate only csv
-    if uploaded_file.content_type != 'text/csv' then
+    if uploaded_file.content_type != 'text/csv'
       flash[:alert] = "csvファイルをアップロードしてください。"
       return redirect_to action: :new
     end
