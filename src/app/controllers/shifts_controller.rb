@@ -24,6 +24,14 @@ class ShiftsController < ApplicationController
     @shift = Shift.new
   end
 
+  def save
+
+  end
+
+  def confirm
+
+  end
+
   # POST /shifts
   # POST /shifts.json
   def create

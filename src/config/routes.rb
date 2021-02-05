@@ -8,6 +8,8 @@ Rails.application.routes.draw do
 
   resources :shifts, only: [:index, :new, :create] do
     collection do
+      post :save
+      get :confirm
       patch :updates
     end
   end
