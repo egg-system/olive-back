@@ -3,6 +3,7 @@ class ShiftsController < ApplicationController
 
   require 'csv'
   require 'time'
+  require 'fileutils'
 
   # GET /shifts
   # GET /shifts.json
@@ -25,7 +26,11 @@ class ShiftsController < ApplicationController
   end
 
   def save
-
+    uploaded_file = csv_params[:shift_csv]
+    file_name = uploaded_file.original_filename;
+    save_path = Rails.root.join('public', 'csv', file_name)
+    FileUtils.mv(uploaded_file.path, save_path)
+    return redirect_to confirm_shifts_path(name: file_name)
   end
 
   def confirm
