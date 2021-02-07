@@ -58,7 +58,7 @@ class Shift < ApplicationRecord
     }
   end
 
-  def self.import
+  def self.import(row)
     Shift.where(Shift.parse(csv_row)).first_or_create()
   end
 
