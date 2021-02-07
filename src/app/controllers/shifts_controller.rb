@@ -76,12 +76,14 @@ class ShiftsController < ApplicationController
     @staffs = viewable_staffs
   end
 
+  def csv_reader(file_name)
+    CSV.read(Shift.save_csv_path(file_name), headers: true, encoding: "Shift_JIS:UTF-8")
+  end
+
   def imports
-    CSV
-      .read(csv_params[:shift_csv].path, headers: true, encoding: "Shift_JIS:UTF-8")
-      .map { |row|
-        Shift.import(row)
-      }
+    csv_reader('test').map { |row|
+      Shift.import(row)
+    }
   end
 
   def create_shifts
