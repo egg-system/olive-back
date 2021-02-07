@@ -39,7 +39,7 @@ class Shift < ApplicationRecord
     }.to_h
   end
 
-  def self.import(csv_row)
+  def self.parse(csv_row)
     shift_date = "#{csv_row['年月']}-#{csv_row['日']}"
     store_id = csv_row['店舗ID']
     staff_id = csv_row['スタッフID']
@@ -48,14 +48,22 @@ class Shift < ApplicationRecord
       SHIFT_TIMES.has_key?(key) && value === '1'
     }.each { |key, value|
       shift_time = Tod::TimeOfDay.parse(SHIFT_TIMES[key])
-      shift = Shift.where(
+      return [
         store_id: store_id,
         staff_id: staff_id,
         date: shift_date,
         start_at: shift_time,
         end_at: shift_time + SLOT_INCREMENT_MITUNES.minutes,
-      ).first_or_create()
+      ]
     }
+  end
+
+  def self.import
+    Shift.where(Shift.parse(csv_row)).first_or_create()
+  end
+
+  def self.make_from_csv(csv_row)
+    return Shift.new(Shift.parse(csv_row))
   end
 
   def self.save_csv_path(file_name)
