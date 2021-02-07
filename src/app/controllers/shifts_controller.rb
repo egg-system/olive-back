@@ -43,6 +43,11 @@ class ShiftsController < ApplicationController
     @file_name = confirm_params[:name]
     return redirect_to action: :new if !File.exist?(Shift.save_csv_path(@file_name))
 
+    @shifts = []
+    csv_reader(@file_name).map { |row|
+      @shifts.push(Shift.make_from_csv(row))
+    }
+    @shifts = @shifts.group_by { |i| i.date }
   end
 
   # POST /shifts
