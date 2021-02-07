@@ -58,6 +58,10 @@ class Shift < ApplicationRecord
     }
   end
 
+  def self.save_csv_path(file_name)
+    Rails.root.join('public', 'csv', file_name)
+  end
+
   def self.slot_times
     return SHIFT_TIMES
   end

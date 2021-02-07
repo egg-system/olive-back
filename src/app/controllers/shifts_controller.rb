@@ -34,13 +34,15 @@ class ShiftsController < ApplicationController
     end
 
     file_name = uploaded_file.original_filename
-    save_path = Rails.root.join('public', 'csv', file_name)
+    save_path = Shift.save_csv_path(file_name)
     FileUtils.mv(uploaded_file.path, save_path)
     return redirect_to confirm_shifts_path(name: file_name)
   end
 
   def confirm
     @file_name = confirm_params[:name]
+    return redirect_to action: :new if !File.exist?(Shift.save_csv_path(@file_name))
+
   end
 
   # POST /shifts
