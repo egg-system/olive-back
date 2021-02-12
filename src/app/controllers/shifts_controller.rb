@@ -1,7 +1,6 @@
 class ShiftsController < ApplicationController
   before_action :set_relations, only: [:index, :new, :create]
 
-  require 'csv'
   require 'time'
   require 'fileutils'
 
@@ -40,31 +39,33 @@ class ShiftsController < ApplicationController
   end
 
   def confirm
-    file_name = confirm_params[:file_name]
-    store_id = confirm_params[:store_id]
-    staff_id = confirm_params[:staff_id]
+    @file_name = confirm_params[:file_name]
+    # csvからshiftの配列を作成
+    csv_shifts = Shift.make_from_csv(@file_name)
+    return redirect_to action: :new if csv_shifts.empty?
 
-    return redirect_to action: :new unless File.exist?(Shift.save_csv_path(file_name))
+    # csvのshift全体から最小日付、最大日付を取得
+    @start_date = csv_shifts.min { |s| s.date }&.date
+    @end_date = csv_shifts.max { |s| s.date }&.date
 
-    shifts_arr = csv_reader(file_name).map { |row| Shift.make_from_csv(row) }
-    if store_id
-      shifts_arr = shifts_arr.select { |s| s.store_id == store_id.to_i }
-    end
-    if staff_id
-      shifts_arr = shifts_arr.select { |s| s.staff_id == staff_id.to_i }
-    end
-    @shifts = shifts_arr.group_by(&:date)
-    @start_date = @shifts.min&.first
-    @end_date = @shifts.max&.first
-    render json: { s_id: store_id, 'shift': shifts_arr, 'min': @start_date, 'max': @end_date }
+    # paramから検索
+    store_id = confirm_params[:store_id].present? ? confirm_params[:store_id].to_i : csv_shifts.first&.store_id
+    staff_id = confirm_params[:staff_id].present? ? confirm_params[:staff_id].to_i : csv_shifts.first&.staff_id
+    searched = csv_shifts.select { |s| s.store_id == store_id && s.staff_id == staff_id }
+    #　検索したものを日付でグループ化
+    @shifts = searched.group_by(&:date)
+    @store = Store.find(store_id)
+    @staff = Staff.find(staff_id)
   end
 
   # POST /shifts
   # POST /shifts.json
   def create
+    @file_name = confirm_params[:file_name]
+    return redirect_to action: :new if @file_name.blank?
     begin
       Shift.transaction do
-        imports
+        Shift.import(@file_name)
       end
       redirect_to action: :index
     rescue Encoding::UndefinedConversionError => e
@@ -88,16 +89,6 @@ class ShiftsController < ApplicationController
   def set_relations
     @stores = viewable_stores
     @staffs = viewable_staffs
-  end
-
-  def csv_reader(file_name)
-    CSV.read(Shift.save_csv_path(file_name), headers: true, encoding: "Shift_JIS:UTF-8")
-  end
-
-  def imports
-    csv_reader('test').map { |row|
-      Shift.import(row)
-    }
   end
 
   def create_shifts

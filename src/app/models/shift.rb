@@ -1,5 +1,7 @@
 class Shift < ApplicationRecord
   require 'tod'
+  require 'csv'
+  require 'fileutils'
 
   # time型を扱いやすくするための実装
   serialize :start_at, Tod::TimeOfDay
@@ -58,12 +60,16 @@ class Shift < ApplicationRecord
     }
   end
 
-  def self.import(row)
-    Shift.where(Shift.parse(row)).first_or_create()
+  def self.csv_reader(file_name)
+    CSV.read(Shift.save_csv_path(file_name), headers: true, encoding: "Shift_JIS:UTF-8")
   end
 
-  def self.make_from_csv(row)
-    return Shift.new(Shift.parse(row))
+  def self.import(file_name)
+    self.csv_reader(file_name).map { |row| self.where(self.parse(row)).first_or_create() } if File.exist?(self.save_csv_path(file_name))
+  end
+
+  def self.make_from_csv(file_name)
+    self.csv_reader(file_name).map { |row| self.new(self.parse(row)) } if File.exist?(self.save_csv_path(file_name))
   end
 
   def self.save_csv_path(file_name)

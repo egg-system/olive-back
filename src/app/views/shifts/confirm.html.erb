@@ -1,3 +1,7 @@
 <h1>シフト確認画面</h1>
 
-<h2></h2>
+<%= form_with url: shifts_path(file_name: @file_name) do |form| %>
+  <div class="actions">
+    <%= form.submit "登録" %>
+  </div>
+<% end %>
