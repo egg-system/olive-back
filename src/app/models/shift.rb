@@ -48,22 +48,22 @@ class Shift < ApplicationRecord
       SHIFT_TIMES.has_key?(key) && value === '1'
     }.each { |key, value|
       shift_time = Tod::TimeOfDay.parse(SHIFT_TIMES[key])
-      return [
+      return {
         store_id: store_id,
         staff_id: staff_id,
         date: shift_date,
         start_at: shift_time,
-        end_at: shift_time + SLOT_INCREMENT_MITUNES.minutes,
-      ]
+        end_at: shift_time + SLOT_INCREMENT_MITUNES.minutes
+      }
     }
   end
 
   def self.import(row)
-    Shift.where(Shift.parse(csv_row)).first_or_create()
+    Shift.where(Shift.parse(row)).first_or_create()
   end
 
-  def self.make_from_csv(csv_row)
-    return Shift.new(Shift.parse(csv_row))
+  def self.make_from_csv(row)
+    return Shift.new(Shift.parse(row))
   end
 
   def self.save_csv_path(file_name)
