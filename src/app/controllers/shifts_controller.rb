@@ -57,11 +57,6 @@ class ShiftsController < ApplicationController
     @start_date = @shifts.min&.first
     @end_date = @shifts.max&.first
     render json: { s_id: store_id, 'shift': shifts_arr, 'min': @start_date, 'max': @end_date }
-    @shifts = []
-    csv_reader(@file_name).map { |row|
-      @shifts.push(Shift.make_from_csv(row))
-    }
-    @shifts = @shifts.group_by { |i| i.date }
   end
 
   # POST /shifts
