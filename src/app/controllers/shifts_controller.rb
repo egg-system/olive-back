@@ -36,13 +36,27 @@ class ShiftsController < ApplicationController
     file_name = uploaded_file.original_filename
     save_path = Shift.save_csv_path(file_name)
     FileUtils.mv(uploaded_file.path, save_path)
-    return redirect_to confirm_shifts_path(name: file_name)
+    return redirect_to confirm_shifts_path(file_name: file_name)
   end
 
   def confirm
-    @file_name = confirm_params[:name]
-    return redirect_to action: :new if !File.exist?(Shift.save_csv_path(@file_name))
+    file_name = confirm_params[:file_name]
+    store_id = confirm_params[:store_id]
+    staff_id = confirm_params[:staff_id]
 
+    return redirect_to action: :new unless File.exist?(Shift.save_csv_path(file_name))
+
+    shifts_arr = csv_reader(file_name).map { |row| Shift.make_from_csv(row) }
+    if store_id
+      shifts_arr = shifts_arr.select { |s| s.store_id == store_id.to_i }
+    end
+    if staff_id
+      shifts_arr = shifts_arr.select { |s| s.staff_id == staff_id.to_i }
+    end
+    @shifts = shifts_arr.group_by(&:date)
+    @start_date = @shifts.min&.first
+    @end_date = @shifts.max&.first
+    render json: { s_id: store_id, 'shift': shifts_arr, 'min': @start_date, 'max': @end_date }
     @shifts = []
     csv_reader(@file_name).map { |row|
       @shifts.push(Shift.make_from_csv(row))
@@ -140,7 +154,7 @@ class ShiftsController < ApplicationController
   end
 
   def confirm_params
-    params.permit(:name)
+    params.permit(:file_name, :store_id, :staff_id)
   end
 
   def updates_params
