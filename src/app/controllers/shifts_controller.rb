@@ -52,7 +52,7 @@ class ShiftsController < ApplicationController
     store_id = confirm_params[:store_id].present? ? confirm_params[:store_id].to_i : csv_shifts.first&.store_id
     staff_id = confirm_params[:staff_id].present? ? confirm_params[:staff_id].to_i : csv_shifts.first&.staff_id
     searched = csv_shifts.select { |s| s.store_id == store_id && s.staff_id == staff_id }
-    #　検索したものを日付でグループ化
+    # 検索したものを日付でグループ化
     @shifts = searched.group_by(&:date)
     @store = Store.find(store_id)
     @staff = Staff.find(staff_id)
