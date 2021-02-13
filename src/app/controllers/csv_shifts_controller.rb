@@ -26,7 +26,6 @@ class CsvShiftsController < ApplicationController
     csv_shifts = Shift.make_from_csv(@file_name)
     return redirect_to action: :new if csv_shifts.empty?
 
-    # rubocop:disable Style/SymbolProc
     @start_date = csv_shifts.min { |s| s.date }&.date
     @end_date = csv_shifts.max { |s| s.date }&.date
 

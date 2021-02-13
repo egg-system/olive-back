@@ -527,6 +527,7 @@ Style/SymbolLiteral:
 Style/SymbolProc:
   Exclude:
     - 'app/controllers/customers/duplicate_controller.rb'
+    - 'app/controllers/csv_shifts_controller.rb'
     - 'app/mailers/customer_mailer.rb'
     - 'app/mailers/reservation_mailer.rb'
     - 'app/models/concerns/shift_build_module.rb'
