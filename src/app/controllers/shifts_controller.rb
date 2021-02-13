@@ -63,6 +63,7 @@ class ShiftsController < ApplicationController
   def create
     @file_name = confirm_params[:file_name]
     return redirect_to action: :new if @file_name.blank?
+
     begin
       Shift.transaction do
         Shift.import(@file_name)
