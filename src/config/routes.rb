@@ -6,11 +6,16 @@ Rails.application.routes.draw do
     sessions: 'staffs/sessions',
   }
 
-  resources :shifts, only: [:index, :new, :create] do
+  resources :shifts, only: [:index, :new] do
+    collection do
+      patch :updates
+    end
+  end
+
+  resources :csv_shifts, only: [:new, :create] do
     collection do
       post :save
       get :confirm
-      patch :updates
     end
   end
 

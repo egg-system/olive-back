@@ -60,8 +60,10 @@ class Shift < ApplicationRecord
     }
   end
 
-  def self.csv_reader(file_name)
-    CSV.read(Shift.save_csv_path(file_name), headers: true, encoding: "Shift_JIS:UTF-8")
+  private
+
+  def csv_reader(file_name)
+    CSV.read(self.save_csv_path(file_name), headers: true, encoding: "Shift_JIS:UTF-8")
   end
 
   def self.import(file_name)

@@ -2,7 +2,7 @@
   <p class="common_title">シフト一覧</p>
 
   <% if current_staff.role.manager? %>
-    <%= link_to 'シフトのインポート', new_shift_path %>
+    <%= link_to 'シフトのインポート', new_csv_shift_path %>
   <% end %>
 
   <%= form_with url: shifts_path, method: :get, local: true do |form| %>
