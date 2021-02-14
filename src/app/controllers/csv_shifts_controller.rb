@@ -23,7 +23,7 @@ class CsvShiftsController < ApplicationController
   # GET /csv_shifts/confirm
   def confirm
     @file_name = confirm_params[:file_name]
-    csv_shifts = Shift.make_from_csv(@file_name)
+    csv_shifts = make_from_csv(@file_name)
     return redirect_to action: :new if csv_shifts.empty?
 
     @start_date = csv_shifts.min { |s| s.date }&.date
@@ -47,7 +47,7 @@ class CsvShiftsController < ApplicationController
 
     begin
       Shift.transaction do
-        Shift.import(@file_name)
+        import(@file_name)
       end
       redirect_to shifts_path
     rescue Encoding::UndefinedConversionError => e
@@ -63,5 +63,19 @@ class CsvShiftsController < ApplicationController
 
   def confirm_params
     params.permit(:file_name, :store_id, :staff_id)
+  end
+
+  private
+
+  def csv_reader(file_path)
+    CSV.read(file_path, headers: true, encoding: "Shift_JIS:UTF-8")
+  end
+
+  def import(file_name)
+    csv_reader(Shift.save_csv_path(file_name)).map { |row| Shift.where(Shift.parse(row)).first_or_create } if File.exist?(Shift.save_csv_path(file_name))
+  end
+
+  def make_from_csv(file_name)
+    csv_reader(Shift.save_csv_path(file_name)).map { |row| Shift.new(Shift.parse(row)) } if File.exist?(Shift.save_csv_path(file_name))
   end
 end
