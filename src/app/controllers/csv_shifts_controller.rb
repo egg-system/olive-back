@@ -23,12 +23,20 @@ class CsvShiftsController < ApplicationController
   # GET /csv_shifts/confirm
   def confirm
     @file_name = confirm_params[:file_name]
-    csv_shifts = make_from_csv(@file_name)
-    return redirect_to action: :new if csv_shifts.empty?
+    begin
+      csv_shifts = make_from_csv(@file_name)
+    rescue Encoding::UndefinedConversionError => e
+      flash[:alert] = "文字コードがShift-JISのファイルをアップロードしてください。"
+      return redirect_to action: :new
+    rescue Encoding::InvalidByteSequenceError => e
+      flash[:alert] = "文字コードがShift-JISのファイルをアップロードしてください。"
+      return redirect_to action: :new
+    rescue Errno::ENOENT => e
+      flash[:alert] = "ファイルが開けません。再度アップロードしてください。"
+      return redirect_to action: :new
+    end
 
-    @start_date = csv_shifts.min { |s| s.date }&.date
-    @end_date = csv_shifts.max { |s| s.date }&.date
-
+    @start_date, @end_date = get_csv_shifts_min_max(csv_shifts)
     # paramから検索
     store_id = confirm_params[:store_id].present? ? confirm_params[:store_id].to_i : csv_shifts.first&.store_id
     staff_id = confirm_params[:staff_id].present? ? confirm_params[:staff_id].to_i : csv_shifts.first&.staff_id
@@ -51,8 +59,13 @@ class CsvShiftsController < ApplicationController
       end
       redirect_to shifts_path
     rescue Encoding::UndefinedConversionError => e
+      flash[:alert] = "文字コードがShift-JISのファイルをアップロードしてください。"
+      return redirect_to action: :new
     rescue Encoding::InvalidByteSequenceError => e
       flash[:alert] = "文字コードがShift-JISのファイルをアップロードしてください。"
+      return redirect_to action: :new
+    rescue Errno::ENOENT => e
+      flash[:alert] = "ファイルが開けません。再度アップロードしてください。"
       return redirect_to action: :new
     end
   end
@@ -65,6 +78,10 @@ class CsvShiftsController < ApplicationController
     params.permit(:file_name, :store_id, :staff_id)
   end
 
+  def get_csv_shifts_min_max(csv_shifts)
+    return csv_shifts.min { |s| s.date }&.date, csv_shifts.max { |s| s.date }&.date
+  end
+
   private
 
   def csv_reader(file_path)
@@ -72,10 +89,10 @@ class CsvShiftsController < ApplicationController
   end
 
   def import(file_name)
-    csv_reader(Shift.save_csv_path(file_name)).map { |row| Shift.where(Shift.parse(row)).first_or_create } if File.exist?(Shift.save_csv_path(file_name))
+    csv_reader(Shift.save_csv_path(file_name)).map { |row| Shift.where(Shift.parse(row)).first_or_create }
   end
 
   def make_from_csv(file_name)
-    csv_reader(Shift.save_csv_path(file_name)).map { |row| Shift.new(Shift.parse(row)) } if File.exist?(Shift.save_csv_path(file_name))
+    csv_reader(Shift.save_csv_path(file_name)).map { |row| Shift.new(Shift.parse(row)) }
   end
 end
