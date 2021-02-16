@@ -19,6 +19,7 @@ class ReservationsController < ApplicationController
     @staff_id = params[:staff_id]
 
     @customer_name = params[:customer_name]
+    @customer_kana_name = params[:customer_kana_name]
     @customer_tel = params[:customer_tel]
 
     @from_date = Date.parse(params[:from_date]) if params.has_key?(:from_date)
@@ -31,6 +32,7 @@ class ReservationsController < ApplicationController
   def search
     redirect_to reservations_path({
       customer_name: params[:customer_name],
+      customer_kana_name: params[:customer_kana_name],
       customer_tel: params[:customer_tel],
       state: params[:state],
       staff_id: params[:staff_id],

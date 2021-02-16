@@ -34,11 +34,15 @@ class Reservation < ApplicationRecord
   validate :validate_reservation_date, on: :create
 
   scope :like_customer_name, ->(customer_name) {
-    joins(:customer).where("concat(last_name, first_name) like ?", "%#{customer_name}%")
+    joins(:customer).merge(Customer.like_name(customer_name)) if customer_name.present?
+  }
+
+  scope :like_customer_kana_name, ->(customer_kana_name) {
+    joins(:customer).merge(Customer.like_kana_name(customer_kana_name)) if customer_kana_name.present?
   }
 
   scope :like_customer_tel, ->(customer_tel) {
-    joins(:customer).where("tel like ?", "%#{customer_tel}%")
+    joins(:customer).merge(Customer.like_tel(customer_tel)) if customer_tel.present?
   }
 
   scope :order_reserved_at, ->(order = :desc) {
