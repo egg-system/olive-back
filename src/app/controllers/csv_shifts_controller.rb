@@ -112,14 +112,16 @@ class CsvShiftsController < ApplicationController
   end
 
   def import(file_name)
-    csv_reader(Shift.save_csv_path(file_name)).map { |row|
-      Shift.where(Shift.parse(row)).first_or_create
+    csv_reader(Shift.save_csv_path(file_name)).flat_map { |row|
+      Shift.parse(row).map{ |shift_data|
+        Shift.where(shift_data).first_or_create
+      } 
     }
   end
 
   def make_from_csv(file_name)
-    csv_reader(Shift.save_csv_path(file_name)).map {
-      |row| Shift.new(Shift.parse(row))
+    csv_reader(Shift.save_csv_path(file_name)).flat_map { |row|
+      Shift.parse(row).map{ |shift_data| Shift.new(shift_data) }
     }
   end
 end
