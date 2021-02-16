@@ -18,7 +18,7 @@
           shift_groups = store.get_time_slots(date).in_groups_of(2)
           shift_groups.each_with_index do |shift_times, index|
         %>
-          <td class="td-checkbox">
+          <td class="td-checkbox <%= 'td-checkbox-disabled' if disabled %>">
             <div
               id="react_shift_checkbox_<%= date %>_<%= index %>"
               data-reservation-exsists="<%=
