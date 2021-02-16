@@ -50,6 +50,9 @@ $borderColor: black;
   }
 }
 // --------------
+.shift-list p {
+  font-size: 1rem;
+}
 
 .shift-list table {
   display: block;
@@ -103,6 +106,10 @@ $borderColor: black;
       font-size: 0.9rem;
       text-align: center;
       border-right: 2px solid $borderColor;
+    }
+
+    .td-checkbox-disabled {
+      pointer-events : none;
     }
 
     // 一行ごとに色を付ける
