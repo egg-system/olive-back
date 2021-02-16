@@ -1,5 +1,6 @@
 class CsvShiftsController < ApplicationController
   require 'fileutils'
+  require 'csv'
 
   # GET /csv_shifts
   def new
