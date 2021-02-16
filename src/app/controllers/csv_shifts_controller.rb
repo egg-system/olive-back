@@ -37,12 +37,32 @@ class CsvShiftsController < ApplicationController
     end
 
     @start_date, @end_date = get_csv_shifts_min_max(csv_shifts)
+
     # paramから検索
-    store_id = confirm_params[:store_id].present? ? confirm_params[:store_id].to_i : csv_shifts.first&.store_id
-    staff_id = confirm_params[:staff_id].present? ? confirm_params[:staff_id].to_i : csv_shifts.first&.staff_id
-    searched = csv_shifts.select { |s| s.store_id == store_id && s.staff_id == staff_id }
+    store_id = if confirm_params[:store_id].present?
+      confirm_params[:store_id].to_i
+    else
+      csv_shifts.first&.store_id
+    end
+
+    staff_id = if confirm_params[:staff_id].present?
+      confirm_params[:staff_id].to_i
+    else
+      csv_shifts.first&.staff_id
+    end
+
+    searched = csv_shifts.select { |shift|
+      shift.store_id == store_id && shift.staff_id == staff_id
+    }
+
+    store_ids = csv_shifts.map { |shift| shift.store_id }.uniq
+    @stores = Store.where(id: store_ids)
+    staff_ids = csv_shifts.map { |shift| shift.staff_id }.uniq
+    @staffs = Staff.where(id: staff_ids)
+
     # 検索したものを日付でグループ化
-    @shifts = searched.group_by(&:date)
+    @shifts = searched.group_by { |shift| shift.date.strftime('%Y-%m-%d') }
+
     @store = Store.find(store_id)
     @staff = Staff.find(staff_id)
   end
@@ -79,7 +99,9 @@ class CsvShiftsController < ApplicationController
   end
 
   def get_csv_shifts_min_max(csv_shifts)
-    return csv_shifts.min { |s| s.date }&.date, csv_shifts.max { |s| s.date }&.date
+    min_date = csv_shifts.min{ |shift| shift.date }&.date
+    max_date = csv_shifts.max { |shift| shift.date }&.date
+    return min_date.strftime('%Y-%m-%d'), max_date.strftime('%Y-%m-%d')
   end
 
   private
@@ -89,10 +111,14 @@ class CsvShiftsController < ApplicationController
   end
 
   def import(file_name)
-    csv_reader(Shift.save_csv_path(file_name)).map { |row| Shift.where(Shift.parse(row)).first_or_create }
+    csv_reader(Shift.save_csv_path(file_name)).map { |row|
+      Shift.where(Shift.parse(row)).first_or_create
+    }
   end
 
   def make_from_csv(file_name)
-    csv_reader(Shift.save_csv_path(file_name)).map { |row| Shift.new(Shift.parse(row)) }
+    csv_reader(Shift.save_csv_path(file_name)).map {
+      |row| Shift.new(Shift.parse(row))
+    }
   end
 end
