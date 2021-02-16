@@ -20,7 +20,6 @@ services:
     image: mysql:5.7
     command: mysqld --character-set-server=utf8 --collation-server=utf8_general_ci
     container_name: "olive-mysql"
-    restart: always
     environment:
       MYSQL_DATABASE: 'db_olive'
       MYSQL_USER: 'root'
