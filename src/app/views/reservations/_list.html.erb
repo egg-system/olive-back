@@ -45,9 +45,9 @@
             <td rowspan="<%= row_span %>" class="visited_store"><%= reservation.store.name %></td>
             <% if is_shown_customer_name %>
               <td rowspan="<%= row_span %>">
-                氏名：<%= reservation.customer.full_name %><br>
-                カナ：<%= reservation.customer.full_kana %><br>
-                電話番号：<%= reservation.customer.tel %>
+                <%= reservation.customer.full_name %><br>
+                <%= reservation.customer.full_kana %><br>
+                <%= reservation.customer.tel %>
               </td>
             <% end %>
             <td rowspan="<%= row_span %>">
