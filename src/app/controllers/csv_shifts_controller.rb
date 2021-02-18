@@ -118,6 +118,7 @@ class CsvShiftsController < ApplicationController
 
   def extract_store_staff_from_params(csv_shifts)
     # paramから検索
+    # rubocop:disable Layout/IndentationWidth, Layout/ElseAlignment, Layout/EndAlignment
     store_id = if confirm_params[:store_id].present?
       confirm_params[:store_id].to_i
     else
@@ -129,6 +130,7 @@ class CsvShiftsController < ApplicationController
     else
       csv_shifts.first&.staff_id
     end
+    # rubocop:enable Layout/IndentationWidth, Layout/ElseAlignment, Layout/EndAlignment
 
     return Store.find(store_id), Staff.find(staff_id)
   end
