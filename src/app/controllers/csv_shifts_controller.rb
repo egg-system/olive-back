@@ -46,9 +46,9 @@ class CsvShiftsController < ApplicationController
     @start_date, @end_date = get_csv_shifts_min_max(csv_shifts)
     @store, @staff = extract_store_staff_from_params(csv_shifts)
 
-    searched = csv_shifts.select { |shift|
+    searched = csv_shifts.select do |shift|
       shift.store_id == @store.id && shift.staff_id == @staff.id
-    }
+    end
 
     store_ids = csv_shifts.map { |shift| shift.store_id }.uniq
     @stores = Store.where(id: store_ids)
@@ -90,12 +90,6 @@ class CsvShiftsController < ApplicationController
     params.permit(:file_name, :store_id, :staff_id)
   end
 
-  def get_csv_shifts_min_max(csv_shifts)
-    min_date = csv_shifts.min{ |shift| shift.date }&.date
-    max_date = csv_shifts.max { |shift| shift.date }&.date
-    return min_date.strftime('%Y-%m-%d'), max_date.strftime('%Y-%m-%d')
-  end
-
   private
 
   def csv_reader(file_path)
@@ -103,17 +97,23 @@ class CsvShiftsController < ApplicationController
   end
 
   def import(file_name)
-    csv_reader(Shift.save_csv_path(file_name)).flat_map { |row|
-      Shift.parse(row).map{ |shift_data|
+    csv_reader(Shift.save_csv_path(file_name)).flat_map do |row|
+      Shift.parse(row).map do |shift_data|
         Shift.where(shift_data).first_or_create
-      } 
-    }
+      end
+    end
   end
 
   def make_from_csv(file_name)
-    csv_reader(Shift.save_csv_path(file_name)).flat_map { |row|
-      Shift.parse(row).map{ |shift_data| Shift.new(shift_data) }
-    }
+    csv_reader(Shift.save_csv_path(file_name)).flat_map do |row|
+      Shift.parse(row).map { |shift_data| Shift.new(shift_data) }
+    end
+  end
+
+  def get_csv_shifts_min_max(csv_shifts)
+    min_date = csv_shifts.min { |shift| shift.date }&.date
+    max_date = csv_shifts.max { |shift| shift.date }&.date
+    return min_date.strftime('%Y-%m-%d'), max_date.strftime('%Y-%m-%d')
   end
 
   def extract_store_staff_from_params(csv_shifts)
