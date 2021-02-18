@@ -37,6 +37,11 @@ class CsvShiftsController < ApplicationController
       return redirect_to action: :new
     end
 
+    if csv_shifts.empty?
+      flash[:alert] = "CSVに有効なデータがありません。ファイルの内容をご確認ください。"
+      return redirect_to action: :new
+    end
+
     @start_date, @end_date = get_csv_shifts_min_max(csv_shifts)
 
     # paramから検索
