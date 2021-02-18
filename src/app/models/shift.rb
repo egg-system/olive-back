@@ -55,6 +55,8 @@ class Shift < ApplicationRecord
         start_at: shift_time,
         end_at: shift_time + SLOT_INCREMENT_MITUNES.minutes
       }
+    }.filter { |shift_data|
+      Shift.new(shift_data).valid?
     }
   end
 
