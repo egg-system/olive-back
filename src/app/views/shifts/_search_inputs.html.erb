@@ -1,0 +1,25 @@
+<div class="field">
+  <%= form.select(
+    :store_id,
+    options_from_collection_for_select(
+      stores,
+      :id,
+      :name,
+      store_id
+    ) 
+  ) %>
+</div>
+<div class="field">
+  <%= form.select(
+    :staff_id,
+    options_from_collection_for_select(
+      staffs,
+      :id,
+      :full_name,
+      staff_id
+    )
+  ) %>
+</div>
+<div class="actions">
+  <%= form.submit "検索" %>
+</div>

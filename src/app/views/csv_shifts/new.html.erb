@@ -1,0 +1,12 @@
+<h1>シフトインポート</h1>
+
+<%= form_for @shift, url: save_csv_shifts_path do |form| %>
+  <div class="field">
+    <label for="shift_shift_csv">インポートするファイルを選択してください</label>
+    <%= form.file_field :shift_csv, required: true %>
+  </div>
+  <div class="actions">
+    <%= form.submit "選択する", class: "btn btn btn-primary" %>
+    <span>選択しても、すぐにはインポートされません。確認画面が表示されます</span>
+  </div>
+<% end %>

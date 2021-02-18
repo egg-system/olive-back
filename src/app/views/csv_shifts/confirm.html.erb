@@ -1,0 +1,31 @@
+<div class="shift-list">
+  <h1 class="common_title">インポート結果の確認画面</h1>
+  <p>本画面ではシフトの修正はできません</p>
+
+  <%= form_with url: confirm_csv_shifts_path, method: :get, local: true do |form| %>
+    <%= form.hidden_field :file_name, value: @file_name %>
+    <%= render(
+      'shifts/search_inputs',
+      form: form,
+      stores: @stores,
+      store_id: @store.id,
+      staffs: @staffs,
+      staff_id: @staff.id
+    ) %>
+  <% end %>
+
+  <%= render(
+    'shifts/table',
+    start_date: @start_date,
+    end_date: @end_date,
+    store: @store,
+    date_shifts: @shifts,
+    disabled: true
+  ) %>
+
+  <%= form_with url: csv_shifts_path(file_name: @file_name) do |form| %>
+    <div class="actions">
+      <%= form.submit "登録" %>
+    </div>
+  <% end %>
+</div>

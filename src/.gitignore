@@ -19,6 +19,8 @@
 
 # テストに使うサンプルファイル
 !/storage/test
+# csv
+!/storage/csv
 
 /node_modules
 /yarn-error.log

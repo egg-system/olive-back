@@ -2,80 +2,33 @@
   <p class="common_title">シフト一覧</p>
 
   <% if current_staff.role.manager? %>
-    <%= link_to 'シフトのインポート', new_shift_path %>
+    <%= link_to 'シフトのインポート', new_csv_shift_path %>
   <% end %>
 
   <%= form_with url: shifts_path, method: :get, local: true do |form| %>
     <div class="field">
       <%= form.date_select :month, discard_day: true, default: @search_params[:month] %>
     </div>
-    <div class="field">
-      <%= form.select(
-        :store_id,
-        options_from_collection_for_select(
-          @stores,
-          :id,
-          :name,
-          @store.id
-        ) 
-      ) %>
-    </div>
-    <div class="field">
-      <%= form.select(
-        :staff_id,
-        options_from_collection_for_select(
-          @staffs,
-          :id,
-          :full_name,
-          @staff.id
-        )
-      ) %>
-    </div>
-    <div class="actions">
-      <%= form.submit "検索" %>
-    </div>
+    <%= render(
+      'shifts/search_inputs',
+      form: form,
+      stores: @stores,
+      store_id: @store.id,
+      staffs: @staffs,
+      staff_id: @staff.id
+    ) %>
   <% end %>
 
   <%= form_with url: updates_shifts_path, method: :patch, local: true do |form| %>
-    <table class="sticky_table">
-      <thead>
-        <tr>
-          <th class="th-corner">日付</th>
-          <% @store.slot_time_labels.each do |key, value| %>
-            <th><%= key %></th>
-          <% end %>
-        </tr>
-      </thead>
+    <%= render(
+      'shifts/table',
+      start_date: @start_date,
+      end_date: @end_date,
+      store: @store,
+      date_shifts: @date_shifts,
+      disabled: false
+    ) %>
 
-      <tbody id="shifts_table">
-        <% (@start_date..@end_date).each do |date| %>
-          <tr class="<%= weekend_color(date) %>">
-            <td>
-              <%= "#{date}(#{get_weekday_label(date)})" %>
-            </td>
-            <%
-              shift_groups = @store.get_time_slots(date).in_groups_of(2)
-              shift_groups.each_with_index do |shift_times, index|
-            %>
-              <td class="td-checkbox">
-                <div
-                  id="react_shift_checkbox_<%= date %>_<%= index %>"
-                  data-reservation-exsists="<%=
-                    resrvation_exist(shift_times.first) ? 'true' : 'false'
-                  %>"
-                  data-shift-input-names="<%=
-                    extract_shift_input_names(shift_times).to_json
-                  %>"
-                  data-checked="<%=
-                    shift_exist(shift_times.first()) ? 'true' : 'false'
-                  %>"
-                ></div>
-              </td>
-            <% end %>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
     <% if current_staff.role.manager? %>
       <%= hidden_field_tag('staff_id', @staff.id) %>
       <%= hidden_field_tag('store_id', @store.id) %>

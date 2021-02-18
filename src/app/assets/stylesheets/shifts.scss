@@ -14,6 +14,7 @@ $borderColor: black;
   margin-bottom: 3px;
   margin-top: 3px;
   margin-right: 3px;
+  min-height: 2rem;
 }
 .shift-list div.field select {
   vertical-align: middle;
@@ -49,6 +50,9 @@ $borderColor: black;
   }
 }
 // --------------
+.shift-list p {
+  font-size: 1rem;
+}
 
 .shift-list table {
   display: block;
@@ -62,7 +66,7 @@ $borderColor: black;
   margin-bottom: 5px;
   border: 1px solid $borderColor;
 }
-.shift-list .sticky_table {
+.shift-list .shift_table {
   width: fit-content;
 
   thead {
@@ -104,6 +108,10 @@ $borderColor: black;
       border-right: 2px solid $borderColor;
     }
 
+    .td-checkbox-disabled {
+      pointer-events : none;
+    }
+
     // 一行ごとに色を付ける
     tr:nth-child(odd) {
       background: $tdOddColor;
@@ -142,4 +150,27 @@ $borderColor: black;
       }
     }
   }  
+}
+
+#new_shift {
+  .field {
+    margin: 1rem 1rem 1.5rem;
+    display: flex;
+    flex-flow: column;
+  }
+
+  .actions {
+    margin: 1rem;
+    display: flex;
+    flex-flow: column;
+
+    input {
+      max-width: 6rem;
+    }
+
+    span {
+      font-size: 0.8rem;
+      margin-top: 0.5rem;
+    }
+  }
 }

@@ -1,7 +1,6 @@
 class ShiftsController < ApplicationController
   before_action :set_relations, only: [:index, :new, :create]
 
-  require 'csv'
   require 'time'
 
   # GET /shifts
@@ -20,25 +19,6 @@ class ShiftsController < ApplicationController
     @staff = Staff.find(@search_params[:staff_id])
   end
 
-  def new
-    @shift = Shift.new
-  end
-
-  # POST /shifts
-  # POST /shifts.json
-  def create
-    begin
-      Shift.transaction do
-        imports
-      end
-      redirect_to action: :index
-    rescue Encoding::UndefinedConversionError => e
-    rescue Encoding::InvalidByteSequenceError => e
-      flash[:alert] = "文字コードがShift-JISのファイルをアップロードしてください。"
-      return redirect_to action: :new
-    end
-  end
-
   def updates
     Shift.transaction do
       create_shifts
@@ -53,14 +33,6 @@ class ShiftsController < ApplicationController
   def set_relations
     @stores = viewable_stores
     @staffs = viewable_staffs
-  end
-
-  def imports
-    CSV
-      .read(csv_params[:shift_csv].path, headers: true, encoding: "Shift_JIS:UTF-8")
-      .map { |row|
-        Shift.import(row)
-      }
   end
 
   def create_shifts
@@ -105,10 +77,6 @@ class ShiftsController < ApplicationController
       store_id: params[:store_id] || current_staff.stores.first.id,
       month: search_month
     }
-  end
-
-  def csv_params
-    params.require(:shift).permit(:shift_csv)
   end
 
   def updates_params

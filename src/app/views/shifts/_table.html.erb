@@ -1,0 +1,39 @@
+<table class="shift_table">
+  <thead>
+    <tr>
+      <th class="th-corner">日付</th>
+      <% store.slot_time_labels.each do |key, value| %>
+        <th><%= key %></th>
+      <% end %>
+    </tr>
+  </thead>
+
+  <tbody id="shifts_table">
+    <% (start_date..end_date).each do |date| %>
+      <tr class="<%= weekend_color(date) %>">
+        <td>
+          <%= "#{date}(#{get_weekday_label(date)})" %>
+        </td>
+        <%
+          shift_groups = store.get_time_slots(date).in_groups_of(2)
+          shift_groups.each_with_index do |shift_times, index|
+        %>
+          <td class="td-checkbox <%= 'td-checkbox-disabled' if disabled %>">
+            <div
+              id="react_shift_checkbox_<%= date %>_<%= index %>"
+              data-reservation-exsists="<%=
+                resrvation_exist(date_shifts, shift_times.first) ? 'true' : 'false'
+              %>"
+              data-shift-input-names="<%=
+                extract_shift_input_names(date_shifts, shift_times).to_json
+              %>"
+              data-checked="<%=
+                shift_exist(date_shifts, shift_times.first()) ? 'true' : 'false'
+              %>"
+            ></div>
+          </td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
