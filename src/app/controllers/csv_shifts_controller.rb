@@ -24,6 +24,7 @@ class CsvShiftsController < ApplicationController
   # GET /csv_shifts/confirm
   def confirm
     @file_name = confirm_params[:file_name]
+
     begin
       csv_shifts = make_from_csv(@file_name)
     rescue Encoding::UndefinedConversionError => e
@@ -43,22 +44,10 @@ class CsvShiftsController < ApplicationController
     end
 
     @start_date, @end_date = get_csv_shifts_min_max(csv_shifts)
-
-    # paramから検索
-    store_id = if confirm_params[:store_id].present?
-      confirm_params[:store_id].to_i
-    else
-      csv_shifts.first&.store_id
-    end
-
-    staff_id = if confirm_params[:staff_id].present?
-      confirm_params[:staff_id].to_i
-    else
-      csv_shifts.first&.staff_id
-    end
+    @store, @staff = extract_store_staff_from_params(csv_shifts)
 
     searched = csv_shifts.select { |shift|
-      shift.store_id == store_id && shift.staff_id == staff_id
+      shift.store_id == @store.id && shift.staff_id == @staff.id
     }
 
     store_ids = csv_shifts.map { |shift| shift.store_id }.uniq
@@ -68,9 +57,6 @@ class CsvShiftsController < ApplicationController
 
     # 検索したものを日付でグループ化
     @shifts = searched.group_by { |shift| shift.date.strftime('%Y-%m-%d') }
-
-    @store = Store.find(store_id)
-    @staff = Staff.find(staff_id)
   end
 
   # POST /csv_shifts
@@ -128,5 +114,22 @@ class CsvShiftsController < ApplicationController
     csv_reader(Shift.save_csv_path(file_name)).flat_map { |row|
       Shift.parse(row).map{ |shift_data| Shift.new(shift_data) }
     }
+  end
+
+  def extract_store_staff_from_params(csv_shifts)
+    # paramから検索
+    store_id = if confirm_params[:store_id].present?
+      confirm_params[:store_id].to_i
+    else
+      csv_shifts.first&.store_id
+    end
+
+    staff_id = if confirm_params[:staff_id].present?
+      confirm_params[:staff_id].to_i
+    else
+      csv_shifts.first&.staff_id
+    end
+
+    return Store.find(store_id), Staff.find(staff_id)
   end
 end
