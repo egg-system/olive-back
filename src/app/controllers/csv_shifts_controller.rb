@@ -69,7 +69,7 @@ class CsvShiftsController < ApplicationController
       Shift.transaction do
         import(@file_name)
       end
-      redirect_to shifts_path
+      redirect_to shifts_path, notice: 'シフトのインポートに成功しました'
     rescue Encoding::UndefinedConversionError => e
       flash[:alert] = "文字コードがShift-JISのファイルをアップロードしてください。"
       return redirect_to action: :new
