@@ -74,7 +74,7 @@ class Staff < ApplicationRecord
   }
 
   scope :exclude_hidden, -> {
-    where("hidden", false)
+    where(hidden: false)
   }
 
   # nameもfull_nameも使われているため、削除時には要注意
