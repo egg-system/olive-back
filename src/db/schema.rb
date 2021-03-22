@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_06_064355) do
+ActiveRecord::Schema.define(version: 2021_03_22_173226) do
 
   create_table "audits", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "auditable_id"
@@ -455,6 +455,7 @@ ActiveRecord::Schema.define(version: 2021_03_06_064355) do
     t.boolean "is_default", default: false, null: false, comment: "このフラグが立っている税率がデフォルトになる"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_display_include", default: true
   end
 
   create_table "treat_goals", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|

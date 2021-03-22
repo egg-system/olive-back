@@ -1,0 +1,8 @@
+<h1>税込表示</h1>
+<div id="store_index">
+  <div class="upper-frame">
+    <div>
+      現在の表示：<%= @tax.is_display_include ? '税込表示' : '税抜き表示' %>
+      <%= link_to "#{!@tax.is_display_include ? '税込表示' : '税抜き表示'}にする", toggle_taxes_path, class: "btn btn-primary btn-new", method: :post %>
+    </div>
+  </div>
