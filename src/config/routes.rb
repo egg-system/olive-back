@@ -40,6 +40,12 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :taxes, only: :index do
+    collection do
+      post :toggle
+    end
+  end
+
   resources :observations, only: [:show, :new, :create, :update, :destroy]
 
   resources(
@@ -67,6 +73,8 @@ Rails.application.routes.draw do
     get 'shops(/:id)/dates', to: 'stores#dates'
 
     resources :reservations, only: [:create, :index, :show, :destroy]
+
+    get 'taxes', to: 'taxes#index'
 
     namespace :admin do
       resources :staffs, only: [:index]
