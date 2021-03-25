@@ -15,7 +15,7 @@ class ReservationsController < ApplicationController
     @stores = viewable_stores
     @store_id = params[:store_id]
 
-    @staffs = viewable_staffs
+    @staffs = viewable_staffs_exclude_hidden
     @staff_id = params[:staff_id]
 
     @customer_name = params[:customer_name]

@@ -30,6 +30,10 @@ class ApplicationController < ActionController::Base
     return Staff.where_store_id(store_ids).distinct
   end
 
+  def viewable_staffs_exclude_hidden
+    return viewable_staffs.exclude_hidden
+  end
+
   # 管理者のみ管理者権限に変更できるようにする
   def viewable_roles
     return Role.all if current_staff.role.admin?
