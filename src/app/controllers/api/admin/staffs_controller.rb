@@ -20,7 +20,6 @@ module Api
 
         staffs = Staff
           .where(id: assignable_staff_ids)
-          .exclude_hidden
           .can_treats(menu_ids, option_ids)
 
         render json: staffs
