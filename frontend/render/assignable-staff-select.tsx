@@ -15,6 +15,10 @@ const assignedElementQueries = [
     query: '[id^="reservation_reservation_details_attributes_"][id*="_option_ids_"]',
     key: 'reservation_option_ids[]'
   },
+  {
+    query: '#exclude_hidden',
+    key: 'exclude_hidden'
+  }
 ]
 
 export const renderAssignableStaffSelect = () => {

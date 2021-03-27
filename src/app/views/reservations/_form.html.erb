@@ -10,7 +10,7 @@
 
   <%= render 'reservations/fields/customer_inputs', form: f, customer: @reservation.customer  %> 
 
-  <%= render 'reservations/fields/assined_inputs', form: f, is_assigned: @reservation.assigned? %>
+  <%= render 'reservations/fields/assined_inputs', form: f, is_assigned: @reservation.assigned?, exclude_hidden: defined?(exclude_hidden) ? exclude_hidden : '' %>
 
   <%= f.input :reservation_comment, label: "コメント" %>
   <div class="custom_row row">
