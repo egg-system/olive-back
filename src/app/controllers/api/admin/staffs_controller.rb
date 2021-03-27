@@ -35,7 +35,7 @@ module Api
           :reseravtion_start_time,
           :exclude_hidden,
           reservation_menu_ids: [],
-          reservation_option_ids: [],
+          reservation_option_ids: []
         )
       end
     end
