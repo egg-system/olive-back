@@ -20,11 +20,10 @@ module Api
 
         staffs = Staff
           .where(id: assignable_staff_ids)
+          .exclude_hidden
+          .can_treats(menu_ids, option_ids)
 
-        hidden = staff_params[:exclude_hidden]
-        staffs = staffs.exclude_hidden if hidden === "true"
-
-        render json: staffs.can_treats(menu_ids, option_ids)
+        render json: staffs
       end
 
       # shiftのあるスタッフを検索する
@@ -33,7 +32,6 @@ module Api
           :store_id,
           :reservation_date,
           :reseravtion_start_time,
-          :exclude_hidden,
           reservation_menu_ids: [],
           reservation_option_ids: []
         )
