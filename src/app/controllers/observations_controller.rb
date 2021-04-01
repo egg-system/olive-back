@@ -66,6 +66,7 @@ class ObservationsController < ApplicationController
   def set_relation_models
     @stores = Store.all
     @staffs = Staff.all
+    @staffs_exclude_hidden = Staff.exclude_hidden
     @menus = Menu.all
     @options = Option.all
   end

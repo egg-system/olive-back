@@ -16,7 +16,7 @@ class ShiftsController < ApplicationController
 
     @start_date, @end_date = Shift.get_month_range(@search_params[:month])
     @store = Store.find(@search_params[:store_id])
-    @staff = Staff.find(@search_params[:staff_id])
+    @staff = Staff.exclude_hidden.find(@search_params[:staff_id])
   end
 
   def updates
@@ -33,6 +33,7 @@ class ShiftsController < ApplicationController
   def set_relations
     @stores = viewable_stores
     @staffs = viewable_staffs
+    @staffs_exclude_hidden = viewable_staffs_exclude_hidden
   end
 
   def create_shifts

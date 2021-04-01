@@ -45,7 +45,7 @@
       <%= f.input(
         :staff_id,
         as: :select,
-        collection: @staffs.map{|staff| [staff.name, staff.id] },
+        collection: @staffs_exclude_hidden.map{|staff| [staff.name, staff.id] },
         label: '担当者',
         default: @observation.staff_id,
         include_blank: true,

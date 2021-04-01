@@ -73,6 +73,10 @@ class Staff < ApplicationRecord
     where("concat(last_name, first_name) like ?", "%#{full_name}%")
   }
 
+  scope :exclude_hidden, -> {
+    where(hidden: false)
+  }
+
   # nameもfull_nameも使われているため、削除時には要注意
   def name
     self.full_name
