@@ -118,6 +118,7 @@ class StaffsController < ApplicationController
         :role_id,
         :login,
         :password,
+        :hidden,
         { skill_ids: [] },
         { store_ids: [] }
       )
