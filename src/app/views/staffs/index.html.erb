@@ -57,7 +57,7 @@
               <td><%= staff.employment_type_name %></td>
               <td><%= staff.role.name %></td>
               <td>
-                <input type="checkbox" class="scale-150 cursor-not-allow" onclick='return false;' <%= staff.hidden ? 'checked' : '' %>>
+                <input type="checkbox" class="scale-150 poin" disabled <%= staff.hidden ? 'checked' : '' %>>
               </td>
               <td><%= staff.updated_at.strftime('%Y/%m/%d') %></td>
               <td><%= link_to "詳細へ", staff_path(staff.id) %></td>
