@@ -42,6 +42,7 @@
             <th scope="col">保有スキル</th>
             <th scope="col">雇用区分</th>
             <th scope="col">アクセス権限</th>
+            <th scope="col">選択時非表示</th>
             <th scope="col">更新日</th>
             <th scope="col"></th>
           </tr>
@@ -55,6 +56,9 @@
               <td><%= safe_join(staff.skills.pluck(:name), tag(:br)) %></td>
               <td><%= staff.employment_type_name %></td>
               <td><%= staff.role.name %></td>
+              <td>
+                <input type="checkbox" class="scale-150 cursor-not-allow" onclick='return false;' <%= staff.hidden ? 'checked' : '' %>>
+              </td>
               <td><%= staff.updated_at.strftime('%Y/%m/%d') %></td>
               <td><%= link_to "詳細へ", staff_path(staff.id) %></td>
             </tr>
