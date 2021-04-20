@@ -1,6 +1,6 @@
 name: stg build
 
-on: push
+on:
   push:
     branches:
       - master
