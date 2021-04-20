@@ -22,7 +22,7 @@ jobs:
       - name: execute build
         run: bash build.command
       - name: Archive Build Zip
-          uses: actions/upload-artifact@v2
-          with:
-            name: src.zip
-            path: src.zip
+        uses: actions/upload-artifact@v2
+        with:
+          name: src.zip
+          path: src.zip
