@@ -16,8 +16,6 @@ class ShiftsController < ApplicationController
 
     @start_date, @end_date = Shift.get_month_range(@search_params[:month])
     @store = Store.find(@search_params[:store_id])
-    @staff = Staff.exclude_hidden.find_by(id: @search_params[:staff_id])
-    @staff = Staff.exclude_hidden.first() if @staff.nil?
   end
 
   def updates
@@ -74,9 +72,11 @@ class ShiftsController < ApplicationController
       search_month = Date.new(params["month(1i)"].to_i, params["month(2i)"].to_i)
     end
 
+    @staff = !current_staff.hidden ? current_staff : Staff.exclude_hidden.first
+
     return {
-      staff_id: params[:staff_id] || current_staff.id,
-      store_id: params[:store_id] || current_staff.stores.first.id,
+      staff_id: params[:staff_id] || @staff.id,
+      store_id: params[:store_id] || @staff.stores.first.id,
       month: search_month
     }
   end
