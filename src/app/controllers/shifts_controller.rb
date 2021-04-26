@@ -14,6 +14,7 @@ class ShiftsController < ApplicationController
       ).where_months(@search_params[:month])
       .group_by { |shift| shift.date.strftime('%Y-%m-%d') }
 
+    @staff = Staff.find(@search_params[:staff_id])
     @start_date, @end_date = Shift.get_month_range(@search_params[:month])
     @store = Store.find(@search_params[:store_id])
   end
@@ -23,8 +24,7 @@ class ShiftsController < ApplicationController
       create_shifts
       delete_shifts if delete_shift_ids.present?
     end
-
-    redirect_to action: :index
+    redirect_back fallback_location: {action: :index}
   end
 
   protected
@@ -72,11 +72,11 @@ class ShiftsController < ApplicationController
       search_month = Date.new(params["month(1i)"].to_i, params["month(2i)"].to_i)
     end
 
-    @staff = !current_staff.hidden ? current_staff : Staff.exclude_hidden.first
+    staff = !current_staff.hidden ? current_staff : Staff.exclude_hidden.first
 
     return {
-      staff_id: params[:staff_id] || @staff.id,
-      store_id: params[:store_id] || @staff.stores.first.id,
+      staff_id: params[:staff_id] || staff.id,
+      store_id: params[:store_id] || staff.stores.first.id,
       month: search_month
     }
   end
