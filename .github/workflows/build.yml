@@ -1,9 +1,9 @@
 name: stg build
 
-on: push
-#  push:
-#    branches:
-#      - master
+on:
+  push:
+    branches:
+      - master
 
 jobs:
   build:
