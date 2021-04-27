@@ -1,9 +1,9 @@
 name: stg build
 
-on:
-  push:
-    branches:
-      - master
+on: push
+#  push:
+#    branches:
+#      - master
 
 jobs:
   build:
@@ -12,10 +12,17 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.6
+          bundler-cache: true
       - name: Use Node.js 14.x
         uses: actions/setup-node@v1
         with:
           node-version: 14.x
+      - name: bundle install
+        run: bundle install
       - name: execute build
         run: bash build.command
       - name: Upload Build Zip
