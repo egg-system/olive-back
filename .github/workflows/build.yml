@@ -23,6 +23,7 @@ jobs:
           node-version: 14.x
       - name: bundle install
         run: bundle install
+        working-directory: ./src
       - name: execute build
         run: bash build.command
       - name: Upload Build Zip
