@@ -16,7 +16,7 @@ class ShiftsController < ApplicationController
 
     @start_date, @end_date = Shift.get_month_range(@search_params[:month])
     @store = Store.find(@search_params[:store_id])
-    @staff = Staff.exclude_hidden.find_by(@search_params[:staff_id])
+    @staff = Staff.exclude_hidden.find_by(id: @search_params[:staff_id])
     redirect_to action: :index if @staff.nil?
   end
 
