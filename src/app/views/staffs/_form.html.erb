@@ -52,7 +52,7 @@
       <% if @staff.id === current_staff.id || current_staff.role.manager? %>
         <%= f.input :password, label: "パスワード", required: @staff.new_record? %>
       <% end %>
-      <%= f.input :hidden, wrapper: :horizontal_collection_inline, label: '選択時非表示', checked: @staff.hidden, include_hidden: false %>
+      <%= f.input :hidden, as: :boolean, wrapper: :horizontal_collection_inline, label: '選択時非表示', checked: @staff.hidden, include_hidden: false %>
       <div>
         <%= f.button :submit, class: 'btn btn-primary'%>
         <%= link_to '戻る', staffs_path, class: 'btn btn-light' %>
