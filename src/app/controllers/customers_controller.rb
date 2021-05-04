@@ -5,7 +5,7 @@ class CustomersController < ApplicationController
   # GET /customers
   # GET /customers.json
   def index
-    @customers = Customer.all.join_tables
+    @customers = current_staff.readable_customers.join_tables
 
     @search_params = search_params
 
@@ -29,7 +29,7 @@ class CustomersController < ApplicationController
   # GET /customers/1
   # GET /customers/1.json
   def show
-    @customer = Customer.join_tables.find(params[:id])
+    @customer = current_staff.readable_customers.join_tables.find(params[:id])
     @reservations = @customer.reservations.order_reserved_at
     @observations = @customer.observations.order(visit_datetime: :desc)
   end
@@ -111,7 +111,7 @@ class CustomersController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_customer
-    @customer = Customer.find(params[:id])
+    @customer = current_staff.readable_customers.find(params[:id])
   end
 
   def set_relation_models
@@ -132,7 +132,8 @@ class CustomersController < ApplicationController
       :first_visit_store_id, :first_visited_at, :last_visit_store_id, :comment,
       :zip_code, :address, :birthday, :card_number, :has_registration_card,
       :introducer, :visit_reason_id, :nearest_station_id, :searched_by, :children_count, :baby_age_id,
-      :occupation_id, :zoomancy_id, :size_id, :provider, :password, :is_deleted, :fm_total_amount
+      :occupation_id, :zoomancy_id, :size_id, :provider, :password, :is_deleted, :fm_total_amount,
+      visit_store_ids: []
     )
   end
 

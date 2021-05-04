@@ -10,6 +10,7 @@ has_registration_card:
 store_type:
   "直営店": "owned"
   "FC店": "franchised"
+  "FC札幌國分": "franchised_sapporo_kokubun"
 
 stores:
   head_store_id: 1
@@ -54,7 +55,7 @@ customer:
   common_email: 'common.mail@olivebodycare.healthcare'
 
 duplicated_customer:
-  kana: 
+  kana:
     name: 'カナ'
     columns:
       - first_kana
