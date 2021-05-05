@@ -227,6 +227,7 @@ Style/ClassAndModuleChildren:
     - 'app/controllers/api/customers/token_validations_controller.rb'
     - 'app/controllers/api/reservations_controller.rb'
     - 'app/controllers/api/stores_controller.rb'
+    - 'app/controllers/api/taxes_controller.rb'
     - 'app/controllers/concerns/reservation_searchable.rb'
     - 'app/controllers/concerns/token_authenticable.rb'
     - 'app/controllers/customers/duplicate_controller.rb'
