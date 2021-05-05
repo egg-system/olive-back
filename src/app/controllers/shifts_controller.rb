@@ -25,7 +25,7 @@ class ShiftsController < ApplicationController
       create_shifts
       delete_shifts if delete_shift_ids.present?
     end
-    redirect_back fallback_location: {action: :index}
+    redirect_back fallback_location: { action: :index }
   end
 
   protected
