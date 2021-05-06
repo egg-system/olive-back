@@ -1,5 +1,5 @@
 class Store < ApplicationRecord
-  enum store_type: { owned: 0, franchised: 1 }
+  enum store_type: { owned: 0, franchised_sapporo_kokubun: 1 }
 
   # time型を扱いやすくするための実装
   serialize :open_at, Tod::TimeOfDay
@@ -18,6 +18,12 @@ class Store < ApplicationRecord
 
   has_many :store_staffs
   has_many :staffs, through: :store_staffs
+
+  has_many :visit_stores
+  has_many :visit_customers,
+    through: :visit_stores,
+    class_name: 'Customer',
+    foreign_key: 'customer_id'
 
   scope :viewable?, ->(current_store) {
     # 直営店は全直営店を閲覧可能

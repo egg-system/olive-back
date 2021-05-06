@@ -12,6 +12,7 @@ class Staff < ApplicationRecord
   # devise()を実行後に記述する
   # moduleで、devise定義のメソッドをオーバーライドしているため
   extend LoginStoreModule
+  include ReadableCustomerModule
 
   has_many :skill_staffs
   has_many :skills, through: :skill_staffs

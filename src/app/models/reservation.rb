@@ -33,6 +33,8 @@ class Reservation < ApplicationRecord
 
   validate :validate_reservation_date, on: :create
 
+  after_create :create_visit_stores
+
   scope :like_customer_name, ->(customer_name) {
     joins(:customer).merge(Customer.like_name(customer_name)) if customer_name.present?
   }
@@ -109,6 +111,14 @@ class Reservation < ApplicationRecord
     if self.reserved_at < Time.current
       errors.add(:reservation_date, "：過去の日時は使えません")
       errors.add(:start_time, "：過去の日時は使えません")
+    end
+  end
+
+  def create_visit_stores
+    return if self.customer.blank?
+    stores = Store.where(store_type: Store.find(self.store_id).store_type)
+    stores.each do |store|
+      self.customer.visit_stores.build(store_id: store.id).save
     end
   end
 end

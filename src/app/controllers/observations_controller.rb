@@ -59,7 +59,7 @@ class ObservationsController < ApplicationController
     if params[:id]
       @observation = Observation.find(params[:id])
     elsif params[:customer_id]
-      @observation = Customer.find(params[:customer_id]).observations.new
+      @observation = current_staff.readable_customers.find(params[:customer_id]).observations.new
     end
   end
 
