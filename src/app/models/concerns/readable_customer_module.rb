@@ -1,10 +1,6 @@
 module ReadableCustomerModule
   extend ActiveSupport::Concern
 
-  included do
-    after_save :sync_square_customer
-  end
-
   def readable_customers
     case self.role.id
     when Role::ADMIN
