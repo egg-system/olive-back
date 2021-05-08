@@ -11,6 +11,7 @@ store_type:
   "直営店": "owned"
   "FC店": "franchised"
   "FC札幌國分": "franchised_sapporo_kokubun"
+  "FCテスト東京": "franchised_tokyo_test"
 
 stores:
   head_store_id: 1
