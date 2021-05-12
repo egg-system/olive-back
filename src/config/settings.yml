@@ -10,7 +10,8 @@ has_registration_card:
 store_type:
   "直営店": "owned"
   "FC店": "franchised"
-  "FC札幌國分": "franchised_sapporo_kokubun"
+  "FC_札幌_國分": "franchised_sapporo_kokubun"
+  "FC_テスト_東京": "franchised_tokyo_test"
 
 stores:
   head_store_id: 1
