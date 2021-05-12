@@ -35,11 +35,12 @@ class Customer < ApplicationRecord
   has_many :stores, through: :visit_stores
 
   before_validation :sync_provider
+  after_save :save_visit_stores
 
   validates :tel, numericality: { allow_blank: true }, length: { in: 9..15 }
   validates :password, presence: true, if: :should_validate_password?
   validates :email, uniqueness: true, unless: :common_email?
-  validates_associated :visit_stores
+  validates :visit_store_ids, presence: true, visit_store: true
 
   # TODO: デフォルトで、joinが走るようにする
   scope :join_size, -> {
@@ -129,13 +130,9 @@ class Customer < ApplicationRecord
     return self.provider != 'none'
   end
 
-  def visit_store_ids=(ids)
-    ids.delete('')
-    ids.delete(nil)
+  def save_visit_stores
     self.visit_stores.delete_all
-    ids.each do |id|
-      self.visit_stores.build(store_id: id).save!
-    end
+    (visit_store_ids - ['', nil]).each { |id| self.visit_stores.build(store_id: id).save! }
   end
 
   protected

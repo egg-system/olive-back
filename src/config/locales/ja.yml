@@ -6,6 +6,7 @@ ja:
         email: 'メールアドレス(会員ID)'
         tel: '電話番号'
         password: 'パスワード'
+        visit_store_ids: '来店店舗'
       staff:
         last_name: '姓'
         first_name: '名'
