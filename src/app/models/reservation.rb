@@ -116,6 +116,7 @@ class Reservation < ApplicationRecord
 
   def create_visit_stores
     return if self.customer.blank?
+
     stores = Store.where(store_type: Store.find(self.store_id).store_type)
     stores.each do |store|
       self.customer.visit_stores.build(store_id: store.id).save

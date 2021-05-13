@@ -36,7 +36,7 @@ class Store < ApplicationRecord
   end
 
   def franchised?
-    return self.store_type.to_sym === :franchised
+    return !self.owned?
   end
 
   def to_shop
