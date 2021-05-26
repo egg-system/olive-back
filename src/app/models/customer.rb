@@ -40,7 +40,7 @@ class Customer < ApplicationRecord
   validates :tel, numericality: { allow_blank: true }, length: { in: 9..15 }
   validates :password, presence: true, if: :should_validate_password?
   validates :email, uniqueness: true, unless: :common_email?
-  validates :visit_store_ids, presence: true, visit_store: true
+  validates :visit_store_ids, allow_nil: true, visit_store: true
 
   # TODO: デフォルトで、joinが走るようにする
   scope :join_size, -> {
@@ -131,8 +131,10 @@ class Customer < ApplicationRecord
   end
 
   def save_visit_stores
-    self.visit_stores.delete_all
-    (visit_store_ids - ['', nil]).each { |id| self.visit_stores.build(store_id: id).save! }
+    if visit_store_ids
+      self.visit_stores.delete_all
+      (visit_store_ids - ['', nil]).each { |id| self.visit_stores.build(store_id: id).save! }
+    end
   end
 
   protected
