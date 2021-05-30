@@ -72,7 +72,7 @@
     <% if @customers.present? %>
       <h5>合計件数：<%= @customers.total_count %>件</h5>
       <% if current_staff.role.admin? %>
-        <a href="<%= customers_csv_index_path %>" class="ml-3">CSV出力</a>
+        <div id="download" data-path="<%= customers_csv_index_path %>" class="ml-3">CSV出力</div>
       <% end %>
     <% end %>
   </div>
