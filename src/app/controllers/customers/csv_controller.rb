@@ -1,7 +1,7 @@
 class Customers::CsvController < ApplicationController
   require 'csv'
 
-  COLUMNS = [
+  HEADERS = [
     "顧客ID",
     "FMID",
     "姓",
@@ -39,11 +39,8 @@ class Customers::CsvController < ApplicationController
   ]
 
   def index
-    @customers = Customer.all
     filename = 'customers_' + Date.current.strftime("%Y%m%d")
-
-    data = generate_customer_data
-    send_data data, filename: filename, type: 'csv'
+    send_data generate_customer_data, filename: filename, type: 'csv'
   end
 
   private
@@ -58,9 +55,10 @@ class Customers::CsvController < ApplicationController
     zoomancies = Zoomancy.all
     sizes = Size.all
 
-    CSV.generate do |csv|
-      csv << COLUMNS
-      @customers.each do |customer|
+    bom = '\uFEFF'
+    CSV.generate(bom) do |csv|
+      csv << HEADERS
+      Customer.find_each do |customer|
         first_visit_store = stores.find { |store| store.id == customer.first_visit_store_id }
         last_visit_store = stores.find { |store| store.id == customer.last_visit_store_id }
         visit_reason = visit_reasons.find { |reason| reason.id == customer.visit_reason_id }
@@ -69,7 +67,6 @@ class Customers::CsvController < ApplicationController
         occupation = occupations.find { |occupation| occupation.id == customer.occupation_id }
         zoomancy = zoomancies.find { |zoomancy| zoomancy.id == customer.zoomancy_id }
         size = sizes.find { |size| size.id == customer.size_id }
-
         values = [
           customer.id,
           customer.fmid,
@@ -82,7 +79,7 @@ class Customers::CsvController < ApplicationController
           customer.display_email,
           customer.uid,
           customer.password,
-          customer.can_receive_mail,
+          customer.can_receive_mail ? "受け取る" : "受け取らない",
           first_visit_store ? first_visit_store.name : '',
           customer.first_visited_at,
           last_visit_store ? last_visit_store.name : '',
@@ -102,9 +99,9 @@ class Customers::CsvController < ApplicationController
           occupation ? occupation.name : '',
           zoomancy ? zoomancy.name : '',
           size ? size.name : '',
-          customer.is_deleted,
+          customer.is_deleted ? "未使用" : "使用中",
           customer.fm_total_amount,
-          customer.square_customer_exists?,
+          customer.square_customer_exists? ? "連携済み" : "未連携",
         ]
         csv << values
       end

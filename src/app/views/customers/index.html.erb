@@ -68,11 +68,11 @@
     </div>
     <div class="clear"></div>
   </div>
-  <div class="pl-2 mt-3 d-flex">
+  <div class="pl-2 mt-3 d-flex align-items-center">
     <% if @customers.present? %>
       <h5>合計件数：<%= @customers.total_count %>件</h5>
       <% if current_staff.role.admin? %>
-        <div id="download" data-path="<%= customers_csv_index_path %>" class="ml-3">CSV出力</div>
+        <div id="download" data-path="<%= customers_csv_index_path %>" class="ml-3 mb-2">CSV出力</div>
       <% end %>
     <% end %>
   </div>
