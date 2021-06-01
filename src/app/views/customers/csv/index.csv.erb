@@ -40,7 +40,7 @@
   bom = '\uFEFF'
   CSV.generate(bom) do |csv|
     csv << headers
-    @customers.each do |customer|
+    Customer.find_each do |customer|
       first_visit_store = @stores.find { |store| store.id == customer.first_visit_store_id }
       last_visit_store = @stores.find { |store| store.id == customer.last_visit_store_id }
       visit_reason = @visit_reasons.find { |reason| reason.id == customer.visit_reason_id }

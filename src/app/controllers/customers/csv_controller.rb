@@ -10,7 +10,6 @@ class Customers::CsvController < ApplicationController
     @occupations = Occupation.all
     @zoomancies = Zoomancy.all
     @sizes = Size.all
-    @customers = Customer.all
 
     respond_to do |format|
       format.csv do
