@@ -20,6 +20,7 @@ module LoginStoreModule
 
   def serialize_from_session(key, salt, login_store_id = nil)
     staff = to_adapter.get(key)
+    return nil if staff.nil?
     staff.login_store_id = login_store_id
     staff if staff && staff.authenticatable_salt == salt
   end
