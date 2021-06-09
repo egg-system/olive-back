@@ -18,7 +18,7 @@
         :display_email,
         label: 'メールアドレス',
         readonly: @customer.persisted? && !current_staff.role.admin?,
-        hint: current_staff.role.admin? ? 
+        hint: current_staff.role.admin? ?
           "
             不明な場合は #{Settings.customer.common_email} を入力してください。<br />
              ※ メールアドレスを変更した際は、パスワードの変更も必要になります
@@ -210,6 +210,14 @@
           hint: synced_square_customer_message(@customer)
         ) %>
       <% end %>
+      <%= f.input(
+        :visit_store_ids,
+        as: :check_boxes,
+        wrapper: :horizontal_collection_inline,
+        collection: Store.pluck(:name, :id),
+        label: '来店店舗',
+        checked: @customer.stores.pluck(:id)
+      ) %>
       <%= f.button :submit, class: 'btn btn-primary' %>
       <%= link_to '戻る', customers_path, class: 'btn btn-light' %>
     </div>

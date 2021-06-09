@@ -6,7 +6,7 @@ class Customers::DuplicateController < ApplicationController
 
     # 重複1件につき、4倍の高さのため、件数は1/4にする ※ 顧客一覧は20件ずつで表示
     ## ペジネーション周りの情報を保持するため、変数名をpageにする
-    @duplicated_customer_page = Customer
+    @duplicated_customer_page = current_staff.readable_customers
       .group_duplicated(search_params[:columns])
       .select('group_concat(id) as duplicated_ids, count(id) as duplicated_count')
       .paginate(search_params[:page], 5)
@@ -18,7 +18,7 @@ class Customers::DuplicateController < ApplicationController
       }
 
     # パフォーマンスの都合から、一括取得する
-    duplicated_customers = Customer.where(
+    duplicated_customers = current_staff.readable_customers.where(
       id: duplicated_ids_groups.flat_map { |ids| ids.split(',').first(MAX_DISPLAYED_CUSTOMERS_COUNT) }
     ).to_a
 

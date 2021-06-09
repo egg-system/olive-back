@@ -31,11 +31,16 @@ class Customer < ApplicationRecord
   has_many :reservations
   has_many :observations
 
+  has_many :visit_stores
+  has_many :stores, through: :visit_stores
+
   before_validation :sync_provider
+  after_save :save_visit_stores
 
   validates :tel, numericality: { allow_blank: true }, length: { in: 9..15 }
   validates :password, presence: true, if: :should_validate_password?
   validates :email, uniqueness: true, unless: :common_email?
+  validates :visit_store_ids, allow_nil: true, visit_store: true
 
   # TODO: デフォルトで、joinが走るようにする
   scope :join_size, -> {
@@ -70,7 +75,7 @@ class Customer < ApplicationRecord
     group(columns).having('count(*) >= 2')
   }
 
-  attr_accessor :age, :display_email
+  attr_accessor :age, :display_email, :visit_store_ids
 
   def self.merge(merge_from_id, merge_to_id)
     merge_from_customer = find(merge_from_id)
@@ -123,6 +128,13 @@ class Customer < ApplicationRecord
 
   def member?
     return self.provider != 'none'
+  end
+
+  def save_visit_stores
+    if visit_store_ids
+      self.visit_stores.delete_all
+      (visit_store_ids - ['', nil]).each { |id| self.visit_stores.build(store_id: id).save! }
+    end
   end
 
   protected

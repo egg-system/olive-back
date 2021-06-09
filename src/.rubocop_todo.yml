@@ -112,6 +112,8 @@ Metrics/BlockLength:
 # Configuration parameters: CountComments.
 Metrics/ClassLength:
   Max: 112
+  Exclude:
+    - 'app/models/customer.rb'
 
 # Offense count: 1
 # Configuration parameters: IgnoredMethods.
