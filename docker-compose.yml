@@ -22,12 +22,12 @@ services:
     container_name: "olive-mysql"
     environment:
       MYSQL_DATABASE: 'db_olive'
-      MYSQL_USER: 'root'
+      MYSQL_USER: 'user'
       MYSQL_ROOT_PASSWORD: 'mysql'
       TZ: "Asia/Tokyo"
-    ports: 
+    ports:
       - 3360:3306
-    volumes: 
+    volumes:
       - db-data:/var/lib/mysql
 
 volumes:
