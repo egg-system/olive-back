@@ -210,14 +210,27 @@
           hint: synced_square_customer_message(@customer)
         ) %>
       <% end %>
-      <%= f.input(
-        :visit_store_ids,
-        as: :check_boxes,
-        wrapper: :horizontal_collection_inline,
-        collection: Store.pluck(:name, :id),
-        label: '来店店舗',
-        checked: @customer.stores.pluck(:id)
-      ) %>
+
+      <% if current_staff.role.head? %>
+        <%= f.input(
+          :visit_store_ids,
+          as: :check_boxes,
+          wrapper: :horizontal_collection_inline,
+          collection: Store.pluck(:name, :id),
+          label: '来店店舗',
+          checked: @customer.stores.pluck(:id)
+        ) %>
+      <% else %>
+        <div class="form-group row optional">
+          <label class="col-sm-3 control-label optional">
+            来店店舗
+          </label>
+          <div class="col-sm-9">
+            <%= @customer.stores.pluck(:name).join(',') %>
+          </div>
+        </div>
+      <% end %>
+
       <%= f.button :submit, class: 'btn btn-primary' %>
       <%= link_to '戻る', customers_path, class: 'btn btn-light' %>
     </div>
