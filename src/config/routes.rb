@@ -33,6 +33,8 @@ Rails.application.routes.draw do
       resources :medical_records, only: [:index, :create]
     end
   end
+  
+  resources :customer_integrations, only: [:show, :update]
 
   resources :stores, :staffs, :reservations do
     collection do
