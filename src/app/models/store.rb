@@ -1,5 +1,5 @@
 class Store < ApplicationRecord
-  enum store_type: { owned: 0, franchised_sapporo_kokubun: 1,  franchised_tokyo_test: 2 }
+  enum store_type: { owned: 0, franchised_sapporo_kokubun: 1, franchised_tokyo_test: 2 }
 
   # time型を扱いやすくするための実装
   serialize :open_at, Tod::TimeOfDay

@@ -131,10 +131,10 @@ class Customer < ApplicationRecord
   end
 
   def save_visit_stores
-    if visit_store_ids
-      self.visit_stores.delete_all
-      (visit_store_ids - ['', nil]).each { |id| self.visit_stores.build(store_id: id).save! }
-    end
+    return unless visit_store_ids
+
+    self.visit_stores.delete_all
+    (visit_store_ids - ['', nil]).each { |id| self.visit_stores.build(store_id: id).save! }
   end
 
   protected

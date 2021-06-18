@@ -9,12 +9,13 @@ namespace :visit_customer do
       store_ids.each do |store_id|
         customer.visit_stores.build(store_id: store_id).save
         next if owned_store
+
         owned_store = true if owned_store_ids.include?(store_id)
       end
-      if owned_store
-        (owned_store_ids - store_ids).each do |store_id|
-          customer.visit_stores.build(store_id: store_id).save
-        end
+      next unless owned_store
+
+      (owned_store_ids - store_ids).each do |store_id|
+        customer.visit_stores.build(store_id: store_id).save
       end
     end
   end
