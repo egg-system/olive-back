@@ -49,6 +49,11 @@ class CustomersController < ApplicationController
       begin
         @customer.save!
 
+        if @customer.visit_stores.blank?
+          visit_store = @customer.visit_stores.build(store_id: view_context.current_store.id)
+          visit_store.save
+        end
+
         # rubocopに従うとネストが深くなりすぎるため、無効化
         # rubocop:disable Layout/IndentationWidth, Layout/ElseAlignment, Layout/EndAlignment
         result = if @customer.square_customer_exists?
