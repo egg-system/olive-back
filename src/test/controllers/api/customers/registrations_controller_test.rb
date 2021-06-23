@@ -30,7 +30,7 @@ class ApiRegistrationsControllerTest < ActionDispatch::IntegrationTest
     register = @register_data
     post '/api/customers/',
          params: register.delete(:first_name)
-    assert_response :failure
+    assert_response :error
 
     assert_nil Customer.find_by first_name: register[:last_name]
   end
