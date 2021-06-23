@@ -23,7 +23,7 @@ class ApiRegistrationsControllerTest < ActionDispatch::IntegrationTest
     post '/api/customers/', params: @register_data
     assert_response :success
 
-    assert Customer.find_by first_name: @register_data.first_name
+    assert Customer.find_by first_name: @register_data[:first_name]
   end
 
   test "should not register customer if" do
@@ -32,6 +32,6 @@ class ApiRegistrationsControllerTest < ActionDispatch::IntegrationTest
          params: register.delete(:first_name)
     assert_response :failure
 
-    assert_nil Customer.find_by first_name: register.last_name
+    assert_nil Customer.find_by first_name: register[:last_name]
   end
 end
