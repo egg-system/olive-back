@@ -26,7 +26,7 @@ class ApiRegistrationsControllerTest < ActionDispatch::IntegrationTest
     assert Customer.find_by first_name: @register_data[:first_name]
   end
 
-  test "should not register customer if" do
+  test "should not register customer" do
     register = @register_data
     post '/api/customers/',
          params: register.delete(:first_name)
