@@ -28,9 +28,10 @@ class ApiRegistrationsControllerTest < ActionDispatch::IntegrationTest
 
   test "should not register customer" do
     register = @register_data
+    register[:email] = Faker::Internet.email
     post '/api/customers/',
          params: register.delete(:first_name)
-    assert_response :error
+    assert_response 422
 
     assert_nil Customer.find_by first_name: register[:last_name]
   end
