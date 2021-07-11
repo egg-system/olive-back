@@ -9,7 +9,6 @@ class DashBoardControllerTest < ActionDispatch::IntegrationTest
 
   setup do
     @staff = Staff.find(9)
-    @staff.update(hidden: true)
     sign_in(@staff)
 
     @reservation = reservations(:tomorrow_one)
