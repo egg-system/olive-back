@@ -52,3 +52,9 @@
 .scale-150 {
   transform: scale(1.5);
 }
+
+table.customer-integration-table {
+  tbody, thead, td, tr, th {
+    border: 0;
+  }
+}
