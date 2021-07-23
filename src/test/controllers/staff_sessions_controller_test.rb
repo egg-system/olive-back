@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class StaffSessionsControllerTest < ActionDispatch::IntegrationTest
-
   test "should show admin login view" do
     get new_staff_session_url
     assert_response :success
@@ -16,5 +15,4 @@ class StaffSessionsControllerTest < ActionDispatch::IntegrationTest
     }
     assert_response 302
   end
-
 end

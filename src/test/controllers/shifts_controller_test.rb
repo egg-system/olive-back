@@ -15,7 +15,6 @@ class ShiftsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should show view" do
-    staffs = Staff.exclude_hidden.all
     get shifts_url
     assert_response :success
   end
