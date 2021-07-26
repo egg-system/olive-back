@@ -19,4 +19,17 @@ namespace :visit_customer do
       end
     end
   end
+
+  desc '来店情報がない顧客'
+  task blank_create: :environment do
+    owned_store_ids = Store.where(store_type: :owned).pluck(:id).uniq
+    all_customer_ids = Customer.all.pluck(:id)
+    exists_customer_ids = VisitStore.all.pluck(:customer_id).uniq
+    customers = Customer.where(id: (all_customer_ids - exists_customer_ids))
+    customers.each do |customer|
+      owned_store_ids.each do |store_id|
+        customer.visit_stores.build(store_id: store_id).save
+      end
+    end
+  end
 end
