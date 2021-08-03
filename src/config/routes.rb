@@ -21,6 +21,7 @@ Rails.application.routes.draw do
 
   namespace :customers do
     resources :duplicate
+    resources :csv, only: [:index]
   end
 
   resources :customers do
