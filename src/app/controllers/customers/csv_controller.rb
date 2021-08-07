@@ -1,5 +1,4 @@
 class Customers::CsvController < ApplicationController
-
   def index
     filename = 'customers_' + Date.current.strftime("%Y%m%d")
 
