@@ -6,6 +6,8 @@ class Customer < ApplicationRecord
   include PaginationModule
   include SquareCustomerModule
 
+  VALID_PASSWORD_REGEX = /\A(?=.*?[a-z])(?=.*?[\d])[a-z\d]+\z/i.freeze
+
   belongs_to(
     :first_visit_store,
     optional: true,
@@ -38,7 +40,8 @@ class Customer < ApplicationRecord
   after_save :save_visit_stores
 
   validates :tel, numericality: { allow_blank: true }, length: { in: 9..15 }
-  validates :password, presence: true, if: :should_validate_password?
+  validates :password, presence: true, length: { minimum: 8 },
+                       format: { with: VALID_PASSWORD_REGEX }, if: :should_validate_password?
   validates :email, uniqueness: true, unless: :common_email?
   validates :visit_store_ids, allow_nil: true, visit_store: true
 
@@ -142,7 +145,7 @@ class Customer < ApplicationRecord
   # 会員かつ、メールアドレスが変更された場合、パスワードをチェックする
   def should_validate_password?
     # nilからの変更は、changed? === trueとして認識されないため、下記の様に確認
-    return self.member? && self.email != self.email_was
+    return (self.member? && self.email != self.email_was) || (!self.common_email? && self.new_record?)
   end
 
   def sync_provider
