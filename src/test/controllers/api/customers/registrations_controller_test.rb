@@ -15,7 +15,7 @@ class ApiRegistrationsControllerTest < ActionDispatch::IntegrationTest
       last_visit_store_id: 1,
       can_receive_mail: 1,
       email: Faker::Internet.email,
-      password: 'test123'
+      password: 'test1234'
     }
   end
 
