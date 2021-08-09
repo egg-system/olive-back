@@ -15,7 +15,7 @@ class ApiRegistrationsControllerTest < ActionDispatch::IntegrationTest
       last_visit_store_id: 1,
       can_receive_mail: 1,
       email: Faker::Internet.email,
-      password: 'test123'
+      password: 'test1234'
     }
   end
 
@@ -35,4 +35,27 @@ class ApiRegistrationsControllerTest < ActionDispatch::IntegrationTest
 
     assert_nil Customer.find_by first_name: register[:last_name]
   end
+
+  test "should not password only alphabet" do
+    register = @register_data
+    register[:email] = Faker::Internet.email
+    register[:password] = 'testTEST'
+
+    post api_customer_registration_url,
+         params: register
+    assert_response 200
+    assert_nil Customer.find_by email: register[:email]
+  end
+
+  test "should password require 8length alpha num" do
+    register = @register_data
+    register[:email] = Faker::Internet.email
+    register[:password] = 'test123'
+
+    post api_customer_registration_url,
+         params: register
+    assert_response 200
+    assert_nil Customer.find_by email: register[:email]
+  end
+
 end
