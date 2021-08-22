@@ -599,4 +599,6 @@ Style/YodaCondition:
 # Configuration parameters: AutoCorrect, AllowHeredoc, AllowURI, URISchemes, IgnoreCopDirectives, IgnoredPatterns.
 # URISchemes: http, https
 Layout/LineLength:
+  Exclude:
+    - 'app/models/customer.rb'
   Max: 216
