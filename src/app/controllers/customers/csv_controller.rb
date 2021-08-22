@@ -15,11 +15,12 @@ class Customers::CsvController < ApplicationController
     bom = "\uFEFF"
     Enumerator.new do |csv|
       csv << bom
-      csv << Customer.column_names.to_csv
+      csv << Customer::JP_COLUMN_NAMES.to_csv
       Customer.find_each do |customer|
         csv << customer.attributes.values.to_csv
       end
     end
   end
 end
+
 
