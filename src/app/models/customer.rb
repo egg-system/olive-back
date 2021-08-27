@@ -8,7 +8,7 @@ class Customer < ApplicationRecord
 
   VALID_PASSWORD_REGEX = /\A(?=.*?[a-z])(?=.*?[\d])[a-z\d]+\z/i.freeze
 
-  JP_COLUMN_NAMES = %w[顧客ID 名 性 メイ セイ 電話番号 固定電話番号 性別 メール受け取り サンキューレター送付済み DM配信受け取り可否 生年月日 郵便番号 都道府県 市区町村 住所 コメント 初回ご来店店舗 直近ご来店店舗 初回ご来店日 直近ご来店日 カルテNo 紹介者 Web検索 診察券発行有無 お子様の数 作成日 更新日 職業 動物占い 赤ちゃんの年齢 サイズ 来店経緯 最寄駅 メールアドレス 暗号化パスワード パスワードリセット用トークン パスワードリセット送信時刻 ログイン記憶時刻 プロパイダー uid トークン パスワード変更可否 FMID 削除済み 売上総額].freeze
+  JP_CSV_COLUMN_NAMES = %w[顧客ID 姓 名 セイ メイ 電話番号 固定電話番号 性別 メール受け取り サンキューレター送付済み DM配信受け取り可否 生年月日 郵便番号 都道府県 市区町村 住所 コメント 初回ご来店店舗 直近ご来店店舗 初回ご来店日 直近ご来店日 カルテNo 紹介者 Web検索 診察券発行有無 お子様の数 作成日 更新日 職業 動物占い 赤ちゃんの年齢 サイズ 来店経緯 最寄駅 メールアドレス 暗号化パスワード パスワードリセット用トークン パスワードリセット送信時刻 ログイン記憶時刻 プロパイダー uid トークン パスワード変更可否 FMID 削除済み 売上総額].freeze
 
   belongs_to(
     :first_visit_store,
@@ -140,6 +140,11 @@ class Customer < ApplicationRecord
 
     self.visit_stores.delete_all
     (visit_store_ids - ['', nil]).each { |id| self.visit_stores.build(store_id: id).save! }
+  end
+
+  def to_csv_values
+    sorted = [self.id, self.last_name, self.first_name, self.last_kana, self.first_kana]
+    sorted + self.attributes.except('id', 'first_name', 'last_name', 'first_kana', 'last_kana').values
   end
 
   protected

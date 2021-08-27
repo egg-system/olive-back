@@ -1,5 +1,6 @@
 class Customers::CsvController < ApplicationController
   require 'csv'
+
   def index
     filename = 'customers_' + Date.current.strftime("%Y%m%d")
     headers.delete("Content-Length")
@@ -13,12 +14,10 @@ class Customers::CsvController < ApplicationController
   def build_csv
     bom = "\uFEFF"
     CSV.generate(bom) do |csv|
-      csv << Customer::JP_COLUMN_NAMES
+      csv << Customer::JP_CSV_COLUMN_NAMES
       Customer.find_each do |customer|
-        csv << customer.attributes.values
+        csv << customer.to_csv_values
       end
     end
   end
 end
-
-
