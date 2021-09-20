@@ -149,10 +149,12 @@ class Customer < ApplicationRecord
 
   protected
 
-  # 会員かつ、メールアドレスが変更された場合、パスワードをチェックする
+  # 会員かつ、メールアドレスかパスワードが変更された場合、パスワードをチェックする
   def should_validate_password?
     # nilからの変更は、changed? === trueとして認識されないため、下記の様に確認
-    return (self.member? && self.email != self.email_was) || (!self.common_email? && self.new_record?)
+    email_or_password_changed = self.email != self.email_was || self.encrypted_password != self.encrypted_password_was
+
+    return (self.member? && email_or_password_changed) || (!self.common_email? && self.new_record?)
   end
 
   def sync_provider
