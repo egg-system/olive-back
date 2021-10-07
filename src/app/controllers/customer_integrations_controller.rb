@@ -1,16 +1,17 @@
 class CustomerIntegrationsController < ApplicationController
-  before_action :set_customer, only: [:show, :edit, :update, :destroy]
+  before_action :forbidden_unless_admin
+  before_action :set_customer
 
   def show
     @search_params = search_params
 
-    @customers = Customer.all
+    @customers = Customer.where.not(id: @customer.id)
 
-    @customers = @customers.where(id: @search_params[:customer_id])if @search_params[:customer_id].present?
+    @customers = @customers.where(id: @search_params[:customer_id]) if @search_params[:customer_id].present?
     @customers = @customers.like_email(@search_params[:email])
+    @customers = @customers.where_deleted(false) unless @search_params[:include_deleted] === '1'
 
     @customers = @customers.paginate(@search_params[:page], 20)
-
   end
 
   def update
@@ -18,8 +19,10 @@ class CustomerIntegrationsController < ApplicationController
     
   end
 
+  private
+
   def search_params
-    params.permit(:email, :include_deleted, :customer_id,)
+    params.permit(:id, :customer_id, :email, :include_deleted, :page)
   end
 
   def set_customer

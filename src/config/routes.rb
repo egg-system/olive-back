@@ -35,7 +35,12 @@ Rails.application.routes.draw do
     end
   end
   
-  resources :customer_integrations, only: [:show, :update]
+  resources :customer_integrations, only: [:show] do
+    member do
+      post :integrate
+    end
+
+  end
 
   resources :stores, :staffs, :reservations do
     collection do

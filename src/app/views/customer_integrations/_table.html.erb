@@ -5,8 +5,7 @@
       <th scope="col">氏名</th>
       <th scope="col">Email</th>
       <th scope="col">使用状況</th>
-      <th scope="col">メモ</th>
-      <th scope="col"></th>
+      <th scope="col">選択</th>
     </tr>
   </thead>
   <tbody>
@@ -16,8 +15,9 @@
         <td><%= customer.full_name %></td>
         <td><%= customer.display_email %></td>
         <td><%= customer.is_deleted == true ? '未使用' : '使用中' %></td>
-        <td></td>
-        <td><%= link_to '統合する', customer_integration_path(id: @customer.id, delete_customer_id: customer.id), method: :put, data: { confirm:  '顧客を統合します。よろしいですか？'}, class: 'btn' %></td>
+        <td>
+          <%= radio_button_tag(:radio_integration_customer_id, customer.id) %>
+        </td>
       </tr>
     <% end %>
   </tbody>

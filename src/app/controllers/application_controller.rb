@@ -13,6 +13,10 @@ class ApplicationController < ActionController::Base
 
   protected
 
+  def forbidden_unless_admin
+    head :forbidden unless current_staff.role.admin?
+  end
+
   def audited_user
     return current_staff if staff_signed_in?
   end
