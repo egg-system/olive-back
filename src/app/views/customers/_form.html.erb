@@ -231,7 +231,7 @@
         </div>
       <% end %>
 
-      <%= f.input :memo, label: 'メモ' %>
+      <%= f.input :memo, label: 'メモ', input_html: { rows: 6 } %>
 
       <%= f.button :submit, class: 'btn btn-primary' %>
       <%= link_to '戻る', customers_path, class: 'btn btn-light' %>

@@ -14,9 +14,9 @@ class CustomerIntegrationsController < ApplicationController
     @customers = @customers.paginate(@search_params[:page], 20)
   end
 
-  def update
-    @search_params = search_params
-    
+  def integrate
+    @customer.integrate!(params[:integration_customer_id])
+    redirect_to customers_path, notice: '顧客統合が完了しました。'
   end
 
   private
