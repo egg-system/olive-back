@@ -1,0 +1,85 @@
+<%= javascript_include_tag 'customer_integrations' %>
+
+<p class="common_title">統合する顧客の選択画面</p>
+
+<h2>現在選択中の顧客</h2>
+<table class="table customer-integration-table">
+  <tr>
+    <th><h4>顧客ID</h4></th>
+    <th><h4>氏名</h4></th>
+    <th><h4>メールアドレス</h4></th>
+  </tr>
+  <tbody>
+    <tr>
+      <td><h4><%= @customer.id %></h4></td>
+      <td><h4><%= @customer.full_name %></h4></td>
+      <td><h4><%= @customer.email %></h4></td>
+    </tr>
+  </tbody>
+</table>
+
+<div id="customer_show">
+  <div class="upper-frame">
+    <h4>検索条件入力</h4>
+    <div class="condition-section">
+      <%= form_with url: customer_integration_path(@customer.id), id:"search", method: :get, local: true do |f| %>
+        <table>
+          <tbody>
+          <tr>
+            <th>顧客ID</th>
+            <td>
+              <%= f.text_field :customer_id, { class: "form-control", value: @search_params["customer_id"] } %>
+            <td>
+          </tr>
+          <tr>
+            <th>メールアドレス</th>
+            <td>
+              <%= f.text_field :email, { class: "form-control", value: @search_params["email"] } %>
+            <td>
+          </tr>
+          <tr>
+            <th></th>
+            <td>
+              <%= f.check_box :include_deleted, {
+                checked: @search_params["include_deleted"] === '1'
+              } %>
+              <%= f.label :include_deleted, "未使用の顧客を含めて検索する" %>
+            <td>
+          </tr>
+          </tbody>
+        </table>
+      <%end%>
+    </div>
+    <div class="button-section">
+      <%= submit_tag "検索実行", {
+        class: "btn btn-info btn-search",
+        form: "search"
+      } %>
+      <%=
+        button_tag '顧客を統合する',
+          id: 'integration_button',
+          class: 'btn btn-secondary',
+          disabled: true
+      %>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="pl-2 mt-3">
+    <% if @customers.present? %>
+      <h5>合計件数：<%= @customers.total_count %>件</h5>
+    <% end %>
+  </div>
+  <div class="lower-frame">.
+    <% if @customers.blank? %>
+      <p>該当データがありません</p>
+    <% else %>
+      <%= render 'table', { customers: @customers } %>
+    <% end %>
+  </div>
+  <%= paginate @customers %>
+  <br>
+  <br>
+  <%= form_with url: integrate_customer_integration_path(@customer.id), method: :post, id: :integration_form, local: true do |f| %>
+    <% f.hidden_field :integration_customer_id %>
+  <% end %>
+</div>

@@ -7,6 +7,39 @@ ja:
         tel: '電話番号'
         password: 'パスワード'
         visit_store_ids: '来店店舗'
+        first_name: 名
+        last_name: 姓
+        first_kana: メイ
+        last_kana: セイ
+        fixed_line_tel: 固定電話番号
+        gender: 性別
+        can_receive_mail: メール受け取り
+        is_receive_thank_you_letter: サンキューレター送付済み
+        can_receive_dm_mail: DM配信受け取り可否
+        birthday: 生年月日
+        zip_code: 郵便番号
+        prefecture: 都道府県
+        city: 市区町村
+        address: 住所
+        comment: コメント
+        first_visit_store_id: 初回ご来店店舗
+        last_visit_store_id: 直近ご来店店舗
+        first_visited_at: 初回ご来店日
+        last_visited_at: 直近ご来店日
+        card_number: カルテNo
+        introducer: 紹介者
+        searched_by: Web検索
+        has_registration_card: 診察券発行有無
+        children_count: お子様の数
+        occupation_id: 職業
+        zoomancy_id: 動物占い
+        baby_age_id: 赤ちゃんの年齢
+        size_id: サイズ
+        visit_reason_id: 来店経緯
+        nearest_station_id: 最寄駅
+        fmid: FMID
+        fm_total_amount: 売上総額
+        memo: メモ
       staff:
         last_name: '姓'
         first_name: '名'

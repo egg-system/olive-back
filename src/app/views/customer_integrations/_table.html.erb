@@ -1,0 +1,24 @@
+<table class="table">
+  <thead class="thead-light">
+    <tr>
+      <th scope="col">顧客ID</th>
+      <th scope="col">氏名</th>
+      <th scope="col">Email</th>
+      <th scope="col">使用状況</th>
+      <th scope="col">選択</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% customers.each do |customer| %>
+      <tr>
+        <td scope="row"><%= customer.id %></td>
+        <td><%= customer.full_name %></td>
+        <td><%= customer.display_email %></td>
+        <td><%= customer.is_deleted == true ? '未使用' : '使用中' %></td>
+        <td>
+          <%= radio_button_tag(:radio_integration_customer_id, customer.id) %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

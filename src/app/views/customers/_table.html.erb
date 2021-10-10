@@ -36,6 +36,9 @@
             <li class="list-group-item"><%= link_to '詳細', customer_path(customer.id) %></li>
             <li class="list-group-item"><%= link_to '経過記録登録', new_observation_path(customer_id: customer.id) %></li>
             <li class="list-group-item"><%= link_to '予約登録', new_reservation_path(customer_id: customer.id) %></li>
+            <% if current_staff.role.admin? %>
+              <li class="list-group-item"><%= link_to '顧客統合', customer_integration_path(id: customer.id) %></li>
+            <% end %>
           </ul>
         </td>
       </tr>

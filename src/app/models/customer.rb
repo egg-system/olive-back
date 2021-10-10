@@ -10,6 +10,9 @@ class Customer < ApplicationRecord
 
   JP_CSV_COLUMN_NAMES = %w[顧客ID 姓 名 セイ メイ 電話番号 固定電話番号 性別 メール受け取り サンキューレター送付済み DM配信受け取り可否 生年月日 郵便番号 都道府県 市区町村 住所 コメント 初回ご来店店舗 直近ご来店店舗 初回ご来店日 直近ご来店日 カルテNo 紹介者 Web検索 診察券発行有無 お子様の数 作成日 更新日 職業 動物占い 赤ちゃんの年齢 サイズ 来店経緯 最寄駅 メールアドレス 暗号化パスワード パスワードリセット用トークン パスワードリセット送信時刻 ログイン記憶時刻 プロパイダー uid トークン パスワード変更可否 FMID 削除済み 売上総額].freeze
 
+  # 顧客統合対象外のカラム
+  INTEGRATE_EXCEPT_ATTRIBUTE_NAMES = %w[id email encrypted_password reset_password_token reset_password_sent_at remember_created_at provider uid tokens allow_password_change is_deleted created_at updated_at].freeze
+
   belongs_to(
     :first_visit_store,
     optional: true,
@@ -147,6 +150,53 @@ class Customer < ApplicationRecord
     sorted + self.attributes.except('id', 'first_name', 'last_name', 'first_kana', 'last_kana').values
   end
 
+  def integrate!(integrate_customer_id)
+    integrate_customer = self.class.find(integrate_customer_id)
+
+    transaction do
+      memo = <<~STR
+        重複した顧客情報を #{Date.today.strftime('%Y/%m/%d')} に統合しました。下記は最新の顧客情報に含まれません。
+        顧客ID：#{integrate_customer.id}
+        名前：#{integrate_customer.full_name}
+      STR
+
+      integrate_attribute_names.each do |attribute_name|
+        value = read_attribute(attribute_name)
+        integrate_value = integrate_customer.read_attribute(attribute_name)
+
+        if value.blank? && value != false
+          write_attribute(attribute_name, integrate_value)
+
+        elsif integrate_value.present? && value != integrate_value
+          # 値が競合した場合は、削除顧客の値をカラム名とともにメモに記載する
+          memo_attribute_name = self.class.human_attribute_name(attribute_name)
+
+          memo << "#{memo_attribute_name}：#{memo_integrate_value(attribute_name, integrate_value)}\n"
+        end
+      end
+
+      if self.memo.present?
+        self.memo << "\n\n"
+      else
+        self.memo = ''
+      end
+
+      self.memo << memo
+
+      save!
+
+      # 予約情報と経過記録情報の紐付けを変更する
+      integrate_customer.reservations.each do |reservation|
+        reservation.update_attributes!(customer_id: id)
+      end
+      integrate_customer.observations.each do |observation|
+        observation.update_attributes!(customer_id: id)
+      end
+
+      integrate_customer.update_attributes!(is_deleted: true)
+    end
+  end
+
   protected
 
   # 会員かつ、メールアドレスかパスワードが変更された場合、パスワードをチェックする
@@ -168,4 +218,44 @@ class Customer < ApplicationRecord
   def common_email
     return Settings.customer.common_email
   end
+
+  def integrate_attribute_names
+    attribute_names - INTEGRATE_EXCEPT_ATTRIBUTE_NAMES
+  end
+
+  def memo_integrate_value(attribute_name, value)
+    return '' if value.blank?
+
+    case attribute_name.to_sym
+    # 日付変換
+    when :birthday, :first_visited_at, :last_visited_at
+      value.present? ? value.strftime('%Y/%m/%d') : ''
+
+    # 外部テーブルの値変換
+    when :first_visit_store_id, :last_visit_store_id
+      Store.find_by(id: value)&.name
+
+    when :occupation_id
+      Occupation.find_by(id: value)&.name
+
+    when :zoomancy_id
+      Zoomancy.find_by(id: value)&.name
+
+    when :baby_age_id
+      BabyAge.find_by(id: value)&.name
+
+    when :size_id
+      Size.find_by(id: value)&.name
+
+    when :visit_reason_id
+      VisitReason.find_by(id: value)&.name
+
+    when :nearest_station_id
+      NearestStation.find_by(id: value)&.name
+
+    else
+      value
+    end
+  end
+
 end
