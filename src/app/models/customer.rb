@@ -154,34 +154,7 @@ class Customer < ApplicationRecord
     integrate_customer = self.class.find(integrate_customer_id)
 
     transaction do
-      memo = <<~STR
-        重複した顧客情報を #{Date.today.strftime('%Y/%m/%d')} に統合しました。下記は最新の顧客情報に含まれません。
-        顧客ID：#{integrate_customer.id}
-        名前：#{integrate_customer.full_name}
-      STR
-
-      integrate_attribute_names.each do |attribute_name|
-        value = read_attribute(attribute_name)
-        integrate_value = integrate_customer.read_attribute(attribute_name)
-
-        if value.blank? && value != false
-          write_attribute(attribute_name, integrate_value)
-
-        elsif integrate_value.present? && value != integrate_value
-          # 値が競合した場合は、削除顧客の値をカラム名とともにメモに記載する
-          memo_attribute_name = self.class.human_attribute_name(attribute_name)
-
-          memo << "#{memo_attribute_name}：#{memo_integrate_value(attribute_name, integrate_value)}\n"
-        end
-      end
-
-      if self.memo.present?
-        self.memo << "\n\n"
-      else
-        self.memo = ''
-      end
-
-      self.memo << memo
+      write_integrate_values(integrate_customer)
 
       save!
 
@@ -219,43 +192,65 @@ class Customer < ApplicationRecord
     return Settings.customer.common_email
   end
 
+  def write_integrate_values(integrate_customer)
+    memo = <<~STR
+      重複した顧客情報を #{Date.today.strftime('%Y/%m/%d')} に統合しました。下記は最新の顧客情報に含まれません。
+      顧客ID：#{integrate_customer.id}
+      名前：#{integrate_customer.full_name}
+    STR
+
+    integrate_attribute_names.each do |attribute_name|
+      value = read_attribute(attribute_name)
+      integrate_value = integrate_customer.read_attribute(attribute_name)
+
+      if value.blank? && value != false
+        write_attribute(attribute_name, integrate_value)
+
+      elsif (integrate_value.present? || integrate_value == false) && value != integrate_value
+        # 値が競合した場合は、削除顧客の値をカラム名とともにメモに記載する
+        memo_attribute_name = self.class.human_attribute_name(attribute_name)
+
+        memo << "#{memo_attribute_name}：#{memo_integrate_value(attribute_name, integrate_value)}\n"
+      end
+    end
+
+    if self.memo.present?
+      self.memo << "\n\n"
+    else
+      self.memo = ''
+    end
+
+    self.memo << memo
+  end
+
   def integrate_attribute_names
     attribute_names - INTEGRATE_EXCEPT_ATTRIBUTE_NAMES
   end
 
   def memo_integrate_value(attribute_name, value)
-    return '' if value.blank?
+    return '' if value.blank? && value != false
 
     case attribute_name.to_sym
+    when :can_receive_mail
+      value ? '受け取る' : '受け取らない'
+
+    when :has_registration_card
+      value ? '済' : '未'
+
     # 日付変換
     when :birthday, :first_visited_at, :last_visited_at
-      value.present? ? value.strftime('%Y/%m/%d') : ''
+      value.strftime('%Y/%m/%d')
 
     # 外部テーブルの値変換
     when :first_visit_store_id, :last_visit_store_id
       Store.find_by(id: value)&.name
 
-    when :occupation_id
-      Occupation.find_by(id: value)&.name
-
-    when :zoomancy_id
-      Zoomancy.find_by(id: value)&.name
-
-    when :baby_age_id
-      BabyAge.find_by(id: value)&.name
-
-    when :size_id
-      Size.find_by(id: value)&.name
-
-    when :visit_reason_id
-      VisitReason.find_by(id: value)&.name
-
-    when :nearest_station_id
-      NearestStation.find_by(id: value)&.name
+    when :occupation_id, :zoomancy_id, :baby_age_id, :size_id, :visit_reason_id, :nearest_station_id
+      model_name = attribute_name.to_s.gsub(/\_id$/, '').camelize
+      model_name.constantize.find_by(id: value)&.name
 
     else
       value
     end
   end
-
 end
