@@ -228,7 +228,6 @@ class Customer < ApplicationRecord
   end
 
   def memo_integrate_value(attribute_name, value)
-    Rails.logger.info("#{attribute_name}, #{value}")
     return '' if value.blank? && value != false
 
     case attribute_name.to_sym
