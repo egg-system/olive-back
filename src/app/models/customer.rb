@@ -158,7 +158,7 @@ class Customer < ApplicationRecord
     transaction do
       write_integrate_values(integrate_customer)
 
-      save!
+      save!(validate: false)
 
       # 予約情報と経過記録情報の紐付けを変更する
       integrate_customer.reservations.each do |reservation|
@@ -168,7 +168,8 @@ class Customer < ApplicationRecord
         observation.update_attributes!(customer_id: id)
       end
 
-      integrate_customer.update_attributes!(enabled: false)
+      integrate_customer.enabled = false
+      integrate_customer.save!(validate: false)
     end
   end
 

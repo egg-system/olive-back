@@ -1,4 +1,9 @@
 <%= javascript_include_tag 'customer_integrations' %>
+<% if @exception.present? %>
+<div class="alert alert-danger">
+  <%= @exception %>
+</div>
+<% end %>
 
 <p class="common_title">統合する顧客の選択画面</p>
 

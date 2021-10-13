@@ -3,6 +3,24 @@ class CustomerIntegrationsController < ApplicationController
   before_action :set_customer
 
   def show
+    assign_show_values
+  end
+
+  def integrate
+    @customer.integrate!(params[:integration_customer_id])
+    redirect_to customers_path, notice: '顧客統合が完了しました。'
+  rescue => e
+    logger.debug(e)
+
+    @exception = e
+
+    assign_show_values
+    render :show
+  end
+
+  private
+
+  def assign_show_values
     @search_params = search_params
 
     @customers = Customer.enabled.where.not(id: @customer.id)
@@ -13,13 +31,6 @@ class CustomerIntegrationsController < ApplicationController
 
     @customers = @customers.paginate(@search_params[:page], 20)
   end
-
-  def integrate
-    @customer.integrate!(params[:integration_customer_id])
-    redirect_to customers_path, notice: '顧客統合が完了しました。'
-  end
-
-  private
 
   def search_params
     params.permit(:id, :customer_id, :email, :include_deleted, :page)
