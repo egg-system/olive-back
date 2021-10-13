@@ -5,7 +5,7 @@ class CustomerIntegrationsController < ApplicationController
   def show
     @search_params = search_params
 
-    @customers = Customer.where.not(id: @customer.id)
+    @customers = Customer.enabled.where.not(id: @customer.id)
 
     @customers = @customers.where(id: @search_params[:customer_id]) if @search_params[:customer_id].present?
     @customers = @customers.like_email(@search_params[:email])
