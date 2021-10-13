@@ -15,7 +15,7 @@ class Customers::CsvController < ApplicationController
     bom = "\uFEFF"
     CSV.generate(bom) do |csv|
       csv << Customer::JP_CSV_COLUMN_NAMES
-      Customer.find_each do |customer|
+      Customer.enabled.find_each do |customer|
         csv << customer.to_csv_values
       end
     end

@@ -83,6 +83,8 @@ class Customer < ApplicationRecord
     group(columns).having('count(*) >= 2')
   }
 
+  scope :enabled, -> { where(enabled: true) }
+
   attr_accessor :age, :display_email, :visit_store_ids
 
   def self.merge(merge_from_id, merge_to_id)
@@ -166,7 +168,7 @@ class Customer < ApplicationRecord
         observation.update_attributes!(customer_id: id)
       end
 
-      integrate_customer.update_attributes!(is_deleted: true)
+      integrate_customer.update_attributes!(enabled: false)
     end
   end
 
