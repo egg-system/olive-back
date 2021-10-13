@@ -39,7 +39,7 @@ ja:
         nearest_station_id: 最寄駅
         fmid: FMID
         fm_total_amount: 売上総額
-        memo: メモ
+        integrate_memo: 顧客統合メモ
       staff:
         last_name: '姓'
         first_name: '名'

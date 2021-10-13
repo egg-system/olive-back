@@ -231,7 +231,9 @@
         </div>
       <% end %>
 
-      <%= f.input :memo, label: 'メモ', input_html: { rows: 6 } %>
+      <% if @customer.persisted? %>
+        <%= f.input :integrate_memo, label: '顧客統合メモ', disabled: true, input_html: { rows: 6 } %>
+      <% end %>
 
       <%= f.button :submit, class: 'btn btn-primary' %>
       <%= link_to '戻る', customers_path, class: 'btn btn-light' %>

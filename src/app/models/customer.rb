@@ -8,7 +8,7 @@ class Customer < ApplicationRecord
 
   VALID_PASSWORD_REGEX = /\A(?=.*?[a-z])(?=.*?[\d])[a-z\d]+\z/i.freeze
 
-  JP_CSV_COLUMN_NAMES = %w[顧客ID 姓 名 セイ メイ 電話番号 固定電話番号 性別 メール受け取り サンキューレター送付済み DM配信受け取り可否 生年月日 郵便番号 都道府県 市区町村 住所 コメント 初回ご来店店舗 直近ご来店店舗 初回ご来店日 直近ご来店日 カルテNo 紹介者 Web検索 診察券発行有無 お子様の数 作成日 更新日 職業 動物占い 赤ちゃんの年齢 サイズ 来店経緯 最寄駅 メールアドレス 暗号化パスワード パスワードリセット用トークン パスワードリセット送信時刻 ログイン記憶時刻 プロパイダー uid トークン パスワード変更可否 FMID 削除済み 売上総額].freeze
+  JP_CSV_COLUMN_NAMES = %w[顧客ID 姓 名 セイ メイ 電話番号 固定電話番号 性別 メール受け取り サンキューレター送付済み DM配信受け取り可否 生年月日 郵便番号 都道府県 市区町村 住所 コメント 初回ご来店店舗 直近ご来店店舗 初回ご来店日 直近ご来店日 カルテNo 紹介者 Web検索 診察券発行有無 お子様の数 作成日 更新日 職業 動物占い 赤ちゃんの年齢 サイズ 来店経緯 最寄駅 メールアドレス 暗号化パスワード パスワードリセット用トークン パスワードリセット送信時刻 ログイン記憶時刻 プロパイダー uid トークン パスワード変更可否 FMID 削除済み 売上総額 顧客統合メモ].freeze
 
   # 顧客統合対象外のカラム
   INTEGRATE_EXCEPT_ATTRIBUTE_NAMES = %w[id email encrypted_password reset_password_token reset_password_sent_at remember_created_at provider uid tokens allow_password_change is_deleted created_at updated_at].freeze
@@ -214,13 +214,13 @@ class Customer < ApplicationRecord
       end
     end
 
-    if self.memo.present?
-      self.memo << "\n\n"
+    if self.integrate_memo.present?
+      self.integrate_memo << "\n\n"
     else
-      self.memo = ''
+      self.integrate_memo = ''
     end
 
-    self.memo << memo
+    self.integrate_memo << memo
   end
 
   def integrate_attribute_names
