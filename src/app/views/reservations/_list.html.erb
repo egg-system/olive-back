@@ -23,7 +23,9 @@
           <th scope="col">メニュー</th>
           <th scope="col">オプション</th>
           <th scope="col" class="gross-profit">登録実行者</th>
+          <th scope="col">登録実行スタッフ</th>
           <th scope="col">登録実行日時</th>
+          <th scope="col">キャンセル実行スタッフ</th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -80,7 +82,13 @@
                 <%= Settings.audit.changed_by.to_h.key(reservation.created_by) %>
               </td>
               <td rowspan="<%= row_span %>">
+                <%= reservation.created_staff&.full_name %>
+              </td>
+              <td rowspan="<%= row_span %>">
                 <%= reservation.created_at.strftime('%Y-%m-%d %H:%M') %>
+              </td>
+              <td rowspan="<%= row_span %>">
+                <%= reservation.canceled_staff&.full_name %>
               </td>
               <% if index === 0 %>
                 <td rowspan="<%= row_span %>">
