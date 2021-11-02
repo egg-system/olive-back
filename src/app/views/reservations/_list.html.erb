@@ -32,11 +32,19 @@
           <% row_span = reservation.reservation_details.count %>
           <tr>
             <td rowspan="<%= row_span %>"><%= reservation.id %></td>
-            <td
-              class="reservation_state reservation_state_<%= reservation.state_symbol.to_s %>"
-              rowspan="<%= row_span %>"
-            >
-              <%= reservation.state %>
+            <td rowspan="<%= row_span %>">
+              <div class="reservation_state reservation_state_<%= reservation.state_symbol.to_s %>">
+                <%= reservation.state %>
+              </div>
+              <% if reservation.state_symbol == :canceled %>
+                <% if reservation.canceled_by == 'Staff' %>
+                  <% if reservation.canceled_staff.present? %>
+                    担:<%= reservation.canceled_staff.full_name %>
+                  <% end %>
+                <% else %>
+                  <%= Settings.audit.changed_by.to_h.key(reservation.canceled_by) %>
+                <% end %>
+              <% end %>
             </td>
             <td rowspan="<%= row_span %>" class="reservation-date">
               <%= reservation.reservation_date %><br>
@@ -77,7 +85,12 @@
               </td>
               </td>
               <td rowspan="<%= row_span %>">
-                <%= Settings.audit.changed_by.to_h.key(reservation.created_by) %>
+                <div>
+                  <%= Settings.audit.changed_by.to_h.key(reservation.created_by) %>
+                </div>
+                <% if reservation.created_by == 'Staff' && reservation.created_staff.present? %>
+                  担:<%= reservation.created_staff.full_name %>
+                <% end %>
               </td>
               <td rowspan="<%= row_span %>">
                 <%= reservation.created_at.strftime('%Y-%m-%d %H:%M') %>
