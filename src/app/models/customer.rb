@@ -152,13 +152,11 @@ class Customer < ApplicationRecord
     sorted + self.attributes.except('id', 'first_name', 'last_name', 'first_kana', 'last_kana').values
   end
 
-  def integrate!(integrate_customer_id)
-    integrate_customer = self.class.find(integrate_customer_id)
-
+  def integrate!(integrate_customer)
     transaction do
-      write_integrate_values(integrate_customer)
+      self.write_integrate_values(integrate_customer)
 
-      save!(validate: false)
+      self.save!(validate: false)
 
       # 予約情報と経過記録情報の紐付けを変更する
       integrate_customer.reservations.each do |reservation|
