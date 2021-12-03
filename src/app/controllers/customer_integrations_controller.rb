@@ -15,7 +15,8 @@ class CustomerIntegrationsController < ApplicationController
   end
 
   def integrate
-    @customer.integrate!(params[:integration_customer_id])
+    integrate_customer = Customer.find(params[:integration_customer_id])
+    @customer.integrate!(integrate_customer)
     redirect_to customers_path, notice: '顧客統合が完了しました。'
   end
 
