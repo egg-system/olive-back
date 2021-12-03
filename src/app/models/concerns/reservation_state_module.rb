@@ -4,7 +4,7 @@ module ReservationStateModule
   STATES = {
     reserved: '予約中',
     visited: '来店済み',
-    canceled: 'キャンセル',
+    canceled: 'キャンセル済み',
   }
 
   included do
