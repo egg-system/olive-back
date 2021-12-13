@@ -88,4 +88,18 @@ module ReservationAuditModule
       created_at: self.canceled_at
     )
   end
+
+  def created_staff
+    audit = created_audit
+    return if audit.blank? || audit.user_type != 'Staff'
+
+    Staff.find_by(id: audit.user_id)
+  end
+
+  def canceled_staff
+    audit = canceled_audit
+    return if audit.blank? || audit.user_type != 'Staff'
+
+    Staff.find_by(id: audit.user_id)
+  end
 end
