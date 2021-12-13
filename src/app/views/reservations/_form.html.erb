@@ -58,6 +58,16 @@
       disabled: !@reservation.can_update_created_by?,
       hint: @reservation.can_update_created_by? ? '' : 'システムが自動登録したため、変更できません。'
     ) %>
+    <% if @reservation.created_by == 'Staff' && @reservation.created_staff.present? %>
+      <div class="form-group custom_row row">
+        <div class="custom_left col-sm-3">
+          <label>登録実行者名</label>
+        </div>
+        <div class="custom_right col-sm-9">
+          <%= @reservation.created_staff.full_name %>
+        </div>
+      </div>
+    <% end %>
   <% end %>
 
   <% if @reservation.canceled? %>
@@ -70,6 +80,16 @@
       disabled: !@reservation.can_update_canceled_by?,
       hint: @reservation.can_update_canceled_by? ? '' : 'システムが自動登録したため、変更できません。'
     ) %>
+    <% if @reservation.created_by == 'Staff' && @reservation.canceled_staff.present? %>
+      <div class="form-group custom_row row">
+        <div class="custom_left col-sm-3">
+          <label>キャンセル実行者名</label>
+        </div>
+        <div class="custom_right col-sm-9">
+            <%= @reservation.canceled_staff.full_name %>
+        </div>
+      </div>
+    <% end %>
   <% end %>
 
   <div class="rsv_btn">
