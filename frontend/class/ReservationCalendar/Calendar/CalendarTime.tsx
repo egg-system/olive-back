@@ -24,6 +24,15 @@ export interface Shift {
   staff: { id: Number, name: String }
 }
 
+export interface Summary {
+  shiftCount: number,
+  reserveCount: number,
+  reserveRatio: number,
+  shiftCountToday: number,
+  reserveCountToday: number,
+  reserveRatioToday: number
+}
+
 interface Props {
   shiftTime: string
   shifts: Shift[]
