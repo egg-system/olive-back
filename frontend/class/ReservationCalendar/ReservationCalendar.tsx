@@ -90,8 +90,6 @@ export default class ReservationCalendar extends Component<
     const storeId = this.state.selectedStore.id
     const startDate = this.state.reservationDateRange.startDate.format('YYYY-MM-DD')
     const endDate = this.state.reservationDateRange.endDate.format('YYYY-MM-DD')
-    console.log(this.state.monthDateRange.startDate.format('YYYY-MM-DD'))
-    console.log(this.state.monthDateRange.endDate.format('YYYY-MM-DD'))
 
     const params = `store_id=${storeId}&start_date=${startDate}&end_date=${endDate}`
 
