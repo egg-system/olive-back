@@ -87,6 +87,7 @@ Rails.application.routes.draw do
       resources :staffs, only: [:index]
       resources :reservations, only: [:index]
       resources :shifts, only: [:index]
+      resources :summaries, only: [:index]
     end
   end
 end

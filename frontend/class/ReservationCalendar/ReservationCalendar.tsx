@@ -2,7 +2,9 @@ import React, { Component } from 'react'
 import moment, { Moment } from 'moment'
 
 import SearchSelectInput, { Option, StoreOption } from './SearchSelectInput'
+import SummaryView from './SummaryView'
 import CalendarView, { ReservationDateRange, Reservation, Shift } from './Calendar/CalendarView'
+import { Summary } from "./Calendar/CalendarTime";
 
 interface ReservationCalendarProps {
   stores: StoreOption[]
@@ -11,10 +13,12 @@ interface ReservationCalendarProps {
 interface ReservationCalendarState {
   stores: StoreOption[]
   reservationDateRange: ReservationDateRange
+  monthDateRange: ReservationDateRange
   selectedStore: StoreOption
   selectedStaff: Option | null
   reservations: Reservation[]
   shifts: Shift[]
+  summary: Summary | null
   loading: Boolean
 }
 
@@ -37,9 +41,15 @@ export default class ReservationCalendar extends Component<
         startDate: rangeStartDate,
         endDate: rangeEndDate
       },
+      monthDateRange: {
+        standardDate: moment().startOf('month'),
+        startDate: moment().startOf('month'),
+        endDate: moment().endOf('month')
+      },
       loading: false,
       reservations: [],
-      shifts: []
+      shifts: [],
+      summary: null
     }
   }
 
@@ -67,8 +77,13 @@ export default class ReservationCalendar extends Component<
       startDate: standardDate.clone().startOf('month').startOf('week'),
       endDate: standardDate.clone().endOf('month').endOf('week')
     }
+    const monthDateRange = {
+      standardDate,
+      startDate: standardDate.clone().startOf('month'),
+      endDate: standardDate.clone().endOf('month')
+    }
 
-    this.setState({ reservationDateRange }, this.fetchReservationShifts)
+    this.setState({ reservationDateRange, monthDateRange }, this.fetchReservationShifts)
   }
 
   private fetchReservationShifts = async () => {
@@ -83,11 +98,13 @@ export default class ReservationCalendar extends Component<
       const response = await Promise.all([
         fetch(`/api/admin/shifts?${params}`),
         fetch(`/api/admin/reservations?${params}`),
+        fetch(`/api/admin/summaries?${params}`),
       ])
       const shifts = await response[0].json()
       const reservations = await response[1].json()
+      const summary =  await response[2].json()
 
-      this.setState({ reservations, shifts })
+      this.setState({ reservations, shifts, summary })
     } catch (error) {
       console.log('予約の検索に失敗しました。')
       console.log(error)
@@ -126,6 +143,9 @@ export default class ReservationCalendar extends Component<
         handleSelectedStore={ this.handleSelectedStore }
         selectedStaff={ this.state.selectedStaff }
         handleSelectedStaff={ this.handleSelectedStaff }
+      />
+      <SummaryView
+          summary={this.state.summary}
       />
       <div>
         { this.renderCalendarView() }
