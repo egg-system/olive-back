@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   before_action :authenticate_staff!, :set_host
   protect_from_forgery with: :exception
-  rescue_from Exception, with: :render_500 if Rails.env.production?
+  rescue_from Exception, with: :render500 if Rails.env.production?
 
   def after_sign_out_path_for(resource)
     new_staff_session_path
@@ -45,7 +45,7 @@ class ApplicationController < ActionController::Base
     return Role.viewable?(view_context.current_store)
   end
 
-  def render_500(exception)
+  def render500(exception)
     ExceptionNotifier.notify_exception(
       exception,
       :env => request.env,

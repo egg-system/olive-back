@@ -38,9 +38,7 @@ class ShiftsController < ApplicationController
 
   def create_shifts
     updates_params[:new_shifts]
-      .select { |shift_at, checked| checked === '1' }
-      .keys
-      .each { |shift_at|
+      .select { |shift_at, checked| checked === '1' }.each_key { |shift_at|
         Shift.create!(
           store_id: updates_params[:store_id],
           staff_id: updates_params[:staff_id],
