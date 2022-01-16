@@ -1,6 +1,6 @@
-module Api
+module ::Api
   module Admin
-    class StaffsController < ApplicationController
+    class StaffsController < ::ApplicationController
       def index
         store_id = staff_params[:store_id]
         date = staff_params[:reservation_date]

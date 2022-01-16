@@ -1,5 +1,5 @@
 class Api::ReservationsController < Api::ApiController
-  include Concerns::TokenAuthenticable
+  include TokenAuthenticable
 
   # TODO: customerが非会員かどうかに応じて、認証処理を追加する
   skip_before_action :authenticate_api_customer!, only: :create
@@ -68,7 +68,7 @@ class Api::ReservationsController < Api::ApiController
       reservation_details_attributes: [
         :menu_id,
         :mimitsubo_count,
-        option_ids: [],
+        { option_ids: [] },
       ]
     )
   end

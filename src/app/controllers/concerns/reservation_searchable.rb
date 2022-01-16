@@ -1,4 +1,4 @@
-module Concerns::ReservationSearchable
+module ReservationSearchable
   extend ActiveSupport::Concern
 
   def search_reservations

@@ -6,7 +6,7 @@ class Customer < ApplicationRecord
   include PaginationModule
   include SquareCustomerModule
 
-  VALID_PASSWORD_REGEX = /\A(?=.*?[a-z])(?=.*?[\d])[a-z\d]+\z/i.freeze
+  VALID_PASSWORD_REGEX = /\A(?=.*?[a-z])(?=.*?\d)[a-z\d]+\z/i.freeze
 
   JP_CSV_COLUMN_NAMES = %w[顧客ID 姓 名 セイ メイ 電話番号 固定電話番号 性別 メール受け取り サンキューレター送付済み DM配信受け取り可否 生年月日 郵便番号 都道府県 市区町村 住所 コメント 初回ご来店店舗 直近ご来店店舗 初回ご来店日 直近ご来店日 カルテNo 紹介者 Web検索 診察券発行有無 お子様の数 作成日 更新日 職業 動物占い 赤ちゃんの年齢 サイズ 来店経緯 最寄駅 メールアドレス 暗号化パスワード パスワードリセット用トークン パスワードリセット送信時刻 ログイン記憶時刻 プロパイダー uid トークン パスワード変更可否 FMID 削除済み 売上総額 顧客統合メモ].freeze
 
@@ -47,7 +47,7 @@ class Customer < ApplicationRecord
   validates :tel, numericality: { allow_blank: true }, length: { in: 9..15 }
   validates :password, presence: true, length: { minimum: 8 },
                        format: { with: VALID_PASSWORD_REGEX }, if: :should_validate_password?
-  validates :email, uniqueness: true, unless: :common_email?
+  validates :email, uniqueness: { case_sensitive: true }, unless: :common_email?
   validates :visit_store_ids, allow_nil: true, visit_store: true
 
   # TODO: デフォルトで、joinが走るようにする
@@ -112,11 +112,11 @@ class Customer < ApplicationRecord
   end
 
   def full_name
-    return self.last_name + ' ' + self.first_name
+    return "#{self.last_name} #{self.first_name}"
   end
 
   def full_kana
-    return self.last_kana + ' ' + self.first_kana
+    return "#{self.last_kana} #{self.first_kana}"
   end
 
   def display_email
@@ -247,7 +247,7 @@ class Customer < ApplicationRecord
       Store.find_by(id: value)&.name
 
     when :occupation_id, :zoomancy_id, :baby_age_id, :size_id, :visit_reason_id, :nearest_station_id
-      model_name = attribute_name.to_s.gsub(/\_id$/, '').camelize
+      model_name = attribute_name.to_s.gsub(/_id$/, '').camelize
       model_name.constantize.find_by(id: value)&.name
 
     else

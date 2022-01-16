@@ -1,5 +1,5 @@
 class Api::Customers::TokenValidationsController < DeviseTokenAuth::ApplicationController
-  include Concerns::TokenAuthenticable
+  include TokenAuthenticable
   skip_before_action :authenticate_staff!
 
   def validate_token

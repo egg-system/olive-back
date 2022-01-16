@@ -88,6 +88,7 @@ Rails.application.routes.draw do
       resources :reservations, only: [:index]
       resources :shifts, only: [:index]
       resources :summaries, only: [:index]
+      resources :versions, only: [:index]
     end
   end
 end

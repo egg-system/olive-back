@@ -1,5 +1,5 @@
 class ReservationsController < ApplicationController
-  include Concerns::ReservationSearchable
+  include ReservationSearchable
 
   before_action :set_reservation, only: [:show, :update, :destroy, :cancel_confirm]
   before_action :set_relation_models, only: [:new, :create, :show, :search, :update, :destroy]
@@ -140,7 +140,7 @@ class ReservationsController < ApplicationController
         :id,
         :menu_id,
         :mimitsubo_count,
-        option_ids: [],
+        { option_ids: [] },
       ]
     )
   end

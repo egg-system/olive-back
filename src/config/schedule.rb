@@ -5,7 +5,7 @@
 #  gemのwheneverによるスクリプト。詳細は下記を確認
 # https://github.com/javan/whenever
 
-require File.expand_path(File.dirname(__FILE__) + "/environment")
+require File.expand_path("#{File.dirname(__FILE__)}/environment")
 rails_env = ENV.fetch('RAILS_ENV', :production)
 set :environment, rails_env
 is_developement = rails_env.to_sym === :development
