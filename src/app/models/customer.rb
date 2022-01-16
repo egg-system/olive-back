@@ -47,7 +47,7 @@ class Customer < ApplicationRecord
   validates :tel, numericality: { allow_blank: true }, length: { in: 9..15 }
   validates :password, presence: true, length: { minimum: 8 },
                        format: { with: VALID_PASSWORD_REGEX }, if: :should_validate_password?
-  validates :email, uniqueness: true, unless: :common_email?
+  validates :email, uniqueness: { case_sensitive: true }, unless: :common_email?
   validates :visit_store_ids, allow_nil: true, visit_store: true
 
   # TODO: デフォルトで、joinが走るようにする

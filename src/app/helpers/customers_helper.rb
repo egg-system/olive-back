@@ -1,8 +1,8 @@
 module CustomersHelper
   def duplicated_customer_alerts
     return Settings.duplicated_customer.to_h.values.map { |item|
-      if Customer.group_duplicated(item.columns).exists?
-        { message: item.name, columns: item.columns }
+      if Customer.group_duplicated(item[:columns]).exists?
+        { message: item[:name], columns: item[:columns] }
       end
     }.select(&:present?)
   end

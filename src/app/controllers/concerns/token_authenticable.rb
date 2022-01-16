@@ -1,4 +1,4 @@
-module Concerns::TokenAuthenticable
+module TokenAuthenticable
   extend ActiveSupport::Concern
 
   included do

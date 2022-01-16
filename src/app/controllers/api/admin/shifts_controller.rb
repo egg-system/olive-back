@@ -1,6 +1,6 @@
 module Api
   module Admin
-    class ShiftsController < ApplicationController
+    class ShiftsController < ::ApplicationController
       def index
         start_date = Date.parse(search_params[:start_date])
         end_date = Date.parse(search_params[:end_date])
