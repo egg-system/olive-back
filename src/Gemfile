@@ -109,7 +109,7 @@ gem "simple_form"
 gem "config"
 
 # 本番環境でjsを動作させるため、必要
-gem 'mini_racer', '0.4.0'
+gem 'mini_racer', '0.3.1'
 
 # dbのtime型を扱う用
 gem 'tod', '2.2.0'
