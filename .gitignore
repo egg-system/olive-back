@@ -3,3 +3,5 @@
 .history
 .DS_Store
 node_modules
+.node-version
+src.zip

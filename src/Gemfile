@@ -84,7 +84,7 @@ gem 'devise_token_auth'
 gem 'font-awesome-rails'
 
 # bootstrap用
-gem 'bootstrap', ">= 4.3.1"
+gem 'bootstrap', "4.5.2"
 gem 'jquery-rails'
 
 # 環境変数の管理を易化
@@ -131,4 +131,4 @@ gem 'exception_notification', :github => 'smartinez87/exception_notification'
 gem 'slack-notifier'
 
 # square連携用
-gem 'square.rb'
+gem 'square.rb', '6.5.0.20201028'
