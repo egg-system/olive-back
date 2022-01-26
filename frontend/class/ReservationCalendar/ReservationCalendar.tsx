@@ -90,15 +90,18 @@ export default class ReservationCalendar extends Component<
     const storeId = this.state.selectedStore.id
     const startDate = this.state.reservationDateRange.startDate.format('YYYY-MM-DD')
     const endDate = this.state.reservationDateRange.endDate.format('YYYY-MM-DD')
+    const summaryStartDate = this.state.monthDateRange.startDate.format('YYYY-MM-DD')
+    const summaryEndDate = this.state.monthDateRange.endDate.format('YYYY-MM-DD')
 
     const params = `store_id=${storeId}&start_date=${startDate}&end_date=${endDate}`
+    const summaryParams = `store_id=${storeId}&start_date=${summaryStartDate}&end_date=${summaryEndDate}`
 
     try {
       this.setState({ loading: true })
       const response = await Promise.all([
         fetch(`/api/admin/shifts?${params}`),
         fetch(`/api/admin/reservations?${params}`),
-        fetch(`/api/admin/summaries?${params}`),
+        fetch(`/api/admin/summaries?${summaryParams}`),
       ])
       const shifts = await response[0].json()
       const reservations = await response[1].json()

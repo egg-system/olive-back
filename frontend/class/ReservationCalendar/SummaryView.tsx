@@ -16,7 +16,7 @@ export default class SummaryView extends Component<SummaryProps> {
     if (num === undefined) {
       return ''
     }
-    return this.floatFixed(num * 100, 2)
+    return this.floatFixed(num * 100, 1)
   }
 
   private floatFixed(num: number, fixed: number) {
@@ -24,17 +24,7 @@ export default class SummaryView extends Component<SummaryProps> {
       return ''
     }
 
-    let fixedNum = num.toFixed(fixed)
-
-    // 小数点以下なし
-    if (fixedNum.indexOf('.') < 0) {
-      return fixedNum
-    }
-
-    // 末尾の0を削って小数点が一番最後になった場合小数点も削る
-    fixedNum = fixedNum.replace(/0+$/, '').replace(/\.$/, '')
-
-    return fixedNum
+    return num.toFixed(fixed)
   }
 
   render() {
@@ -56,13 +46,13 @@ export default class SummaryView extends Component<SummaryProps> {
          <div className="row">
            <div className="col d-flex justify-content-between">
              <div>実質稼働率</div>
-             <div>{ this.percentage(this.props.summary?.reserveRatio) }%</div>
+             <div>{ this.percentage(this.props.summary?.reserveRatioToday) }%</div>
            </div>
          </div>
          <div className="row">
            <div className="col d-flex justify-content-between">
              <div>月間稼働率</div>
-             <div>{ this.percentage(this.props.summary?.reserveRatioToday) }%</div>
+             <div>{ this.percentage(this.props.summary?.reserveRatio) }%</div>
            </div>
          </div>
        </div>
