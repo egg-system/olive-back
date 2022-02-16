@@ -12,7 +12,7 @@ class MedicalRecordsController < ApplicationController
     @medical_record = MedicalRecord.find_or_initialize_by(
       customer_id: params[:id]
     )
-    @medical_record.update_attributes(medical_record_params)
+    @medical_record.update(medical_record_params)
     redirect_to medical_records_path, notice: '更新しました。'
   end
 

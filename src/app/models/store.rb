@@ -2,10 +2,10 @@ class Store < ApplicationRecord
   enum store_type: { owned: 0, franchised_sapporo_kokubun: 1, franchised_tokyo_test: 2 }
 
   # time型を扱いやすくするための実装
-  serialize :open_at, Tod::TimeOfDay
-  serialize :close_at, Tod::TimeOfDay
-  serialize :break_from, Tod::TimeOfDay
-  serialize :break_to, Tod::TimeOfDay
+  attribute :open_at, :time_only
+  attribute :close_at, :time_only
+  attribute :break_from, :time_only
+  attribute :break_to, :time_only
 
   validates_presence_of :break_from, if: :input_break_time?
   validates_presence_of :break_to, if: :input_break_time?

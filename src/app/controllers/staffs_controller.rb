@@ -17,11 +17,6 @@ class StaffsController < ApplicationController
     end
 
     @stores = viewable_stores
-
-    # 要リファクタリング
-    @staff_skills_list = ActiveRecord::Base.connection.select_all(
-      'select skill_staffs.staff_id, group_concat(skills.name) as skills_list FROM `skill_staffs` INNER JOIN `skills` ON `skills`.`id` = `skill_staffs`.`skill_id` GROUP BY `skill_staffs`.`staff_id`'
-    ).to_hash
   end
 
   def search
