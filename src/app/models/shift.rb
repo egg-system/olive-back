@@ -1,9 +1,8 @@
 class Shift < ApplicationRecord
-  require 'tod'
 
   # time型を扱いやすくするための実装
-  serialize :start_at, Tod::TimeOfDay
-  serialize :end_at, Tod::TimeOfDay
+  attribute :start_at, :time_only
+  attribute :end_at, :time_only
 
   extend DateModule
 

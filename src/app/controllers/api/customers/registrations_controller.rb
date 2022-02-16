@@ -12,7 +12,7 @@ class Api::Customers::RegistrationsController < DeviseTokenAuth::RegistrationsCo
       email: sign_up_params[:email],
       provider: sign_up_params[:provider],
     })
-    new_customer.update_attributes!(sign_up_params)
+    new_customer.update!(sign_up_params)
 
     # superの返り値に合わせる
     render json: { status: 'success', data: new_customer }

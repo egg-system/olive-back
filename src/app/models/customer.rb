@@ -160,10 +160,10 @@ class Customer < ApplicationRecord
 
       # 予約情報と経過記録情報の紐付けを変更する
       integrate_customer.reservations.each do |reservation|
-        reservation.update_attributes!(customer_id: id)
+        reservation.update!(customer_id: id)
       end
       integrate_customer.observations.each do |observation|
-        observation.update_attributes!(customer_id: id)
+        observation.update!(customer_id: id)
       end
 
       integrate_customer.enabled = false

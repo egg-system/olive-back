@@ -1,11 +1,10 @@
 class Reservation < ApplicationRecord
   # 時間帯とキャンセルに関わる部分のみ、変更履歴を保持する
   audited only: [:reservation_date, :start_time, :end_time, :canceled_at]
-  require 'tod'
 
   # time型を扱いやすくするための実装
-  serialize :start_time, Tod::TimeOfDay
-  serialize :end_time, Tod::TimeOfDay
+  attribute :start_time, :time_only
+  attribute :end_time, :time_only
 
   extend DateModule
   include PaginationModule
