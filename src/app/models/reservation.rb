@@ -31,6 +31,7 @@ class Reservation < ApplicationRecord
   accepts_nested_attributes_for :reservation_coupons, allow_destroy: true
 
   validate :validate_reservation_date, on: :create
+  validate :validate_reservation_staff
 
   after_create :create_visit_stores
 
@@ -110,6 +111,22 @@ class Reservation < ApplicationRecord
     if self.reserved_at < Time.current
       errors.add(:reservation_date, "：過去の日時は使えません")
       errors.add(:start_time, "：過去の日時は使えません")
+    end
+  end
+
+  def validate_reservation_staff
+    return if self.staff_id.blank? || self.canceled_at.present?
+
+    # 同じ時間帯に同じスタッフを予約しているか確認
+    is_duplicate = Reservation.where(
+      staff_id: self.staff_id,
+      reservation_date: self.reservation_date,
+      start_time: self.start_time,
+      canceled_at: nil
+    ).exists?
+
+    if is_duplicate
+      errors.add(:staff_id, "：この時間帯はすでに予約されています")
     end
   end
 
