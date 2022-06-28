@@ -31,7 +31,7 @@ class Reservation < ApplicationRecord
   accepts_nested_attributes_for :reservation_coupons, allow_destroy: true
 
   validate :validate_reservation_date, on: :create
-  validate :validate_reservation_staff
+  validate :validate_reservation_staff, on: :create
 
   after_create :create_visit_stores
 
