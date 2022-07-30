@@ -22,6 +22,7 @@ class StoresController < ApplicationController
     @store = Store.find(params[:id]);
     @store_menus = StoreMenu.where(store_id: params[:id]);
     @store_options = StoreOption.where(store_id: params[:id])
+    @near_stores = @store.near_stores
   end
 
   # GET /stores/new
@@ -36,6 +37,8 @@ class StoresController < ApplicationController
 
     respond_to do |format|
       if @store.save
+        @store.save_near_stores(params[:store][:near_store_ids])
+
         format.html { redirect_to @store, notice: I18n.t("successes.messages.create") }
         format.json { render :show, status: :created, location: @store }
       else
@@ -50,6 +53,8 @@ class StoresController < ApplicationController
   def update
     respond_to do |format|
       if @store.update(store_params)
+        @store.save_near_stores(params[:store][:near_store_ids])
+
         format.html { redirect_to @store, notice: I18n.t("successes.messages.update") }
         format.json { render :show, status: :ok, location: @store }
       else
@@ -69,6 +74,7 @@ class StoresController < ApplicationController
         format.json { head :no_content }
       end
     rescue => exception
+      Rails.logger.info(exception.message)
       respond_to do |format|
         format.html { redirect_to @store, alert: 'すでに利用されているため、削除できません' }
         format.json { render json: @store.errors, status: :unprocessable_entity }
@@ -86,6 +92,8 @@ class StoresController < ApplicationController
   def set_relations
     @menus = Menu.all
     @options = Option.all
+    @near_store_options = Store.all
+    @near_store_options = @near_store_options.where.not(id: params[:id]) if params[:id].present?
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
@@ -93,6 +101,7 @@ class StoresController < ApplicationController
     params.require(:store).permit(
       :store_type,
       :name,
+      :short_name,
       :zip_code,
       :address,
       :tel,
