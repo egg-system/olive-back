@@ -32,6 +32,7 @@
             <th scope="col">id</th>
             <th scope="col">店舗区分</th>
             <th scope="col">店舗名</th>
+            <th scope="col">略称</th>
             <th scope="col">店舗住所</th>
             <th scope="col">店舗リンク</th>
             <th scope="col">予約URL</th>
@@ -45,6 +46,7 @@
               <td><%= store.id %></td>
               <td><%= store.store_type_label %></td>
               <td><%= store.name%></td>
+              <td><%= store.short_name %></td>
               <td><%= store.address%></td>
               <td><%= link_to "ホームページへ", store.url %></td>
               <td><%= link_to "予約ページへ", store.reserve_url %></td>

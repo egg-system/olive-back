@@ -24,6 +24,8 @@ class Store < ApplicationRecord
     through: :visit_stores,
     class_name: 'Customer',
     foreign_key: 'customer_id'
+  has_many :near_store_options
+  has_many :near_stores, through: :near_store_options
 
   scope :viewable?, ->(current_store) {
     # 直営店は全直営店を閲覧可能
@@ -74,6 +76,19 @@ class Store < ApplicationRecord
     }
   end
 
+  def save_near_stores(near_store_ids)
+    near_store_ids = [] if near_store_ids.blank?
+
+    current_near_store_ids = near_store_options.pluck(:near_store_id)
+
+    delete_near_store_ids = current_near_store_ids - near_store_ids
+    create_near_store_ids = near_store_ids - current_near_store_ids
+    near_store_options.where(near_store_id: delete_near_store_ids).destroy_all if delete_near_store_ids.present?
+    create_near_store_ids.each { |near_store_id|
+      near_store_options.create(near_store_id: near_store_id)
+    }
+  end
+
   protected
 
   def select_slot_times(slot_times)
@@ -96,7 +111,12 @@ class Store < ApplicationRecord
   def shop_attributes
     SHOP_KEYS.map { |json_key|
       [json_key, attributes[json_key.to_s].to_s]
-    }.to_h.to_json
+    }.to_h
+    .merge({
+     near_stores: self.near_stores.map do |near_store|
+       { near_store_id: near_store.id, short_name: near_store.short_name }
+     end
+   }).to_json
   end
 
   def is_head

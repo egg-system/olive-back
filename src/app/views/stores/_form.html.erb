@@ -16,6 +16,10 @@
     required: true
   ) %>
   <%= f.input(
+    :short_name,
+    label: "店舗名略称",
+  ) %>
+  <%= f.input(
     :zip_code,
     label: "郵便番号",
     required: true
@@ -83,6 +87,15 @@
     collection: @options.map{ |option| [option.name, option.id] },
     label: 'オプション',
     checked: @store_options.present? ? @store_options.map{ |item| item.option_id } : [],
+    include_hidden: false
+  ) %>
+  <%= f.input(
+    'near_store_ids',
+    as: :check_boxes,
+    wrapper: :horizontal_collection_inline,
+    collection: @near_store_options.map{ |option| [option.name, option.id] },
+    label: '近隣店舗',
+    checked: @near_stores.present? ? @near_stores.map{ |item| item.id } : [],
     include_hidden: false
   ) %>
   <%= f.button :submit, class: 'btn btn-primary'%>
