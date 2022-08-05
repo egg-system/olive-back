@@ -5,7 +5,7 @@
 # 1：赤川（2店舗所属、柔道整復師＆鍼灸師、正社員）
 Staff.where(id: 1).first_or_create!(
   login: 'akagawa',
-  password: 'password',
+  password: 'password1',
   first_name: '花子',
   last_name: '赤川',
   first_kana: 'ハナコ',
@@ -25,7 +25,7 @@ Staff.where(id: 1).first_or_create!(
 # 2：田坂（2店舗所属、柔道整復師＆鍼灸師、正社員）
 Staff.where(id: 2).first_or_create!(
   login: 'tasaka',
-  password: 'password',
+  password: 'password1',
   first_name: '花子',
   last_name: '田坂',
   first_kana: 'ハナコ',
@@ -45,7 +45,7 @@ Staff.where(id: 2).first_or_create!(
 # 3：鈴木（オリーヴ所属、柔道整復師、正社員）
 Staff.where(id: 3).first_or_create!(
   login: 'suzuki',
-  password: 'password',
+  password: 'password1',
   first_name: '花子',
   last_name: '鈴木',
   first_kana: 'ハナコ',
@@ -59,7 +59,7 @@ Staff.where(id: 3).first_or_create!(
 # 4：國分（オリーヴ所属、柔道整復師、バイト）
 Staff.where(id: 4).first_or_create!(
   login: 'kokubun',
-  password: 'password',
+  password: 'password1',
   first_name: '花子',
   last_name: '國分',
   first_kana: 'ハナコ',
@@ -73,7 +73,7 @@ Staff.where(id: 4).first_or_create!(
 # 5：金森（オリーヴ所属、柔道整復師＆鍼灸師、バイト）
 Staff.where(id: 5).first_or_create!(
   login: 'kanamori',
-  password: 'password',
+  password: 'password1',
   first_name: '花子',
   last_name: '金森',
   first_kana: 'ハナコ',
@@ -90,7 +90,7 @@ Staff.where(id: 5).first_or_create!(
 # 6：牧野（オリーヴ所属、柔道整復師、正社員）
 Staff.where(id: 6).first_or_create!(
   login: 'makino',
-  password: 'password',
+  password: 'password1',
   first_name: '花子',
   last_name: '牧野',
   first_kana: 'ハナコ',
@@ -104,7 +104,7 @@ Staff.where(id: 6).first_or_create!(
 # 7：水谷（オリーヴ所属、柔道整復師＆鍼灸師、正社員）
 Staff.where(id: 7).first_or_create!(
   login: 'mizutani',
-  password: 'password',
+  password: 'password1',
   first_name: '花子',
   last_name: '水谷',
   first_kana: 'ハナコ',
@@ -121,7 +121,7 @@ Staff.where(id: 7).first_or_create!(
 # 8：鎌田（オリーヴ所属、柔道整復師、バイト）
 Staff.where(id: 8).first_or_create!(
   login: 'kamata',
-  password: 'password',
+  password: 'password1',
   first_name: '花子',
   last_name: '鎌田',
   first_kana: 'ハナコ',
@@ -135,7 +135,7 @@ Staff.where(id: 8).first_or_create!(
 # 9：テストスタッフ（管理者権限、2店舗所属、柔道整復師＆鍼灸師、契約社員）
 Staff.where(id: 9).first_or_create!(
   login: 'test1',
-  password: 'password',
+  password: 'password1',
   first_name: '花子',
   last_name: '管理者',
   first_kana: 'ハナコ',
@@ -155,7 +155,7 @@ Staff.where(id: 9).first_or_create!(
 # 10：テストスタッフ（スタッフ権限、2店舗所属、柔道整復師＆鍼灸師、契約社員）
 Staff.where(id: 10).first_or_create!(
   login: 'test2',
-  password: 'password',
+  password: 'password1',
   first_name: '花子',
   last_name: 'スタッフ',
   first_kana: 'ハナコ',
