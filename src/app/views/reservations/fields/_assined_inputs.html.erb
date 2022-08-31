@@ -81,7 +81,11 @@
       </div>
       <div class="custom_right col-sm-9">
         <%= detail_form.collection_check_boxes :option_ids, @options, :id, :name do |option| %>
-          <%= option.check_box disabled: is_assigned %>
+          <%= option.check_box(
+                checked: @reservation.option_ids.include?(option.value.to_i),
+                disabled: is_assigned
+              )
+          %>
           <%= option.label %>
         <% end %>
       </div>
