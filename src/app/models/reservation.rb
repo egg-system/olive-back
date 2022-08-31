@@ -25,6 +25,7 @@ class Reservation < ApplicationRecord
   has_many :reservation_details
   accepts_nested_attributes_for :reservation_details
   validates_presence_of :reservation_details
+  has_many :reservation_detail_options, through: :reservation_details
 
   has_many :reservation_coupons
   has_many :coupons, through: :reservation_coupons
@@ -103,6 +104,10 @@ class Reservation < ApplicationRecord
 
   def email_present?
     self.customer.email.present?
+  end
+
+  def option_ids
+    self.reservation_detail_options.pluck(:option_id)
   end
 
   private

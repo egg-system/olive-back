@@ -73,7 +73,11 @@ class ReservationsController < ApplicationController
   # PATCH/PUT /reservations/1
   # PATCH/PUT /reservations/1.json
   def update
-    @reservation.assign_attributes(reservation_params)
+    if @reservation.assigned?
+      @reservation.assign_attributes(staff_assigned_reservation_params)
+    else
+      @reservation.assign_attributes(reservation_params)
+    end
     @reservation.build_shifts if @reservation.shifts.empty? && @reservation.staff_id.present?
     @reservation.shifts.delete_all if @reservation.staff_id.nil?
 
@@ -142,6 +146,19 @@ class ReservationsController < ApplicationController
         :mimitsubo_count,
         { option_ids: [] },
       ]
+    )
+  end
+
+  # 担当スタッフがいる場合に変更可能な項目
+  def staff_assigned_reservation_params
+    params.require(:reservation).permit(
+      :id,
+      :staff_id,
+      :reservation_comment,
+      :children_count,
+      :is_first,
+      :is_confirmed,
+      coupon_ids: [],
     )
   end
 end
