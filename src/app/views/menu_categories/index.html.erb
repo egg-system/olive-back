@@ -1,24 +1,26 @@
-  <h1>Menu一覧</h1>
-  <%=link_to "新規登録へ", new_menu_category_path, {class: "btn btn-primary btn-new"}%>
-  <table class="table">
-    <thead class="thead-light">
-      <tr>
-        <th scope="col">id</th>
-        <th scope="col">メニューカテゴリ名</th>
-        <th scope="col">部門名</th>
-        <th scope="col">更新日時</th>
-        <th scope="col"></th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @menu_categories.each do |item|%>
-      <tr>
-        <td><%=item.id%></td>
-        <td><%=item.name%></td>
-        <td><%=item.department_name%></td>
-        <td><%=item.updated_at.strftime('%Y/%m/%d')%></td>
-        <td><%=link_to "詳細へ", menu_category_path(item.id)%></td>
-      </tr>
-      <%end%>
-    </tbody>
-  </table>
+<h1>商品カテゴリ一覧</h1>
+<%= link_to "新規登録へ", new_menu_category_path, { class: "btn btn-primary btn-new" } %>
+<table class="table">
+  <thead class="thead-light">
+    <tr>
+      <th scope="col">id</th>
+      <th scope="col">商品カテゴリ名</th>
+      <th scope="col">部門名</th>
+      <th scope="col">登録日時</th>
+      <th scope="col">更新日時</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @menu_categories.each do |item|%>
+    <tr>
+      <td><%=item.id%></td>
+      <td><%=item.name%></td>
+      <td><%=item.department_name%></td>
+      <td><%=item.created_at.strftime('%Y/%m/%d')%></td>
+      <td><%=item.updated_at.strftime('%Y/%m/%d')%></td>
+      <td><%=link_to "詳細へ", menu_category_path(item.id)%></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
