@@ -10,8 +10,8 @@ export const renderShiftCheckboxes = () => {
     return
   }
 
-  const shiftBoexes = $('#shifts_table [id^="react_shift_checkbox_"]')
-  Array.from(shiftBoexes).forEach((element) => {
+  const shiftBoxes = $('#shifts_table [id^="react_shift_checkbox_"]')
+  Array.from(shiftBoxes).forEach((element) => {
     const shiftInputNames = element.getAttribute('data-shift-input-names')
     const reservationExists = element.getAttribute('data-reservation-exsists')
     const checked = element.getAttribute('data-checked')
