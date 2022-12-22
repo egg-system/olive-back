@@ -8,16 +8,12 @@ class Option < ApplicationRecord
 
   has_many :store_options, inverse_of: :store
   has_many :store, through: :store_options
+  has_many :option_menu_categories
+  has_many :menu_categories, through: :option_menu_categories
+  accepts_nested_attributes_for :menu_categories, allow_destroy: true
 
-  attr_accessor :is_option, :is_mimitsubo_jewelry
-
-  def is_acupuncture
-    self.id === ACUPUNCTURE_OPTION_ID
-  end
-
-  def is_mimitsubo_jewelry
-    self.id === MIMITSUBO_JWELRY_OPTION_ID
-  end
+  validates :menu_category_ids, presence: true
+  validates :name, presence: true
 
   def to_api_json
     return {
@@ -25,12 +21,8 @@ class Option < ApplicationRecord
       name: self.name,
       description: self.description,
       price: self.fee,
-      is_mimitsubo_jewelry: self.is_mimitsubo_jewelry,
+
+      menu_category_ids: self.menu_categories.pluck(:id)
     }
   end
-
-  private
-
-  ACUPUNCTURE_OPTION_ID = 5
-  MIMITSUBO_JWELRY_OPTION_ID = 7
 end

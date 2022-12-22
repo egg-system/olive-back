@@ -143,7 +143,6 @@ class ReservationsController < ApplicationController
       reservation_details_attributes: [
         :id,
         :menu_id,
-        :mimitsubo_count,
         { option_ids: [] },
       ]
     )
