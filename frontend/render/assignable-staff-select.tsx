@@ -32,12 +32,10 @@ export const renderAssignableStaffSelect = () => {
       name: `${selectedStaff.last_name} ${selectedStaff.first_name}`
     }
     : null
-  const assignedElements = assignedElementQueries.map((element) => {
-    return {
-      key: element.key,
-      value: $(element.query) as JQuery<HTMLInputElement>
-    }
-  })
+  const assignedElements = assignedElementQueries.map((element) => ({
+    key: element.key,
+    value: $(element.query) as JQuery<HTMLInputElement>
+  }))
 
   ReactDOM.render(
     <AssignableStaffSelect
@@ -46,6 +44,7 @@ export const renderAssignableStaffSelect = () => {
       disabled={ disabledValue }
       hint={ hintValue }
     />,
-    element.get(0)
+    // キャストしないと、ReactComponentが配列扱いになる
+    element.get(0) as HTMLElement
   )
 }
