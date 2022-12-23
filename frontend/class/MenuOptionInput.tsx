@@ -126,7 +126,7 @@ extends React.Component<MenuOptionInputProps, MenuOptionInputState>
       return 'メニューを選択しなければ、オプションは選択できません。'
     }
     
-    return '選択されたメニューで使用可能なオプションだけがチェックをつけられます。'
+    return '選択されたメニューで使用可能なオプションのみ、チェックをつけられます。'
   }
 
   public render() {
