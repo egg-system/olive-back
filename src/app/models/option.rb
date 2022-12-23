@@ -21,7 +21,6 @@ class Option < ApplicationRecord
       name: self.name,
       description: self.description,
       price: self.fee,
-
       menu_category_ids: self.menu_categories.pluck(:id)
     }
   end
