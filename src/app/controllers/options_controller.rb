@@ -42,7 +42,7 @@ class OptionsController < ApplicationController
         format.html { redirect_to @option, notice: I18n.t("successes.messages.update") }
         format.json { render :show, status: :ok, location: @option }
       else
-        format.html { render :edit }
+        format.html { render :show }
         format.json { render json: @option.errors, status: :unprocessable_entity }
       end
     end
@@ -73,10 +73,20 @@ class OptionsController < ApplicationController
   def set_master
     @departments = Department.all
     @skills = Skill.all
+    @menuCategories = MenuCategory.all
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def option_params
-    params.require(:option).permit(:name, :description, :fee, :start_at, :end_at, :department_id, :skill_id)
+    params.require(:option).permit(
+      :name,
+      :description,
+      :fee,
+      :start_at,
+      :end_at,
+      :department_id,
+      :skill_id,
+      menu_category_ids: []
+    )
   end
 end
