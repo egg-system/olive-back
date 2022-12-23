@@ -64,31 +64,44 @@
 <% @reservation.reservation_details.each.with_index(1) do |detail, index| %>
   <%= form.fields_for :reservation_details, detail, child_index: index do |detail_form| %>
     <%= detail_form.hidden_field :id, value: detail.id %>
-    <%= detail_form.input(
-      :menu_id,
-      collection: Menu.all,
-      label: @reservation.reservation_details.count > 1 ? "#{index}時間目のメニュー" : 'メニュー',
-      required: index === 1,
-      disabled: is_assigned,
-      hint: is_assigned ? '担当スタッフを空にすると、メニューとオプションの変更が可能になります。' : ''
-    ) %>
-
-    <hr>
-
-    <div class="custom_row row">
-      <div class="custom_left col-sm-3">
-        <label>オプション</label>
-      </div>
-      <div class="custom_right col-sm-9">
-        <%= detail_form.collection_check_boxes :option_ids, @options, :id, :name do |option| %>
-          <%= option.check_box(
-                checked: @reservation.option_ids.include?(option.value.to_i),
-                disabled: is_assigned
-              )
-          %>
-          <%= option.label %>
-        <% end %>
-      </div>
-    </div>
+    <div
+      id="react_input_reservation_menu_options"
+      <%# model構造などが変わった際に、ここでnameを変更する %>
+      data-input-name-prefix='reservation[reservation_details_attributes]'
+      data-reservation-detail-index='<%= index %>'
+      <%# メニューのinputに関する各オプション %>
+      data-menu-input-name='[menu_id]'
+      data-menu-label='<%=
+        @reservation.reservation_details.count > 1 ? "#{index}時間目のメニュー" : 'メニュー'
+      %>'
+      data-menu-required='<%= true %>'
+      data-menu-items='<%= Menu.all.map {
+        |menu| {
+          text: menu.name,
+          value: menu.id,
+          menu_category_id: menu.menu_category_id
+        }
+      }.to_json %>'
+      data-menu-hint='<%= 
+        is_assigned ? '担当スタッフを空にすると、メニューとオプションの変更が可能になります。' : ''
+      %>'
+      data-menu-value='<%= detail.menu&.id %>'
+      data-menu-disabled='<%= is_assigned %>'
+      <%# オプションのinputに関する各オプション %>
+      data-option-label='オプション'
+      data-option-input-name='[option_ids][]'
+      data-option-required='<%= false %>'
+      data-option-items='<%= @options.map {
+        |option| {
+          text: option.name,
+          value: option.id,
+          menu_category_ids: option.menu_category_ids
+        }
+      }.to_json %>'
+      data-option-value='<%= @reservation.option_ids.to_json %>'
+      data-option-hint=''
+      data-option-disabled='<%= is_assigned %>'
+      
+    ></div>
   <% end %>
 <% end %>
