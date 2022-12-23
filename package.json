@@ -1,6 +1,7 @@
 {
   "name": "olive-back",
   "version": "1.0.0",
+  "license": "UNLICENSED",
   "description": "管理画面のUIコンポーネント作成",
   "scripts": {
     "dev": "webpack --watch --progress --mode=development --config webpack.config.js",
