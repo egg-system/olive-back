@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_07_06_010629) do
+ActiveRecord::Schema.define(version: 2022_12_08_193551) do
 
   create_table "audits", charset: "utf8", force: :cascade do |t|
     t.integer "auditable_id"
@@ -284,6 +284,15 @@ ActiveRecord::Schema.define(version: 2022_07_06_010629) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "option_menu_categories", charset: "utf8", force: :cascade do |t|
+    t.bigint "option_id", null: false
+    t.bigint "menu_category_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["menu_category_id"], name: "index_option_menu_categories_on_menu_category_id"
+    t.index ["option_id"], name: "index_option_menu_categories_on_option_id"
+  end
+
   create_table "options", charset: "utf8", force: :cascade do |t|
     t.string "name"
     t.bigint "skill_id", comment: "必須スキル"
@@ -529,6 +538,8 @@ ActiveRecord::Schema.define(version: 2022_07_06_010629) do
   add_foreign_key "observations", "menus", on_delete: :nullify
   add_foreign_key "observations", "staffs", on_delete: :nullify
   add_foreign_key "observations", "stores", on_delete: :nullify
+  add_foreign_key "option_menu_categories", "menu_categories"
+  add_foreign_key "option_menu_categories", "options"
   add_foreign_key "options", "departments"
   add_foreign_key "options", "skills"
   add_foreign_key "reservation_coupons", "coupons", on_delete: :cascade
