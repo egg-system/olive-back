@@ -19,12 +19,12 @@ module Src
     # feからのアクセス設定
     Rails.application.config.middleware.insert_before 0, Rack::Cors do
       allow do
-        origins ENV.fetch('RESERVATION_CLIENT_DOMAIN', '')
+        origins ENV.fetch('RESERVATION_CLIENT_DOMAIN', 'http://localhost:3000')
 
         resource "*",
-                 headers: :any,
-                 methods: [:get, :post, :put, :patch, :delete, :options, :head],
-                 expose: ['uid', 'access-token', 'client']
+          headers: :any,
+          methods: [:get, :post, :put, :patch, :delete, :options, :head],
+          expose: ['uid', 'access-token', 'client']
       end
     end
 

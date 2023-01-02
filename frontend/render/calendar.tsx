@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import moment from 'moment'
 import CalendarInput from '../class/CalendarInput'
-import CalendarSearchInput from '../class/CalendarSearcInput'
+import CalendarSearchInput from '../class/CalendarSearchInput'
 
 const renderDateInput = (elementId: string) => {
   const valueElementId = `${elementId}_value`

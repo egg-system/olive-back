@@ -118,7 +118,7 @@ class ReservationsController < ApplicationController
 
   def set_relation_models
     @coupons = Coupon.all
-    @options = Option.all
+    @options = Option.preload(:menu_categories).all
     @stores = viewable_stores
     @staffs = viewable_staffs
   end
@@ -143,7 +143,6 @@ class ReservationsController < ApplicationController
       reservation_details_attributes: [
         :id,
         :menu_id,
-        :mimitsubo_count,
         { option_ids: [] },
       ]
     )

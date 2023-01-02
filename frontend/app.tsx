@@ -5,7 +5,8 @@ import { renderCalendar } from './render/calendar'
 import { renderShiftCheckboxes } from './render/shifts-checkboxes'
 import { renderAssignableStaffSelect } from './render/assignable-staff-select'
 import { renderReservationCalendar } from './render/reservation-calendar'
-import { renderDownloadButton } from "./render/download";
+import { renderDownloadButton } from './render/download';
+import { renderInputMenuOptions } from './render/reservation-input-menu-options';
 
 // カレンダーの描画処理
 renderCalendar()
@@ -21,3 +22,5 @@ renderReservationCalendar()
 
 // ダウンロードリンク
 renderDownloadButton()
+
+renderInputMenuOptions()

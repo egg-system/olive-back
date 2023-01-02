@@ -1,5 +1,7 @@
-<h1>Coupon一覧</h1>
-<%=link_to "新規登録へ", new_coupon_path, {class: "btn btn-primary btn-new"}%>
+<div class="row">
+  <h1>回数券一覧</h1>
+  <%= link_to "新規登録へ", new_coupon_path, {class: "btn btn-primary btn-new"} %>
+</div>
 <% if @coupons.blank? %>
   <p>該当データがありません</p>
 <% else %>

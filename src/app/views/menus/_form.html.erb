@@ -2,20 +2,21 @@
   <% if request.path_info != new_menu_path %>
     <%= f.input :id, label: "id", readonly: true %>
   <% end %>
+  <%= f.input(
+    :menu_category_id,
+    as: :select,
+    collection: @menu_categories.map { |category| [category.name, category.id] },
+    label: "商品カテゴリ",
+    default: 0,
+    include_blank: true,
+    required: true
+  ) %>
   <%= f.input :name, label: "メニュー名", required: true %>
   <%= f.input :description, label: "メニュー説明" %>
   <%= f.input :fee, label: "料金（税別）", required: true %>
   <%= f.input :service_minutes, label: "施術時間", required: true %>
   <%= f.input :start_at, label: "販売開始日" %>
   <%= f.input :end_at, label: "販売終了日" %>
-  <%= f.input(
-    :menu_category_id,
-    as: :select,
-    collection: @menu_categories.map { |category| [category.name, category.id] },
-    label: "商品カテゴリー",
-    default: 0,
-    include_blank: true
-  ) %>
   <%= f.input(
     :skill_id,
     as: :select,

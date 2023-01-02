@@ -1,12 +1,36 @@
 
 <%= simple_form_for(@option) do |f| %>
-  <%=f.input :name, label: "オプション名"%>
-  <%=f.input :description, label: "オプション説明"%>
-  <%=f.input :fee, label: "料金（税別）"%>
-  <%=f.input :start_at, label: "販売開始日"%>
-  <%=f.input :end_at, label: "販売終了日"%>
-  <%=f.input :department_id,  as: :select, collection: @departments.map{|department| [department.name, department.id]}, label: "部門", default: 0%>
-  <%=f.input :skill_id,  as: :select, collection: @skills.map{|skill| [skill.name, skill.id]}, label: "手技", default: 0%>
+  <%= render 'application/form_error', errors: @option.errors %>
+  <%= f.input :name, label: "オプション名" %>
+  <%= f.input :description, label: "オプション説明" %>
+  <div class="custom_row row">
+    <div class="custom_left col-sm-3">
+        <label>商品カテゴリ</label>
+      </div>
+    <div class="custom_right col-sm-9">
+      <%= f.collection_check_boxes :menu_category_ids, @menuCategories, :id, :name do |category| %>
+        <%= category.check_box checked: @option.menu_categories.pluck(:id).include?(category.value) %>
+        <%= category.label %>
+      <% end %>
+    </div>
+  </div>
+  <%= f.input :fee, label: "料金（税別）" %>
+  <%= f.input :start_at, label: "販売開始日" %>
+  <%= f.input :end_at, label: "販売終了日" %>
+  <%= f.input(
+    :department_id,
+    as: :select,
+    collection: @departments.map{|department| [department.name, department.id]},
+    label: "部門",
+    default: 0
+  ) %>
+  <%= f.input(
+    :skill_id,
+    as: :select,
+    collection: @skills.map{|skill| [skill.name, skill.id]},
+    label: "スキル",
+    default: 0
+  ) %>
 
   <%= f.button :submit, class: 'btn btn-primary'%>
   <% if request.path_info != new_option_path%>

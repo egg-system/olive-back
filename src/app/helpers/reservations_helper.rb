@@ -1,8 +1,4 @@
 module ReservationsHelper
-  def mimitsubo_jwery_options
-    ReservationDetail::MIMITSUBO_JEWELRY_OPTIONS.map { |option| ["#{option}粒", option] }
-  end
-
   def create_audit(reservation = @reservation)
     return reservation.audits.where(action: 'create').first
   end

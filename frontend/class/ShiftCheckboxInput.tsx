@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import checkboxStyle from '../styles/ShiftCheckboxInput.scss'
 
 interface ShiftCheckboxProp {
@@ -32,7 +32,7 @@ export default class ShiftCheckboxInput extends React.Component<
   }
 
   public render() {
-    return <Fragment>
+    return <div onClick={ this.handleChecked }>
       <input
         type="checkbox"
         onChange={ this.handleChecked }
@@ -53,6 +53,6 @@ export default class ShiftCheckboxInput extends React.Component<
           />
         })
       }
-    </Fragment>
+    </div>
   }
 }
