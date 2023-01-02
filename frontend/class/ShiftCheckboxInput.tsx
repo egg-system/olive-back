@@ -32,7 +32,7 @@ export default class ShiftCheckboxInput extends React.Component<
   }
 
   public render() {
-    return <Fragment>
+    return <div onClick={ this.handleChecked }>
       <input
         type="checkbox"
         onChange={ this.handleChecked }
@@ -53,6 +53,6 @@ export default class ShiftCheckboxInput extends React.Component<
           />
         })
       }
-    </Fragment>
+    </div>
   }
 }
