@@ -1,6 +1,6 @@
 class OptionsController < ApplicationController
   before_action :set_option, only: [:show, :update, :destroy]
-  before_action :set_master, only: [:show, :new, :update]
+  before_action :set_master, only: [:show, :new, :update, :create, :update]
 
   # GET /options
   # GET /options.json
