@@ -14,12 +14,12 @@
   <tbody>
     <% @menu_categories.each do |item|%>
     <tr>
-      <td><%=item.id%></td>
-      <td><%=item.name%></td>
-      <td><%=item.department_name%></td>
-      <td><%=item.created_at.strftime('%Y/%m/%d')%></td>
-      <td><%=item.updated_at.strftime('%Y/%m/%d')%></td>
-      <td><%=link_to "詳細へ", menu_category_path(item.id)%></td>
+      <td><%= item.id %></td>
+      <td><%= item.name %></td>
+      <td><%= item.department_name %></td>
+      <td><%= item.created_at.strftime('%Y/%m/%d') %></td>
+      <td><%= item.updated_at.strftime('%Y/%m/%d') %></td>
+      <td><%= link_to "詳細へ", menu_category_path(item.id) %></td>
     </tr>
     <% end %>
   </tbody>

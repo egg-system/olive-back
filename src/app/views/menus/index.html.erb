@@ -8,6 +8,7 @@
       <tr>
         <th scope="col">id</th>
         <th scope="col">メニュー名</th>
+        <th scope="col">商品カテゴリ名</th>
         <th scope="col">メニュー説明</th>
         <th scope="col">料金（税別）</th>
         <th scope="col">施術時間</th>
@@ -18,13 +19,14 @@
     <tbody>
       <% @menus.each do |menu|%>
       <tr>
-        <td><%=menu.id%></td>
-        <td><%=menu.name%></td>
-        <td><%=menu.description%></td>
-        <td><%=menu.fee%></td>
-        <td><%=menu.service_minutes%></td>
-        <td><%=menu.updated_at.strftime('%Y/%m/%d')%></td>
-        <td><%=link_to "詳細へ", menu_path(menu.id)%></td>
+        <td><%= menu.id %></td>
+        <td><%= menu.name %></td>
+        <td><%= menu.menu_category&.name %></td>
+        <td><%= menu.description %></td>
+        <td><%= menu.fee %></td>
+        <td><%= menu.service_minutes %></td>
+        <td><%= menu.updated_at.strftime('%Y/%m/%d') %></td>
+        <td><%= link_to "詳細へ", menu_path(menu.id) %></td>
       </tr>
       <%end%>
     </tbody>
