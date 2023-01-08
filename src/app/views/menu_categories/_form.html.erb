@@ -3,12 +3,13 @@
   <% if request.path_info != new_menu_category_path %>
     <%= f.input :id, label: "id", readonly: true %>
   <% end %>
-  <%= f.input :name, label: "商品カテゴリ名"%>
+  <%= f.input :name, label: "商品カテゴリ名", required: true %>
   <%= f.input(
     :department_id,
     as: :select,
     collection: @departments.map{ |department| [department.name, department.id] },
-    label: "部門名"
+    label: "部門名",
+    required: true
   ) %>
   <%= f.button :submit, class: 'btn btn-primary'%>
   <% if request.path_info != new_menu_category_path%>

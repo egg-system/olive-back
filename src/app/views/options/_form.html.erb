@@ -33,9 +33,8 @@
   ) %>
 
   <%= f.button :submit, class: 'btn btn-primary'%>
-  <% if request.path_info != new_option_path%>
-  <%= link_to '削除', option_path(@option),method: :delete, class: 'btn btn-danger' %>
-  <%end%>
+  <% unless @option.nil? || @option.new_record? %>
+    <%= link_to '削除', option_path(@option), method: :delete, class: 'btn btn-danger' %>
+  <% end %>
   <%= link_to '戻る', options_path, class: 'btn' %>
 <% end %>
-
