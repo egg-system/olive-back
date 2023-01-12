@@ -4,11 +4,14 @@
   <%= f.input :name, label: "オプション名" %>
   <%= f.input :description, label: "オプション説明" %>
   <div class="custom_row row">
-    <div class="custom_left col-sm-3">
-        <label>商品カテゴリ</label>
-      </div>
+    <label class="col-sm-3 col-form-label string required" for="menu_category_ids">
+      商品カテゴリ
+      <abbr class="req">(必須)</abbr>
+    </label>
     <div class="custom_right col-sm-9">
-      <%= f.collection_check_boxes :menu_category_ids, @menuCategories, :id, :name do |category| %>
+      <%=
+        f.collection_check_boxes :menu_category_ids, @menuCategories, :id, :name do |category|
+      %>
         <%= category.check_box checked: @option.menu_categories.pluck(:id).include?(category.value) %>
         <%= category.label %>
       <% end %>
