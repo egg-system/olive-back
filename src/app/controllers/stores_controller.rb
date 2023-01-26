@@ -114,6 +114,6 @@ class StoresController < ApplicationController
       :break_to,
       menu_ids: [],
       option_ids: []
-    )
+    ).with_defaults(option_ids: [])
   end
 end
