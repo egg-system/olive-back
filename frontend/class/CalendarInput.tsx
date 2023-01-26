@@ -1,7 +1,7 @@
 import React from 'react'
 import { DatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
 import { ThemeProvider } from '@material-ui/styles'
-import { createMuiTheme } from '@material-ui/core/styles'
+import { createTheme } from '@material-ui/core/styles'
 
 import moment from 'moment'
 import { MaterialUiPickersDate } from "@material-ui/pickers/typings/date"
@@ -64,7 +64,7 @@ export default class CalendarInput extends React.Component<CalendarProp, Calenda
     const doSelectBirthDay = dateValueElement.getAttribute('data-select-birth-day')
 
     return <ThemeProvider
-      theme={ createMuiTheme({ palette: { primary: { main: '#28a745' } } }) }
+      theme={ createTheme({ palette: { primary: { main: '#28a745' } } }) }
     >
       <MuiPickersUtilsProvider
         utils={ momentJaUtils }
