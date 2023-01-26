@@ -14,13 +14,14 @@ renderCalendar()
 // シフト用のチェックボックスの描画処理
 renderShiftCheckboxes()
 
-// シフトの空いているスタッフのみのセレクトボックスの描画処理
-renderAssignableStaffSelect()
-
 // 予約一覧のカレンダー表示
 renderReservationCalendar()
 
 // ダウンロードリンク
 renderDownloadButton()
 
+// シフトの空いているスタッフのみのセレクトボックスの描画処理
+renderAssignableStaffSelect()
+
+// メニュー・オプションの描画
 renderInputMenuOptions()
