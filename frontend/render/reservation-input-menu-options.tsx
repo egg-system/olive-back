@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import OptionMenuInput from '../class/MenuOptionInput'
+import MenuOptionInput from '../class/MenuOptionInput'
 
 export const renderInputMenuOptions = () => {
   const elementId = 'react_input_reservation_menu_options'
@@ -15,10 +15,12 @@ export const renderInputMenuOptions = () => {
   const reservationDetailIndex = element.getAttribute('data-reservation-detail-index')
   const inputNamePrefix = `${namePrefix}[${reservationDetailIndex}]`
 
+  const menuInputId = element.getAttribute('data-menu-input-id')
   const menuInputName = element.getAttribute('data-menu-input-name')
   const menuItems = JSON.parse(element.getAttribute('data-menu-items') ?? '')
   const menuValue = element.getAttribute('data-menu-value')
   const menuInputOptions = {
+    id: menuInputId ?? '',
     name: `${inputNamePrefix}${menuInputName}`,
     label: element.getAttribute('data-menu-label') ?? '',
     items: menuItems,
@@ -32,9 +34,11 @@ export const renderInputMenuOptions = () => {
   if (!Array.isArray(selectedOptionIds)) {
     selectedOptionIds = null
   }
+  const optionInputId = element.getAttribute('data-option-input-id')
   const optionInputName = element.getAttribute('data-option-input-name')
   const optionItems = JSON.parse(element.getAttribute('data-option-items') ?? '')
   const optionInputOptions = {
+    id: optionInputId ?? '',
     name: `${inputNamePrefix}${optionInputName}`,
     label: element.getAttribute('data-option-label') ?? '',
     items: optionItems,
@@ -44,7 +48,7 @@ export const renderInputMenuOptions = () => {
     value: selectedOptionIds
   }
   return ReactDOM.render(
-    <OptionMenuInput
+    <MenuOptionInput
       menuInputOptions={ menuInputOptions }
       optionInputOptions={ optionInputOptions }
     />,
