@@ -14,6 +14,7 @@ interface OptionItem extends Item {
 }
 
 interface inputOptions<Item> {
+  id: string
   name: string
   label: string
   items: Item[]
@@ -145,6 +146,7 @@ extends React.Component<MenuOptionInputProps, MenuOptionInputState>
         </label>
         <div className='col-sm-9'>
           <select
+            id={ this.props.menuInputOptions.id }
             className={ this.getRequiredClass(
               'form-control select required',
               this.props.menuInputOptions.required
@@ -194,7 +196,7 @@ extends React.Component<MenuOptionInputProps, MenuOptionInputState>
               const menuCategoryId = this.getMenuCategoryId()
               return <span key={ item.value }>
                 <input
-                  id={ `${this.props.optionInputOptions.name}_${item.value}` }
+                  id={ `${this.props.optionInputOptions.id}_${item.value}` }
                   type='checkbox'
                   name={ this.props.optionInputOptions.name }
                   value={ item.value }
@@ -210,7 +212,7 @@ extends React.Component<MenuOptionInputProps, MenuOptionInputState>
                     && this.state.selectedOptionIds?.includes(item.value) }
                 />
                 <label
-                  htmlFor={ `${this.props.optionInputOptions.name}_${item.value}` }
+                  htmlFor={ `${this.props.optionInputOptions.id}_${item.value}` }
                   className='check_box_label'
                 >{ item.text }</label>
               </span>
