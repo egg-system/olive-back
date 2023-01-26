@@ -188,6 +188,7 @@ extends React.Component<MenuOptionInputProps, MenuOptionInputState>
               type='hidden'
               name={ this.props.optionInputOptions.name }
               value=''
+              disabled={ this.props.optionInputOptions.disabled }
             />
             { this.props.optionInputOptions.items.map((item) => {
               const menuCategoryId = this.getMenuCategoryId()
@@ -199,8 +200,11 @@ extends React.Component<MenuOptionInputProps, MenuOptionInputState>
                   value={ item.value }
                   onChange={ this.changeSelectedOptionIds }
                   disabled={
-                    menuCategoryId === null
-                    || !item.menu_category_ids?.includes(menuCategoryId)
+                    this.props.optionInputOptions.disabled
+                      || (
+                        menuCategoryId === null
+                        || !item.menu_category_ids?.includes(menuCategoryId)
+                      )
                   }
                   checked={ this.state.selectedOptionIds !== null
                     && this.state.selectedOptionIds?.includes(item.value) }
