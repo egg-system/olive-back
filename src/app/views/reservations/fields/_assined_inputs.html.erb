@@ -9,6 +9,9 @@
       data-hint="<%=
         @reservation.new_record? ? '日時、メニューを元に自動で割当てられます。' : ''
       %>"
+      data-reservation-from-id="<%=
+        @reservation.new_record? ? 'new_reservation' : "edit_reservation_#{@reservation.id}"
+      %>"
       data-selected-staff="<%=
         is_assigned ? @reservation.staff.to_json : ''
       %>"

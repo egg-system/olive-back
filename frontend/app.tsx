@@ -20,8 +20,9 @@ renderReservationCalendar()
 // ダウンロードリンク
 renderDownloadButton()
 
-// シフトの空いているスタッフのみのセレクトボックスの描画処理
-renderAssignableStaffSelect()
-
 // メニュー・オプションの描画
 renderInputMenuOptions()
+
+// シフトの空いているスタッフのみのセレクトボックスの描画処理
+// ※ メニュー・オプションの描画後に実行すること
+renderAssignableStaffSelect()

@@ -4,7 +4,7 @@ module ::Api
       def index
         store_id = staff_params[:store_id]
         date = staff_params[:reservation_date]
-        start_time = staff_params[:reseravtion_start_time]
+        start_time = staff_params[:reservation_start_time]
 
         assignable_staff_ids = Shift
           .where_not_reserved
@@ -21,7 +21,6 @@ module ::Api
         staffs = Staff
           .where(id: assignable_staff_ids)
           .can_treats(menu_ids, option_ids)
-
         render json: staffs
       end
 
@@ -30,7 +29,7 @@ module ::Api
         return params.permit(
           :store_id,
           :reservation_date,
-          :reseravtion_start_time,
+          :reservation_start_time,
           reservation_menu_ids: [],
           reservation_option_ids: []
         )

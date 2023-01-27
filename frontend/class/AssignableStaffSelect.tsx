@@ -22,14 +22,9 @@ interface SelectOption {
   disabled?: boolean
 }
 
-interface AssignedElement {
-  key: string
-  value: JQuery<HTMLInputElement>
-}
-
 interface StaffSelectProp {
   selectedStaffOption: Staff | null
-  assignedElements: AssignedElement[]
+  reservationForm: JQuery<HTMLFormElement>
   disabled: boolean
   hint: string
 }
@@ -38,11 +33,24 @@ interface StaffSelectState {
   selectedStaffId: string
   staffs: Staff[] | null
   selectedStaffOption: Staff | null
-  assignedElements: AssignedElement[]
   disabled: boolean
   hint: string
   loading: boolean
 }
+
+const apiParamKeys = [
+  { paramKey: 'store_id', formKey: /reservation\[store_id\]/ },
+  { paramKey: 'reservation_date', formKey: /reservation\[reservation_date\]/ },
+  { paramKey: 'reservation_start_time', formKey: /reservation\[start_time\]/ },
+  {
+    paramKey: 'reservation_menu_ids[]',
+    formKey: /reservation\[reservation_details_attributes\]\[[1-9]\d*\]\[menu_id\]/
+  },
+  {
+    paramKey: 'reservation_option_ids[]',
+    formKey: /reservation\[reservation_details_attributes\]\[[1-9]\d*\]\[option_ids\]\[\]/
+  },
+]
 
 export default class AssignableStaffSelect extends React.Component<
   StaffSelectProp,
@@ -59,7 +67,6 @@ export default class AssignableStaffSelect extends React.Component<
       selectedStaffId: selectedStaffId,
       staffs: null,
       selectedStaffOption: props.selectedStaffOption,
-      assignedElements: props.assignedElements,
       disabled: props.disabled,
       hint: props.hint,
       loading: false
@@ -99,17 +106,21 @@ export default class AssignableStaffSelect extends React.Component<
   }
 
   private fetchStaffOptions = async () => {
-    const params = this.state.assignedElements.map((elementData) => {
-      if (elementData.value.length === 1) {
-        const paramValue = elementData.value.val()
-        return `${elementData.key}=${paramValue}`
+    const formValues = this.props.reservationForm.serializeArray()
+    const params = apiParamKeys.map((param) => {
+      const values = formValues.filter(formValue => {
+        if (formValue.value === '') {
+          return false
+        }
+
+        return param.formKey.test(formValue.name)
+      })
+
+      if (values.length > 1) {
+        return values.map(value => `${param.paramKey}=${value.value}`).join('&')
       }
 
-      return elementData.value.get().filter((element) => {
-        return element.checked
-      }).flatMap((element) => {
-        return `${elementData.key}=${element.value}`
-      }).join('&')
+      return values.length > 0 ? `${param.paramKey}=${values[0].value}` : ''
     })
 
     try {
@@ -134,9 +145,7 @@ export default class AssignableStaffSelect extends React.Component<
       return
     }
 
-    this.state.assignedElements.forEach((elementData) => {
-      elementData.value.on('change', this.fetchStaffOptions)
-    })
+    this.props.reservationForm.on('change', this.fetchStaffOptions)
 
     await this.fetchStaffOptions()
   }
@@ -154,6 +163,7 @@ export default class AssignableStaffSelect extends React.Component<
         onChange={ this.handleSelectedStaffId }
         disabled={ this.state.disabled }
         className={ SelectStyle.assignedStaffSelect }
+        onClick={ this.fetchStaffOptions }
       >
         { this.state.loading && <MenuItem disabled>
           <CircularProgress />

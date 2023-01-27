@@ -3,20 +3,6 @@ import ReactDOM from 'react-dom'
 import $ from 'jquery'
 import AssignableStaffSelect from '../class/AssignableStaffSelect'
 
-const assignedElementQueries = [
-  { query: '#reservation_store_id', key: 'store_id' },
-  { query: '#react_reservation_date_value', key: 'reservation_date' },
-  { query: '#reservation_start_time', key: 'reseravtion_start_time' },
-  {
-    query: '[id^="reservation_reservation_details_attributes_"][id$="_menu_id"]',
-    key: 'reservation_menu_ids[]'
-  },
-  {
-    query: '[id^="reservation_reservation_details_attributes_"][id*="_option_ids_"]',
-    key: 'reservation_option_ids[]'
-  },
-]
-
 export const renderAssignableStaffSelect = () => {
   const element = $('#react_reservation_assignable_staff_select')
   if (Object.keys(element).length === 0) {
@@ -32,15 +18,13 @@ export const renderAssignableStaffSelect = () => {
       name: `${selectedStaff.last_name} ${selectedStaff.first_name}`
     }
     : null
-  const assignedElements = assignedElementQueries.map((element) => ({
-    key: element.key,
-    value: $(element.query) as JQuery<HTMLInputElement>
-  }))
+  const reservationFormId = element.data('reservation-from-id')
+  const reservationForm = $(`#${reservationFormId}`) as JQuery<HTMLFormElement>
 
   ReactDOM.render(
     <AssignableStaffSelect
       selectedStaffOption={ selectedStaffOption }
-      assignedElements={ assignedElements }
+      reservationForm={ reservationForm }
       disabled={ disabledValue }
       hint={ hintValue }
     />,
