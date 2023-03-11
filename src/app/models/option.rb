@@ -8,7 +8,7 @@ class Option < ApplicationRecord
 
   has_many :store_options, inverse_of: :store
   has_many :store, through: :store_options
-  has_many :option_menu_categories
+  has_many :option_menu_categories, dependent: :destroy
   has_many :menu_categories, through: :option_menu_categories
   accepts_nested_attributes_for :menu_categories, allow_destroy: true
 

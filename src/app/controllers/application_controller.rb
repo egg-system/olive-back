@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   before_action :authenticate_staff!, :set_host
+  before_action :authenticate_store! if :staff_signed_in?
   protect_from_forgery with: :exception
   rescue_from Exception, with: :render500 if Rails.env.production?
 
@@ -12,6 +13,31 @@ class ApplicationController < ActionController::Base
   end
 
   protected
+
+  def authenticate_store!
+    if controller_path.start_with?('api') && !controller_path.start_with?('api/admin')
+      return
+    end
+
+    # ログイン処理時にエラーになるため、return
+    return if controller_path === 'staffs/sessions' && action_name === 'create'
+
+    # ログアウト処理時にエラーになるため、return
+    return if current_staff.nil?
+
+    is_belongs_login_store = current_staff.stores.any? {
+      |store| store.id === view_context.current_store.id
+    }
+
+    # 所属店舗の変更をチェックする
+    unless is_belongs_login_store
+      sign_out
+      redirect_to(
+        staff_session_url,
+        notice: '所属店舗が変更されました。お手数ですが、再度ログインしてください。'
+      )
+    end
+  end
 
   def forbidden_unless_admin
     head :forbidden unless current_staff.role.admin?

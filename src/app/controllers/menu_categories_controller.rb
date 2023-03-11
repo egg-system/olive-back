@@ -59,7 +59,7 @@ class MenuCategoriesController < ApplicationController
       @menu_category.destroy!
       respond_to do |format|
         format.html {
-          redirect_to menu_category_url,
+          redirect_to menu_categories_url,
           notice: I18n.t("successes.messages.destroy")
         }
         format.json { head :no_content }

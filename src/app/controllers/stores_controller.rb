@@ -68,6 +68,7 @@ class StoresController < ApplicationController
   # DELETE /stores/1.json
   def destroy
     begin
+      binding.pry
       @store.destroy!
       respond_to do |format|
         format.html { redirect_to stores_url, notice: I18n.t("successes.messages.destroy") }

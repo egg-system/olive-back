@@ -22,15 +22,14 @@ module SquareCustomerModule
         query: {
           filter: {
             reference_id: { exact: id.to_s }
+          },
+          sort: {
+            field: 'CREATED_AT',
+            order: 'ASC'
           }
         },
-
         # squareのreference_idが一致するデータから、一番古いものを取得する
-        limit: 1,
-        sort: {
-          field: 'CREATED_AT',
-          order: 'ASC'
-        }
+        limit: 1
       }
     )
 
