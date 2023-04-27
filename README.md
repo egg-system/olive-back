@@ -1,5 +1,9 @@
 # olive-back
 ## サロンシステム
+### 本番環境などで、コマンドを実行する手順
+下記を参考にする
+- https://dev.to/pritambios/how-to-run-rails-console-on-newly-setup-elastic-beanstalk-environment-4ieg
+
 ### 環境のbuild手順
 - 下記を参照
    - https://github.com/egg-system/olive-back/wiki/%E7%92%B0%E5%A2%83%E3%81%AEbuild%E6%89%8B%E9%A0%86
