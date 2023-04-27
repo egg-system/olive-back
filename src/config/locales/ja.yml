@@ -59,8 +59,11 @@ ja:
         store: '来店店舗'
         staff: '担当者'
         menu: 'メニュー'
+      menu:
+        index: '並び順'
       option:
         menu_category_ids: '商品カテゴリ'
+        index: '並び順'
     errors:
       models:
         reservation:

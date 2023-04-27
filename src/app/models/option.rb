@@ -1,4 +1,6 @@
 class Option < ApplicationRecord
+  include SortIndexModule
+
   belongs_to :skill
   belongs_to :department
 

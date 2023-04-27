@@ -1,6 +1,8 @@
 class OptionsController < ApplicationController
   before_action :set_option, only: [:show, :update, :destroy]
-  before_action :set_master, only: [:show, :new, :update, :create, :update]
+  before_action :set_master, only: [:show, :new, :update, :create]
+  before_action :set_before_index, only: [:create, :update, :destroy]
+  after_action :rebuild_indexes, only: [:create, :update, :destroy]
 
   # GET /options
   # GET /options.json
@@ -65,6 +67,22 @@ class OptionsController < ApplicationController
 
   private
 
+  def set_before_index
+    @before_index = @option&.index
+  end
+
+  def rebuild_indexes
+    # エラーがあった場合は処理を実行しない
+    return if @option.errors.any?
+
+    # 新規レコードかどうか
+    id = params[:id].nil? ? @option.id : params[:id]
+
+    # 削除済みかどうか
+    after_index = @option.destroyed? ? nil : @option.index
+    Option.rebuild_indexes(id, @before_index, after_index)
+  end
+
   # Use callbacks to share common setup or constraints between actions.
   def set_option
     @option = Option.find(params[:id])
@@ -82,6 +100,7 @@ class OptionsController < ApplicationController
       :name,
       :description,
       :fee,
+      :index,
       :start_at,
       :end_at,
       :department_id,

@@ -1,5 +1,7 @@
 class MenusController < ApplicationController
   before_action :set_menu, only: [:show, :update, :destroy]
+  before_action :set_before_index, only: [:create, :update, :destroy]
+  after_action :rebuild_indexes, only: [:create, :update, :destroy]
 
   # GET /menus
   # GET /menus.json
@@ -78,6 +80,23 @@ class MenusController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def menu_params
-    params.require(:menu).permit(:id, :name, :description, :fee, :service_minutes, :start_at, :end_at, :menu_category_id, :skill_id, :memo)
+    params.require(:menu).permit(:id, :name, :description, :fee, :index, :service_minutes, :start_at, :end_at, :menu_category_id, :skill_id, :memo)
+  end
+
+  def set_before_index
+    @before_index = @menu&.index
+  end
+
+  
+  def rebuild_indexes
+    # エラーがあった場合は処理を実行しない
+    return if @menu.errors.any?
+
+    # 新規レコードかどうか
+    id = params[:id].nil? ? @menu.id : params[:id]
+
+    # 削除済みかどうか
+    after_index = @menu.destroyed? ? nil : @menu.index
+    Menu.rebuild_indexes(id, @before_index, after_index)
   end
 end
