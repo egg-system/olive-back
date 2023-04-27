@@ -1,13 +1,13 @@
-FROM ruby:2.6.3
+FROM ruby:3.0.5
 
 ENV LANG C.UTF-8
 ENV WORKSPACE=/usr/local/src
 
-# install bundler. -v 1.16.6 は本番環境のバージョンに合わせている
+# install bundler. -v 2.4.3 は本番環境のバージョンに合わせている
 RUN apt-get update && \
     apt-get install -y vim less && \
     apt-get install -y build-essential libpq-dev nodejs graphviz cron && \
-    gem install bundler -v 1.16.6 && \
+    gem install bundler -v 2.4.3 && \
     apt-get clean && \
     rm -r /var/lib/apt/lists/*
 
@@ -38,7 +38,7 @@ USER rails
 WORKDIR $WORKSPACE
 
 ADD --chown=rails:rails src $WORKSPACE
-RUN bundle _1.16.6_ install
+RUN bundle _2.4.3_ install
 
 EXPOSE 3000
 CMD ["/usr/local/start_up.sh"]

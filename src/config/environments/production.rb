@@ -91,4 +91,9 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+  config.hosts << ENV['RAILS_HOST']
+  config.host_authorization = { 
+    # ログイン画面はヘルスチェックをするので、blocked hostを除外する
+    exclude: -> (request) { request.path == '/staffs/sign_in' }
+  }
 end

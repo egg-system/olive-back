@@ -23,7 +23,12 @@ class Staff < ApplicationRecord
   validates :skill_staffs, presence: true
   validates :first_kana, full_width_kana: true
   validates :last_kana, full_width_kana: true
-  validates :password, presence: true, length: { minimum: 8 }, format: { with: VALID_PASSWORD_REGEX }
+  validates(
+    :password,
+    allow_blank: true,
+    length: { minimum: 8 },
+    format: { with: VALID_PASSWORD_REGEX }
+  )
   has_many :store_staffs
   has_many :stores, through: :store_staffs
   accepts_nested_attributes_for :skill_staffs, update_only: true

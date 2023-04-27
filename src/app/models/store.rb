@@ -10,13 +10,13 @@ class Store < ApplicationRecord
   validates_presence_of :break_from, if: :input_break_time?
   validates_presence_of :break_to, if: :input_break_time?
 
-  has_many :store_menu
+  has_many :store_menu, dependent: :destroy
   has_many :menus, through: :store_menu
 
-  has_many :store_option
+  has_many :store_option, dependent: :destroy
   has_many :options, through: :store_option
 
-  has_many :store_staffs
+  has_many :store_staffs, dependent: :destroy
   has_many :staffs, through: :store_staffs
 
   has_many :visit_stores

@@ -66,4 +66,9 @@ Rails.application.configure do
     host: 'localhost',
     port: 8080
   }
+
+  config.hosts = [
+    'localhost',
+    ENV['RAILS_HOST']
+  ]
 end

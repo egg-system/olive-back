@@ -51,10 +51,10 @@
       <%= f.input :login, label: "ログインID", required: true %>
       <% if @staff.id === current_staff.id || current_staff.role.manager? %>
         <%= f.input(
-              :password,
-              label: "パスワード",
-              hint: 'パスワードは英字/数字を含む8文字以上にしてください（記号は使えません）',
-              required: @staff.new_record?
+          :password,
+          label: "パスワード",
+          hint: 'パスワードは英字/数字を含む8文字以上にしてください（記号は使えません）',
+          required: @staff.new_record?
         ) %>
 
       <% end %>
