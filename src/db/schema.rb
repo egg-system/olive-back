@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_12_08_193551) do
+ActiveRecord::Schema.define(version: 2023_04_27_123531) do
 
   create_table "audits", charset: "utf8", force: :cascade do |t|
     t.integer "auditable_id"
@@ -232,6 +232,7 @@ ActiveRecord::Schema.define(version: 2022_12_08_193551) do
     t.string "name"
     t.text "description"
     t.integer "fee"
+    t.integer "index", null: false
     t.integer "service_minutes", comment: "施術時間(分)"
     t.date "start_at"
     t.date "end_at"
@@ -299,6 +300,7 @@ ActiveRecord::Schema.define(version: 2022_12_08_193551) do
     t.bigint "department_id"
     t.text "description"
     t.integer "fee"
+    t.integer "index", null: false
     t.date "start_at"
     t.date "end_at"
     t.datetime "created_at", null: false
