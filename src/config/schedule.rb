@@ -10,7 +10,8 @@ rails_env = ENV.fetch('RAILS_ENV', :production)
 set :environment, rails_env
 is_developement = rails_env.to_sym === :development
 
-logfile_name = "#{Rails.root}/log/cron.log"
+# 本番はアプリログと同一にする
+logfile_name = "#{Rails.root}/log/production.log"
 logfile_name = "#{Rails.root}/log/cron-#{Date.today.strftime('%Y-%m-%d')}.log" if is_developement
 set :output, logfile_name
 
