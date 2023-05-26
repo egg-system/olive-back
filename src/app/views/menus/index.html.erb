@@ -11,6 +11,7 @@
         <th scope="col">商品カテゴリ名</th>
         <th scope="col">メニュー説明</th>
         <th scope="col">料金（税別）</th>
+        <th scope="col">並び順</th>
         <th scope="col">施術時間</th>
         <th scope="col">更新日時</th>
         <th scope="col"></th>
@@ -24,6 +25,7 @@
         <td><%= menu.menu_category&.name %></td>
         <td><%= menu.description %></td>
         <td><%= menu.fee %></td>
+        <td><%= menu.index %></td>
         <td><%= menu.service_minutes %></td>
         <td><%= menu.updated_at.strftime('%Y/%m/%d') %></td>
         <td><%= link_to "詳細へ", menu_path(menu.id) %></td>

@@ -12,6 +12,7 @@
         <th scope="col">商品カテゴリ名</th>
         <th scope="col">オプション説明</th>
         <th scope="col">料金（税別）</th>
+        <th scope="col">並び順</th>
         <th scope="col">更新日時</th>
         <th scope="col"></th>
       </tr>
@@ -27,6 +28,7 @@
           }&.join('<br />').html_safe %></td>
           <td><%= option.description %></td>
           <td><%= number_with_delimiter(option.fee) %>円</td>
+          <td><%= option.index %></td>
           <td><%= option.updated_at.strftime('%Y/%m/%d') %></td>
           <td><%= link_to "詳細へ", option_path(option.id) %></td>
         </tr>
