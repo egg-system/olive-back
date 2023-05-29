@@ -1,5 +1,6 @@
 class MenusController < ApplicationController
   before_action :set_menu, only: [:show, :update, :destroy]
+  before_action :set_master, only: [:show, :new, :update, :create]
   before_action :set_before_index, only: [:create, :update, :destroy]
   after_action :rebuild_indexes, only: [:create, :update, :destroy]
 
@@ -12,16 +13,11 @@ class MenusController < ApplicationController
   # GET /menus/1
   # GET /menus/1.json
   def show
-    @menu = Menu.find(params[:id])
-    @menu_categories = MenuCategory.all
-    @skills = Skill.all
   end
 
   # GET /menus/new
   def new
     @menu = Menu.new
-    @menu_categories = MenuCategory.all
-    @skills = Skill.all
   end
 
   # POST /menus
@@ -48,7 +44,7 @@ class MenusController < ApplicationController
         format.html { redirect_to @menu, notice: I18n.t("successes.messages.update") }
         format.json { render :show, status: :ok, location: @menu }
       else
-        format.html { render :edit }
+        format.html { render :show }
         format.json { render json: @menu.errors, status: :unprocessable_entity }
       end
     end
@@ -76,6 +72,11 @@ class MenusController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_menu
     @menu = Menu.find(params[:id])
+  end
+
+  def set_master
+    @menu_categories = MenuCategory.all
+    @skills = Skill.all
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
