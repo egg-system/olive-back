@@ -40,8 +40,9 @@ module SortIndexModule
   end
 
   def validate_max_index
-    max_index = self.class.maximum(:index) + 1
+    max_index = self.class.maximum(:index)
+    max_index += 1 if self.new_record?
     return if self.index <= max_index
-    self.errors[:index] << "並び順は#{max_index}以内の値にしてください。"
+    self.errors[:index] << "は#{max_index}以内の値にしてください。"
   end
 end
