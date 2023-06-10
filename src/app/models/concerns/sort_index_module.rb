@@ -40,9 +40,13 @@ module SortIndexModule
   end
 
   def validate_max_index
-    max_index = self.class.maximum(:index)
+    # エスケープされないパターンがあるので、パラメータにエスケープを追加
+    max_index = self.class.maximum('`index`')
+    return if max_index.nil?
+
     max_index += 1 if self.new_record?
     return if self.index <= max_index
+
     self.errors[:index] << "は#{max_index}以内の値にしてください。"
   end
 end
