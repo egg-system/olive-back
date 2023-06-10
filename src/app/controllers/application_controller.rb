@@ -78,6 +78,9 @@ class ApplicationController < ActionController::Base
       :data => { :message => 'error' }
     )
 
+    logger.error("#{exception.class}: #{exception.message}")
+    logger.error("#{exception.backtrace.join("\n")}")
+
     render(
       file: Rails.root.join('public/500.html'),
       status: 500,
